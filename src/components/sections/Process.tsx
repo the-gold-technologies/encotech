@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import {
   SearchIcon,
-  PenToolIcon,
-  HardHatIcon,
-  CheckCircle2Icon,
-  ActivityIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon } from
+  ZapIcon,
+  ShieldCheckIcon,
+  SettingsIcon,
+  TrendingUpIcon,
+  WindIcon,
+  PlaneIcon } from
 'lucide-react';
 const steps = [
 {
@@ -23,7 +23,7 @@ const steps = [
   title: 'Strategic Alignment',
   description:
   'Our team develops technical specifications and assists in the selection of the right partners to ensure a solid start.',
-  icon: PenToolIcon,
+  icon: ZapIcon,
   accent: 'from-fuchsia-500/20 to-pink-500/20'
 },
 {
@@ -31,7 +31,7 @@ const steps = [
   title: 'Technical Realization',
   description:
   'We manage the precision erection and commissioning of assets, whether they are new builds or relocated plants.',
-  icon: HardHatIcon,
+  icon: SettingsIcon,
   accent: 'from-rose-500/20 to-orange-500/20'
 },
 {
@@ -39,7 +39,7 @@ const steps = [
   title: "Owner's O&M",
   description:
   'We transition into long-term stewardship, providing operation and maintenance with the same care as the asset owner.',
-  icon: CheckCircle2Icon,
+  icon: ShieldCheckIcon,
   accent: 'from-pink-500/20 to-purple-500/20'
 },
 {
@@ -47,7 +47,7 @@ const steps = [
   title: 'Continuous Improvement',
   description:
   'Through regular performance diagnostics and energy audits, we ensure your asset remains efficient and reliable for its entire lifecycle.',
-  icon: ActivityIcon,
+  icon: TrendingUpIcon,
   accent: 'from-fuchsia-500/20 to-violet-500/20'
 }];
 
@@ -61,7 +61,6 @@ export function Process() {
     const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
     setCanScrollLeft(scrollLeft > 10);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    // Calculate active index based on scroll position
     const cardWidth = 360;
     const gap = 24;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
@@ -98,7 +97,6 @@ export function Process() {
   return (
     <section className="py-32 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
           <motion.div
             initial={{
@@ -122,7 +120,6 @@ export function Process() {
             </h2>
           </motion.div>
 
-          {/* Navigation Arrows */}
           <motion.div
             initial={{
               opacity: 0
@@ -140,19 +137,18 @@ export function Process() {
               disabled={!canScrollLeft}
               className="w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-600 hover:border-brand-pink hover:text-brand-pink disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300">
               
-              <ChevronLeftIcon size={20} />
+              <WindIcon size={20} />
             </button>
             <button
               onClick={() => scroll('right')}
               disabled={!canScrollRight}
               className="w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-600 hover:border-brand-pink hover:text-brand-pink disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300">
               
-              <ChevronRightIcon size={20} />
+              <PlaneIcon size={20} />
             </button>
           </motion.div>
         </div>
 
-        {/* Progress Line */}
         <div className="mb-10 relative">
           <div className="h-px w-full bg-neutral-100" />
           <motion.div
@@ -171,7 +167,6 @@ export function Process() {
               ease: 'easeOut'
             }} />
           
-          {/* Step indicators on the line */}
           <div className="absolute top-0 left-0 w-full flex justify-between -translate-y-1/2">
             {steps.map((step, i) =>
             <button
@@ -192,9 +187,7 @@ export function Process() {
           </div>
         </div>
 
-        {/* Horizontal Carousel */}
         <div className="relative mt-14">
-          {/* Fade edges */}
           {canScrollLeft &&
           <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
           }

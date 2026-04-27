@@ -1,10 +1,8 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowRightIcon,
   FlameIcon,
   NetworkIcon,
-  SunIcon,
   ClipboardCheckIcon,
   WrenchIcon,
   SearchIcon } from
@@ -91,27 +89,21 @@ export function Services() {
         {/* Top row: 3 cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {services.slice(0, 3).map((service, index) =>
-          <ServiceCard key={index} service={service} index={index} />
+          <ServiceCard key={index} service={service} />
           )}
         </div>
 
         {/* Bottom row: 2 cards centered */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {services.slice(3).map((service, index) =>
-          <ServiceCard key={index + 3} service={service} index={index + 3} />
+          <ServiceCard key={index + 3} service={service} />
           )}
         </div>
       </div>
     </section>);
 
 }
-function ServiceCard({
-  service,
-  index
-
-
-
-}: {service: (typeof services)[number];index: number;}) {
+function ServiceCard({ service }: { service: typeof services[0] }) {
   return (
     <motion.div
       initial={{
