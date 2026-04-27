@@ -1,15 +1,13 @@
-import React, { useEffect, useState, useRef, Component } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { Navbar } from '../../components/Navbar';
+import { motion, useInView } from 'framer-motion';
 import {
   ArrowRightIcon,
   ArrowLeftIcon,
-  CheckCircle2Icon,
   TargetIcon,
   FileCheckIcon,
-  TrendingUpIcon,
   UsersIcon,
-  ClockIcon,
   ShieldCheckIcon,
   MapIcon,
   BriefcaseIcon,
@@ -55,8 +53,6 @@ function AnimatedCounter({
 
 }
 function ProjectHero() {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 150]);
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       {/* Strategic Grid Pattern */}
@@ -450,69 +446,7 @@ function StatsSection() {
 export function ProjectManagement() {
   return (
     <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 px-6 lg:px-10 py-4 flex justify-between items-center bg-neutral-900/90 backdrop-blur-md border-b border-white/10">
-        <Link to="/" className="flex items-center">
-          <img
-            src="/encotec-768x179.png"
-            alt="Encotec - Member of Dornier Group"
-            className="h-10 w-auto" />
-          
-        </Link>
-
-        <div className="hidden lg:flex items-center gap-8">
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/20 text-xs font-medium text-neutral-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-            SINCE 2011
-          </div>
-          <Link
-            to="/"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            Home
-          </Link>
-          <Link
-            to="/about"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            About
-          </Link>
-          <Link to="/services" className="text-sm font-medium text-brand-pink">
-            Services
-          </Link>
-          <Link
-            to="/insights"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            Insights
-          </Link>
-          <Link
-            to="/careers"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            Careers
-          </Link>
-          <Link
-            to="/certifications"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            Certifications
-          </Link>
-          <Link
-            to="/leadership"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            Leadership
-          </Link>
-        </div>
-
-        <Link
-          to="/contact"
-          className="px-6 py-2.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-          
-          Contact Us
-        </Link>
-      </nav>
+      <Navbar variant="dark" />
 
       <ProjectHero />
       <PhilosophySection />

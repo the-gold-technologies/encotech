@@ -5,9 +5,10 @@ import {
   Geographies,
   Geography,
   Marker,
-  Line } from
+  Line,
+  ZoomableGroup } from
 'react-simple-maps';
-import { MapPinIcon, BuildingIcon, PhoneIcon } from 'lucide-react';
+import { MapPinIcon, PhoneIcon } from 'lucide-react';
 const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 interface Location {
   name: string;
@@ -204,6 +205,15 @@ export function GlobalFootprint() {
     x: 0,
     y: 0
   });
+  const [isMobile, setIsMobile] = useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!mapContainerRef.current) return;
     const rect = mapContainerRef.current.getBoundingClientRect();
@@ -348,12 +358,17 @@ export function GlobalFootprint() {
               projection="geoMercator"
               projectionConfig={{
                 scale: 600,
-                center: [62, 27]
               }}
               style={{
                 width: '100%',
                 height: 'auto'
               }}>
+              <ZoomableGroup 
+                center={[62, 27]} 
+                zoom={isMobile ? 2.5 : 1}
+                maxZoom={5}
+                minZoom={1}
+              >
               
               <Geographies geography={geoUrl}>
                 {({ geographies }) =>
@@ -514,6 +529,7 @@ export function GlobalFootprint() {
                   </motion.text>
                 </Marker>
               )}
+              </ZoomableGroup>
             </ComposableMap>
 
             {/* Hover Tooltip — HTML overlay, positioned via mouse coords */}
@@ -633,7 +649,7 @@ export function GlobalFootprint() {
 
           {/* Bottom Stats Bar */}
           <div
-            className="flex justify-center gap-12 px-8 py-6 border-t"
+            className="grid grid-cols-3 gap-2 sm:gap-12 px-4 sm:px-8 py-6 border-t"
             style={{
               borderColor: 'rgba(233,30,140,0.1)',
               background: 'rgba(0,0,0,0.3)'
@@ -659,14 +675,14 @@ export function GlobalFootprint() {
               className="text-center">
               
                 <div
-                className="text-2xl md:text-3xl font-black tracking-tight"
+                className="text-2xl sm:text-2xl md:text-3xl font-black tracking-tight"
                 style={{
                   color: '#B6005E'
                 }}>
                 
                   {stat.value}
                 </div>
-                <div className="text-xs text-neutral-500 uppercase tracking-widest mt-1">
+                <div className="text-[10px] sm:text-xs text-neutral-500 uppercase tracking-widest mt-1">
                   {stat.label}
                 </div>
               </motion.div>
