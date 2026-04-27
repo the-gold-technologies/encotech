@@ -90,13 +90,13 @@ export function Navbar({ variant = 'light' }: NavbarProps) {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
                   transition={{ duration: 0.2, ease: "easeOut" }}
-                  className={`absolute left-0 mt-1 w-72 p-3 rounded-2xl border shadow-2xl z-50 ${
+                  className={`absolute left-0 mt-1 w-[560px] p-4 rounded-2xl border shadow-2xl z-50 ${
                     isDark 
                       ? "bg-neutral-900 border-white/10" 
                       : "bg-white border-neutral-100"
                   }`}
                 >
-                  <div className="grid gap-1">
+                  <div className="grid grid-cols-2 gap-2">
                     {services.map((service) => (
                       <Link
                         key={service.name}
