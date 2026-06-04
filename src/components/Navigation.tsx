@@ -1,25 +1,8 @@
-import React, { useState, Component } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home } from './pages/Home';
-import { About } from './pages/About';
-import { Services } from './pages/Services';
-import { EngineeringServices } from './pages/services/EngineeringServices';
-import { ProjectManagement } from './pages/services/ProjectManagement';
-import { PowerGeneration } from './pages/services/PowerGeneration';
-import { TransmissionDistribution } from './pages/services/TransmissionDistribution';
-import { RenewableEnergy } from './pages/services/RenewableEnergy';
-import { AirportServices } from './pages/services/AirportServices';
-import { ValueAddedServices } from './pages/services/ValueAddedServices';
-import { Insights } from './pages/Insights';
-import { InsightDetail } from './pages/insights/InsightDetail';
-import { Contact } from './pages/Contact';
-import { Careers } from './pages/Careers';
-import { Certifications } from './pages/Certifications';
-import { Leadership } from './pages/Leadership';
-// Shared Navigation Component
-function Navigation() {
+export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <nav className="fixed top-0 left-0 w-full z-50 px-6 lg:px-10 py-4 flex justify-between items-center bg-white/90 backdrop-blur-md border-b border-neutral-100">
@@ -60,6 +43,18 @@ function Navigation() {
           className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
           
           Careers
+        </Link>
+        <Link
+          to="/certifications"
+          className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+          
+          Certifications
+        </Link>
+        <Link
+          to="/leadership"
+          className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+          
+          Leadership
         </Link>
       </div>
 
@@ -194,44 +189,5 @@ function Navigation() {
         }
       </AnimatePresence>
     </nav>);
-
-}
-export function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/services/engineering" element={<EngineeringServices />} />
-        <Route
-          path="/services/project-management"
-          element={<ProjectManagement />} />
-        
-        <Route
-          path="/services/power-generation"
-          element={<PowerGeneration />} />
-        
-        <Route
-          path="/services/transmission-distribution"
-          element={<TransmissionDistribution />} />
-        
-        <Route
-          path="/services/renewable-energy"
-          element={<RenewableEnergy />} />
-        
-        <Route
-          path="/services/airport-services"
-          element={<AirportServices />} />
-        
-        <Route path="/services/value-added" element={<ValueAddedServices />} />
-        <Route path="/insights" element={<Insights />} />
-        <Route path="/insights/:slug" element={<InsightDetail />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/careers" element={<Careers />} />
-        <Route path="/certifications" element={<Certifications />} />
-        <Route path="/leadership" element={<Leadership />} />
-      </Routes>
-    </BrowserRouter>);
 
 }

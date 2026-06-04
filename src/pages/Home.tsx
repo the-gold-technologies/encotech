@@ -1,4 +1,5 @@
-import { Navbar } from '../components/Navbar';
+import React from 'react';
+import { Navigation } from '../components/Navigation';
 import { Hero } from '../components/sections/Hero';
 import { AboutSection } from '../components/sections/TrustStrip';
 import { Services } from '../components/sections/Services';
@@ -12,8 +13,7 @@ import { CTA } from '../components/sections/CTA';
 export function Home() {
   return (
     <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
-      <Navbar />
-
+      <Navigation />
       <Hero />
       <AboutSection />
       <Services />

@@ -1,13 +1,55 @@
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar } from '../../components/Navbar';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
+  ClipboardCheckIcon,
   SearchIcon,
   ActivityIcon,
-  TrendingUpIcon } from
+  TrendingUpIcon,
+  ShieldCheckIcon,
+  CheckCircle2Icon,
+  ZapIcon } from
 'lucide-react';
+function AnimatedCounter({
+  target,
+  suffix = ''
+
+
+
+}: {target: number;suffix?: string;}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, {
+    once: true,
+    margin: '-100px'
+  });
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!isInView) return;
+    const duration = 2000;
+    const steps = 60;
+    const increment = target / steps;
+    const stepDuration = duration / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, stepDuration);
+    return () => clearInterval(timer);
+  }, [isInView, target]);
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>);
+
+}
 function AdvisoryHero() {
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
@@ -221,7 +263,68 @@ function DiagnosticProcess() {
 export function RenewableEnergy() {
   return (
     <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
-      <Navbar variant="dark" />
+      <nav className="fixed top-0 left-0 w-full z-50 px-6 lg:px-10 py-4 flex justify-between items-center bg-neutral-900/90 backdrop-blur-md border-b border-white/10">
+        <Link to="/" className="flex items-center">
+          <img
+            src="/encotec-768x179.png"
+            alt="Encotec - Member of Dornier Group"
+            className="h-10 w-auto" />
+          
+        </Link>
+
+        <div className="hidden lg:flex items-center gap-8">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/20 text-xs font-medium text-neutral-300">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+            SINCE 2011
+          </div>
+          <Link
+            to="/"
+            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
+            
+            Home
+          </Link>
+          <Link
+            to="/about"
+            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
+            
+            About
+          </Link>
+          <Link to="/services" className="text-sm font-medium text-brand-pink">
+            Services
+          </Link>
+          <Link
+            to="/insights"
+            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
+            
+            Insights
+          </Link>
+          <Link
+            to="/careers"
+            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
+            
+            Careers
+          </Link>
+          <Link
+            to="/certifications"
+            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
+            
+            Certifications
+          </Link>
+          <Link
+            to="/leadership"
+            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
+            
+            Leadership
+          </Link>
+        </div>
+
+        <Link
+          to="/contact"
+          className="px-6 py-2.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
+          
+          Contact Us
+        </Link>
+      </nav>
 
       <AdvisoryHero />
       <AdvisoryFeatures />
@@ -265,7 +368,7 @@ export function RenewableEnergy() {
               Contact
             </Link>
           </div>
-          <div className="mt-4 md:mt-0">© 2024 Encotec Engineering.</div>
+          <div className="mt-4 md:mt-0">© 2026 Encotec Engineering.</div>
         </div>
       </footer>
     </main>);

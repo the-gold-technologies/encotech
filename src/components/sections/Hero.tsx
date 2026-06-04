@@ -1,3 +1,5 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRightIcon } from 'lucide-react';
 const heroStats = [
@@ -147,13 +149,19 @@ export function Hero() {
               }}
               className="flex flex-wrap gap-4 mb-16">
               
-              <button className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
+              <Link
+                to="/services"
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
+                
                 Our Services
                 <ArrowRightIcon size={14} />
-              </button>
-              <button className="inline-flex items-center gap-2 px-7 py-3.5 border-2 border-neutral-900 text-neutral-900 text-xs font-bold tracking-wider uppercase hover:bg-neutral-900 hover:text-white transition-all duration-300">
+              </Link>
+              <Link
+                to="/insights"
+                className="inline-flex items-center gap-2 px-7 py-3.5 border-2 border-neutral-900 text-neutral-900 text-xs font-bold tracking-wider uppercase hover:bg-neutral-900 hover:text-white transition-all duration-300">
+                
                 View Case Studies
-              </button>
+              </Link>
             </motion.div>
 
             {/* Stats Row */}

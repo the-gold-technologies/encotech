@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from 'lucide-react';
@@ -147,7 +148,7 @@ export function CTA() {
               Contact
             </a>
           </div>
-          <div className="mt-4 md:mt-0">© 2024 Encotec Engineering.</div>
+          <div className="mt-4 md:mt-0">© 2026 Encotec Engineering.</div>
         </footer>
       </div>
     </section>);

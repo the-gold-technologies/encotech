@@ -1,3 +1,5 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   CalendarIcon,
@@ -276,10 +278,13 @@ export function AboutSection() {
             From India to Turkey, see how we are setting new standards in power
             infrastructure.
           </p>
-          <button className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
+            
             View Our Global Reach
             <ArrowRightIcon size={14} />
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>);

@@ -1,5 +1,11 @@
-import { useRef, useState, useEffect, useCallback } from 'react';
-import { Navbar } from '../components/Navbar';
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  useRef,
+  Component } from
+'react';
+import { Link } from 'react-router-dom';
 import {
   motion,
   useScroll,
@@ -33,105 +39,166 @@ interface Location {
   phone: string;
 }
 const locations: Location[] = [
+// India — Headquarters
 {
-  name: 'Houston',
-  coordinates: [-95.37, 29.76],
-  region: 'Americas',
-  address: '1200 Smith St, Suite 1600',
-  suite: 'Houston, TX 77002, USA',
-  phone: '+1 (713) 555 0192'
+  name: 'Noida (HQ)',
+  coordinates: [77.39, 28.58],
+  region: 'India',
+  address: 'Corporate Headquarters',
+  suite: 'Noida, Uttar Pradesh',
+  phone: '+91 120 555 0100'
+},
+// India — Key Locations
+{
+  name: 'New Delhi',
+  coordinates: [77.21, 28.61],
+  region: 'India',
+  address: 'Regional Office',
+  suite: 'New Delhi, India',
+  phone: '+91 11 555 0200'
 },
 {
-  name: 'London',
-  coordinates: [-0.13, 51.51],
-  region: 'Europe',
-  address: '30 St Mary Axe',
-  suite: 'London EC3A 8EP, UK',
-  phone: '+44 20 7946 0321'
+  name: 'Jamshedpur',
+  coordinates: [86.18, 22.8],
+  region: 'India',
+  address: 'Project Site',
+  suite: 'Jamshedpur, Jharkhand',
+  phone: '+91 657 555 0300'
 },
 {
-  name: 'Dubai',
-  coordinates: [55.27, 25.2],
-  region: 'Middle East',
-  address: 'Level 15, Burj Daman, DIFC',
-  suite: 'Dubai, UAE',
-  phone: '+971 4 555 0847'
+  name: 'Jhajjar',
+  coordinates: [76.66, 28.61],
+  region: 'India',
+  address: 'Power Plant O&M',
+  suite: 'Jhajjar, Haryana',
+  phone: '+91 1251 555 0400'
 },
 {
-  name: 'Riyadh',
-  coordinates: [46.68, 24.69],
-  region: 'Middle East',
-  address: 'King Fahd Road, Al Olaya',
-  suite: 'Riyadh 12211, KSA',
-  phone: '+966 11 555 0234'
+  name: 'Haldia',
+  coordinates: [88.06, 22.03],
+  region: 'India',
+  address: 'Project Site',
+  suite: 'Haldia, West Bengal',
+  phone: '+91 3224 555 0500'
 },
 {
-  name: 'Mumbai',
-  coordinates: [72.88, 19.08],
-  region: 'Asia',
-  address: 'Bandra Kurla Complex, BKC',
-  suite: 'Mumbai 400051, India',
-  phone: '+91 22 6655 0178'
+  name: 'Khandwa',
+  coordinates: [76.35, 21.82],
+  region: 'India',
+  address: 'Project Site',
+  suite: 'Khandwa, Madhya Pradesh',
+  phone: '+91 733 555 0600'
 },
 {
-  name: 'Singapore',
-  coordinates: [103.82, 1.35],
-  region: 'Asia',
-  address: '1 Raffles Place, #20-61',
-  suite: 'Singapore 048616',
-  phone: '+65 6555 0293'
+  name: 'Rajpura',
+  coordinates: [76.59, 30.48],
+  region: 'India',
+  address: '2x700 MW Supercritical Plant',
+  suite: 'Rajpura, Punjab',
+  phone: '+91 1762 555 0700'
 },
 {
-  name: 'Lagos',
-  coordinates: [3.38, 6.52],
-  region: 'Africa',
-  address: '3A Ozumba Mbadiwe Ave',
-  suite: 'Victoria Island, Lagos',
-  phone: '+234 1 555 0412'
+  name: 'Obra',
+  coordinates: [82.98, 24.42],
+  region: 'India',
+  address: '2x660 MW Thermal Project',
+  suite: 'Obra, Uttar Pradesh',
+  phone: '+91 5446 555 0800'
 },
 {
-  name: 'Frankfurt',
-  coordinates: [8.68, 50.11],
-  region: 'Europe',
-  address: 'Taunusanlage 8',
-  suite: '60329 Frankfurt, Germany',
-  phone: '+49 69 5550 0187'
+  name: 'Singrauli',
+  coordinates: [82.67, 24.2],
+  region: 'India',
+  address: 'Power Plant Operations',
+  suite: 'Singrauli, Madhya Pradesh',
+  phone: '+91 7805 555 0900'
+},
+{
+  name: 'Vizag',
+  coordinates: [83.3, 17.69],
+  region: 'India',
+  address: 'Project Site',
+  suite: 'Visakhapatnam, Andhra Pradesh',
+  phone: '+91 891 555 1000'
+},
+{
+  name: 'Panki',
+  coordinates: [80.3, 26.47],
+  region: 'India',
+  address: 'Power Plant',
+  suite: 'Panki, Uttar Pradesh',
+  phone: '+91 512 555 1100'
+},
+{
+  name: 'Jewar',
+  coordinates: [77.55, 28.13],
+  region: 'India',
+  address: 'Airport MEP Services',
+  suite: 'Jewar, Uttar Pradesh',
+  phone: '+91 120 555 1200'
+},
+{
+  name: 'Shahjahanpur',
+  coordinates: [79.91, 27.88],
+  region: 'India',
+  address: 'Project Site',
+  suite: 'Shahjahanpur, Uttar Pradesh',
+  phone: '+91 5842 555 1300'
+},
+{
+  name: 'Bela',
+  coordinates: [83.95, 24.65],
+  region: 'India',
+  address: 'Project Site',
+  suite: 'Bela, Uttar Pradesh',
+  phone: '+91 5446 555 1400'
+},
+// Global
+{
+  name: 'Turkey',
+  coordinates: [32.86, 39.93],
+  region: 'International',
+  address: 'Celikler Energy Project',
+  suite: 'Ankara, Turkey',
+  phone: '+90 312 555 0100'
+},
+{
+  name: 'Bahrain',
+  coordinates: [50.58, 26.07],
+  region: 'International',
+  address: 'Energy Infrastructure',
+  suite: 'Manama, Bahrain',
+  phone: '+973 1755 0200'
 }];
 
 const connections: Array<[[number, number], [number, number]]> = [
+// Noida HQ to key India locations
 [
-[-95.37, 29.76],
-[-0.13, 51.51]],
-
-[
-[-0.13, 51.51],
-[55.27, 25.2]],
+[77.39, 28.58],
+[86.18, 22.8]],
 
 [
-[55.27, 25.2],
-[72.88, 19.08]],
+[77.39, 28.58],
+[76.59, 30.48]],
 
 [
-[72.88, 19.08],
-[103.82, 1.35]],
+[77.39, 28.58],
+[82.98, 24.42]],
 
 [
-[55.27, 25.2],
-[46.68, 24.69]],
+[77.39, 28.58],
+[83.3, 17.69]],
+
+// Noida HQ to international
+[
+[77.39, 28.58],
+[32.86, 39.93]],
 
 [
-[-0.13, 51.51],
-[8.68, 50.11]],
-
-[
-[3.38, 6.52],
-[55.27, 25.2]],
-
-[
-[-95.37, 29.76],
-[3.38, 6.52]]];
-
-
+[77.39, 28.58],
+[50.58, 26.07]]
+// Noida → Bahrain
+];
 // --- Components ---
 function ContactHero() {
   const { scrollY } = useScroll();
@@ -604,7 +671,7 @@ function GlobalOfficesMap() {
             }}
             className="text-4xl md:text-6xl font-black tracking-tight mb-6 uppercase">
             
-            Our Global Offices
+            Connected Intelligence
           </motion.h2>
           <motion.p
             initial={{
@@ -622,9 +689,8 @@ function GlobalOfficesMap() {
             }}
             className="text-neutral-400 max-w-2xl mx-auto text-lg">
             
-            With strategic locations across the Americas, Europe, Middle East,
-            Asia, and Africa, we are positioned to deliver engineering
-            excellence worldwide.
+            A live network of energy systems operating in synchronization across
+            continents.
           </motion.p>
         </div>
 
@@ -670,8 +736,8 @@ function GlobalOfficesMap() {
             <ComposableMap
               projection="geoMercator"
               projectionConfig={{
-                scale: 140,
-                center: [20, 20]
+                scale: 600,
+                center: [62, 27]
               }}
               style={{
                 width: '100%',
@@ -963,7 +1029,66 @@ export function Contact() {
   }, []);
   return (
     <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
-      <Navbar />
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 w-full z-50 px-6 lg:px-10 py-4 flex justify-between items-center bg-white/90 backdrop-blur-md border-b border-neutral-100">
+        <Link to="/" className="flex items-center">
+          <img
+            src="/encotec-768x179.png"
+            alt="Encotec - Member of Dornier Group"
+            className="h-10 w-auto" />
+          
+        </Link>
+
+        <div className="hidden lg:flex items-center gap-8">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-neutral-200 text-xs font-medium text-neutral-600">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+            SINCE 2011
+          </div>
+          <Link
+            to="/about"
+            className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+            
+            About
+          </Link>
+          <Link
+            to="/services"
+            className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+            
+            Services
+          </Link>
+          <Link
+            to="/insights"
+            className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+            
+            Insights
+          </Link>
+          <Link
+            to="/careers"
+            className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+            
+            Careers
+          </Link>
+          <Link
+            to="/certifications"
+            className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+            
+            Certifications
+          </Link>
+          <Link
+            to="/leadership"
+            className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+            
+            Leadership
+          </Link>
+        </div>
+
+        <Link
+          to="/contact"
+          className="px-6 py-2.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
+          
+          Contact Us
+        </Link>
+      </nav>
 
       <ContactHero />
       <ContactFormSection />
@@ -986,7 +1111,7 @@ export function Contact() {
               Contact
             </a>
           </div>
-          <div className="mt-4 md:mt-0">© 2024 Encotec Engineering.</div>
+          <div className="mt-4 md:mt-0">© 2026 Encotec Engineering.</div>
         </div>
       </footer>
     </main>);

@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Navbar } from '../../components/Navbar';
+import React, { useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowLeftIcon,
@@ -524,8 +523,10 @@ const insightsData = [
 
 export function InsightDetail() {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
   // Scroll to top on mount and when slug changes
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -567,7 +568,63 @@ export function InsightDetail() {
   };
   return (
     <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white pb-20">
-      <Navbar />
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 w-full z-50 px-6 lg:px-10 py-4 flex justify-between items-center bg-white/90 backdrop-blur-md border-b border-neutral-100">
+        <Link to="/" className="flex items-center">
+          <img
+            src="/encotec-768x179.png"
+            alt="Encotec - Member of Dornier Group"
+            className="h-10 w-auto" />
+          
+        </Link>
+
+        <div className="hidden lg:flex items-center gap-8">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-neutral-200 text-xs font-medium text-neutral-600">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+            SINCE 2011
+          </div>
+          <Link
+            to="/about"
+            className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+            
+            About
+          </Link>
+          <Link
+            to="/services"
+            className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+            
+            Services
+          </Link>
+          <Link to="/insights" className="text-sm font-medium text-brand-pink">
+            Insights
+          </Link>
+          <Link
+            to="/careers"
+            className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+            
+            Careers
+          </Link>
+          <Link
+            to="/certifications"
+            className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+            
+            Certifications
+          </Link>
+          <Link
+            to="/leadership"
+            className="text-sm font-medium text-neutral-700 hover:text-brand-pink transition-colors">
+            
+            Leadership
+          </Link>
+        </div>
+
+        <Link
+          to="/contact"
+          className="px-6 py-2.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
+          
+          Contact Us
+        </Link>
+      </nav>
 
       {/* Hero Section */}
       <section className="relative h-[70vh] w-full bg-neutral-900 text-white overflow-hidden flex items-end pb-20">
@@ -698,10 +755,10 @@ export function InsightDetail() {
                     </blockquote>);
 
                 }
-                if (block.type === 'list' && (block as any).items) {
+                if (block.type === 'list' && block.items) {
                   return (
                     <ul key={index} className="space-y-4 my-8">
-                      {(block as any).items.map((item: string, i: number) =>
+                      {block.items.map((item, i) =>
                       <li key={i} className="flex items-start gap-3">
                           <div className="w-1.5 h-1.5 rounded-full bg-brand-pink mt-2.5 flex-shrink-0" />
                           <span>{item}</span>
@@ -826,7 +883,7 @@ export function InsightDetail() {
               Contact
             </a>
           </div>
-          <div className="mt-4 md:mt-0">© 2024 Encotec Engineering.</div>
+          <div className="mt-4 md:mt-0">© 2026 Encotec Engineering.</div>
         </div>
       </footer>
     </main>);
