@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { Footer } from '../../components/Footer';
+import { Navigation } from '../../components/Navigation';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import {
   ArrowLeftIcon,
@@ -259,68 +261,8 @@ function ValueProtection() {
 export function AirportServices() {
   return (
     <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
-      <nav className="fixed top-0 left-0 w-full z-50 px-6 lg:px-10 py-4 flex justify-between items-center bg-neutral-900/90 backdrop-blur-md border-b border-white/10">
-        <Link to="/" className="flex items-center">
-          <img
-            src="/encotec-768x179.png"
-            alt="Encotec - Member of Dornier Group"
-            className="h-10 w-auto" />
-          
-        </Link>
-
-        <div className="hidden lg:flex items-center gap-8">
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/20 text-xs font-medium text-neutral-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-            SINCE 2011
-          </div>
-          <Link
-            to="/"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            Home
-          </Link>
-          <Link
-            to="/about"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            About
-          </Link>
-          <Link to="/services" className="text-sm font-medium text-brand-pink">
-            Services
-          </Link>
-          <Link
-            to="/insights"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            Insights
-          </Link>
-          <Link
-            to="/careers"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            Careers
-          </Link>
-          <Link
-            to="/certifications"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            Certifications
-          </Link>
-          <Link
-            to="/leadership"
-            className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
-            
-            Leadership
-          </Link>
-        </div>
-
-        <Link
-          to="/contact"
-          className="px-6 py-2.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-          
-          Contact Us
-        </Link>
-      </nav>
+      {/* Navigation */}
+      <Navigation variant="dark" />
 
       <DueDiligenceHero />
       <HealthFeatures />
@@ -345,28 +287,7 @@ export function AirportServices() {
         </div>
       </section>
 
-      <footer className="py-12 border-t border-neutral-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center text-neutral-500 text-sm">
-          <div className="font-black text-neutral-900 text-xl mb-4 md:mb-0 tracking-tighter">
-            ENCOTEC
-          </div>
-          <div className="flex gap-8">
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Terms
-            </a>
-            <Link
-              to="/contact"
-              className="hover:text-brand-pink transition-colors">
-              
-              Contact
-            </Link>
-          </div>
-          <div className="mt-4 md:mt-0">© 2026 Encotec Engineering.</div>
-        </div>
-      </footer>
+      <Footer />
     </main>);
 
 }

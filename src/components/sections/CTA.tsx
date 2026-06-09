@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from 'lucide-react';
+import { Footer } from '../Footer';
 export function CTA() {
   return (
     <section className="py-32 relative overflow-hidden flex items-center justify-center">
@@ -133,23 +134,7 @@ export function CTA() {
           about our certified quality and safety-first approach.
         </motion.p>
 
-        <footer className="mt-32 border-t border-neutral-200 pt-12 flex flex-col md:flex-row justify-between items-center text-neutral-500 text-sm">
-          <div className="font-black text-neutral-900 text-xl mb-4 md:mb-0 tracking-tighter">
-            ENCOTEC
-          </div>
-          <div className="flex gap-8">
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Terms
-            </a>
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Contact
-            </a>
-          </div>
-          <div className="mt-4 md:mt-0">© 2026 Encotec Engineering.</div>
-        </footer>
+        <Footer variant="embedded" />
       </div>
     </section>);
 
