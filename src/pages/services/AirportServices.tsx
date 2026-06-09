@@ -1,56 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { Footer } from '../../components/Footer';
-import { Navigation } from '../../components/Navigation';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import React, { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import { Footer } from "../../components/Footer";
+import { Navigation } from "../../components/Navigation";
+import { motion, useInView } from "framer-motion";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
-  ShieldCheckIcon,
   FileCheckIcon,
   RefreshCwIcon,
   ActivityIcon,
   CheckCircle2Icon,
-  BarChartIcon } from
-'lucide-react';
-function AnimatedCounter({
-  target,
-  suffix = ''
-
-
-
-}: {target: number;suffix?: string;}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, {
-    once: true,
-    margin: '-100px'
-  });
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!isInView) return;
-    const duration = 2000;
-    const steps = 60;
-    const increment = target / steps;
-    const stepDuration = duration / steps;
-    let current = 0;
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, stepDuration);
-    return () => clearInterval(timer);
-  }, [isInView, target]);
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>);
-
-}
+} from "lucide-react";
 function DueDiligenceHero() {
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
@@ -59,11 +19,11 @@ function DueDiligenceHero() {
           className="absolute inset-0"
           style={{
             backgroundImage:
-            'linear-gradient(45deg, #B6005E 25%, transparent 25%, transparent 75%, #B6005E 75%, #B6005E), linear-gradient(45deg, #B6005E 25%, transparent 25%, transparent 75%, #B6005E 75%, #B6005E)',
-            backgroundSize: '60px 60px',
-            backgroundPosition: '0 0, 30px 30px'
-          }} />
-        
+              "linear-gradient(45deg, #B6005E 25%, transparent 25%, transparent 75%, #B6005E 75%, #B6005E), linear-gradient(45deg, #B6005E 25%, transparent 25%, transparent 75%, #B6005E 75%, #B6005E)",
+            backgroundSize: "60px 60px",
+            backgroundPosition: "0 0, 30px 30px",
+          }}
+        />
       </div>
 
       <div className="absolute inset-0 bg-gradient-to-b from-neutral-900 via-neutral-900/90 to-neutral-900" />
@@ -72,22 +32,22 @@ function DueDiligenceHero() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 40
+            y: 40,
           }}
           animate={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           transition={{
             duration: 1,
-            ease: 'easeOut'
+            ease: "easeOut",
           }}
-          className="max-w-4xl">
-          
+          className="max-w-4xl"
+        >
           <Link
             to="/services"
-            className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300 mb-12">
-            
+            className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300 mb-12"
+          >
             <ArrowLeftIcon size={16} />
             Back to Services
           </Link>
@@ -113,54 +73,55 @@ function DueDiligenceHero() {
           </p>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function HealthFeatures() {
   const features = [
-  {
-    title: 'Residual Life Assessment (RLA)',
-    description:
-    'We conduct exhaustive studies to determine how many more years of efficient life your plant equipment actually has, helping you plan for replacements or upgrades.',
-    icon: ActivityIcon
-  },
-  {
-    title: 'Technical Due Diligence',
-    description:
-    'We provide independent technical audits for plant acquisitions, helping you understand the true value, operational risks, and hidden costs of an investment.',
-    icon: FileCheckIcon
-  },
-  {
-    title: 'Restoration Strategy',
-    description:
-    'For older plants, we provide comprehensive revamping and restoration plans to improve performance, extend lifecycle, and meet modern environmental standards.',
-    icon: RefreshCwIcon
-  }];
+    {
+      title: "Residual Life Assessment (RLA)",
+      description:
+        "We conduct exhaustive studies to determine how many more years of efficient life your plant equipment actually has, helping you plan for replacements or upgrades.",
+      icon: ActivityIcon,
+    },
+    {
+      title: "Technical Due Diligence",
+      description:
+        "We provide independent technical audits for plant acquisitions, helping you understand the true value, operational risks, and hidden costs of an investment.",
+      icon: FileCheckIcon,
+    },
+    {
+      title: "Restoration Strategy",
+      description:
+        "For older plants, we provide comprehensive revamping and restoration plans to improve performance, extend lifecycle, and meet modern environmental standards.",
+      icon: RefreshCwIcon,
+    },
+  ];
 
   return (
     <section className="py-28 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {features.map((feature, i) =>
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.2
-            }}
-            className="p-10 bg-neutral-50 border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 group">
-            
+          {features.map((feature, i) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.2,
+              }}
+              className="p-10 bg-neutral-50 border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 group"
+            >
               <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center text-brand-pink mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300">
                 <feature.icon size={32} strokeWidth={1.5} />
               </div>
@@ -171,11 +132,11 @@ function HealthFeatures() {
                 {feature.description}
               </p>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function ValueProtection() {
   return (
@@ -185,19 +146,19 @@ function ValueProtection() {
           <motion.div
             initial={{
               opacity: 0,
-              x: -40
+              x: -40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
-            }}>
-            
+              duration: 0.8,
+            }}
+          >
             <h2 className="text-4xl md:text-5xl font-black mb-8">
               Protecting Your <br />
               <span className="text-brand-pink">Investment</span>
@@ -220,43 +181,44 @@ function ValueProtection() {
           <motion.div
             initial={{
               opacity: 0,
-              x: 40
+              x: 40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
+              duration: 0.8,
             }}
-            className="bg-white/5 border border-white/10 p-10">
-            
+            className="bg-white/5 border border-white/10 p-10"
+          >
             <h3 className="text-2xl font-bold mb-6">What We Evaluate</h3>
             <ul className="space-y-4">
               {[
-              'Structural integrity and material degradation',
-              'Historical O&M records and failure analysis',
-              'Environmental compliance and emissions',
-              'Control systems obsolescence',
-              'Thermodynamic performance baseline'].
-              map((item, i) =>
-              <li key={i} className="flex items-start gap-3">
+                "Structural integrity and material degradation",
+                "Historical O&M records and failure analysis",
+                "Environmental compliance and emissions",
+                "Control systems obsolescence",
+                "Thermodynamic performance baseline",
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
                   <CheckCircle2Icon
-                  className="text-brand-pink flex-shrink-0 mt-1"
-                  size={20} />
-                
+                    className="text-brand-pink flex-shrink-0 mt-1"
+                    size={20}
+                  />
+
                   <span className="text-neutral-300">{item}</span>
                 </li>
-              )}
+              ))}
             </ul>
           </motion.div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 export function AirportServices() {
   return (
@@ -279,8 +241,8 @@ export function AirportServices() {
           </p>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-            
+            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+          >
             Request an Assessment
             <ArrowRightIcon size={20} />
           </Link>
@@ -288,6 +250,6 @@ export function AirportServices() {
       </section>
 
       <Footer />
-    </main>);
-
+    </main>
+  );
 }

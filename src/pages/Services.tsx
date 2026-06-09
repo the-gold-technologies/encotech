@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navigation } from "../components/Navigation";
@@ -10,7 +10,6 @@ import {
   TargetIcon,
   HardHatIcon,
   SettingsIcon,
-  SunIcon,
   PackageIcon,
   ShieldCheckIcon,
   ChevronDownIcon,

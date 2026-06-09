@@ -1,37 +1,30 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-  useRef,
-  Component } from
-'react';
-import { Link } from 'react-router-dom';
-import { Footer } from '../components/Footer';
-import { Navigation } from '../components/Navigation';
+import React, { useCallback, useEffect, useState, useRef } from "react";
+import { Footer } from "../components/Footer";
+import { Navigation } from "../components/Navigation";
 import {
   motion,
   useScroll,
   useTransform,
   useInView,
-  AnimatePresence } from
-'framer-motion';
+  AnimatePresence,
+} from "framer-motion";
 import {
   ComposableMap,
   Geographies,
   Geography,
   Marker,
-  Line } from
-'react-simple-maps';
+  Line,
+} from "react-simple-maps";
 import {
   ArrowRightIcon,
   MapPinIcon,
   PhoneIcon,
   MailIcon,
   ClockIcon,
-  BuildingIcon } from
-'lucide-react';
+  BuildingIcon,
+} from "lucide-react";
 // --- Map Data & Configuration ---
-const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
+const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 interface Location {
   name: string;
   coordinates: [number, number];
@@ -41,165 +34,172 @@ interface Location {
   phone: string;
 }
 const locations: Location[] = [
-// India — Headquarters
-{
-  name: 'Noida (HQ)',
-  coordinates: [77.39, 28.58],
-  region: 'India',
-  address: 'Corporate Headquarters',
-  suite: 'Noida, Uttar Pradesh',
-  phone: '+91 120 555 0100'
-},
-// India — Key Locations
-{
-  name: 'New Delhi',
-  coordinates: [77.21, 28.61],
-  region: 'India',
-  address: 'Regional Office',
-  suite: 'New Delhi, India',
-  phone: '+91 11 555 0200'
-},
-{
-  name: 'Jamshedpur',
-  coordinates: [86.18, 22.8],
-  region: 'India',
-  address: 'Project Site',
-  suite: 'Jamshedpur, Jharkhand',
-  phone: '+91 657 555 0300'
-},
-{
-  name: 'Jhajjar',
-  coordinates: [76.66, 28.61],
-  region: 'India',
-  address: 'Power Plant O&M',
-  suite: 'Jhajjar, Haryana',
-  phone: '+91 1251 555 0400'
-},
-{
-  name: 'Haldia',
-  coordinates: [88.06, 22.03],
-  region: 'India',
-  address: 'Project Site',
-  suite: 'Haldia, West Bengal',
-  phone: '+91 3224 555 0500'
-},
-{
-  name: 'Khandwa',
-  coordinates: [76.35, 21.82],
-  region: 'India',
-  address: 'Project Site',
-  suite: 'Khandwa, Madhya Pradesh',
-  phone: '+91 733 555 0600'
-},
-{
-  name: 'Rajpura',
-  coordinates: [76.59, 30.48],
-  region: 'India',
-  address: '2x700 MW Supercritical Plant',
-  suite: 'Rajpura, Punjab',
-  phone: '+91 1762 555 0700'
-},
-{
-  name: 'Obra',
-  coordinates: [82.98, 24.42],
-  region: 'India',
-  address: '2x660 MW Thermal Project',
-  suite: 'Obra, Uttar Pradesh',
-  phone: '+91 5446 555 0800'
-},
-{
-  name: 'Singrauli',
-  coordinates: [82.67, 24.2],
-  region: 'India',
-  address: 'Power Plant Operations',
-  suite: 'Singrauli, Madhya Pradesh',
-  phone: '+91 7805 555 0900'
-},
-{
-  name: 'Vizag',
-  coordinates: [83.3, 17.69],
-  region: 'India',
-  address: 'Project Site',
-  suite: 'Visakhapatnam, Andhra Pradesh',
-  phone: '+91 891 555 1000'
-},
-{
-  name: 'Panki',
-  coordinates: [80.3, 26.47],
-  region: 'India',
-  address: 'Power Plant',
-  suite: 'Panki, Uttar Pradesh',
-  phone: '+91 512 555 1100'
-},
-{
-  name: 'Jewar',
-  coordinates: [77.55, 28.13],
-  region: 'India',
-  address: 'Airport MEP Services',
-  suite: 'Jewar, Uttar Pradesh',
-  phone: '+91 120 555 1200'
-},
-{
-  name: 'Shahjahanpur',
-  coordinates: [79.91, 27.88],
-  region: 'India',
-  address: 'Project Site',
-  suite: 'Shahjahanpur, Uttar Pradesh',
-  phone: '+91 5842 555 1300'
-},
-{
-  name: 'Bela',
-  coordinates: [83.95, 24.65],
-  region: 'India',
-  address: 'Project Site',
-  suite: 'Bela, Uttar Pradesh',
-  phone: '+91 5446 555 1400'
-},
-// Global
-{
-  name: 'Turkey',
-  coordinates: [32.86, 39.93],
-  region: 'International',
-  address: 'Celikler Energy Project',
-  suite: 'Ankara, Turkey',
-  phone: '+90 312 555 0100'
-},
-{
-  name: 'Bahrain',
-  coordinates: [50.58, 26.07],
-  region: 'International',
-  address: 'Energy Infrastructure',
-  suite: 'Manama, Bahrain',
-  phone: '+973 1755 0200'
-}];
+  // India — Headquarters
+  {
+    name: "Noida (HQ)",
+    coordinates: [77.39, 28.58],
+    region: "India",
+    address: "Corporate Headquarters",
+    suite: "Noida, Uttar Pradesh",
+    phone: "+91 120 555 0100",
+  },
+  // India — Key Locations
+  {
+    name: "New Delhi",
+    coordinates: [77.21, 28.61],
+    region: "India",
+    address: "Regional Office",
+    suite: "New Delhi, India",
+    phone: "+91 11 555 0200",
+  },
+  {
+    name: "Jamshedpur",
+    coordinates: [86.18, 22.8],
+    region: "India",
+    address: "Project Site",
+    suite: "Jamshedpur, Jharkhand",
+    phone: "+91 657 555 0300",
+  },
+  {
+    name: "Jhajjar",
+    coordinates: [76.66, 28.61],
+    region: "India",
+    address: "Power Plant O&M",
+    suite: "Jhajjar, Haryana",
+    phone: "+91 1251 555 0400",
+  },
+  {
+    name: "Haldia",
+    coordinates: [88.06, 22.03],
+    region: "India",
+    address: "Project Site",
+    suite: "Haldia, West Bengal",
+    phone: "+91 3224 555 0500",
+  },
+  {
+    name: "Khandwa",
+    coordinates: [76.35, 21.82],
+    region: "India",
+    address: "Project Site",
+    suite: "Khandwa, Madhya Pradesh",
+    phone: "+91 733 555 0600",
+  },
+  {
+    name: "Rajpura",
+    coordinates: [76.59, 30.48],
+    region: "India",
+    address: "2x700 MW Supercritical Plant",
+    suite: "Rajpura, Punjab",
+    phone: "+91 1762 555 0700",
+  },
+  {
+    name: "Obra",
+    coordinates: [82.98, 24.42],
+    region: "India",
+    address: "2x660 MW Thermal Project",
+    suite: "Obra, Uttar Pradesh",
+    phone: "+91 5446 555 0800",
+  },
+  {
+    name: "Singrauli",
+    coordinates: [82.67, 24.2],
+    region: "India",
+    address: "Power Plant Operations",
+    suite: "Singrauli, Madhya Pradesh",
+    phone: "+91 7805 555 0900",
+  },
+  {
+    name: "Vizag",
+    coordinates: [83.3, 17.69],
+    region: "India",
+    address: "Project Site",
+    suite: "Visakhapatnam, Andhra Pradesh",
+    phone: "+91 891 555 1000",
+  },
+  {
+    name: "Panki",
+    coordinates: [80.3, 26.47],
+    region: "India",
+    address: "Power Plant",
+    suite: "Panki, Uttar Pradesh",
+    phone: "+91 512 555 1100",
+  },
+  {
+    name: "Jewar",
+    coordinates: [77.55, 28.13],
+    region: "India",
+    address: "Airport MEP Services",
+    suite: "Jewar, Uttar Pradesh",
+    phone: "+91 120 555 1200",
+  },
+  {
+    name: "Shahjahanpur",
+    coordinates: [79.91, 27.88],
+    region: "India",
+    address: "Project Site",
+    suite: "Shahjahanpur, Uttar Pradesh",
+    phone: "+91 5842 555 1300",
+  },
+  {
+    name: "Bela",
+    coordinates: [83.95, 24.65],
+    region: "India",
+    address: "Project Site",
+    suite: "Bela, Uttar Pradesh",
+    phone: "+91 5446 555 1400",
+  },
+  // Global
+  {
+    name: "Turkey",
+    coordinates: [32.86, 39.93],
+    region: "International",
+    address: "Celikler Energy Project",
+    suite: "Ankara, Turkey",
+    phone: "+90 312 555 0100",
+  },
+  {
+    name: "Bahrain",
+    coordinates: [50.58, 26.07],
+    region: "International",
+    address: "Energy Infrastructure",
+    suite: "Manama, Bahrain",
+    phone: "+973 1755 0200",
+  },
+];
 
 const connections: Array<[[number, number], [number, number]]> = [
-// Noida HQ to key India locations
-[
-[77.39, 28.58],
-[86.18, 22.8]],
+  // Noida HQ to key India locations
+  [
+    [77.39, 28.58],
+    [86.18, 22.8],
+  ],
 
-[
-[77.39, 28.58],
-[76.59, 30.48]],
+  [
+    [77.39, 28.58],
+    [76.59, 30.48],
+  ],
 
-[
-[77.39, 28.58],
-[82.98, 24.42]],
+  [
+    [77.39, 28.58],
+    [82.98, 24.42],
+  ],
 
-[
-[77.39, 28.58],
-[83.3, 17.69]],
+  [
+    [77.39, 28.58],
+    [83.3, 17.69],
+  ],
 
-// Noida HQ to international
-[
-[77.39, 28.58],
-[32.86, 39.93]],
+  // Noida HQ to international
+  [
+    [77.39, 28.58],
+    [32.86, 39.93],
+  ],
 
-[
-[77.39, 28.58],
-[50.58, 26.07]]
-// Noida → Bahrain
+  [
+    [77.39, 28.58],
+    [50.58, 26.07],
+  ],
+  // Noida → Bahrain
 ];
 // --- Components ---
 function ContactHero() {
@@ -211,15 +211,16 @@ function ContactHero() {
       {/* Parallax Background */}
       <motion.div
         style={{
-          y
+          y,
         }}
-        className="absolute inset-0">
-        
+        className="absolute inset-0"
+      >
         <img
           src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2400"
           alt="Modern office building"
-          className="w-full h-full object-cover opacity-40" />
-        
+          className="w-full h-full object-cover opacity-40"
+        />
+
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/90 via-neutral-900/70 to-neutral-900" />
       </motion.div>
 
@@ -228,46 +229,46 @@ function ContactHero() {
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage:
-          'linear-gradient(rgba(233,30,140,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.3) 1px, transparent 1px)',
-          backgroundSize: '80px 80px'
-        }} />
-      
+            "linear-gradient(rgba(233,30,140,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.3) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 py-32">
         <motion.div
           style={{
-            opacity
+            opacity,
           }}
           initial={{
             opacity: 0,
-            y: 40
+            y: 40,
           }}
           animate={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           transition={{
             duration: 1,
-            ease: 'easeOut'
+            ease: "easeOut",
           }}
-          className="max-w-4xl">
-          
+          className="max-w-4xl"
+        >
           {/* Label */}
           <motion.div
             initial={{
               opacity: 0,
-              x: -20
+              x: -20,
             }}
             animate={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             transition={{
               duration: 0.6,
-              delay: 0.2
+              delay: 0.2,
             }}
-            className="flex items-center gap-3 mb-8">
-            
+            className="flex items-center gap-3 mb-8"
+          >
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
               Get in Touch
@@ -278,18 +279,18 @@ function ContactHero() {
           <motion.h1
             initial={{
               opacity: 0,
-              y: 30
+              y: 30,
             }}
             animate={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.4
+              delay: 0.4,
             }}
-            className="text-5xl md:text-7xl font-black leading-[1.05] tracking-tight mb-8 uppercase">
-            
+            className="text-5xl md:text-7xl font-black leading-[1.05] tracking-tight mb-8 uppercase"
+          >
             Let's Build the Future of Energy Together
           </motion.h1>
 
@@ -297,25 +298,25 @@ function ContactHero() {
           <motion.p
             initial={{
               opacity: 0,
-              y: 20
+              y: 20,
             }}
             animate={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.6
+              delay: 0.6,
             }}
-            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12">
-            
+            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12"
+          >
             Reach out to our team of experts for project inquiries, strategic
             partnerships, or to learn more about our engineering capabilities.
           </motion.p>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function ContactFormSection() {
   const handleSubmit = (e: React.FormEvent) => {
@@ -330,20 +331,20 @@ function ContactFormSection() {
           <motion.div
             initial={{
               opacity: 0,
-              x: -40
+              x: -40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
+              duration: 0.8,
             }}
-            className="lg:col-span-7">
-            
+            className="lg:col-span-7"
+          >
             <h2 className="text-3xl font-black text-neutral-900 mb-8 uppercase tracking-tight">
               Send us a message
             </h2>
@@ -353,8 +354,8 @@ function ContactFormSection() {
                 <div className="space-y-2">
                   <label
                     htmlFor="fullName"
-                    className="text-sm font-bold text-neutral-700 uppercase tracking-wider">
-                    
+                    className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
+                  >
                     Full Name *
                   </label>
                   <input
@@ -362,14 +363,14 @@ function ContactFormSection() {
                     id="fullName"
                     required
                     className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300"
-                    placeholder="John Doe" />
-                  
+                    placeholder="John Doe"
+                  />
                 </div>
                 <div className="space-y-2">
                   <label
                     htmlFor="email"
-                    className="text-sm font-bold text-neutral-700 uppercase tracking-wider">
-                    
+                    className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
+                  >
                     Email Address *
                   </label>
                   <input
@@ -377,8 +378,8 @@ function ContactFormSection() {
                     id="email"
                     required
                     className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300"
-                    placeholder="john@company.com" />
-                  
+                    placeholder="john@company.com"
+                  />
                 </div>
               </div>
 
@@ -386,45 +387,45 @@ function ContactFormSection() {
                 <div className="space-y-2">
                   <label
                     htmlFor="phone"
-                    className="text-sm font-bold text-neutral-700 uppercase tracking-wider">
-                    
+                    className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
+                  >
                     Phone Number
                   </label>
                   <input
                     type="tel"
                     id="phone"
                     className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300"
-                    placeholder="+1 (555) 000-0000" />
-                  
+                    placeholder="+1 (555) 000-0000"
+                  />
                 </div>
                 <div className="space-y-2">
                   <label
                     htmlFor="company"
-                    className="text-sm font-bold text-neutral-700 uppercase tracking-wider">
-                    
+                    className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
+                  >
                     Company Name
                   </label>
                   <input
                     type="text"
                     id="company"
                     className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300"
-                    placeholder="Company Ltd." />
-                  
+                    placeholder="Company Ltd."
+                  />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label
                   htmlFor="subject"
-                  className="text-sm font-bold text-neutral-700 uppercase tracking-wider">
-                  
+                  className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
+                >
                   Subject *
                 </label>
                 <select
                   id="subject"
                   required
-                  className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300 appearance-none rounded-none">
-                  
+                  className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300 appearance-none rounded-none"
+                >
                   <option value="" disabled selected>
                     Select a subject
                   </option>
@@ -439,8 +440,8 @@ function ContactFormSection() {
               <div className="space-y-2">
                 <label
                   htmlFor="message"
-                  className="text-sm font-bold text-neutral-700 uppercase tracking-wider">
-                  
+                  className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
+                >
                   Message *
                 </label>
                 <textarea
@@ -448,14 +449,14 @@ function ContactFormSection() {
                   required
                   rows={5}
                   className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300 resize-none"
-                  placeholder="How can we help you?">
-                </textarea>
+                  placeholder="How can we help you?"
+                ></textarea>
               </div>
 
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 px-8 py-5 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-                
+                className="w-full inline-flex items-center justify-center gap-2 px-8 py-5 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+              >
                 Send Message
                 <ArrowRightIcon size={16} />
               </button>
@@ -466,21 +467,21 @@ function ContactFormSection() {
           <motion.div
             initial={{
               opacity: 0,
-              x: 40
+              x: 40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.2
+              delay: 0.2,
             }}
-            className="lg:col-span-5 space-y-6">
-            
+            className="lg:col-span-5 space-y-6"
+          >
             {/* Card 1: HQ */}
             <div className="p-8 bg-neutral-900 text-white border border-white/10 hover:border-brand-pink/30 transition-colors duration-300">
               <div className="w-12 h-12 bg-brand-pink/20 rounded-xl flex items-center justify-center text-brand-pink mb-6">
@@ -493,8 +494,9 @@ function ContactFormSection() {
                 <p className="flex items-start gap-3">
                   <MapPinIcon
                     size={18}
-                    className="text-brand-pink flex-shrink-0 mt-0.5" />
-                  
+                    className="text-brand-pink flex-shrink-0 mt-0.5"
+                  />
+
                   <span>
                     Bandra Kurla Complex, BKC
                     <br />
@@ -504,15 +506,17 @@ function ContactFormSection() {
                 <p className="flex items-center gap-3">
                   <PhoneIcon
                     size={18}
-                    className="text-brand-pink flex-shrink-0" />
-                  
+                    className="text-brand-pink flex-shrink-0"
+                  />
+
                   <span>+91 22 6655 0178</span>
                 </p>
                 <p className="flex items-center gap-3">
                   <MailIcon
                     size={18}
-                    className="text-brand-pink flex-shrink-0" />
-                  
+                    className="text-brand-pink flex-shrink-0"
+                  />
+
                   <span>info@encotec.com</span>
                 </p>
               </div>
@@ -561,8 +565,8 @@ function ContactFormSection() {
                   </div>
                   <a
                     href="mailto:info@encotec.com"
-                    className="text-white hover:text-brand-pink transition-colors">
-                    
+                    className="text-white hover:text-brand-pink transition-colors"
+                  >
                     info@encotec.com
                   </a>
                 </div>
@@ -572,8 +576,8 @@ function ContactFormSection() {
                   </div>
                   <a
                     href="mailto:careers@encotec.com"
-                    className="text-white hover:text-brand-pink transition-colors">
-                    
+                    className="text-white hover:text-brand-pink transition-colors"
+                  >
                     careers@encotec.com
                   </a>
                 </div>
@@ -582,27 +586,27 @@ function ContactFormSection() {
           </motion.div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function GlobalOfficesMap() {
   const sectionRef = useRef<HTMLElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, {
     once: true,
-    margin: '-100px'
+    margin: "-100px",
   });
   const [hoveredLocation, setHoveredLocation] = useState<Location | null>(null);
   const [tooltipPos, setTooltipPos] = useState({
     x: 0,
-    y: 0
+    y: 0,
   });
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!mapContainerRef.current) return;
     const rect = mapContainerRef.current.getBoundingClientRect();
     setTooltipPos({
       x: e.clientX - rect.left,
-      y: e.clientY - rect.top
+      y: e.clientY - rect.top,
     });
   }, []);
   return (
@@ -611,26 +615,27 @@ function GlobalOfficesMap() {
       className="py-32 text-white relative overflow-hidden"
       style={{
         background:
-        'linear-gradient(180deg, #0D0D0D 0%, #111111 50%, #0D0D0D 100%)'
-      }}>
-      
+          "linear-gradient(180deg, #0D0D0D 0%, #111111 50%, #0D0D0D 100%)",
+      }}
+    >
       {/* Subtle grid overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-          'linear-gradient(rgba(233,30,140,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.03) 1px, transparent 1px)',
-          backgroundSize: '60px 60px'
-        }} />
-      
+            "linear-gradient(rgba(233,30,140,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.03) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
+
       {/* Radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-          'radial-gradient(ellipse 80% 60% at 50% 60%, rgba(233,30,140,0.06) 0%, transparent 70%)'
-        }} />
-      
+            "radial-gradient(ellipse 80% 60% at 50% 60%, rgba(233,30,140,0.06) 0%, transparent 70%)",
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
@@ -638,17 +643,17 @@ function GlobalOfficesMap() {
           <motion.div
             initial={{
               opacity: 0,
-              y: 20
+              y: 20,
             }}
             whileInView={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
-            className="flex items-center justify-center gap-3 mb-6">
-            
+            className="flex items-center justify-center gap-3 mb-6"
+          >
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
               Global Presence
@@ -658,39 +663,39 @@ function GlobalOfficesMap() {
           <motion.h2
             initial={{
               opacity: 0,
-              y: 20
+              y: 20,
             }}
             whileInView={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.1
+              delay: 0.1,
             }}
-            className="text-4xl md:text-6xl font-black tracking-tight mb-6 uppercase">
-            
+            className="text-4xl md:text-6xl font-black tracking-tight mb-6 uppercase"
+          >
             Connected Intelligence
           </motion.h2>
           <motion.p
             initial={{
-              opacity: 0
+              opacity: 0,
             }}
             whileInView={{
-              opacity: 1
+              opacity: 1,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.2
+              delay: 0.2,
             }}
-            className="text-neutral-400 max-w-2xl mx-auto text-lg">
-            
+            className="text-neutral-400 max-w-2xl mx-auto text-lg"
+          >
             A live network of energy systems operating in synchronization across
             continents.
           </motion.p>
@@ -700,298 +705,300 @@ function GlobalOfficesMap() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 30
+            y: 30,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
             duration: 1,
-            delay: 0.3
+            delay: 0.3,
           }}
           className="relative rounded-3xl overflow-hidden border"
           style={{
-            background: 'rgba(255,255,255,0.02)',
-            borderColor: 'rgba(233,30,140,0.12)',
-            backdropFilter: 'blur(10px)'
-          }}>
-          
+            background: "rgba(255,255,255,0.02)",
+            borderColor: "rgba(233,30,140,0.12)",
+            backdropFilter: "blur(10px)",
+          }}
+        >
           {/* Inner glow */}
           <div
             className="absolute inset-0 pointer-events-none rounded-3xl z-0"
             style={{
-              boxShadow: 'inset 0 0 80px rgba(233,30,140,0.04)'
-            }} />
-          
+              boxShadow: "inset 0 0 80px rgba(233,30,140,0.04)",
+            }}
+          />
 
           {/* Mouse-tracking wrapper for tooltip positioning */}
           <div
             ref={mapContainerRef}
             className="relative"
             onMouseMove={handleMouseMove}
-            onMouseLeave={() => setHoveredLocation(null)}>
-            
+            onMouseLeave={() => setHoveredLocation(null)}
+          >
             <ComposableMap
               projection="geoMercator"
               projectionConfig={{
                 scale: 600,
-                center: [62, 27]
+                center: [62, 27],
               }}
               style={{
-                width: '100%',
-                height: 'auto'
-              }}>
-              
+                width: "100%",
+                height: "auto",
+              }}
+            >
               <Geographies geography={geoUrl}>
                 {({ geographies }) =>
-                geographies.map((geo) =>
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  style={{
-                    default: {
-                      fill: '#1C1C1E',
-                      stroke: 'rgba(233,30,140,0.18)',
-                      strokeWidth: 0.5,
-                      outline: 'none'
-                    },
-                    hover: {
-                      fill: '#252528',
-                      stroke: 'rgba(233,30,140,0.35)',
-                      strokeWidth: 0.6,
-                      outline: 'none'
-                    },
-                    pressed: {
-                      fill: '#1C1C1E',
-                      outline: 'none'
-                    }
-                  }} />
-
-                )
+                  geographies.map((geo) => (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      style={{
+                        default: {
+                          fill: "#1C1C1E",
+                          stroke: "rgba(233,30,140,0.18)",
+                          strokeWidth: 0.5,
+                          outline: "none",
+                        },
+                        hover: {
+                          fill: "#252528",
+                          stroke: "rgba(233,30,140,0.35)",
+                          strokeWidth: 0.6,
+                          outline: "none",
+                        },
+                        pressed: {
+                          fill: "#1C1C1E",
+                          outline: "none",
+                        },
+                      }}
+                    />
+                  ))
                 }
               </Geographies>
 
               {/* Connection Lines */}
-              {connections.map((conn, i) =>
-              <Line
-                key={i}
-                from={conn[0]}
-                to={conn[1]}
-                stroke="rgba(233,30,140,0.22)"
-                strokeWidth={0.8}
-                strokeLinecap="round"
-                strokeDasharray="4 6" />
-
-              )}
+              {connections.map((conn, i) => (
+                <Line
+                  key={i}
+                  from={conn[0]}
+                  to={conn[1]}
+                  stroke="rgba(233,30,140,0.22)"
+                  strokeWidth={0.8}
+                  strokeLinecap="round"
+                  strokeDasharray="4 6"
+                />
+              ))}
 
               {/* Location Markers */}
-              {locations.map((loc, i) =>
-              <Marker
-                key={i}
-                coordinates={loc.coordinates}
-                onMouseEnter={() => setHoveredLocation(loc)}
-                onMouseLeave={() => setHoveredLocation(null)}>
-                
+              {locations.map((loc, i) => (
+                <Marker
+                  key={i}
+                  coordinates={loc.coordinates}
+                  onMouseEnter={() => setHoveredLocation(loc)}
+                  onMouseLeave={() => setHoveredLocation(null)}
+                >
                   {/* Large invisible hit area */}
                   <circle
-                  r={14}
-                  fill="transparent"
-                  style={{
-                    cursor: 'pointer'
-                  }} />
-                
+                    r={14}
+                    fill="transparent"
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  />
 
                   {/* Outer pulse ring */}
                   <motion.circle
-                  r={8}
-                  fill="rgba(233,30,140,0.08)"
-                  stroke={
-                  hoveredLocation?.name === loc.name ?
-                  'rgba(233,30,140,0.7)' :
-                  'rgba(233,30,140,0.3)'
-                  }
-                  strokeWidth={hoveredLocation?.name === loc.name ? 1.5 : 0.8}
-                  initial={{
-                    scale: 0,
-                    opacity: 0
-                  }}
-                  animate={
-                  isInView ?
-                  {
-                    scale: [1, 1.8, 1],
-                    opacity: [0.6, 0, 0.6]
-                  } :
-                  {}
-                  }
-                  transition={{
-                    duration: 2.5,
-                    delay: i * 0.15 + 0.5,
-                    repeat: Infinity,
-                    ease: 'easeOut'
-                  }}
-                  style={{
-                    pointerEvents: 'none'
-                  }} />
-                
+                    r={8}
+                    fill="rgba(233,30,140,0.08)"
+                    stroke={
+                      hoveredLocation?.name === loc.name
+                        ? "rgba(233,30,140,0.7)"
+                        : "rgba(233,30,140,0.3)"
+                    }
+                    strokeWidth={hoveredLocation?.name === loc.name ? 1.5 : 0.8}
+                    initial={{
+                      scale: 0,
+                      opacity: 0,
+                    }}
+                    animate={
+                      isInView
+                        ? {
+                            scale: [1, 1.8, 1],
+                            opacity: [0.6, 0, 0.6],
+                          }
+                        : {}
+                    }
+                    transition={{
+                      duration: 2.5,
+                      delay: i * 0.15 + 0.5,
+                      repeat: Infinity,
+                      ease: "easeOut",
+                    }}
+                    style={{
+                      pointerEvents: "none",
+                    }}
+                  />
 
                   {/* Inner dot */}
                   <motion.circle
-                  r={hoveredLocation?.name === loc.name ? 5 : 3.5}
-                  fill={
-                  hoveredLocation?.name === loc.name ? '#D4006F' : '#B6005E'
-                  }
-                  initial={{
-                    scale: 0,
-                    opacity: 0
-                  }}
-                  animate={
-                  isInView ?
-                  {
-                    scale: 1,
-                    opacity: 1
-                  } :
-                  {}
-                  }
-                  transition={{
-                    duration: 0.4,
-                    delay: i * 0.15 + 0.3
-                  }}
-                  style={{
-                    filter:
-                    hoveredLocation?.name === loc.name ?
-                    'drop-shadow(0 0 10px rgba(233,30,140,1))' :
-                    'drop-shadow(0 0 6px rgba(233,30,140,0.8))',
-                    pointerEvents: 'none',
-                    transition: 'r 0.2s ease, filter 0.2s ease'
-                  }} />
-                
+                    r={hoveredLocation?.name === loc.name ? 5 : 3.5}
+                    fill={
+                      hoveredLocation?.name === loc.name ? "#D4006F" : "#B6005E"
+                    }
+                    initial={{
+                      scale: 0,
+                      opacity: 0,
+                    }}
+                    animate={
+                      isInView
+                        ? {
+                            scale: 1,
+                            opacity: 1,
+                          }
+                        : {}
+                    }
+                    transition={{
+                      duration: 0.4,
+                      delay: i * 0.15 + 0.3,
+                    }}
+                    style={{
+                      filter:
+                        hoveredLocation?.name === loc.name
+                          ? "drop-shadow(0 0 10px rgba(233,30,140,1))"
+                          : "drop-shadow(0 0 6px rgba(233,30,140,0.8))",
+                      pointerEvents: "none",
+                      transition: "r 0.2s ease, filter 0.2s ease",
+                    }}
+                  />
 
                   {/* Label */}
                   <motion.text
-                  textAnchor="middle"
-                  y={-10}
-                  style={{
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '5px',
-                    fill:
-                    hoveredLocation?.name === loc.name ?
-                    'rgba(255,255,255,0.95)' :
-                    'rgba(255,255,255,0.55)',
-                    fontWeight: 700,
-                    letterSpacing: '0.08em',
-                    pointerEvents: 'none',
-                    transition: 'fill 0.2s ease'
-                  }}
-                  initial={{
-                    opacity: 0
-                  }}
-                  animate={
-                  isInView ?
-                  {
-                    opacity: 1
-                  } :
-                  {}
-                  }
-                  transition={{
-                    duration: 0.4,
-                    delay: i * 0.15 + 0.6
-                  }}>
-                  
+                    textAnchor="middle"
+                    y={-10}
+                    style={{
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "5px",
+                      fill:
+                        hoveredLocation?.name === loc.name
+                          ? "rgba(255,255,255,0.95)"
+                          : "rgba(255,255,255,0.55)",
+                      fontWeight: 700,
+                      letterSpacing: "0.08em",
+                      pointerEvents: "none",
+                      transition: "fill 0.2s ease",
+                    }}
+                    initial={{
+                      opacity: 0,
+                    }}
+                    animate={
+                      isInView
+                        ? {
+                            opacity: 1,
+                          }
+                        : {}
+                    }
+                    transition={{
+                      duration: 0.4,
+                      delay: i * 0.15 + 0.6,
+                    }}
+                  >
                     {loc.name.toUpperCase()}
                   </motion.text>
                 </Marker>
-              )}
+              ))}
             </ComposableMap>
 
             {/* Hover Tooltip */}
             <AnimatePresence>
-              {hoveredLocation &&
-              <motion.div
-                key={hoveredLocation.name}
-                initial={{
-                  opacity: 0,
-                  scale: 0.9,
-                  y: 6
-                }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  y: 0
-                }}
-                exit={{
-                  opacity: 0,
-                  scale: 0.9,
-                  y: 6
-                }}
-                transition={{
-                  duration: 0.18,
-                  ease: 'easeOut'
-                }}
-                className="absolute z-50 pointer-events-none"
-                style={{
-                  left: tooltipPos.x + 16,
-                  top: tooltipPos.y - 80
-                }}>
-                
-                  <div
-                  className="rounded-2xl px-4 py-4 min-w-[200px]"
+              {hoveredLocation && (
+                <motion.div
+                  key={hoveredLocation.name}
+                  initial={{
+                    opacity: 0,
+                    scale: 0.9,
+                    y: 6,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.9,
+                    y: 6,
+                  }}
+                  transition={{
+                    duration: 0.18,
+                    ease: "easeOut",
+                  }}
+                  className="absolute z-50 pointer-events-none"
                   style={{
-                    background: 'rgba(15, 15, 15, 0.95)',
-                    border: '1px solid rgba(233,30,140,0.3)',
-                    backdropFilter: 'blur(20px)',
-                    boxShadow:
-                    '0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(233,30,140,0.08), inset 0 1px 0 rgba(255,255,255,0.05)'
-                  }}>
-                  
+                    left: tooltipPos.x + 16,
+                    top: tooltipPos.y - 80,
+                  }}
+                >
+                  <div
+                    className="rounded-2xl px-4 py-4 min-w-[200px]"
+                    style={{
+                      background: "rgba(15, 15, 15, 0.95)",
+                      border: "1px solid rgba(233,30,140,0.3)",
+                      backdropFilter: "blur(20px)",
+                      boxShadow:
+                        "0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(233,30,140,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
+                    }}
+                  >
                     {/* Header */}
                     <div className="flex items-center gap-2 mb-3">
                       <div
-                      className="w-2 h-2 rounded-full flex-shrink-0"
-                      style={{
-                        background: '#B6005E',
-                        boxShadow: '0 0 8px rgba(182,0,94,0.8)'
-                      }} />
-                    
+                        className="w-2 h-2 rounded-full flex-shrink-0"
+                        style={{
+                          background: "#B6005E",
+                          boxShadow: "0 0 8px rgba(182,0,94,0.8)",
+                        }}
+                      />
+
                       <span
-                      className="text-xs font-bold tracking-[0.2em] uppercase"
-                      style={{
-                        color: '#B6005E'
-                      }}>
-                      
+                        className="text-xs font-bold tracking-[0.2em] uppercase"
+                        style={{
+                          color: "#B6005E",
+                        }}
+                      >
                         {hoveredLocation.region}
                       </span>
                     </div>
 
                     <div
-                    className="text-base font-black tracking-tight mb-3"
-                    style={{
-                      color: '#FFFFFF'
-                    }}>
-                    
+                      className="text-base font-black tracking-tight mb-3"
+                      style={{
+                        color: "#FFFFFF",
+                      }}
+                    >
                       {hoveredLocation.name}
                     </div>
 
                     {/* Divider */}
                     <div
-                    className="w-full h-px mb-3"
-                    style={{
-                      background: 'rgba(233,30,140,0.15)'
-                    }} />
-                  
+                      className="w-full h-px mb-3"
+                      style={{
+                        background: "rgba(233,30,140,0.15)",
+                      }}
+                    />
 
                     {/* Address */}
                     <div className="flex items-start gap-2 mb-2">
                       <MapPinIcon
-                      size={12}
-                      className="flex-shrink-0 mt-0.5"
-                      style={{
-                        color: '#B6005E'
-                      }} />
-                    
+                        size={12}
+                        className="flex-shrink-0 mt-0.5"
+                        style={{
+                          color: "#B6005E",
+                        }}
+                      />
+
                       <div>
                         <div className="text-xs text-white/80 leading-relaxed">
                           {hoveredLocation.address}
@@ -1005,25 +1012,26 @@ function GlobalOfficesMap() {
                     {/* Phone */}
                     <div className="flex items-center gap-2">
                       <PhoneIcon
-                      size={12}
-                      className="flex-shrink-0"
-                      style={{
-                        color: '#B6005E'
-                      }} />
-                    
+                        size={12}
+                        className="flex-shrink-0"
+                        style={{
+                          color: "#B6005E",
+                        }}
+                      />
+
                       <span className="text-xs text-white/50 font-mono">
                         {hoveredLocation.phone}
                       </span>
                     </div>
                   </div>
                 </motion.div>
-              }
+              )}
             </AnimatePresence>
           </div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 export function Contact() {
   useEffect(() => {
@@ -1040,6 +1048,6 @@ export function Contact() {
 
       {/* Footer */}
       <Footer />
-    </main>);
-
+    </main>
+  );
 }

@@ -1,8 +1,12 @@
-import React, { useEffect, useState, Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Footer } from '../components/Footer';
-import { Navigation } from '../components/Navigation';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useState } from "react";
+import { Footer } from "../components/Footer";
+import { Navigation } from "../components/Navigation";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 import {
   ArrowRightIcon,
   GlobeIcon,
@@ -16,167 +20,170 @@ import {
   CheckCircle2Icon,
   SearchIcon,
   UsersIcon,
-  SettingsIcon,
-  FileTextIcon } from
-'lucide-react';
+  FileTextIcon,
+} from "lucide-react";
 // --- Data ---
 const benefits = [
-{
-  title: 'Global Exposure',
-  description:
-  'Work on critical energy infrastructure projects across 23+ countries with diverse international teams.',
-  icon: GlobeIcon
-},
-{
-  title: 'Technical Growth',
-  description:
-  'Access to cutting-edge technologies, specialized training, and continuous learning programs.',
-  icon: TrendingUpIcon
-},
-{
-  title: 'Competitive Compensation',
-  description:
-  'Industry-leading salary packages with performance-based bonuses and comprehensive benefits.',
-  icon: DollarSignIcon
-},
-{
-  title: 'Health & Wellness',
-  description:
-  'Comprehensive medical insurance, wellness programs, and support for physical and mental health.',
-  icon: HeartIcon
-},
-{
-  title: 'Work-Life Balance',
-  description:
-  'Flexible working arrangements, generous leave policies, and a supportive team environment.',
-  icon: ClockIcon
-},
-{
-  title: 'Career Progression',
-  description:
-  'Clear growth paths, leadership development, and mentorship from seasoned industry veterans.',
-  icon: AwardIcon
-}];
+  {
+    title: "Global Exposure",
+    description:
+      "Work on critical energy infrastructure projects across 23+ countries with diverse international teams.",
+    icon: GlobeIcon,
+  },
+  {
+    title: "Technical Growth",
+    description:
+      "Access to cutting-edge technologies, specialized training, and continuous learning programs.",
+    icon: TrendingUpIcon,
+  },
+  {
+    title: "Competitive Compensation",
+    description:
+      "Industry-leading salary packages with performance-based bonuses and comprehensive benefits.",
+    icon: DollarSignIcon,
+  },
+  {
+    title: "Health & Wellness",
+    description:
+      "Comprehensive medical insurance, wellness programs, and support for physical and mental health.",
+    icon: HeartIcon,
+  },
+  {
+    title: "Work-Life Balance",
+    description:
+      "Flexible working arrangements, generous leave policies, and a supportive team environment.",
+    icon: ClockIcon,
+  },
+  {
+    title: "Career Progression",
+    description:
+      "Clear growth paths, leadership development, and mentorship from seasoned industry veterans.",
+    icon: AwardIcon,
+  },
+];
 
 const jobs = [
-{
-  id: 1,
-  title: 'Senior Power Plant Engineer',
-  dept: 'Engineering',
-  location: 'Mumbai, India',
-  type: 'Full-time',
-  desc: 'Lead engineering design and technical reviews for supercritical thermal power projects.'
-},
-{
-  id: 2,
-  title: 'Renewable Energy Analyst',
-  dept: 'Engineering',
-  location: 'Dubai, UAE',
-  type: 'Full-time',
-  desc: 'Conduct energy yield analysis and feasibility studies for solar and wind projects.'
-},
-{
-  id: 3,
-  title: 'Project Manager — EPC',
-  dept: 'Project Management',
-  location: 'Riyadh, KSA',
-  type: 'Full-time',
-  desc: 'Manage end-to-end execution of large-scale EPC projects in the Middle East.'
-},
-{
-  id: 4,
-  title: 'Commissioning Engineer',
-  dept: 'Engineering',
-  location: 'Houston, USA',
-  type: 'Contract',
-  desc: 'Oversee testing and commissioning of power generation equipment and systems.'
-},
-{
-  id: 5,
-  title: 'O&M Site Manager',
-  dept: 'Operations',
-  location: 'Rajpura, India',
-  type: 'Full-time',
-  desc: 'Lead day-to-day operations and maintenance of a 2x700 MW supercritical plant.'
-},
-{
-  id: 6,
-  title: 'Electrical Design Engineer',
-  dept: 'Engineering',
-  location: 'Mumbai, India',
-  type: 'Full-time',
-  desc: 'Design transmission lines (33kV-765kV) and substation systems (AIS/GIS).'
-},
-{
-  id: 7,
-  title: 'Business Development Manager',
-  dept: 'Corporate',
-  location: 'Singapore',
-  type: 'Full-time',
-  desc: 'Drive business growth across the Asia-Pacific region for energy services.'
-},
-{
-  id: 8,
-  title: 'Quality Assurance Lead',
-  dept: 'Operations',
-  location: 'Frankfurt, Germany',
-  type: 'Full-time',
-  desc: 'Implement and oversee quality management systems across European projects.'
-}];
+  {
+    id: 1,
+    title: "Senior Power Plant Engineer",
+    dept: "Engineering",
+    location: "Mumbai, India",
+    type: "Full-time",
+    desc: "Lead engineering design and technical reviews for supercritical thermal power projects.",
+  },
+  {
+    id: 2,
+    title: "Renewable Energy Analyst",
+    dept: "Engineering",
+    location: "Dubai, UAE",
+    type: "Full-time",
+    desc: "Conduct energy yield analysis and feasibility studies for solar and wind projects.",
+  },
+  {
+    id: 3,
+    title: "Project Manager — EPC",
+    dept: "Project Management",
+    location: "Riyadh, KSA",
+    type: "Full-time",
+    desc: "Manage end-to-end execution of large-scale EPC projects in the Middle East.",
+  },
+  {
+    id: 4,
+    title: "Commissioning Engineer",
+    dept: "Engineering",
+    location: "Houston, USA",
+    type: "Contract",
+    desc: "Oversee testing and commissioning of power generation equipment and systems.",
+  },
+  {
+    id: 5,
+    title: "O&M Site Manager",
+    dept: "Operations",
+    location: "Rajpura, India",
+    type: "Full-time",
+    desc: "Lead day-to-day operations and maintenance of a 2x700 MW supercritical plant.",
+  },
+  {
+    id: 6,
+    title: "Electrical Design Engineer",
+    dept: "Engineering",
+    location: "Mumbai, India",
+    type: "Full-time",
+    desc: "Design transmission lines (33kV-765kV) and substation systems (AIS/GIS).",
+  },
+  {
+    id: 7,
+    title: "Business Development Manager",
+    dept: "Corporate",
+    location: "Singapore",
+    type: "Full-time",
+    desc: "Drive business growth across the Asia-Pacific region for energy services.",
+  },
+  {
+    id: 8,
+    title: "Quality Assurance Lead",
+    dept: "Operations",
+    location: "Frankfurt, Germany",
+    type: "Full-time",
+    desc: "Implement and oversee quality management systems across European projects.",
+  },
+];
 
 const gallery = [
-{
-  image:
-  'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800',
-  caption: 'Team Collaboration'
-},
-{
-  image:
-  'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800',
-  caption: 'On-Site Engineering'
-},
-{
-  image:
-  'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800',
-  caption: 'Strategic Planning'
-},
-{
-  image:
-  'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800',
-  caption: 'Field Operations'
-},
-{
-  image:
-  'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800',
-  caption: 'Team Celebrations'
-},
-{
-  image:
-  'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800',
-  caption: 'Project Reviews'
-}];
+  {
+    image:
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800",
+    caption: "Team Collaboration",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800",
+    caption: "On-Site Engineering",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800",
+    caption: "Strategic Planning",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800",
+    caption: "Field Operations",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800",
+    caption: "Team Celebrations",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800",
+    caption: "Project Reviews",
+  },
+];
 
 const processSteps = [
-{
-  title: 'Apply Online',
-  description: 'Submit your resume and cover letter through our portal.',
-  icon: FileTextIcon
-},
-{
-  title: 'Initial Screening',
-  description: 'Our HR team reviews your application within 5 business days.',
-  icon: SearchIcon
-},
-{
-  title: 'Technical Interview',
-  description: 'Meet with our engineering leads for a technical discussion.',
-  icon: UsersIcon
-},
-{
-  title: 'Final Offer',
-  description: 'Receive your offer and begin your journey with Encotec.',
-  icon: CheckCircle2Icon
-}];
+  {
+    title: "Apply Online",
+    description: "Submit your resume and cover letter through our portal.",
+    icon: FileTextIcon,
+  },
+  {
+    title: "Initial Screening",
+    description: "Our HR team reviews your application within 5 business days.",
+    icon: SearchIcon,
+  },
+  {
+    title: "Technical Interview",
+    description: "Meet with our engineering leads for a technical discussion.",
+    icon: UsersIcon,
+  },
+  {
+    title: "Final Offer",
+    description: "Receive your offer and begin your journey with Encotec.",
+    icon: CheckCircle2Icon,
+  },
+];
 
 // --- Components ---
 function CareersHero() {
@@ -188,15 +195,16 @@ function CareersHero() {
       {/* Parallax Background */}
       <motion.div
         style={{
-          y
+          y,
         }}
-        className="absolute inset-0">
-        
+        className="absolute inset-0"
+      >
         <img
           src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2400"
           alt="Team collaboration"
-          className="w-full h-full object-cover opacity-40" />
-        
+          className="w-full h-full object-cover opacity-40"
+        />
+
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/90 via-neutral-900/70 to-neutral-900" />
       </motion.div>
 
@@ -205,46 +213,46 @@ function CareersHero() {
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage:
-          'linear-gradient(rgba(233,30,140,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.3) 1px, transparent 1px)',
-          backgroundSize: '80px 80px'
-        }} />
-      
+            "linear-gradient(rgba(233,30,140,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.3) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 py-32">
         <motion.div
           style={{
-            opacity
+            opacity,
           }}
           initial={{
             opacity: 0,
-            y: 40
+            y: 40,
           }}
           animate={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           transition={{
             duration: 1,
-            ease: 'easeOut'
+            ease: "easeOut",
           }}
-          className="max-w-4xl">
-          
+          className="max-w-4xl"
+        >
           {/* Label */}
           <motion.div
             initial={{
               opacity: 0,
-              x: -20
+              x: -20,
             }}
             animate={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             transition={{
               duration: 0.6,
-              delay: 0.2
+              delay: 0.2,
             }}
-            className="flex items-center gap-3 mb-8">
-            
+            className="flex items-center gap-3 mb-8"
+          >
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
               Careers at Encotec
@@ -255,18 +263,18 @@ function CareersHero() {
           <motion.h1
             initial={{
               opacity: 0,
-              y: 30
+              y: 30,
             }}
             animate={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.4
+              delay: 0.4,
             }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            
+            className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8"
+          >
             SHAPE THE FUTURE OF GLOBAL ENERGY
           </motion.h1>
 
@@ -274,18 +282,18 @@ function CareersHero() {
           <motion.p
             initial={{
               opacity: 0,
-              y: 20
+              y: 20,
             }}
             animate={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.6
+              delay: 0.6,
             }}
-            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            
+            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl"
+          >
             Join a team of world-class engineers and energy professionals
             delivering critical infrastructure across 23+ countries.
           </motion.p>
@@ -294,18 +302,18 @@ function CareersHero() {
           <motion.div
             initial={{
               opacity: 0,
-              y: 20
+              y: 20,
             }}
             animate={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             transition={{
               duration: 0.6,
-              delay: 0.8
+              delay: 0.8,
             }}
-            className="flex flex-wrap gap-4">
-            
+            className="flex flex-wrap gap-4"
+          >
             <div className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase">
               200+ Team Members
             </div>
@@ -315,8 +323,8 @@ function CareersHero() {
           </motion.div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function WhyEncotecSection() {
   return (
@@ -327,19 +335,19 @@ function WhyEncotecSection() {
           <motion.div
             initial={{
               opacity: 0,
-              x: -40
+              x: -40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
-            }}>
-            
+              duration: 0.8,
+            }}
+          >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
@@ -382,39 +390,40 @@ function WhyEncotecSection() {
           <motion.div
             initial={{
               opacity: 0,
-              x: 40
+              x: 40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.2
+              delay: 0.2,
             }}
-            className="relative">
-            
+            className="relative"
+          >
             <div
               className="relative"
               style={{
-                transform: 'rotate(2deg)'
-              }}>
-              
+                transform: "rotate(2deg)",
+              }}
+            >
               <img
                 src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200"
                 alt="Engineers working"
-                className="w-full h-[600px] object-cover shadow-2xl" />
-              
+                className="w-full h-[600px] object-cover shadow-2xl"
+              />
+
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/20 to-transparent" />
             </div>
           </motion.div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function BenefitsSection() {
   return (
@@ -423,17 +432,17 @@ function BenefitsSection() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="mb-16 text-center">
-          
+          className="mb-16 text-center"
+        >
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
@@ -447,30 +456,30 @@ function BenefitsSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {benefits.map((benefit, i) =>
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              y: 40
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true,
-              margin: '-50px'
-            }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.1
-            }}
-            whileHover={{
-              y: -8
-            }}
-            className="p-8 bg-white border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 group">
-            
+          {benefits.map((benefit, i) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                y: 40,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+                margin: "-50px",
+              }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.1,
+              }}
+              whileHover={{
+                y: -8,
+              }}
+              className="p-8 bg-white border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 group"
+            >
               <div className="w-14 h-14 bg-brand-panel rounded-xl flex items-center justify-center text-brand-pink mb-6 group-hover:scale-110 transition-transform duration-300">
                 <benefit.icon size={28} strokeWidth={1.5} />
               </div>
@@ -481,37 +490,38 @@ function BenefitsSection() {
                 {benefit.description}
               </p>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function OpenPositionsSection() {
-  const [activeFilter, setActiveFilter] = useState('All');
+  const [activeFilter, setActiveFilter] = useState("All");
   const filters = [
-  'All',
-  'Engineering',
-  'Project Management',
-  'Operations',
-  'Corporate'];
+    "All",
+    "Engineering",
+    "Project Management",
+    "Operations",
+    "Corporate",
+  ];
 
   const filteredJobs = jobs.filter((job) => {
-    if (activeFilter === 'All') return true;
+    if (activeFilter === "All") return true;
     return job.dept === activeFilter;
   });
   const getDeptColor = (dept: string) => {
     switch (dept) {
-      case 'Engineering':
-        return 'bg-blue-500 text-white';
-      case 'Project Management':
-        return 'bg-purple-500 text-white';
-      case 'Operations':
-        return 'bg-green-500 text-white';
-      case 'Corporate':
-        return 'bg-orange-500 text-white';
+      case "Engineering":
+        return "bg-blue-500 text-white";
+      case "Project Management":
+        return "bg-purple-500 text-white";
+      case "Operations":
+        return "bg-green-500 text-white";
+      case "Corporate":
+        return "bg-orange-500 text-white";
       default:
-        return 'bg-neutral-800 text-white';
+        return "bg-neutral-800 text-white";
     }
   };
   return (
@@ -520,82 +530,82 @@ function OpenPositionsSection() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="mb-16">
-          
+          className="mb-16"
+        >
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
             Current Openings
           </h2>
 
           {/* Filter Tabs */}
           <div className="flex flex-wrap items-center gap-8 border-b border-neutral-200">
-            {filters.map((filter) =>
-            <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`relative pb-4 text-sm font-bold tracking-wider uppercase transition-colors duration-300 ${activeFilter === filter ? 'text-brand-pink' : 'text-neutral-500 hover:text-neutral-900'}`}>
-              
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`relative pb-4 text-sm font-bold tracking-wider uppercase transition-colors duration-300 ${activeFilter === filter ? "text-brand-pink" : "text-neutral-500 hover:text-neutral-900"}`}
+              >
                 {filter}
-                {activeFilter === filter &&
-              <motion.div
-                layoutId="jobTab"
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-pink"
-                transition={{
-                  type: 'spring',
-                  stiffness: 300,
-                  damping: 30
-                }} />
-
-              }
+                {activeFilter === filter && (
+                  <motion.div
+                    layoutId="jobTab"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-pink"
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 30,
+                    }}
+                  />
+                )}
               </button>
-            )}
+            ))}
           </div>
         </motion.div>
 
         {/* Job List */}
         <motion.div layout className="space-y-4">
           <AnimatePresence mode="popLayout">
-            {filteredJobs.map((job, index) =>
-            <motion.div
-              key={job.id}
-              layout
-              initial={{
-                opacity: 0,
-                y: 20
-              }}
-              animate={{
-                opacity: 1,
-                y: 0
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.95,
-                transition: {
-                  duration: 0.2
-                }
-              }}
-              transition={{
-                duration: 0.4,
-                delay: index * 0.05
-              }}
-              whileHover={{
-                y: -4
-              }}
-              className="group p-8 bg-white border border-neutral-200 hover:border-brand-pink/50 hover:shadow-lg transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-6">
-              
+            {filteredJobs.map((job, index) => (
+              <motion.div
+                key={job.id}
+                layout
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.95,
+                  transition: {
+                    duration: 0.2,
+                  },
+                }}
+                transition={{
+                  duration: 0.4,
+                  delay: index * 0.05,
+                }}
+                whileHover={{
+                  y: -4,
+                }}
+                className="group p-8 bg-white border border-neutral-200 hover:border-brand-pink/50 hover:shadow-lg transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-6"
+              >
                 <div className="flex-grow">
                   <div className="flex flex-wrap items-center gap-3 mb-3">
                     <span
-                    className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${getDeptColor(job.dept)}`}>
-                    
+                      className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${getDeptColor(job.dept)}`}
+                    >
                       {job.dept}
                     </span>
                     <span className="flex items-center gap-1.5 text-xs font-medium text-neutral-500">
@@ -620,18 +630,18 @@ function OpenPositionsSection() {
                   </button>
                 </div>
               </motion.div>
-            )}
+            ))}
           </AnimatePresence>
         </motion.div>
 
-        {filteredJobs.length === 0 &&
-        <div className="py-20 text-center text-neutral-500">
+        {filteredJobs.length === 0 && (
+          <div className="py-20 text-center text-neutral-500">
             No open positions found for this department.
           </div>
-        }
+        )}
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function CultureGallery() {
   return (
@@ -640,17 +650,17 @@ function CultureGallery() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="mb-16 text-center">
-          
+          className="mb-16 text-center"
+        >
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
@@ -664,42 +674,43 @@ function CultureGallery() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {gallery.map((item, i) =>
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              scale: 0.95
-            }}
-            whileInView={{
-              opacity: 1,
-              scale: 1
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.1
-            }}
-            className="group relative h-72 overflow-hidden bg-neutral-800">
-            
+          {gallery.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                scale: 0.95,
+              }}
+              whileInView={{
+                opacity: 1,
+                scale: 1,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.1,
+              }}
+              className="group relative h-72 overflow-hidden bg-neutral-800"
+            >
               <img
-              src={item.image}
-              alt={item.caption}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-            
+                src={item.image}
+                alt={item.caption}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                 <span className="text-lg font-bold tracking-wider uppercase text-brand-pink transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                   {item.caption}
                 </span>
               </div>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function ApplicationProcess() {
   return (
@@ -708,17 +719,17 @@ function ApplicationProcess() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="mb-20 text-center">
-          
+          className="mb-20 text-center"
+        >
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
             How to Join Us
           </h2>
@@ -728,26 +739,26 @@ function ApplicationProcess() {
           {/* Connecting Line (Desktop) */}
           <div className="hidden md:block absolute top-12 left-1/8 right-1/8 h-[2px] bg-neutral-200 z-0" />
 
-          {processSteps.map((step, i) =>
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.1
-            }}
-            className="relative z-10 text-center">
-            
+          {processSteps.map((step, i) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.1,
+              }}
+              className="relative z-10 text-center"
+            >
               <div className="w-24 h-24 mx-auto bg-white border-4 border-neutral-100 rounded-full flex items-center justify-center text-brand-pink mb-6 shadow-xl">
                 <step.icon size={32} strokeWidth={1.5} />
               </div>
@@ -761,18 +772,18 @@ function ApplicationProcess() {
                 {step.description}
               </p>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function CTASection() {
   const scrollToJobs = () => {
-    const element = document.getElementById('open-positions');
+    const element = document.getElementById("open-positions");
     if (element) {
       element.scrollIntoView({
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
@@ -786,19 +797,19 @@ function CTASection() {
         <motion.div
           initial={{
             opacity: 0,
-            scale: 0.95
+            scale: 0.95,
           }}
           whileInView={{
             opacity: 1,
-            scale: 1
+            scale: 1,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            duration: 0.8
-          }}>
-          
+            duration: 0.8,
+          }}
+        >
           <h2 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
             Don't See the Right Role?
           </h2>
@@ -811,22 +822,22 @@ function CTASection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="mailto:careers@encotec.com"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-              
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+            >
               Send Your Resume
               <ArrowRightIcon size={16} />
             </a>
             <button
               onClick={scrollToJobs}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300">
-              
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300"
+            >
               View Open Positions
             </button>
           </div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 export function Careers() {
   useEffect(() => {
@@ -847,6 +858,6 @@ export function Careers() {
 
       {/* Footer */}
       <Footer />
-    </main>);
-
+    </main>
+  );
 }

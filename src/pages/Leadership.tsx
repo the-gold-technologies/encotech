@@ -1,27 +1,27 @@
-import React, { useEffect, useState, useRef, Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Footer } from '../components/Footer';
-import { Navigation } from '../components/Navigation';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import React, { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import { Footer } from "../components/Footer";
+import { Navigation } from "../components/Navigation";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import {
   ArrowRightIcon,
   AwardIcon,
   UsersIcon,
   GlobeIcon,
-  TrendingUpIcon } from
-'lucide-react';
+  TrendingUpIcon,
+} from "lucide-react";
 // --- Animated Counter Component ---
 function AnimatedCounter({
   target,
-  suffix = ''
-
-
-
-}: {target: number;suffix?: string;}) {
+  suffix = "",
+}: {
+  target: number;
+  suffix?: string;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, {
     once: true,
-    margin: '-100px'
+    margin: "-100px",
   });
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -46,8 +46,8 @@ function AnimatedCounter({
     <span ref={ref}>
       {count}
       {suffix}
-    </span>);
-
+    </span>
+  );
 }
 // --- Sections ---
 function LeadershipHero() {
@@ -59,15 +59,16 @@ function LeadershipHero() {
       {/* Parallax Background */}
       <motion.div
         style={{
-          y
+          y,
         }}
-        className="absolute inset-0">
-        
+        className="absolute inset-0"
+      >
         <img
           src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=2400"
           alt="Leadership and Team"
-          className="w-full h-full object-cover opacity-40" />
-        
+          className="w-full h-full object-cover opacity-40"
+        />
+
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/90 via-neutral-900/70 to-neutral-900" />
       </motion.div>
 
@@ -76,45 +77,45 @@ function LeadershipHero() {
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage:
-          'linear-gradient(rgba(233,30,140,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.3) 1px, transparent 1px)',
-          backgroundSize: '80px 80px'
-        }} />
-      
+            "linear-gradient(rgba(233,30,140,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.3) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 py-20">
         <motion.div
           style={{
-            opacity
+            opacity,
           }}
           initial={{
             opacity: 0,
-            y: 40
+            y: 40,
           }}
           animate={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           transition={{
             duration: 1,
-            ease: 'easeOut'
-          }}>
-          
+            ease: "easeOut",
+          }}
+        >
           {/* Label */}
           <motion.div
             initial={{
               opacity: 0,
-              x: -20
+              x: -20,
             }}
             animate={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             transition={{
               duration: 0.6,
-              delay: 0.3
+              delay: 0.3,
             }}
-            className="flex items-center gap-3 mb-8">
-            
+            className="flex items-center gap-3 mb-8"
+          >
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
               Our People
@@ -125,18 +126,18 @@ function LeadershipHero() {
           <motion.h1
             initial={{
               opacity: 0,
-              y: 30
+              y: 30,
             }}
             animate={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.4
+              delay: 0.4,
             }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8 max-w-5xl">
-            
+            className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8 max-w-5xl"
+          >
             LEADERSHIP & TEAM
           </motion.h1>
 
@@ -144,18 +145,18 @@ function LeadershipHero() {
           <motion.p
             initial={{
               opacity: 0,
-              y: 20
+              y: 20,
             }}
             animate={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.6
+              delay: 0.6,
             }}
-            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light max-w-3xl mb-12">
-            
+            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light max-w-3xl mb-12"
+          >
             Meet the experienced leaders and engineers driving operational
             excellence and strategic growth across global energy markets.
           </motion.p>
@@ -165,59 +166,59 @@ function LeadershipHero() {
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               animate={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               transition={{
                 duration: 0.6,
-                delay: 0.8
+                delay: 0.8,
               }}
-              className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase">
-              
+              className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase"
+            >
               200+ Professionals
             </motion.div>
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               animate={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               transition={{
                 duration: 0.6,
-                delay: 0.9
+                delay: 0.9,
               }}
-              className="px-6 py-3 bg-white/90 backdrop-blur-sm text-neutral-900 font-bold text-sm tracking-wider uppercase">
-              
+              className="px-6 py-3 bg-white/90 backdrop-blur-sm text-neutral-900 font-bold text-sm tracking-wider uppercase"
+            >
               15+ Years Average Experience
             </motion.div>
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               animate={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               transition={{
                 duration: 0.6,
-                delay: 1.0
+                delay: 1.0,
               }}
-              className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-sm tracking-wider uppercase">
-              
+              className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-sm tracking-wider uppercase"
+            >
               23+ Countries
             </motion.div>
           </div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function LeadershipPhilosophy() {
   return (
@@ -228,19 +229,19 @@ function LeadershipPhilosophy() {
           <motion.div
             initial={{
               opacity: 0,
-              x: -40
+              x: -40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
-            }}>
-            
+              duration: 0.8,
+            }}
+          >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
@@ -272,32 +273,33 @@ function LeadershipPhilosophy() {
           <motion.div
             initial={{
               opacity: 0,
-              x: 40
+              x: 40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.2
+              delay: 0.2,
             }}
-            className="relative">
-            
+            className="relative"
+          >
             <div
               className="relative shadow-2xl"
               style={{
-                transform: 'rotate(2deg)'
-              }}>
-              
+                transform: "rotate(2deg)",
+              }}
+            >
               <img
                 src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=1200"
                 alt="Leadership Philosophy"
-                className="w-full h-[500px] object-cover" />
-              
+                className="w-full h-[500px] object-cover"
+              />
+
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/40 to-transparent" />
             </div>
 
@@ -305,24 +307,24 @@ function LeadershipPhilosophy() {
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               whileInView={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               viewport={{
-                once: true
+                once: true,
               }}
               transition={{
                 duration: 0.6,
-                delay: 0.6
+                delay: 0.6,
               }}
               className="absolute -bottom-10 -left-6 md:-left-12 bg-brand-panel p-8 shadow-xl max-w-sm border-l-4 border-brand-pink"
               style={{
-                transform: 'rotate(-2deg)'
-              }}>
-              
+                transform: "rotate(-2deg)",
+              }}
+            >
               <p className="text-lg font-bold text-neutral-900 italic leading-snug">
                 "We don't just manage projects — we take ownership of outcomes,
                 treating every asset as if it were our own."
@@ -331,31 +333,32 @@ function LeadershipPhilosophy() {
           </motion.div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function ExecutiveTeam() {
   const executives = [
-  {
-    name: 'Vikram Sharma',
-    role: 'Managing Director & Founder',
-    image:
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800',
-    bio: "25+ years of leadership in energy infrastructure. Founded Encotec with a vision to bring an owner's mindset to every project. Under his leadership, Encotec has grown from a specialized engineering firm to a full-spectrum energy services provider operating across 23+ countries.",
-    tags: ['Strategic Leadership', 'Business Development', 'Energy Policy']
-  },
-  {
-    name: 'Rajesh Patel',
-    role: 'Director – Operations',
-    image:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800',
-    bio: '20+ years in power plant operations and project execution. Leads operational delivery across multiple projects, ensuring efficient execution, quality standards, and optimal resource utilization across thermal, renewable, and transmission projects.',
-    tags: [
-    'Operations Management',
-    'Plant Commissioning',
-    'Asset Optimization']
-
-  }];
+    {
+      name: "Vikram Sharma",
+      role: "Managing Director & Founder",
+      image:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
+      bio: "25+ years of leadership in energy infrastructure. Founded Encotec with a vision to bring an owner's mindset to every project. Under his leadership, Encotec has grown from a specialized engineering firm to a full-spectrum energy services provider operating across 23+ countries.",
+      tags: ["Strategic Leadership", "Business Development", "Energy Policy"],
+    },
+    {
+      name: "Rajesh Patel",
+      role: "Director – Operations",
+      image:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800",
+      bio: "20+ years in power plant operations and project execution. Leads operational delivery across multiple projects, ensuring efficient execution, quality standards, and optimal resource utilization across thermal, renewable, and transmission projects.",
+      tags: [
+        "Operations Management",
+        "Plant Commissioning",
+        "Asset Optimization",
+      ],
+    },
+  ];
 
   return (
     <section className="py-32 bg-dark-bg text-white">
@@ -363,20 +366,20 @@ function ExecutiveTeam() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            duration: 0.8
+            duration: 0.8,
           }}
-          className="mb-16">
-          
+          className="mb-16"
+        >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
@@ -389,32 +392,32 @@ function ExecutiveTeam() {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          {executives.map((exec, index) =>
-          <motion.div
-            key={exec.name}
-            initial={{
-              opacity: 0,
-              y: 40
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.6,
-              delay: index * 0.2
-            }}
-            className="relative h-[500px] overflow-hidden group bg-neutral-800">
-            
+          {executives.map((exec, index) => (
+            <motion.div
+              key={exec.name}
+              initial={{
+                opacity: 0,
+                y: 40,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.2,
+              }}
+              className="relative h-[500px] overflow-hidden group bg-neutral-800"
+            >
               {/* Background Image */}
               <img
-              src={exec.image}
-              alt={exec.name}
-              className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
-            
+                src={exec.image}
+                alt={exec.name}
+                className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+              />
 
               {/* Default Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/40 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
@@ -425,14 +428,14 @@ function ExecutiveTeam() {
                   {exec.bio}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-auto pb-24">
-                  {exec.tags.map((tag) =>
-                <span
-                  key={tag}
-                  className="px-3 py-1 border border-brand-pink/50 text-brand-pink text-xs font-bold uppercase tracking-wider">
-                  
+                  {exec.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 border border-brand-pink/50 text-brand-pink text-xs font-bold uppercase tracking-wider"
+                    >
                       {tag}
                     </span>
-                )}
+                  ))}
                 </div>
               </div>
 
@@ -446,56 +449,57 @@ function ExecutiveTeam() {
                 </p>
               </div>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function SeniorLeadership() {
   const leaders = [
-  {
-    name: 'Dr. Anita Desai',
-    role: 'VP Engineering',
-    image:
-    'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800',
-    bio: 'PhD in Thermal Engineering. 18+ years leading complex engineering design for power generation and transmission projects.'
-  },
-  {
-    name: 'Sanjay Mehta',
-    role: 'VP Business Development',
-    image:
-    'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800',
-    bio: '15+ years driving strategic growth across India, Middle East, and Southeast Asia.'
-  },
-  {
-    name: 'Priya Krishnan',
-    role: 'Head of Renewable Energy',
-    image:
-    'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=800',
-    bio: '12+ years in solar and wind energy project development and execution.'
-  },
-  {
-    name: 'Arjun Reddy',
-    role: 'Head of Project Management',
-    image:
-    'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800',
-    bio: '16+ years managing large-scale EPC projects across diverse geographies.'
-  },
-  {
-    name: 'Dr. Klaus Werner',
-    role: 'Head of Quality & Safety',
-    image:
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800',
-    bio: '20+ years in quality management systems and international safety standards.'
-  },
-  {
-    name: 'Meera Iyer',
-    role: 'Chief Financial Officer',
-    image:
-    'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&q=80&w=800',
-    bio: '14+ years in financial strategy and corporate governance for engineering firms.'
-  }];
+    {
+      name: "Dr. Anita Desai",
+      role: "VP Engineering",
+      image:
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
+      bio: "PhD in Thermal Engineering. 18+ years leading complex engineering design for power generation and transmission projects.",
+    },
+    {
+      name: "Sanjay Mehta",
+      role: "VP Business Development",
+      image:
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
+      bio: "15+ years driving strategic growth across India, Middle East, and Southeast Asia.",
+    },
+    {
+      name: "Priya Krishnan",
+      role: "Head of Renewable Energy",
+      image:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=800",
+      bio: "12+ years in solar and wind energy project development and execution.",
+    },
+    {
+      name: "Arjun Reddy",
+      role: "Head of Project Management",
+      image:
+        "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
+      bio: "16+ years managing large-scale EPC projects across diverse geographies.",
+    },
+    {
+      name: "Dr. Klaus Werner",
+      role: "Head of Quality & Safety",
+      image:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800",
+      bio: "20+ years in quality management systems and international safety standards.",
+    },
+    {
+      name: "Meera Iyer",
+      role: "Chief Financial Officer",
+      image:
+        "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&q=80&w=800",
+      bio: "14+ years in financial strategy and corporate governance for engineering firms.",
+    },
+  ];
 
   return (
     <section className="py-32 bg-neutral-50">
@@ -503,20 +507,20 @@ function SeniorLeadership() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            duration: 0.8
+            duration: 0.8,
           }}
-          className="mb-16 text-center">
-          
+          className="mb-16 text-center"
+        >
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
@@ -530,35 +534,35 @@ function SeniorLeadership() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {leaders.map((leader, index) =>
-          <motion.div
-            key={leader.name}
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.5,
-              delay: index * 0.1
-            }}
-            whileHover={{
-              y: -8
-            }}
-            className="bg-white border border-neutral-200 hover:border-b-4 hover:border-b-brand-pink transition-all duration-300 overflow-hidden group">
-            
+          {leaders.map((leader, index) => (
+            <motion.div
+              key={leader.name}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.1,
+              }}
+              whileHover={{
+                y: -8,
+              }}
+              className="bg-white border border-neutral-200 hover:border-b-4 hover:border-b-brand-pink transition-all duration-300 overflow-hidden group"
+            >
               <div className="h-64 overflow-hidden">
                 <img
-                src={leader.image}
-                alt={leader.name}
-                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
-              
+                  src={leader.image}
+                  alt={leader.name}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
               <div className="p-8">
                 <h3 className="text-xl font-black text-neutral-900 mb-1 uppercase tracking-tight">
@@ -572,11 +576,11 @@ function SeniorLeadership() {
                 </p>
               </div>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function TeamByNumbers() {
   return (
@@ -619,31 +623,32 @@ function TeamByNumbers() {
           </div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function CultureValues() {
   const values = [
-  {
-    title: 'Technical Mastery',
-    desc: 'Deep domain expertise across every discipline',
-    icon: AwardIcon
-  },
-  {
-    title: 'Collaborative Spirit',
-    desc: 'Cross-functional teams solving complex challenges',
-    icon: UsersIcon
-  },
-  {
-    title: 'Global Perspective',
-    desc: 'Diverse experiences from 23+ countries',
-    icon: GlobeIcon
-  },
-  {
-    title: 'Continuous Growth',
-    desc: 'Investment in learning and professional development',
-    icon: TrendingUpIcon
-  }];
+    {
+      title: "Technical Mastery",
+      desc: "Deep domain expertise across every discipline",
+      icon: AwardIcon,
+    },
+    {
+      title: "Collaborative Spirit",
+      desc: "Cross-functional teams solving complex challenges",
+      icon: UsersIcon,
+    },
+    {
+      title: "Global Perspective",
+      desc: "Diverse experiences from 23+ countries",
+      icon: GlobeIcon,
+    },
+    {
+      title: "Continuous Growth",
+      desc: "Investment in learning and professional development",
+      icon: TrendingUpIcon,
+    },
+  ];
 
   return (
     <section className="py-32 bg-white">
@@ -651,20 +656,20 @@ function CultureValues() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            duration: 0.8
+            duration: 0.8,
           }}
-          className="mb-16">
-          
+          className="mb-16"
+        >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
@@ -677,29 +682,29 @@ function CultureValues() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {values.map((value, index) =>
-          <motion.div
-            key={value.title}
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.5,
-              delay: index * 0.1
-            }}
-            whileHover={{
-              y: -8
-            }}
-            className="p-8 bg-neutral-50 border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 group">
-            
+          {values.map((value, index) => (
+            <motion.div
+              key={value.title}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.1,
+              }}
+              whileHover={{
+                y: -8,
+              }}
+              className="p-8 bg-neutral-50 border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 group"
+            >
               <div className="w-14 h-14 bg-brand-panel rounded-xl flex items-center justify-center text-brand-pink mb-6 group-hover:scale-110 transition-transform duration-300">
                 <value.icon size={28} strokeWidth={1.5} />
               </div>
@@ -710,11 +715,11 @@ function CultureValues() {
                 {value.desc}
               </p>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function JoinCTA() {
   return (
@@ -727,19 +732,19 @@ function JoinCTA() {
         <motion.div
           initial={{
             opacity: 0,
-            scale: 0.95
+            scale: 0.95,
           }}
           whileInView={{
             opacity: 1,
-            scale: 1
+            scale: 1,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            duration: 0.8
-          }}>
-          
+            duration: 0.8,
+          }}
+        >
           <h2 className="text-4xl md:text-6xl font-black mb-6 leading-tight uppercase tracking-tight">
             Join Our Team of Experts
           </h2>
@@ -751,22 +756,22 @@ function JoinCTA() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/careers"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-              
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+            >
               View Open Positions
               <ArrowRightIcon size={16} />
             </Link>
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300">
-              
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300"
+            >
               Contact Us
             </Link>
           </div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 export function Leadership() {
   useEffect(() => {
@@ -787,6 +792,6 @@ export function Leadership() {
 
       {/* Footer */}
       <Footer />
-    </main>);
-
+    </main>
+  );
 }
