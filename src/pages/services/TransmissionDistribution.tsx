@@ -123,7 +123,7 @@ function ConstructionHero() {
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
             Bringing Complex <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
               Infrastructure to Life
@@ -333,7 +333,7 @@ function ProcessFlow() {
 }
 export function TransmissionDistribution() {
   return (
-    <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
+    <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}
       <Navigation variant="dark" />
 

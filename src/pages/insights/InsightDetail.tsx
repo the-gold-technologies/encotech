@@ -568,7 +568,7 @@ export function InsightDetail() {
     }
   };
   return (
-    <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white pb-20">
+    <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white pb-20">
       {/* Navigation */}
       <Navigation />
 

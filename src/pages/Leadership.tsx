@@ -136,7 +136,7 @@ function LeadershipHero() {
               duration: 0.8,
               delay: 0.4,
             }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8 max-w-5xl"
+            className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8 max-w-5xl"
           >
             LEADERSHIP & TEAM
           </motion.h1>
@@ -778,7 +778,7 @@ export function Leadership() {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
+    <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}
       <Navigation />
 

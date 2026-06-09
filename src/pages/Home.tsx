@@ -12,7 +12,7 @@ import { LogoStrip } from '../components/sections/LogoStrip';
 import { CTA } from '../components/sections/CTA';
 export function Home() {
   return (
-    <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
+    <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       <Navigation />
       <Hero />
       <AboutSection />

@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Footer } from "../../components/Footer";
 import { Navigation } from "../../components/Navigation";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -59,7 +59,7 @@ function DueDiligenceHero() {
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
             Making Informed Decisions <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
               For the Long Term
@@ -222,7 +222,7 @@ function ValueProtection() {
 }
 export function AirportServices() {
   return (
-    <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
+    <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}
       <Navigation variant="dark" />
 

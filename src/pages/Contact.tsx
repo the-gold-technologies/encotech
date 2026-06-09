@@ -289,7 +289,7 @@ function ContactHero() {
               duration: 0.8,
               delay: 0.4,
             }}
-            className="text-5xl md:text-7xl font-black leading-[1.05] tracking-tight mb-8 uppercase"
+            className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-8 uppercase"
           >
             Let's Build the Future of Energy Together
           </motion.h1>
@@ -1038,7 +1038,7 @@ export function Contact() {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
+    <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}
       <Navigation />
 
