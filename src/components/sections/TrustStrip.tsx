@@ -1,15 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   CalendarIcon,
   GlobeIcon,
   UsersIcon,
   ZapIcon,
-  ArrowRightIcon } from
-'lucide-react';
-import { useSectionData } from '../../store/useCMSStore';
-
+  ArrowRightIcon,
+} from "lucide-react";
+import { useSectionData } from "../../store/useCMSStore";
 
 const trustStripIcons = [CalendarIcon, GlobeIcon, UsersIcon, ZapIcon];
 
@@ -17,7 +16,7 @@ export function AboutSection() {
   const { data } = useSectionData<any>("home", "AboutUs");
   const stats = (data.stats || []).map((stat: any, i: number) => ({
     ...stat,
-    icon: trustStripIcons[i % trustStripIcons.length] || ZapIcon
+    icon: trustStripIcons[i % trustStripIcons.length] || ZapIcon,
   }));
 
   return (
@@ -27,10 +26,10 @@ export function AboutSection() {
         className="absolute inset-0 pointer-events-none opacity-[0.35]"
         style={{
           backgroundImage:
-          'linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)',
-          backgroundSize: '60px 60px'
-        }} />
-      
+            "linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -40,20 +39,20 @@ export function AboutSection() {
             <motion.div
               initial={{
                 opacity: 0,
-                x: -20
+                x: -20,
               }}
               whileInView={{
                 opacity: 1,
-                x: 0
+                x: 0,
               }}
               viewport={{
-                once: true
+                once: true,
               }}
               transition={{
-                duration: 0.6
+                duration: 0.6,
               }}
-              className="flex items-center gap-3 mb-6">
-              
+              className="flex items-center gap-3 mb-6"
+            >
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
                 {data.upperTag}
@@ -64,48 +63,46 @@ export function AboutSection() {
             <motion.h2
               initial={{
                 opacity: 0,
-                y: 25
+                y: 25,
               }}
               whileInView={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               viewport={{
-                once: true
+                once: true,
               }}
               transition={{
                 duration: 0.8,
-                delay: 0.1
+                delay: 0.1,
               }}
-              className="text-4xl md:text-5xl lg:text-[3.5rem] font-black text-neutral-900 leading-[1.08] tracking-tight uppercase mb-8">
-              
-              {data.headingItalicHighlight ? (
-                <>
-                  {data.headingLabel}{' '}
-                  <span className="text-brand-pink">{data.headingItalicHighlight}</span>
-                </>
-              ) : (data.headingLabel || "")}
+              className="text-4xl md:text-5xl lg:text-[3.5rem] font-black text-neutral-900 leading-[1.08] tracking-tight uppercase mb-8"
+            >
+              {data.headingLabel}{" "}
+              <span className="text-brand-pink">
+                {data.headingItalicHighlight}
+              </span>
             </motion.h2>
 
             {/* Body Text */}
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               whileInView={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               viewport={{
-                once: true
+                once: true,
               }}
               transition={{
                 duration: 0.7,
-                delay: 0.2
+                delay: 0.2,
               }}
-              className="space-y-5 mb-8">
-              
+              className="space-y-5 mb-8"
+            >
               <p className="text-neutral-500 leading-relaxed">
                 {data.paragraphs?.[0]}
               </p>
@@ -116,22 +113,23 @@ export function AboutSection() {
 
             {/* Learn More Link */}
             <motion.a
-              href="/about"
+              href={data?.ctaUrl}
               initial={{
-                opacity: 0
+                opacity: 0,
               }}
               whileInView={{
-                opacity: 1
+                opacity: 1,
               }}
               viewport={{
-                once: true
+                once: true,
               }}
               transition={{
                 duration: 0.5,
-                delay: 0.3
+                delay: 0.3,
               }}
-              className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-brand-pink uppercase hover:gap-3 transition-all duration-300 mb-12">
-              Learn More
+              className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-brand-pink uppercase hover:gap-3 transition-all duration-300 mb-12"
+            >
+              {data?.ctaLabel}
               <ArrowRightIcon size={14} />
             </motion.a>
 
@@ -139,31 +137,32 @@ export function AboutSection() {
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               whileInView={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               viewport={{
-                once: true
+                once: true,
               }}
               transition={{
                 duration: 0.7,
-                delay: 0.35
+                delay: 0.35,
               }}
-              className="grid grid-cols-2 gap-4">
-              
-              {stats.map((stat: any, i: number) =>
+              className="grid grid-cols-2 gap-4"
+            >
+              {stats.map((stat: any, i: number) => (
                 <div
                   key={i}
-                  className="p-5 border border-neutral-200 hover:border-brand-pink/30 transition-colors duration-300 group">
-                  
+                  className="p-5 border border-neutral-200 hover:border-brand-pink/30 transition-colors duration-300 group"
+                >
                   <div className="mb-4">
                     <stat.icon
                       size={22}
                       className="text-brand-pink/60 group-hover:text-brand-pink transition-colors duration-300"
-                      strokeWidth={1.5} />
+                      strokeWidth={1.5}
+                    />
                   </div>
                   <div className="text-2xl md:text-3xl font-black text-neutral-900 tracking-tight leading-none">
                     {stat.value}
@@ -172,7 +171,7 @@ export function AboutSection() {
                     {stat.label}
                   </div>
                 </div>
-              )}
+              ))}
             </motion.div>
           </div>
 
@@ -180,27 +179,28 @@ export function AboutSection() {
           <motion.div
             initial={{
               opacity: 0,
-              x: 30
+              x: 30,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
               duration: 0.9,
-              delay: 0.2
+              delay: 0.2,
             }}
-            className="relative">
-            
+            className="relative"
+          >
             <div className="relative overflow-hidden">
-               <img
-                src={data.image || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000"}
+              <img
+                src={data.image}
                 alt={data.imageAlt || "Engineer working on advanced equipment"}
-                className="w-full h-[500px] lg:h-[620px] object-cover" />
-              
+                className="w-full h-[500px] lg:h-[620px] object-cover"
+              />
+
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
             </div>
 
@@ -208,21 +208,21 @@ export function AboutSection() {
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               whileInView={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               viewport={{
-                once: true
+                once: true,
               }}
               transition={{
                 duration: 0.5,
-                delay: 0.7
+                delay: 0.7,
               }}
-              className="absolute -bottom-5 left-6 z-20">
-              
+              className="absolute -bottom-5 left-6 z-20"
+            >
               <div className="flex items-center gap-3 bg-neutral-800 text-white pl-3 pr-6 py-3 shadow-xl">
                 <div className="w-10 h-10 rounded-full bg-brand-pink/20 flex items-center justify-center">
                   <ZapIcon size={18} className="text-brand-pink" />
@@ -244,20 +244,20 @@ export function AboutSection() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 30
+            y: 30,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            duration: 0.7
+            duration: 0.7,
           }}
-          className="mt-28 py-20 bg-neutral-50 -mx-6 lg:-mx-10 px-6 lg:px-10 text-center">
-          
+          className="mt-28 py-20 bg-neutral-50 -mx-6 lg:-mx-10 px-6 lg:px-10 text-center"
+        >
           <h3 className="text-2xl md:text-3xl font-black text-neutral-900 tracking-tight uppercase mb-4">
             {data.bannerHeading}
           </h3>
@@ -265,9 +265,10 @@ export function AboutSection() {
             {data.bannerDescription}
           </p>
           <Link
-            to="/contact"
-            className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-            View Our Global Reach
+            to={data?.bannerButtonUrl}
+            className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+          >
+            {data?.bannerButtonLabel}
             <ArrowRightIcon size={14} />
           </Link>
         </motion.div>

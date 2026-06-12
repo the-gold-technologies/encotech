@@ -11,8 +11,13 @@ import {
 } from "lucide-react";
 import { useSectionData } from "../../store/useCMSStore";
 
-
-const servicesIcons = [ClipboardCheckIcon, NetworkIcon, FlameIcon, SearchIcon, WrenchIcon];
+const servicesIcons = [
+  ClipboardCheckIcon,
+  NetworkIcon,
+  FlameIcon,
+  SearchIcon,
+  WrenchIcon,
+];
 
 export function Services() {
   const { data } = useSectionData<any>("home", "ServicesSection");
@@ -68,11 +73,7 @@ export function Services() {
   );
 }
 
-function ServiceCard({
-  service,
-}: {
-  service: any;
-}) {
+function ServiceCard({ service }: { service: any }) {
   return (
     <Link to="/services">
       <motion.div

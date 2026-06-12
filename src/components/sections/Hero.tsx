@@ -67,15 +67,9 @@ export function Hero() {
               }}
               className="text-[2.6rem] md:text-[3.5rem] lg:text-[4rem] font-black text-neutral-900 leading-[1.05] tracking-tight uppercase mb-8 select-text selection:bg-brand-pink selection:text-white cursor-text"
             >
-              {data.headlineLine1?.includes("Our Stewardship") ? (
-                <>
-                  Your Assets. Our{" "}
-                  <span className="text-brand-pink">Stewardship.</span>{" "}
-                  End-to-End Solutions for a Global Future
-                </>
-              ) : (
-                data.headlineLine1 || ""
-              )}
+              {data?.headlineLine1}{" "}
+              <span className="text-brand-pink">{data?.headlineHighlight}</span>{" "}
+              {data?.headlineLine2}
             </motion.h1>
 
             {/* Subtitle */}
@@ -140,17 +134,17 @@ export function Hero() {
               className="flex flex-wrap gap-4 mb-16"
             >
               <Link
-                to="/services"
+                to={data?.primaryBtnUrl}
                 className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
               >
-                Our Services
+                {data?.primaryBtnLabel}
                 <ArrowRightIcon size={14} />
               </Link>
               <Link
-                to="/insights"
+                to={data?.secondaryBtnUrl}
                 className="inline-flex items-center gap-2 px-7 py-3.5 border-2 border-neutral-900 text-neutral-900 text-xs font-bold tracking-wider uppercase hover:bg-neutral-900 hover:text-white transition-all duration-300"
               >
-                View Case Studies
+                {data?.secondaryBtnLabel}
               </Link>
             </motion.div>
 
@@ -211,10 +205,7 @@ export function Hero() {
                 }}
               >
                 <img
-                  src={
-                    data.backgroundImage ||
-                    "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&q=80&w=1200"
-                  }
+                  src={data.backgroundImage}
                   alt="Wind turbines at sunset"
                   className="w-full h-[420px] md:h-[520px] lg:h-[580px] object-cover"
                 />

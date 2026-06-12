@@ -18,6 +18,9 @@ const airportFeatureIconMap = [ActivityIcon, FileCheckIcon, RefreshCwIcon];
 
 function DueDiligenceHero() {
   const { data } = useSectionData<any>("airport-services", "DueDiligenceHero");
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 500], [0, 150]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-10">
@@ -36,6 +39,9 @@ function DueDiligenceHero() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 w-full">
         <motion.div
+          style={{
+            opacity,
+          }}
           initial={{
             opacity: 0,
             y: 40,
@@ -61,16 +67,16 @@ function DueDiligenceHero() {
           <div className="flex items-center gap-3 mb-8">
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Due Diligence & Asset Health
+              {data.label || "Due Diligence & Asset Health"}
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            {data.heroTitle}
+            {data.heading || data.heroTitle}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            {data.heroSubtitle}
+            {data.description || data.heroSubtitle}
           </p>
         </motion.div>
       </div>
@@ -79,13 +85,13 @@ function DueDiligenceHero() {
 }
 function HealthFeatures() {
   const { data } = useSectionData<any>("airport-services", "HealthFeatures");
-  const features = (data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: airportFeatureIconMap[i] || ActivityIcon }));
+  const features = (data.features || data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: airportFeatureIconMap[i] || ActivityIcon }));
 
   return (
     <section className="py-28 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {features.map((feature, i) => (
+          {features.map((feature: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -122,6 +128,24 @@ function HealthFeatures() {
   );
 }
 function ValueProtection() {
+  const { data } = useSectionData<any>("airport-services", "ValueProtection");
+  const heading = data.heading || "Protecting Your Investment";
+  const highlight = "Investment";
+  const parts = heading.split(highlight);
+  
+  const paragraphs = data.paragraphs || [
+    "Acquiring or relocating an industrial asset involves significant capital risk. Without a clear understanding of the asset's true condition, you may be inheriting expensive liabilities.",
+    "Our independent technical audits provide the objective data you need to negotiate effectively, plan capital expenditures accurately, and ensure that your investment will deliver the expected returns over its intended lifecycle."
+  ];
+
+  const bullets = data.bullets || [
+    "Structural integrity and material degradation",
+    "Historical O&M records and failure analysis",
+    "Environmental compliance and emissions",
+    "Control systems obsolescence",
+    "Thermodynamic performance baseline"
+  ];
+
   return (
     <section className="py-28 bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -143,21 +167,16 @@ function ValueProtection() {
             }}
           >
             <h2 className="text-4xl md:text-5xl font-black mb-8">
-              Protecting Your <br />
-              <span className="text-brand-pink">Investment</span>
+              {parts[0]}
+              {heading.includes(highlight) && (
+                <span className="text-brand-pink">{highlight}</span>
+              )}
+              {parts[1]}
             </h2>
             <div className="space-y-6 text-lg text-neutral-400 leading-relaxed">
-              <p>
-                Acquiring or relocating an industrial asset involves significant
-                capital risk. Without a clear understanding of the asset's true
-                condition, you may be inheriting expensive liabilities.
-              </p>
-              <p>
-                Our independent technical audits provide the objective data you
-                need to negotiate effectively, plan capital expenditures
-                accurately, and ensure that your investment will deliver the
-                expected returns over its intended lifecycle.
-              </p>
+              {paragraphs.map((para: string, idx: number) => (
+                <p key={idx}>{para}</p>
+              ))}
             </div>
           </motion.div>
 
@@ -178,27 +197,42 @@ function ValueProtection() {
             }}
             className="bg-white/5 border border-white/10 p-10"
           >
-            <h3 className="text-2xl font-bold mb-6">What We Evaluate</h3>
+            <h3 className="text-2xl font-bold mb-6">{data.bulletHeading || "What We Evaluate"}</h3>
             <ul className="space-y-4">
-              {[
-                "Structural integrity and material degradation",
-                "Historical O&M records and failure analysis",
-                "Environmental compliance and emissions",
-                "Control systems obsolescence",
-                "Thermodynamic performance baseline",
-              ].map((item, i) => (
+              {bullets.map((item: string, i: number) => (
                 <li key={i} className="flex items-start gap-3">
                   <CheckCircle2Icon
                     className="text-brand-pink flex-shrink-0 mt-1"
                     size={20}
                   />
-
                   <span className="text-neutral-300">{item}</span>
                 </li>
               ))}
             </ul>
           </motion.div>
         </div>
+      </div>
+    </section>
+  );
+}
+function CTASection() {
+  const { data } = useSectionData<any>("airport-services", "CTASection");
+  return (
+    <section className="py-32 bg-white text-center">
+      <div className="max-w-4xl mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
+          {data.heading || "Planning an Acquisition or Relocation?"}
+        </h2>
+        <p className="text-xl text-neutral-600 mb-10">
+          {data.description || "Get the technical truth about your assets before you make a decision."}
+        </p>
+        <Link
+          to={data.ctaUrl || "/contact"}
+          className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+        >
+          {data.ctaLabel || "Request an Assessment"}
+          <ArrowRightIcon size={20} />
+        </Link>
       </div>
     </section>
   );
@@ -214,25 +248,7 @@ export function AirportServices() {
       <DueDiligenceHero />
       <HealthFeatures />
       <ValueProtection />
-
-      <section className="py-32 bg-white text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
-            Planning an Acquisition or Relocation?
-          </h2>
-          <p className="text-xl text-neutral-600 mb-10">
-            Get the technical truth about your assets before you make a
-            decision.
-          </p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
-          >
-            Request an Assessment
-            <ArrowRightIcon size={20} />
-          </Link>
-        </div>
-      </section>
+      <CTASection />
 
       <Footer />
     </main>

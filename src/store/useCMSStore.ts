@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { useEffect } from "react";
 
-const API_BASE_URL = (import.meta as any).env?.VITE_CMS_API_URL || "https://cms-encotec.vercel.app";
+const API_BASE_URL = import.meta.env.VITE_CMS_API_URL || "https://cms-encotec.vercel.app";
 
 interface PageState {
   loading: boolean;
@@ -22,13 +22,29 @@ interface PageState {
   fetched: boolean;
 }
 
+interface GlobalSEOData {
+  siteTitle?: string | null;
+  siteDescription?: string | null;
+  favicon?: string | null;
+  googleAnalyticsId?: string | null;
+  gtmId?: string | null;
+  searchConsoleId?: string | null;
+  customHeaderScripts?: string | null;
+  customFooterScripts?: string | null;
+}
+
 interface CMSState {
   pages: Record<string, PageState>;
+  globalSEO: GlobalSEOData | null;
+  globalSEOFetched: boolean;
   fetchPage: (slug: string) => Promise<void>;
+  fetchGlobalSEO: () => Promise<void>;
 }
 
 export const useCMSStore = create<CMSState>((set, get) => ({
   pages: {},
+  globalSEO: null,
+  globalSEOFetched: false,
   fetchPage: async (slug: string) => {
     const currentPage = get().pages[slug];
     // If already loading or already fetched, don't refetch
@@ -97,6 +113,25 @@ export const useCMSStore = create<CMSState>((set, get) => ({
           },
         },
       }));
+    }
+  },
+  fetchGlobalSEO: async () => {
+    if (get().globalSEOFetched) return;
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/seo/global`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch global SEO: ${response.statusText}`);
+      }
+      const json = await response.json();
+      if (json.success && json.data) {
+        set({
+          globalSEO: json.data,
+          globalSEOFetched: true,
+        });
+      }
+    } catch (err: any) {
+      console.warn("CMS Global SEO Fetch Error:", err.message);
+      set({ globalSEOFetched: true });
     }
   },
 }));

@@ -422,11 +422,10 @@ function ScaleImpact() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-black mb-6">
-            Encotec by the Numbers
+            {data.heading || "Encotec by the Numbers"}
           </h2>
           <p className="text-neutral-400 text-lg max-w-3xl mx-auto">
-            Our growth is a testament to the trust our partners place in us. As
-            of 2025–26, our impact is felt across the industry.
+            {data.description || "Our growth is a testament to the trust our partners place in us. As of 2025–26, our impact is felt across the industry."}
           </p>
         </motion.div>
 
@@ -481,9 +480,7 @@ function ScaleImpact() {
           }}
           className="text-center text-neutral-400 italic max-w-4xl mx-auto"
         >
-          Our scale is not just a measure of size, but a reflection of our
-          ability to consistently deliver high-performance outcomes across
-          complex engineering environments.
+          {data.footerNote || "Our scale is not just a measure of size, but a reflection of our ability to consistently deliver high-performance outcomes across complex engineering environments."}
         </motion.p>
       </div>
     </section>
@@ -492,8 +489,7 @@ function ScaleImpact() {
 // Timeline
 function Timeline() {
   const { data } = useSectionData<any>("about", "Timeline");
-  const phasesList = data.phases || [];
-  const phases: Array<{ title: string; description: string }> = data.phasesList || [];
+  const phases: Array<{ title: string; description: string }> = data.phases || data.phasesList || [];
 
   return (
     <section className="py-28 bg-white">
@@ -515,15 +511,14 @@ function Timeline() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-[3px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Our Journey
+              {data.tagline || "Our Journey"}
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
-            A Timeline of Growth
+            {data.heading || "A Timeline of Growth"}
           </h2>
           <p className="text-lg text-neutral-600 max-w-3xl leading-relaxed">
-            We have spent over a decade building a legacy of excellence, one
-            project at a time.
+            {data.description || "We have spent over a decade building a legacy of excellence, one project at a time."}
           </p>
         </motion.div>
 
@@ -581,8 +576,7 @@ function Timeline() {
 // Sustainability Section
 function Sustainability() {
   const { data } = useSectionData<any>("about", "Sustainability");
-  const focusList = data.focuses || [];
-  const focuses: string[] = data.focusList || [];
+  const focuses: string[] = data.focuses || data.focusList || [];
 
   return (
     <section className="py-28 bg-neutral-50">
@@ -607,11 +601,11 @@ function Sustainability() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-[3px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                ESG Commitment
+                {data.tagline || "ESG Commitment"}
               </span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-neutral-900 leading-tight mb-8">
-              Committed to a Greener Tomorrow
+              {data.heading || "Committed to a Greener Tomorrow"}
             </h2>
             <div className="space-y-4 text-neutral-700 leading-relaxed">
               <p>{data.paragraphs?.[0]}</p>
@@ -861,6 +855,11 @@ function Leadership() {
 }
 // Closing Statement
 function ClosingStatement() {
+  const { data } = useSectionData<any>("about", "ClosingStatement");
+  const heading = data.heading || "Encotec integrates engineering expertise, execution capability, and operational excellence to deliver solutions that perform";
+  const highlight = "engineering expertise, execution capability, and operational excellence";
+  const parts = heading.split(highlight);
+
   return (
     <section className="py-32 bg-white">
       <div className="max-w-5xl mx-auto px-6 lg:px-10 text-center">
@@ -881,23 +880,23 @@ function ClosingStatement() {
           }}
         >
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 leading-tight mb-8">
-            Encotec integrates{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-brand">
-              engineering expertise, execution capability, and operational
-              excellence
-            </span>{" "}
-            to deliver solutions that perform
+            {parts[0]}
+            {heading.includes(highlight) && (
+              <span className="text-transparent bg-clip-text bg-gradient-brand">
+                {highlight}
+              </span>
+            )}
+            {parts[1]}
           </h2>
           <p className="text-2xl text-neutral-600 leading-relaxed font-light">
-            — not just at commissioning, but throughout the lifecycle of every
-            asset.
+            {data.description || "— not just at commissioning, but throughout the lifecycle of every asset."}
           </p>
 
           <Link
-            to="/contact"
+            to={data.ctaUrl || "/contact"}
             className="inline-flex items-center gap-3 px-10 py-5 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300 shadow-2xl shadow-brand-pink/30 mt-12"
           >
-            Partner With Us
+            {data.ctaLabel || "Partner With Us"}
             <ArrowRightIcon size={18} />
           </Link>
         </motion.div>

@@ -61,16 +61,16 @@ function ServicesHero() {
           <div className="flex items-center gap-3 mb-8">
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Our Services
+              {data.tagline || "Our Services"}
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            {data.heroTitle}
+            {data.heading || data.heroTitle}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-10">
-            {data.heroSubtitle}
+            {data.description || data.heroSubtitle}
           </p>
         </motion.div>
       </div>
@@ -79,7 +79,7 @@ function ServicesHero() {
 }
 // Intro Section
 function IntroSection() {
-  const { data } = useSectionData<any>("services", "ServicesIntro");
+  const { data } = useSectionData<any>("services", "IntroSection");
   return (
     <section className="py-20 bg-white">
       <div className="max-w-5xl mx-auto px-6 lg:px-10">
@@ -100,8 +100,8 @@ function IntroSection() {
           }}
           className="text-center space-y-6"
         >
-          <p className="text-xl text-neutral-700 leading-relaxed">{data.para1}</p>
-          <p className="text-lg text-neutral-600 leading-relaxed">{data.para2}</p>
+          <p className="text-xl text-neutral-700 leading-relaxed">{data.paragraph1 || data.para1}</p>
+          <p className="text-lg text-neutral-600 leading-relaxed">{data.paragraph2 || data.para2}</p>
         </motion.div>
       </div>
     </section>
@@ -230,7 +230,7 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
 // Core Services Section
 function CoreServices() {
   const { data } = useSectionData<any>("services", "CoreServices");
-  const services = (data.servicesList || []).map((s: any, i: number) => ({
+  const services = (data.services || data.servicesList || []).map((s: any, i: number) => ({
     ...s,
     icon: serviceIconMap[i] || TargetIcon,
     capabilities: typeof s.capabilities === "string" ? s.capabilities.split("|") : (s.capabilities || []),
@@ -261,13 +261,12 @@ function CoreServices() {
             </span>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 leading-tight">
-            Comprehensive Solutions <br />
-            Across the Value Chain
+            {data.heading || "Comprehensive Solutions Across the Value Chain"}
           </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {services.map((service, index) => (
+          {services.map((service: any, index: number) => (
             <ServiceCard key={index} service={service} index={index} />
           ))}
         </div>
@@ -278,7 +277,7 @@ function CoreServices() {
 // Industries Section
 function IndustriesSection() {
   const { data } = useSectionData<any>("services", "IndustriesSection");
-  const industries = (data.industriesList || []).map((ind: any, i: number) => ({ ...ind, icon: industryIconMap[i] || ZapIcon }));
+  const industries = (data.industries || data.industriesList || []).map((ind: any, i: number) => ({ ...ind, icon: industryIconMap[i] || ZapIcon }));
 
   return (
     <section className="py-28 bg-white">
@@ -298,15 +297,15 @@ function IndustriesSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-4">
-            Industries We Serve
+            {data.heading || "Industries We Serve"}
           </h2>
           <p className="text-neutral-600 max-w-2xl mx-auto">
-            We deliver solutions across a wide range of sectors
+            {data.description || "We deliver solutions across a wide range of sectors"}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-          {industries.map((industry, i) => (
+          {industries.map((industry: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -345,8 +344,8 @@ function IndustriesSection() {
 }
 // Process Section
 function ProcessSection() {
-  const { data } = useSectionData<any>("services", "ServicesProcess");
-  const steps: Array<{ title: string; description: string; number: string }> = data.stepsList || [];
+  const { data } = useSectionData<any>("services", "ProcessSection");
+  const steps: Array<{ title: string; description: string; number: string }> = data.steps || data.stepsList || [];
 
   return (
     <section className="py-28 bg-neutral-900 text-white relative overflow-hidden">
@@ -370,12 +369,14 @@ function ProcessSection() {
           }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-black mb-4">
-            How We Deliver
+          <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
+            {data.tagline || "Our Workflow"}
+          </span>
+          <h2 className="text-4xl md:text-5xl font-black mb-4 mt-2">
+            {data.heading || "How We Deliver"}
           </h2>
           <p className="text-neutral-400 max-w-2xl mx-auto">
-            Our structured approach ensures precision and reliability at every
-            stage
+            {data.description || "Our structured approach ensures precision and reliability at every stage"}
           </p>
         </motion.div>
 
@@ -401,7 +402,7 @@ function ProcessSection() {
               className="relative p-8 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-brand-pink/50 transition-all duration-300 group"
             >
               <div className="text-6xl font-black text-brand-pink/20 group-hover:text-brand-pink/40 transition-colors mb-4">
-                {step.number}
+                {step.number || `0${i + 1}`}
               </div>
               <h3 className="text-2xl font-black mb-2 uppercase">
                 {step.title}
@@ -416,6 +417,13 @@ function ProcessSection() {
 }
 // Closing Statement
 function ClosingSection() {
+  const { data } = useSectionData<any>("services", "ClosingSection");
+  const heading = data.heading || "Our integrated approach ensures that every project — from concept to operation — is delivered with precision, reliability, and long-term performance in mind.";
+  const highlight = data.highlight || "from concept to operation";
+  
+  // Safely split and highlight
+  const parts = heading.split(highlight);
+
   return (
     <section className="py-32 bg-white">
       <div className="max-w-5xl mx-auto px-6 lg:px-10 text-center">
@@ -436,19 +444,20 @@ function ClosingSection() {
           }}
         >
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 leading-tight mb-8">
-            Our integrated approach ensures that every project —{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-brand">
-              from concept to operation
-            </span>{" "}
-            — is delivered with precision, reliability, and long-term
-            performance in mind.
+            {parts[0]}
+            {heading.includes(highlight) && (
+              <span className="text-transparent bg-clip-text bg-gradient-brand">
+                {highlight}
+              </span>
+            )}
+            {parts[1]}
           </h2>
 
           <Link
-            to="/contact"
+            to={data.ctaUrl || "/contact"}
             className="inline-flex items-center gap-3 px-10 py-5 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300 shadow-2xl shadow-brand-pink/30 mt-8"
           >
-            Start Your Project
+            {data.ctaLabel || "Start Your Project"}
             <ArrowRightIcon size={18} />
           </Link>
         </motion.div>

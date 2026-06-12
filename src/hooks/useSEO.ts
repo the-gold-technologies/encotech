@@ -1,51 +1,38 @@
-import { useEffect, useState } from "react";
-
-const API_BASE_URL = (import.meta as any).env?.VITE_CMS_API_URL || "https://cms-encotec.vercel.app";
-
-export interface SEOData {
-  metaTitle?: string | null;
-  metaDescription?: string | null;
-  targetKeywords?: string | null;
-  canonicalUrl?: string | null;
-  noIndex?: boolean;
-}
+import { useEffect } from "react";
+import { useCMSStore } from "../store/useCMSStore";
 
 export function useSEO(
   slug: string,
   defaultTitle?: string,
   defaultDescription?: string
 ) {
-  const [seoData, setSeoData] = useState<SEOData | null>(null);
+  const pageState = useCMSStore((state) => state.pages[slug]);
+  const fetchPage = useCMSStore((state) => state.fetchPage);
+  const globalSEO = useCMSStore((state) => state.globalSEO);
+  const fetchGlobalSEO = useCMSStore((state) => state.fetchGlobalSEO);
 
   useEffect(() => {
-    if (!slug) return;
+    fetchGlobalSEO();
+  }, [fetchGlobalSEO]);
 
-    let isMounted = true;
-    async function fetchSEO() {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/seo/pages/${slug}`);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch SEO: ${response.statusText}`);
-        }
-        const json = await response.json();
-        if (json.success && json.data && isMounted) {
-          setSeoData(json.data);
-        }
-      } catch (err: any) {
-        console.warn(`CMS SEO Fetch Error for "${slug}":`, err.message);
-      }
+  useEffect(() => {
+    if (slug && !pageState) {
+      fetchPage(slug);
     }
+  }, [slug, pageState, fetchPage]);
 
-    fetchSEO();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [slug]);
+  const seoData = pageState?.seo;
 
   useEffect(() => {
-    const title = seoData?.metaTitle || defaultTitle || "Encotec";
-    const description = seoData?.metaDescription || defaultDescription || "Encotec | Asset Stewardship & Engineering";
+    const title = (slug === "home"
+      ? (globalSEO?.siteTitle || seoData?.metaTitle)
+      : (seoData?.metaTitle || globalSEO?.siteTitle)
+    ) || defaultTitle || "Encotec";
+
+    const description = (slug === "home"
+      ? (globalSEO?.siteDescription || seoData?.metaDescription)
+      : (seoData?.metaDescription || globalSEO?.siteDescription)
+    ) || defaultDescription || "Encotec | Asset Stewardship & Engineering";
 
     document.title = title;
 
@@ -56,5 +43,13 @@ export function useSEO(
       document.head.appendChild(metaDescription);
     }
     metaDescription.setAttribute('content', description);
-  }, [seoData?.metaTitle, seoData?.metaDescription, defaultTitle, defaultDescription]);
+  }, [
+    seoData?.metaTitle,
+    seoData?.metaDescription,
+    globalSEO?.siteTitle,
+    globalSEO?.siteDescription,
+    defaultTitle,
+    defaultDescription,
+    slug
+  ]);
 }

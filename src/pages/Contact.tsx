@@ -323,10 +323,16 @@ function ContactHero() {
   );
 }
 function ContactFormSection() {
+  const { data } = useSectionData<any>("contact", "ContactInfo");
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Form submission logic would go here
   };
+  const openingHours = data.openingHours || [
+    { days: "Monday - Friday", hours: "9:00 AM - 6:00 PM IST" },
+    { days: "Saturday", hours: "9:00 AM - 1:00 PM IST" },
+    { days: "Sunday", hours: "Closed" }
+  ];
   return (
     <section className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -492,7 +498,7 @@ function ContactFormSection() {
                 <BuildingIcon size={24} strokeWidth={1.5} />
               </div>
               <h3 className="text-xl font-bold mb-4 uppercase tracking-tight">
-                Headquarters
+                {data.locationTitle || "Headquarters"}
               </h3>
               <div className="space-y-3 text-neutral-400">
                 <p className="flex items-start gap-3">
@@ -502,9 +508,9 @@ function ContactFormSection() {
                   />
 
                   <span>
-                    Bandra Kurla Complex, BKC
+                    {data.addressLine1 || "Bandra Kurla Complex, BKC"}
                     <br />
-                    Mumbai 400051, India
+                    {data.addressLine2 || "Mumbai 400051, India"}
                   </span>
                 </p>
                 <p className="flex items-center gap-3">
@@ -513,7 +519,7 @@ function ContactFormSection() {
                     className="text-brand-pink flex-shrink-0"
                   />
 
-                  <span>+91 22 6655 0178</span>
+                  <span>{data.phoneNumber || "+91 22 6655 0178"}</span>
                 </p>
                 <p className="flex items-center gap-3">
                   <MailIcon
@@ -521,7 +527,7 @@ function ContactFormSection() {
                     className="text-brand-pink flex-shrink-0"
                   />
 
-                  <span>info@encotec.com</span>
+                  <span>{data.emailAddress || "info@encotec.com"}</span>
                 </p>
               </div>
             </div>
@@ -535,22 +541,14 @@ function ContactFormSection() {
                 Business Hours
               </h3>
               <div className="space-y-3 text-neutral-400">
-                <div className="flex justify-between items-center border-b border-white/10 pb-2">
-                  <span>Monday - Friday</span>
-                  <span className="text-white font-medium">
-                    9:00 AM - 6:00 PM IST
-                  </span>
-                </div>
-                <div className="flex justify-between items-center pt-1">
-                  <span>Saturday</span>
-                  <span className="text-white font-medium">
-                    9:00 AM - 1:00 PM IST
-                  </span>
-                </div>
-                <div className="flex justify-between items-center pt-1">
-                  <span>Sunday</span>
-                  <span className="text-brand-pink font-medium">Closed</span>
-                </div>
+                {openingHours.map((item: any, i: number) => (
+                  <div key={i} className={`flex justify-between items-center ${i < openingHours.length - 1 ? 'border-b border-white/10 pb-2' : 'pt-1'}`}>
+                    <span>{item.days}</span>
+                    <span className={`font-medium ${item.hours?.toLowerCase() === 'closed' ? 'text-brand-pink' : 'text-white'}`}>
+                      {item.hours}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -568,10 +566,10 @@ function ContactFormSection() {
                     General Inquiries
                   </div>
                   <a
-                    href="mailto:info@encotec.com"
+                    href={`mailto:${data.emailAddress || "info@encotec.com"}`}
                     className="text-white hover:text-brand-pink transition-colors"
                   >
-                    info@encotec.com
+                    {data.emailAddress || "info@encotec.com"}
                   </a>
                 </div>
                 <div>
