@@ -9,54 +9,61 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "lucide-react";
-const steps = [
-  {
-    id: 1,
-    title: "Logical Foundation",
-    description:
-      "We start by conceptualizing the project through rigorous feasibility studies and Detailed Project Reports (DPR).",
-    icon: SearchIcon,
-    accent: "from-pink-500/20 to-rose-500/20",
-  },
-  {
-    id: 2,
-    title: "Strategic Alignment",
-    description:
-      "Our team develops technical specifications and assists in the selection of the right partners to ensure a solid start.",
-    icon: PenToolIcon,
-    accent: "from-fuchsia-500/20 to-pink-500/20",
-  },
-  {
-    id: 3,
-    title: "Technical Realization",
-    description:
-      "We manage the precision erection and commissioning of assets, whether they are new builds or relocated plants.",
-    icon: HardHatIcon,
-    accent: "from-rose-500/20 to-orange-500/20",
-  },
-  {
-    id: 4,
-    title: "Owner's O&M",
-    description:
-      "We transition into long-term stewardship, providing operation and maintenance with the same care as the asset owner.",
-    icon: CheckCircle2Icon,
-    accent: "from-pink-500/20 to-purple-500/20",
-  },
-  {
-    id: 5,
-    title: "Continuous Improvement",
-    description:
-      "Through regular performance diagnostics and energy audits, we ensure your asset remains efficient and reliable for its entire lifecycle.",
-    icon: ActivityIcon,
-    accent: "from-fuchsia-500/20 to-violet-500/20",
-  },
-];
+import { useSectionData } from "../../store/useCMSStore";
+
+// --- Default Data ---
+const defaultProcessData = {
+  workflowLabel: "Our Workflow",
+  workflowTitle: "Workflow Followed for Each Project",
+  stepsList: [
+    {
+      id: 1,
+      title: "Logical Foundation",
+      description:
+        "We start by conceptualizing the project through rigorous feasibility studies and Detailed Project Reports (DPR).",
+    },
+    {
+      id: 2,
+      title: "Strategic Alignment",
+      description:
+        "Our team develops technical specifications and assists in the selection of the right partners to ensure a solid start.",
+    },
+    {
+      id: 3,
+      title: "Technical Realization",
+      description:
+        "We manage the precision erection and commissioning of assets, whether they are new builds or relocated plants.",
+    },
+    {
+      id: 4,
+      title: "Owner's O&M",
+      description:
+        "We transition into long-term stewardship, providing operation and maintenance with the same care as the asset owner.",
+    },
+    {
+      id: 5,
+      title: "Continuous Improvement",
+      description:
+        "Through regular performance diagnostics and energy audits, we ensure your asset remains efficient and reliable for its entire lifecycle.",
+    },
+  ],
+};
+
+const processStepIcons = [SearchIcon, PenToolIcon, HardHatIcon, CheckCircle2Icon, ActivityIcon];
 
 export function Process() {
+  const { data } = useSectionData("home", "HomeProcess", defaultProcessData);
+  const rawSteps = data.stepsList || defaultProcessData.stepsList;
+  const steps = rawSteps.map((step: any, i: number) => ({
+    ...step,
+    icon: processStepIcons[i % processStepIcons.length] || SearchIcon,
+  }));
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+
   const updateScrollState = () => {
     if (!scrollRef.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
@@ -68,6 +75,7 @@ export function Process() {
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
     setActiveIndex(Math.min(newIndex, steps.length - 1));
   };
+
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -76,7 +84,8 @@ export function Process() {
     });
     updateScrollState();
     return () => el.removeEventListener("scroll", updateScrollState);
-  }, []);
+  }, [steps.length]);
+
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
     const cardWidth = 360;
@@ -87,6 +96,7 @@ export function Process() {
       behavior: "smooth",
     });
   };
+
   const scrollToIndex = (index: number) => {
     if (!scrollRef.current) return;
     const cardWidth = 360;
@@ -96,6 +106,7 @@ export function Process() {
       behavior: "smooth",
     });
   };
+
   return (
     <section className="py-32 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -115,11 +126,15 @@ export function Process() {
             }}
           >
             <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
-              Our Workflow
+              {data.workflowLabel}
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mt-2">
-              Workflow Followed <br className="hidden md:block" />
-              for Each Project
+            <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mt-2 selection:bg-brand-pink selection:text-white select-text cursor-text">
+              {data.workflowTitle.includes("Workflow Followed") ? (
+                <>
+                  Workflow Followed <br className="hidden md:block" />
+                  for Each Project
+                </>
+              ) : data.workflowTitle}
             </h2>
           </motion.div>
 
@@ -175,7 +190,7 @@ export function Process() {
 
           {/* Step indicators on the line */}
           <div className="absolute top-0 left-0 w-full flex justify-between -translate-y-1/2">
-            {steps.map((step, i) => (
+            {steps.map((step: any, i: number) => (
               <button
                 key={i}
                 onClick={() => scrollToIndex(i)}
@@ -188,7 +203,7 @@ export function Process() {
                 <span
                   className={`absolute top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold tracking-wider uppercase whitespace-nowrap transition-colors duration-300 ${i <= activeIndex ? "text-brand-pink" : "text-neutral-400"}`}
                 >
-                  0{step.id}
+                  0{step.id || (i + 1)}
                 </span>
               </button>
             ))}
@@ -213,9 +228,9 @@ export function Process() {
               WebkitOverflowScrolling: "touch",
             }}
           >
-            {steps.map((step, index) => (
+            {steps.map((step: any, index: number) => (
               <motion.div
-                key={step.id}
+                key={step.id || index}
                 initial={{
                   opacity: 0,
                   y: 30,
@@ -244,7 +259,7 @@ export function Process() {
                     <span
                       className={`text-5xl font-black tracking-tighter transition-colors duration-500 ${index === activeIndex ? "text-brand-pink" : "text-neutral-200"}`}
                     >
-                      0{step.id}
+                      0{step.id || (index + 1)}
                     </span>
                     <div
                       className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${index === activeIndex ? "bg-brand-pink/20 text-brand-pink" : "bg-brand-panel text-brand-pink"}`}

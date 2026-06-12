@@ -8,6 +8,20 @@ import {
   Line,
 } from "react-simple-maps";
 import { MapPinIcon, PhoneIcon } from "lucide-react";
+import { useSectionData } from "../../store/useCMSStore";
+
+// --- Default Data ---
+const defaultGlobalFootprintData = {
+  footprintLabel: "Global Presence",
+  footprintTitle: "Connected Intelligence",
+  footprintSubtitle: "A live network of energy systems operating in synchronization across continents.",
+  statsList: [
+    { value: "14+", label: "India Locations" },
+    { value: "8000+", label: "MW Capacity" },
+    { value: "1,800+", label: "Professionals" }
+  ]
+};
+
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 interface Location {
   name: string;
@@ -157,50 +171,33 @@ const connections: Array<[[number, number], [number, number]]> = [
     [77.39, 28.58],
     [86.18, 22.8],
   ],
-
   [
     [77.39, 28.58],
     [76.59, 30.48],
   ],
-
   [
     [77.39, 28.58],
     [82.98, 24.42],
   ],
-
   [
     [77.39, 28.58],
     [83.3, 17.69],
   ],
-
   // Noida HQ to international
   [
     [77.39, 28.58],
     [32.86, 39.93],
   ],
-
   [
     [77.39, 28.58],
     [50.58, 26.07],
   ],
-  // Noida → Bahrain
-];
-const stats = [
-  {
-    value: "14+",
-    label: "India Locations",
-  },
-  {
-    value: "8000+",
-    label: "MW Capacity",
-  },
-  {
-    value: "1,800+",
-    label: "Professionals",
-  },
 ];
 
 export function GlobalFootprint() {
+  const { data } = useSectionData("home", "HomeGlobalFootprint", defaultGlobalFootprintData);
+  const stats = data.statsList || defaultGlobalFootprintData.statsList;
+
   const sectionRef = useRef<HTMLElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, {
@@ -271,7 +268,7 @@ export function GlobalFootprint() {
               color: "#B6005E",
             }}
           >
-            Global Presence
+            {data.footprintLabel}
           </motion.span>
           <motion.h2
             initial={{
@@ -289,9 +286,9 @@ export function GlobalFootprint() {
               duration: 0.8,
               delay: 0.1,
             }}
-            className="text-4xl md:text-6xl font-black tracking-tight mb-4"
+            className="text-4xl md:text-6xl font-black tracking-tight mb-4 select-text cursor-text selection:bg-[#B6005E] selection:text-white"
           >
-            Connected Intelligence
+            {data.footprintTitle}
           </motion.h2>
           <motion.p
             initial={{
@@ -309,8 +306,7 @@ export function GlobalFootprint() {
             }}
             className="text-neutral-400 max-w-xl mx-auto text-lg"
           >
-            A live network of energy systems operating in synchronization across
-            continents.
+            {data.footprintSubtitle}
           </motion.p>
         </div>
 
@@ -365,8 +361,8 @@ export function GlobalFootprint() {
               }}
             >
               <Geographies geography={geoUrl}>
-                {({ geographies }) =>
-                  geographies.map((geo) => (
+                {({ geographies }: any) =>
+                  geographies.map((geo: any) => (
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
@@ -525,7 +521,7 @@ export function GlobalFootprint() {
               ))}
             </ComposableMap>
 
-            {/* Hover Tooltip — HTML overlay, positioned via mouse coords */}
+            {/* Hover Tooltip */}
             <AnimatePresence>
               {hoveredLocation && (
                 <motion.div
@@ -553,7 +549,6 @@ export function GlobalFootprint() {
                   style={{
                     left: tooltipPos.x + 16,
                     top: tooltipPos.y - 80,
-                    // Clamp to stay inside container — handled via transform below if near edge
                   }}
                 >
                   <div
@@ -651,7 +646,7 @@ export function GlobalFootprint() {
               background: "rgba(0,0,0,0.3)",
             }}
           >
-            {stats.map((stat, i) => (
+            {stats.map((stat: any, i: number) => (
               <motion.div
                 key={i}
                 initial={{

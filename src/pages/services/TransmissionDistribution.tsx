@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { Navigation } from '../../components/Navigation';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -11,47 +11,26 @@ import {
   TruckIcon,
   CheckCircle2Icon,
   ZapIcon,
-  SettingsIcon } from
-'lucide-react';
-function AnimatedCounter({
-  target,
-  suffix = ''
+  SettingsIcon } from 'lucide-react';
+import { useSectionData } from "../../store/useCMSStore";
+import { useSEO } from "../../hooks/useSEO";
 
+// --- Default Data ---
+const defaultTDHeroData = {
+  heroTitle: "Bringing Complex Infrastructure to Life",
+  heroSubtitle: "At Encotec, we thrive on the challenge of \"physical realization\". From the massive IBR piping of a thermal plant to the precision mounting of solar modules, we bring your assets online with speed and safety.",
+};
+const defaultTDCapabilitiesData = {
+  capabilitiesList: [
+    { title: "Multi-Sector Expertise", description: "We have delivered construction excellence across thermal power, solar PV, and wind projects globally. Our teams handle everything from civil works to complex mechanical erection." },
+    { title: "International Commissioning", description: "Our teams have managed grid synchronization and performance tests in diverse markets, including Greece and Turkey. We ensure your plant meets all local and international standards." },
+    { title: "Asset Relocation Services", description: "Unique to Encotec, we support owners in the complex process of dismantling, shifting, and reinstalling plants from one site—or country—to another, ensuring minimal downtime." },
+  ],
+};
+const tdCapIconMap = [HardHatIcon, GlobeIcon, TruckIcon];
 
-
-}: {target: number;suffix?: string;}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, {
-    once: true,
-    margin: '-100px'
-  });
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!isInView) return;
-    const duration = 2000;
-    const steps = 60;
-    const increment = target / steps;
-    const stepDuration = duration / steps;
-    let current = 0;
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, stepDuration);
-    return () => clearInterval(timer);
-  }, [isInView, target]);
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>);
-
-}
 function ConstructionHero() {
+  const { data } = useSectionData("transmission-distribution", "TDHero", defaultTDHeroData);
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       {/* Blueprint Grid Pattern */}
@@ -124,17 +103,11 @@ function ConstructionHero() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            Bringing Complex <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
-              Infrastructure to Life
-            </span>
+            {data.heroTitle}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            At Encotec, we thrive on the challenge of "physical realization".
-            From the massive IBR piping of a thermal plant to the precision
-            mounting of solar modules, we bring your assets online with speed
-            and safety.
+            {data.heroSubtitle}
           </p>
         </motion.div>
       </div>
@@ -142,25 +115,8 @@ function ConstructionHero() {
 
 }
 function CapabilitiesSection() {
-  const capabilities = [
-  {
-    title: 'Multi-Sector Expertise',
-    description:
-    'We have delivered construction excellence across thermal power, solar PV, and wind projects globally. Our teams handle everything from civil works to complex mechanical erection.',
-    icon: HardHatIcon
-  },
-  {
-    title: 'International Commissioning',
-    description:
-    'Our teams have managed grid synchronization and performance tests in diverse markets, including Greece and Turkey. We ensure your plant meets all local and international standards.',
-    icon: GlobeIcon
-  },
-  {
-    title: 'Asset Relocation Services',
-    description:
-    'Unique to Encotec, we support owners in the complex process of dismantling, shifting, and reinstalling plants from one site—or country—to another, ensuring minimal downtime.',
-    icon: TruckIcon
-  }];
+  const { data } = useSectionData("transmission-distribution", "TDCapabilities", defaultTDCapabilitiesData);
+  const capabilities = (data.capabilitiesList || []).map((c: any, i: number) => ({ ...c, icon: tdCapIconMap[i] || HardHatIcon }));
 
   return (
     <section className="py-28 bg-white relative overflow-hidden">
@@ -332,6 +288,12 @@ function ProcessFlow() {
 
 }
 export function TransmissionDistribution() {
+  useSEO(
+    "service/transmission-distribution",
+    "Transmission & Distribution Infrastructure | Encotec",
+    "Encotec delivers comprehensive power transmission, substation construction, grid synchronization, commissioning, and asset relocation services globally."
+  );
+
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}

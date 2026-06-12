@@ -14,6 +14,28 @@ import {
   BriefcaseIcon,
   FileTextIcon,
 } from "lucide-react";
+import { useSectionData } from "../../store/useCMSStore";
+import { useSEO } from "../../hooks/useSEO";
+
+// --- Default Data ---
+const defaultPMHeroData = {
+  heroTitle: "Building Your Vision on a Logical Foundation",
+  heroSubtitle: "A great project doesn't start with a shovel in the ground; it starts with a logical, well-vetted plan. We are your strategic developers who ensure your project is technically sound and financially viable from day one.",
+};
+const defaultPMPhilosophyData = {
+  heading: "Not Just Detailed Engineering. Strategic Development.",
+  para1: "We are not a \"detailed engineering\" firm that gets lost in the minutiae. We understand that the earliest decisions in a project's lifecycle have the most profound impact on its ultimate success.",
+  para2: "By adopting an \"Owner's Mindset\" from the very beginning, we evaluate site conditions, resource potential, and financial models to ensure your investment is built on reality, not just theory.",
+};
+const defaultPMOfferingsData = {
+  offeringsList: [
+    { title: "Feasibility & Pre-Feasibility Studies", description: "We evaluate site conditions and resource potential to ensure your investment is built on reality, not just theory. Our comprehensive studies cover technical, economic, and environmental factors." },
+    { title: "Detailed Project Reports (DPR)", description: "We provide the technical and financial clarity required for stakeholder confidence and project approval. Our DPRs serve as the definitive blueprint for project execution and financing." },
+    { title: "Strategic Sourcing & EPC Selection", description: "We develop rigorous technical specifications and help you finalise EPC contractors, ensuring you have the right partners by your side. We manage the entire tendering and evaluation process." },
+  ],
+};
+const pmOfferingIconMap = [MapIcon, FileTextIcon, BriefcaseIcon];
+
 // Animated Counter Component
 function AnimatedCounter({
   target,
@@ -54,6 +76,7 @@ function AnimatedCounter({
   );
 }
 function ProjectHero() {
+  const { data } = useSectionData("project-management", "ProjectHero", defaultPMHeroData);
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       {/* Strategic Grid Pattern */}
@@ -146,17 +169,11 @@ function ProjectHero() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            Building Your Vision on a <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
-              Logical Foundation
-            </span>
+            {data.heroTitle}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            A great project doesn't start with a shovel in the ground; it starts
-            with a logical, well-vetted plan. We are your strategic developers
-            who ensure your project is technically sound and financially viable
-            from day one.
+            {data.heroSubtitle}
           </p>
 
           <div className="flex flex-wrap gap-6">
@@ -185,6 +202,7 @@ function ProjectHero() {
   );
 }
 function PhilosophySection() {
+  const { data } = useSectionData("project-management", "PhilosophySection", defaultPMPhilosophyData);
   return (
     <section className="py-28 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -206,22 +224,14 @@ function PhilosophySection() {
             }}
           >
             <h2 className="text-4xl md:text-5xl font-black text-neutral-900 leading-tight mb-8">
-              Not Just Detailed Engineering. <br />
-              <span className="text-brand-pink">Strategic Development.</span>
+              {data.heading}
             </h2>
             <div className="space-y-6 text-lg text-neutral-700 leading-relaxed">
               <p>
-                We are not a "detailed engineering" firm that gets lost in the
-                minutiae. We understand that the earliest decisions in a
-                project's lifecycle have the most profound impact on its
-                ultimate success.
+                {data.para1}
               </p>
               <p>
-                By adopting an "Owner's Mindset" from the very beginning, we
-                evaluate site conditions, resource potential, and financial
-                models to ensure your investment is built on reality, not just
-                theory. We provide the clarity required for stakeholder
-                confidence and project approval.
+                {data.para2}
               </p>
             </div>
           </motion.div>
@@ -288,27 +298,8 @@ function PhilosophySection() {
   );
 }
 function CoreOfferings() {
-  const offerings = [
-    {
-      title: "Feasibility & Pre-Feasibility Studies",
-      description:
-        "We evaluate site conditions and resource potential to ensure your investment is built on reality, not just theory. Our comprehensive studies cover technical, economic, and environmental factors.",
-      icon: MapIcon,
-    },
-    {
-      title: "Detailed Project Reports (DPR)",
-      description:
-        "We provide the technical and financial clarity required for stakeholder confidence and project approval. Our DPRs serve as the definitive blueprint for project execution and financing.",
-      icon: FileTextIcon,
-    },
-    {
-      title: "Strategic Sourcing & EPC Selection",
-      description:
-        "We develop rigorous technical specifications and help you finalise EPC contractors, ensuring you have the right partners by your side. We manage the entire tendering and evaluation process.",
-      icon: BriefcaseIcon,
-    },
-  ];
-
+  const { data } = useSectionData("project-management", "PMOfferings", defaultPMOfferingsData);
+  const offerings = (data.offeringsList || []).map((o: any, i: number) => ({ ...o, icon: pmOfferingIconMap[i] || FileTextIcon }));
   return (
     <section className="py-28 bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -448,6 +439,12 @@ function StatsSection() {
   );
 }
 export function ProjectManagement() {
+  useSEO(
+    "service/project-management",
+    "Project Conceptualisation & Development | Encotec",
+    "Encotec provides pre-feasibility, feasibility, Detailed Project Reports (DPR), and EPC contractor selection support with an owner's mindset."
+  );
+
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}

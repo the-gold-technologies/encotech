@@ -19,8 +19,51 @@ import {
   PlaneIcon,
   ZapIcon,
 } from "lucide-react";
+import { useSectionData } from "../store/useCMSStore";
+import { useSEO } from "../hooks/useSEO";
+
+// --- Default Data ---
+const defaultServicesHeroData = {
+  heroTitle: "Integrated Solutions Across the Asset Lifecycle",
+  heroSubtitle: "We bridge the gap between technical complexity and commercial success. Whether you are conceptualizing a new plant or optimizing an existing one, we provide the end-to-end expertise required to keep your world running.",
+};
+const defaultIntroData = {
+  para1: "At Encotec, we don't just provide engineering services; we provide peace of mind. We approach every facility we manage with an \"Owner's Mindset\", meaning we treat your infrastructure with the same care, precision, and long-term vision as if it were our own.",
+  para2: "With a family of over 1,800 staff members and 300+ specialized engineers, we bridge the gap between technical complexity and commercial success. Below is an overview of how we provide end-to-end expertise across the asset lifecycle.",
+};
+const defaultCoreServicesData = {
+  servicesList: [
+    { title: "Project Conceptualisation & Development", link: "/services/project-management", overview: "We help you build on a solid foundation, from pre-feasibility studies to the final selection of your EPC partners.", capabilities: "Feasibility & Pre-Feasibility Studies|Detailed Project Reports (DPR)|Strategic Sourcing & Technical Specifications|EPC Contractor Selection|Financial Assessments", value: "Technically sound planning|Financially viable projects|Stakeholder confidence" },
+    { title: "Construction, Commissioning & Relocation", link: "/services/transmission-distribution", overview: "Whether it's a new build or moving an entire plant across borders, we handle the complex installation and synchronization of your assets.", capabilities: "Multi-Sector Construction Expertise|International Commissioning|Grid Synchronization & Performance Tests|Asset Dismantling & Relocation|Complex IBR Piping Erection", value: "Speed and safety|Seamless cross-border transitions|Physical realization of complex assets" },
+    { title: "Asset Stewardship (O&M)", link: "/services/power-generation", overview: "As one of India's top five O&M specialists, we provide continuous care for thermal plants, international airports, and critical utilities.", capabilities: "Thermal & Supercritical Mastery|Airport Utility Management|Integrated ERP Support|Zero-Error Operations|Risk Management & Reliability Focus", value: "Optimized megawatt production|Long-term asset health|Owner-perspective care" },
+    { title: "Expert Advisory & Performance Audits", link: "/services/renewable-energy", overview: "When problems arise or efficiency drops, our specialists provide on-site diagnostics and high-level technical solutions.", capabilities: "Specialised Testing (NDT)|Energy Efficiency Audits|Steam Path Audits|5S & Process Improvement|High-Level Problem Solving", value: "Reduced carbon footprint|Improved workplace safety|Restored operational efficiency" },
+    { title: "Due Diligence & Asset Health", link: "/services/airport-services", overview: "We evaluate the \"residual life\" of older plants to help owners make informed decisions about acquisitions or relocations.", capabilities: "Residual Life Assessment (RLA)|Technical Due Diligence|Independent Technical Audits|Revamping & Restoration Strategy|Environmental Compliance Planning", value: "Informed investment decisions|Understanding true asset value|Future-proofed infrastructure" },
+    { title: "Strategic Global Sourcing (Spare Parts)", link: "/services/value-added", overview: "Access our trusted network of major OEMs in China, Vietnam, and India to keep your facility running without interruption.", capabilities: "Global OEM Network (65+ tie-ups)|Comprehensive Inventory Supply|High-Pressure Boiler Spares|Electrical Actuators & Mill Rollers|Engineering Integration Support", value: "Reduced downtime|Strategic sourcing partnerships|Guaranteed specification performance" },
+  ],
+};
+const defaultIndustriesData = {
+  industriesList: [
+    { name: "Power Generation", subtitle: "Thermal & Renewable" },
+    { name: "Transmission & Distribution", subtitle: "Grid Infrastructure" },
+    { name: "Infrastructure & Industrial", subtitle: "Facilities" },
+    { name: "Airports & Utility Systems", subtitle: "Critical Infrastructure" },
+    { name: "Energy & Climate Projects", subtitle: "Sustainable Solutions" },
+  ],
+};
+const defaultProcessStepsData = {
+  stepsList: [
+    { title: "Assess", description: "Technical and commercial evaluation", number: "01" },
+    { title: "Design", description: "Engineering and system planning", number: "02" },
+    { title: "Execute", description: "Construction and commissioning", number: "03" },
+    { title: "Operate", description: "Maintenance and optimization", number: "04" },
+  ],
+};
+const industryIconMap = [FlameIcon, NetworkIcon, BuildingIcon, PlaneIcon, ZapIcon];
+const serviceIconMap = [TargetIcon, HardHatIcon, SettingsIcon, ClipboardCheckIcon, ShieldCheckIcon, PackageIcon];
+
 // Hero Section
 function ServicesHero() {
+  const { data } = useSectionData("services", "ServicesHero", defaultServicesHeroData);
   return (
     <section className="relative w-full bg-neutral-900 text-white pt-32 pb-20 overflow-hidden">
       {/* Background Pattern */}
@@ -59,17 +102,11 @@ function ServicesHero() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            Integrated Solutions Across the{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
-              Asset Lifecycle
-            </span>
+            {data.heroTitle}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-10">
-            We bridge the gap between technical complexity and commercial
-            success. Whether you are conceptualizing a new plant or optimizing
-            an existing one, we provide the end-to-end expertise required to
-            keep your world running.
+            {data.heroSubtitle}
           </p>
         </motion.div>
       </div>
@@ -78,6 +115,7 @@ function ServicesHero() {
 }
 // Intro Section
 function IntroSection() {
+  const { data } = useSectionData("services", "ServicesIntro", defaultIntroData);
   return (
     <section className="py-20 bg-white">
       <div className="max-w-5xl mx-auto px-6 lg:px-10">
@@ -98,18 +136,8 @@ function IntroSection() {
           }}
           className="text-center space-y-6"
         >
-          <p className="text-xl text-neutral-700 leading-relaxed">
-            At Encotec, we don't just provide engineering services; we provide
-            peace of mind. We approach every facility we manage with an "Owner's
-            Mindset", meaning we treat your infrastructure with the same care,
-            precision, and long-term vision as if it were our own.
-          </p>
-          <p className="text-lg text-neutral-600 leading-relaxed">
-            With a family of over 1,800 staff members and 300+ specialized
-            engineers, we bridge the gap between technical complexity and
-            commercial success. Below is an overview of how we provide
-            end-to-end expertise across the asset lifecycle.
-          </p>
+          <p className="text-xl text-neutral-700 leading-relaxed">{data.para1}</p>
+          <p className="text-lg text-neutral-600 leading-relaxed">{data.para2}</p>
         </motion.div>
       </div>
     </section>
@@ -237,128 +265,13 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
 }
 // Core Services Section
 function CoreServices() {
-  const services = [
-    {
-      title: "Project Conceptualisation & Development",
-      icon: TargetIcon,
-      link: "/services/project-management",
-      overview:
-        "We help you build on a solid foundation, from pre-feasibility studies to the final selection of your EPC partners.",
-      capabilities: [
-        "Feasibility & Pre-Feasibility Studies",
-        "Detailed Project Reports (DPR)",
-        "Strategic Sourcing & Technical Specifications",
-        "EPC Contractor Selection",
-        "Financial Assessments",
-      ],
-
-      value: [
-        "Technically sound planning",
-        "Financially viable projects",
-        "Stakeholder confidence",
-      ],
-    },
-    {
-      title: "Construction, Commissioning & Relocation",
-      icon: HardHatIcon,
-      link: "/services/transmission-distribution",
-      overview:
-        "Whether it's a new build or moving an entire plant across borders, we handle the complex installation and synchronization of your assets.",
-      capabilities: [
-        "Multi-Sector Construction Expertise",
-        "International Commissioning",
-        "Grid Synchronization & Performance Tests",
-        "Asset Dismantling & Relocation",
-        "Complex IBR Piping Erection",
-      ],
-
-      value: [
-        "Speed and safety",
-        "Seamless cross-border transitions",
-        "Physical realization of complex assets",
-      ],
-    },
-    {
-      title: "Asset Stewardship (O&M)",
-      icon: SettingsIcon,
-      link: "/services/power-generation",
-      overview:
-        "As one of India's top five O&M specialists, we provide continuous care for thermal plants, international airports, and critical utilities.",
-      capabilities: [
-        "Thermal & Supercritical Mastery",
-        "Airport Utility Management",
-        "Integrated ERP Support",
-        "Zero-Error Operations",
-        "Risk Management & Reliability Focus",
-      ],
-
-      value: [
-        "Optimized megawatt production",
-        "Long-term asset health",
-        "Owner-perspective care",
-      ],
-    },
-    {
-      title: "Expert Advisory & Performance Audits",
-      icon: ClipboardCheckIcon,
-      link: "/services/renewable-energy",
-      overview:
-        "When problems arise or efficiency drops, our specialists provide on-site diagnostics and high-level technical solutions.",
-      capabilities: [
-        "Specialised Testing (NDT)",
-        "Energy Efficiency Audits",
-        "Steam Path Audits",
-        "5S & Process Improvement",
-        "High-Level Problem Solving",
-      ],
-
-      value: [
-        "Reduced carbon footprint",
-        "Improved workplace safety",
-        "Restored operational efficiency",
-      ],
-    },
-    {
-      title: "Due Diligence & Asset Health",
-      icon: ShieldCheckIcon,
-      link: "/services/airport-services",
-      overview:
-        'We evaluate the "residual life" of older plants to help owners make informed decisions about acquisitions or relocations.',
-      capabilities: [
-        "Residual Life Assessment (RLA)",
-        "Technical Due Diligence",
-        "Independent Technical Audits",
-        "Revamping & Restoration Strategy",
-        "Environmental Compliance Planning",
-      ],
-
-      value: [
-        "Informed investment decisions",
-        "Understanding true asset value",
-        "Future-proofed infrastructure",
-      ],
-    },
-    {
-      title: "Strategic Global Sourcing (Spare Parts)",
-      icon: PackageIcon,
-      link: "/services/value-added",
-      overview:
-        "Access our trusted network of major OEMs in China, Vietnam, and India to keep your facility running without interruption.",
-      capabilities: [
-        "Global OEM Network (65+ tie-ups)",
-        "Comprehensive Inventory Supply",
-        "High-Pressure Boiler Spares",
-        "Electrical Actuators & Mill Rollers",
-        "Engineering Integration Support",
-      ],
-
-      value: [
-        "Reduced downtime",
-        "Strategic sourcing partnerships",
-        "Guaranteed specification performance",
-      ],
-    },
-  ];
+  const { data } = useSectionData("services", "CoreServices", defaultCoreServicesData);
+  const services = (data.servicesList || []).map((s: any, i: number) => ({
+    ...s,
+    icon: serviceIconMap[i] || TargetIcon,
+    capabilities: typeof s.capabilities === "string" ? s.capabilities.split("|") : (s.capabilities || []),
+    value: typeof s.value === "string" ? s.value.split("|") : (s.value || []),
+  }));
 
   return (
     <section className="py-28 bg-neutral-50">
@@ -400,33 +313,8 @@ function CoreServices() {
 }
 // Industries Section
 function IndustriesSection() {
-  const industries = [
-    {
-      name: "Power Generation",
-      subtitle: "Thermal & Renewable",
-      icon: FlameIcon,
-    },
-    {
-      name: "Transmission & Distribution",
-      subtitle: "Grid Infrastructure",
-      icon: NetworkIcon,
-    },
-    {
-      name: "Infrastructure & Industrial",
-      subtitle: "Facilities",
-      icon: BuildingIcon,
-    },
-    {
-      name: "Airports & Utility Systems",
-      subtitle: "Critical Infrastructure",
-      icon: PlaneIcon,
-    },
-    {
-      name: "Energy & Climate Projects",
-      subtitle: "Sustainable Solutions",
-      icon: ZapIcon,
-    },
-  ];
+  const { data } = useSectionData("services", "IndustriesSection", defaultIndustriesData);
+  const industries = (data.industriesList || []).map((ind: any, i: number) => ({ ...ind, icon: industryIconMap[i] || ZapIcon }));
 
   return (
     <section className="py-28 bg-white">
@@ -493,28 +381,8 @@ function IndustriesSection() {
 }
 // Process Section
 function ProcessSection() {
-  const steps = [
-    {
-      title: "Assess",
-      description: "Technical and commercial evaluation",
-      number: "01",
-    },
-    {
-      title: "Design",
-      description: "Engineering and system planning",
-      number: "02",
-    },
-    {
-      title: "Execute",
-      description: "Construction and commissioning",
-      number: "03",
-    },
-    {
-      title: "Operate",
-      description: "Maintenance and optimization",
-      number: "04",
-    },
-  ];
+  const { data } = useSectionData("services", "ServicesProcess", defaultProcessStepsData);
+  const steps: Array<{ title: string; description: string; number: string }> = data.stepsList || [];
 
   return (
     <section className="py-28 bg-neutral-900 text-white relative overflow-hidden">
@@ -626,6 +494,12 @@ function ClosingSection() {
 }
 // Main Services Page
 export function Services() {
+  useSEO(
+    "services",
+    "Our Services | Encotec Energy Infrastructure Solutions",
+    "Explore Encotec's comprehensive services across the asset lifecycle: project conceptualization, construction, O&M, advisory, due diligence, and global sourcing."
+  );
+
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}

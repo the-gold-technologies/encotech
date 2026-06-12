@@ -1,58 +1,38 @@
-import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Navigation } from '../../components/Navigation';
 import { Footer } from '../../components/Footer';
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
-  ClipboardCheckIcon,
   SearchIcon,
   ActivityIcon,
-  TrendingUpIcon,
-  ShieldCheckIcon,
-  CheckCircle2Icon,
-  ZapIcon } from
+  TrendingUpIcon } from
 'lucide-react';
-function AnimatedCounter({
-  target,
-  suffix = ''
+import { useSectionData } from "../../store/useCMSStore";
+import { useSEO } from "../../hooks/useSEO";
 
+// --- Default Data ---
+const defaultREHeroData = {
+  heroTitle: "Solving the Hardest Engineering Problems",
+  heroSubtitle: "When a plant is running but not performing, or when technical faults disrupt your peace of mind, our expert advisory team steps in. We provide high-level problem solving that goes beyond basic maintenance.",
+};
+const defaultREFeaturesData = {
+  featuresList: [
+    { title: "Specialised Testing (NDT)", description: "We use Non-Destructive Testing to assess the health of your equipment without causing further downtime. Identify micro-fractures and wear before they lead to catastrophic failure." },
+    { title: "Efficiency Audits", description: "Our in-house team conducts energy efficiency and steam path audits to identify savings and reduce your carbon footprint. We find the lost megawatts in your system." },
+    { title: "5S & Process Improvement", description: "We implement industrial standards (5S) to improve workplace safety and operational flow. A clean, organized plant is a safe and efficient plant." },
+  ],
+};
+const defaultRECTAData = {
+  heading: "Is Your Asset Reaching Its Full Potential?",
+  subheading: "Speak with our specialized engineers about our expert advisory and performance audits.",
+  buttonText: "Request an Audit",
+};
+const reFeatureIconMap = [SearchIcon, ActivityIcon, TrendingUpIcon];
 
-
-}: {target: number;suffix?: string;}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, {
-    once: true,
-    margin: '-100px'
-  });
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!isInView) return;
-    const duration = 2000;
-    const steps = 60;
-    const increment = target / steps;
-    const stepDuration = duration / steps;
-    let current = 0;
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, stepDuration);
-    return () => clearInterval(timer);
-  }, [isInView, target]);
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>);
-
-}
 function AdvisoryHero() {
+  const { data } = useSectionData("renewable-energy", "REHero", defaultREHeroData);
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-20">
@@ -100,17 +80,11 @@ function AdvisoryHero() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            Solving the Hardest <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
-              Engineering Problems
-            </span>
+            {data.heroTitle}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            When a plant is running but not performing, or when technical faults
-            disrupt your peace of mind, our expert advisory team steps in. We
-            provide high-level problem solving that goes beyond basic
-            maintenance.
+            {data.heroSubtitle}
           </p>
         </motion.div>
       </div>
@@ -118,25 +92,8 @@ function AdvisoryHero() {
 
 }
 function AdvisoryFeatures() {
-  const features = [
-  {
-    title: 'Specialised Testing (NDT)',
-    description:
-    'We use Non-Destructive Testing to assess the health of your equipment without causing further downtime. Identify micro-fractures and wear before they lead to catastrophic failure.',
-    icon: SearchIcon
-  },
-  {
-    title: 'Efficiency Audits',
-    description:
-    'Our in-house team conducts energy efficiency and steam path audits to identify savings and reduce your carbon footprint. We find the lost megawatts in your system.',
-    icon: ActivityIcon
-  },
-  {
-    title: '5S & Process Improvement',
-    description:
-    'We implement industrial standards (5S) to improve workplace safety and operational flow. A clean, organized plant is a safe and efficient plant.',
-    icon: TrendingUpIcon
-  }];
+  const { data } = useSectionData("renewable-energy", "REFeatures", defaultREFeaturesData);
+  const features = (data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: reFeatureIconMap[i] || SearchIcon }));
 
   return (
     <section className="py-28 bg-white relative overflow-hidden">
@@ -262,7 +219,34 @@ function DiagnosticProcess() {
     </section>);
 
 }
+function AdvisoryCTA() {
+  const { data } = useSectionData("renewable-energy", "RECTA", defaultRECTAData);
+  return (
+    <section className="py-32 bg-white text-center">
+      <div className="max-w-4xl mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
+          {data.heading}
+        </h2>
+        <p className="text-xl text-neutral-600 mb-10">
+          {data.subheading}
+        </p>
+        <Link
+          to="/contact"
+          className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
+          {data.buttonText}
+          <ArrowRightIcon size={20} />
+        </Link>
+      </div>
+    </section>
+  );
+}
 export function RenewableEnergy() {
+  useSEO(
+    "service/renewable-energy",
+    "Renewable Energy & Advisory | Encotec Solutions",
+    "Encotec provides specialized testing (NDT), energy efficiency audits, process improvement, and advisory services for renewable energy assets."
+  );
+
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}
@@ -271,25 +255,7 @@ export function RenewableEnergy() {
       <AdvisoryHero />
       <AdvisoryFeatures />
       <DiagnosticProcess />
-
-      <section className="py-32 bg-white text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
-            Is Your Asset Reaching Its Full Potential?
-          </h2>
-          <p className="text-xl text-neutral-600 mb-10">
-            Speak with our specialized engineers about our expert advisory and
-            performance audits.
-          </p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-            
-            Request an Audit
-            <ArrowRightIcon size={20} />
-          </Link>
-        </div>
-      </section>
+      <AdvisoryCTA />
 
       <Footer />
     </main>);

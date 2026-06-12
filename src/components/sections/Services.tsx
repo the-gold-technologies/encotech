@@ -9,55 +9,67 @@ import {
   WrenchIcon,
   SearchIcon,
 } from "lucide-react";
-const services = [
-  {
-    title: "Project Conceptualisation & Development",
-    description:
-      "From pre-feasibility and financial assessments to finalizing EPC contractors and developing technical specifications.",
-    icon: ClipboardCheckIcon,
-    delay: 0,
-    image:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    title: "Construction, Commissioning & Relocation",
-    description:
-      "Expert installation of complex power and process industries, including specialized asset shifting and relocation services across borders.",
-    icon: NetworkIcon,
-    delay: 0.1,
-    image:
-      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    title: "Asset Stewardship (O&M)",
-    description:
-      "Specialized management of thermal power plants, international airports, and critical utilities like STPs.",
-    icon: FlameIcon,
-    delay: 0.2,
-    image:
-      "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    title: "Expert Advisory & Performance Audits",
-    description:
-      "High-level problem solving, energy efficiency audits, and specialized testing (NDT) for operational plants.",
-    icon: SearchIcon,
-    delay: 0.3,
-    image:
-      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    title: "Global Trading & Spare Parts",
-    description:
-      "Strategic sourcing of critical equipment and spares from major OEMs in China, Vietnam, Korea, and India.",
-    icon: WrenchIcon,
-    delay: 0.4,
-    image:
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800",
-  },
-];
+import { useSectionData } from "../../store/useCMSStore";
+
+// --- Default Data ---
+const defaultServicesData = {
+  servicesLabel: "Our Services",
+  servicesTitle: "Integrated Solutions Across the Asset Lifecycle",
+  servicesSubtitle: "We bridge the gap between technical complexity and commercial success. Whether you are conceptualizing a new plant or optimizing an existing one, we provide the end-to-end expertise required to keep your world running.",
+  servicesList: [
+    {
+      title: "Project Conceptualisation & Development",
+      description:
+        "From pre-feasibility and financial assessments to finalizing EPC contractors and developing technical specifications.",
+      image:
+        "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
+      delay: 0,
+    },
+    {
+      title: "Construction, Commissioning & Relocation",
+      description:
+        "Expert installation of complex power and process industries, including specialized asset shifting and relocation services across borders.",
+      image:
+        "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800",
+      delay: 0.1,
+    },
+    {
+      title: "Asset Stewardship (O&M)",
+      description:
+        "Specialized management of thermal power plants, international airports, and critical utilities like STPs.",
+      image:
+        "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&q=80&w=800",
+      delay: 0.2,
+    },
+    {
+      title: "Expert Advisory & Performance Audits",
+      description:
+        "High-level problem solving, energy efficiency audits, and specialized testing (NDT) for operational plants.",
+      image:
+        "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800",
+      delay: 0.3,
+    },
+    {
+      title: "Global Trading & Spare Parts",
+      description:
+        "Strategic sourcing of critical equipment and spares from major OEMs in China, Vietnam, Korea, and India.",
+      image:
+        "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800",
+      delay: 0.4,
+    },
+  ],
+};
+
+const servicesIcons = [ClipboardCheckIcon, NetworkIcon, FlameIcon, SearchIcon, WrenchIcon];
 
 export function Services() {
+  const { data } = useSectionData("home", "HomeServices", defaultServicesData);
+  const rawList = data.servicesList || defaultServicesData.servicesList;
+  const services = rawList.map((service: any, i: number) => ({
+    ...service,
+    icon: servicesIcons[i % servicesIcons.length] || ClipboardCheckIcon,
+  }));
+
   return (
     <section className="py-28 bg-neutral-50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,41 +88,38 @@ export function Services() {
           className="text-center mb-16"
         >
           <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
-            Our Services
+            {data.servicesLabel}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-4 mt-2">
-            Integrated Solutions Across the Asset Lifecycle
+            {data.servicesTitle}
           </h2>
           <p className="text-neutral-500 max-w-2xl mx-auto text-lg">
-            We bridge the gap between technical complexity and commercial
-            success. Whether you are conceptualizing a new plant or optimizing
-            an existing one, we provide the end-to-end expertise required to
-            keep your world running.
+            {data.servicesSubtitle}
           </p>
         </motion.div>
 
         {/* Top row: 3 cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {services.slice(0, 3).map((service, index) => (
-            <ServiceCard key={index} service={service} index={index} />
+          {services.slice(0, 3).map((service: any, index: number) => (
+            <ServiceCard key={index} service={service} />
           ))}
         </div>
 
         {/* Bottom row: 2 cards centered */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {services.slice(3).map((service, index) => (
-            <ServiceCard key={index + 3} service={service} index={index + 3} />
+          {services.slice(3).map((service: any, index: number) => (
+            <ServiceCard key={index + 3} service={service} />
           ))}
         </div>
       </div>
     </section>
   );
 }
+
 function ServiceCard({
   service,
 }: {
-  service: (typeof services)[number];
-  index: number;
+  service: any;
 }) {
   return (
     <Link to="/services">

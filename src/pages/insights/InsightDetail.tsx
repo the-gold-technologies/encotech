@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useSEO } from "../../hooks/useSEO";
 import { Footer } from "../../components/Footer";
 import { Navigation } from "../../components/Navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -533,6 +534,13 @@ export function InsightDetail() {
     window.scrollTo(0, 0);
   }, [slug]);
   const article = insightsData.find((item) => item.slug === slug);
+
+  useSEO(
+    "",
+    article ? `${article.title} | Encotec` : "Insight Detail | Encotec",
+    article ? article.description : "Encotec Insight and Case Study"
+  );
+
   if (!article) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-neutral-50 px-6">
@@ -665,7 +673,7 @@ export function InsightDetail() {
           >
             {/* Render Rich Content */}
             <div className="space-y-8 text-neutral-700 leading-relaxed text-lg">
-              {article.content.map((block, index) => {
+              {article.content.map((block: any, index) => {
                 if (block.type === "paragraph") {
                   return (
                     <p
@@ -705,7 +713,7 @@ export function InsightDetail() {
                 if (block.type === "list" && block.items) {
                   return (
                     <ul key={index} className="space-y-4 my-8">
-                      {block.items.map((item, i) => (
+                      {block.items.map((item: any, i: number) => (
                         <li key={i} className="flex items-start gap-3">
                           <div className="w-1.5 h-1.5 rounded-full bg-brand-pink mt-2.5 flex-shrink-0" />
                           <span>{item}</span>

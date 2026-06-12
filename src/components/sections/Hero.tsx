@@ -2,31 +2,34 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRightIcon } from 'lucide-react';
-const heroStats = [
-{
-  value: '2011',
-  label: 'FOUNDED YEAR'
-},
-{
-  value: '13+',
-  label: 'CITIES IN INDIA'
-},
-{
-  value: '300+',
-  label: 'SPECIALIZED ENGINEERS'
-},
-{
-  value: '8000+',
-  label: 'MW UNDER STEWARDSHIP'
-}];
+import { useSectionData } from '../../store/useCMSStore';
 
-const serviceTags = [
-'STEWARDSHIP',
-'COMMISSIONING',
-'ADVISORY',
-'GLOBAL SOURCING'];
+// --- Default Data ---
+const defaultHeroData = {
+  heroLabel: "Global Energy Stewardship",
+  heroTitle: "Your Assets. Our Stewardship. End-to-End Solutions for a Global Future",
+  heroSubtitle: "We are more than consultants; we are your partners in progress. By adopting an \"Owner's Mindset,\" we take total responsibility for your infrastructure — from the first feasibility study to long-term operational excellence.",
+  serviceTags: [
+    'STEWARDSHIP',
+    'COMMISSIONING',
+    'ADVISORY',
+    'GLOBAL SOURCING'
+  ],
+  heroStats: [
+    { value: '2011', label: 'FOUNDED YEAR' },
+    { value: '13+', label: 'CITIES IN INDIA' },
+    { value: '300+', label: 'SPECIALIZED ENGINEERS' },
+    { value: '8000+', label: 'MW UNDER STEWARDSHIP' }
+  ],
+  projectsCount: "150+",
+  projectsLabel: "Projects Delivered"
+};
 
 export function Hero() {
+  const { data } = useSectionData("home", "HomeHero", defaultHeroData);
+  const serviceTags = data.serviceTags || defaultHeroData.serviceTags;
+  const heroStats = data.heroStats || defaultHeroData.heroStats;
+
   return (
     <section className="relative w-full bg-white pt-28 pb-16 overflow-hidden">
       {/* Subtle grid background */}
@@ -34,10 +37,9 @@ export function Hero() {
         className="absolute inset-0 pointer-events-none opacity-[0.35]"
         style={{
           backgroundImage:
-          'linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)',
+            'linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)',
           backgroundSize: '60px 60px'
         }} />
-      
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -60,7 +62,7 @@ export function Hero() {
               
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                Global Energy Stewardship
+                {data.heroLabel}
               </span>
             </motion.div>
 
@@ -78,11 +80,15 @@ export function Hero() {
                 duration: 0.8,
                 delay: 0.1
               }}
-              className="text-[2.6rem] md:text-[3.5rem] lg:text-[4rem] font-black text-neutral-900 leading-[1.05] tracking-tight uppercase mb-8">
+              className="text-[2.6rem] md:text-[3.5rem] lg:text-[4rem] font-black text-neutral-900 leading-[1.05] tracking-tight uppercase mb-8 select-text selection:bg-brand-pink selection:text-white cursor-text">
               
-              Your Assets. Our{' '}
-              <span className="text-brand-pink">Stewardship.</span> End-to-End
-              Solutions for a Global Future
+              {data.heroTitle.includes("Our Stewardship") ? (
+                <>
+                  Your Assets. Our{' '}
+                  <span className="text-brand-pink">Stewardship.</span> End-to-End
+                  Solutions for a Global Future
+                </>
+              ) : data.heroTitle}
             </motion.h1>
 
             {/* Subtitle */}
@@ -100,11 +106,7 @@ export function Hero() {
                 delay: 0.25
               }}
               className="text-base md:text-lg text-neutral-500 leading-relaxed max-w-lg mb-8">
-              
-              We are more than consultants; we are your partners in progress. By
-              adopting an "Owner's Mindset," we take total responsibility for
-              your infrastructure — from the first feasibility study to
-              long-term operational excellence.
+              {data.heroSubtitle}
             </motion.p>
 
             {/* Service Tags */}
@@ -123,11 +125,10 @@ export function Hero() {
               }}
               className="flex flex-wrap gap-2.5 mb-8">
               
-              {serviceTags.map((tag, i) =>
-              <span
-                key={i}
-                className="px-4 py-2 border border-neutral-300 text-[11px] font-bold tracking-wider text-neutral-700 uppercase hover:border-brand-pink hover:text-brand-pink transition-colors duration-300 cursor-default">
-                
+              {serviceTags.map((tag: string, i: number) =>
+                <span
+                  key={i}
+                  className="px-4 py-2 border border-neutral-300 text-[11px] font-bold tracking-wider text-neutral-700 uppercase hover:border-brand-pink hover:text-brand-pink transition-colors duration-300 cursor-default">
                   {tag}
                 </span>
               )}
@@ -152,14 +153,12 @@ export function Hero() {
               <Link
                 to="/services"
                 className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-                
                 Our Services
                 <ArrowRightIcon size={14} />
               </Link>
               <Link
                 to="/insights"
                 className="inline-flex items-center gap-2 px-7 py-3.5 border-2 border-neutral-900 text-neutral-900 text-xs font-bold tracking-wider uppercase hover:bg-neutral-900 hover:text-white transition-all duration-300">
-                
                 View Case Studies
               </Link>
             </motion.div>
@@ -180,8 +179,8 @@ export function Hero() {
               }}
               className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 border-t border-neutral-200">
               
-              {heroStats.map((stat, i) =>
-              <div key={i}>
+              {heroStats.map((stat: any, i: number) =>
+                <div key={i}>
                   <div className="text-3xl md:text-4xl font-black text-neutral-900 tracking-tight leading-none">
                     {stat.value}
                   </div>
@@ -229,7 +228,7 @@ export function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
               </div>
 
-              {/* 150+ Projects Badge */}
+              {/* Projects Delivered Badge */}
               <motion.div
                 initial={{
                   opacity: 0,
@@ -250,10 +249,10 @@ export function Hero() {
                 
                 <div className="bg-white px-6 py-4 shadow-xl border border-neutral-100">
                   <div className="text-3xl font-black text-neutral-900 leading-none">
-                    150+
+                    {data.projectsCount}
                   </div>
                   <div className="text-[10px] font-bold text-neutral-400 tracking-[0.15em] uppercase mt-1">
-                    Projects Delivered
+                    {data.projectsLabel}
                   </div>
                   <div className="w-10 h-[3px] bg-brand-pink mt-2" />
                 </div>
@@ -262,6 +261,6 @@ export function Hero() {
           </div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }

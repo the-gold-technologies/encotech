@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Footer } from "../../components/Footer";
 import { Navigation } from "../../components/Navigation";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -13,7 +13,35 @@ import {
   DatabaseIcon,
   ActivityIcon,
 } from "lucide-react";
+import { useSectionData } from "../../store/useCMSStore";
+import { useSEO } from "../../hooks/useSEO";
+
+// --- Default Data ---
+const defaultPGHeroData = {
+  heroTitle: "Operating With An Owner's Mindset",
+  heroSubtitle: "We don't just \"maintain\" plants; we steward them. By adopting the owner's perspective, we focus on reliability, risk management, and long-term health, ensuring that every megawatt produced is optimized.",
+};
+const defaultPGFeaturesData = {
+  featuresList: [
+    { title: "Thermal & Supercritical Mastery", description: "We manage some of India's largest facilities, such as the 2x700 MW supercritical plant at Rajpura, with a focus on zero-error operations and maximum availability." },
+    { title: "Airport Utility Management", description: "We are the silent force behind international hubs like DIAL, managing critical high-voltage assets, fire safety, and mechanical systems to ensure uninterrupted operations." },
+    { title: "Integrated ERP Support", description: "All our sites are linked via a single ERP system, providing central project management and inventory support from our Noida headquarters for seamless operations." },
+  ],
+};
+const defaultPGPhilosophyData = {
+  heading: "The Difference Between Maintenance & Stewardship",
+  para1: "Maintenance is reactive; stewardship is proactive. As one of India's top five O&M specialists, we take total responsibility for the health of your assets.",
+  para2: "Our approach integrates predictive diagnostics, rigorous safety protocols, and continuous performance optimization. We don't just fix what's broken; we prevent failures before they occur, maximizing the lifespan and profitability of your infrastructure.",
+};
+const defaultPGCTAData = {
+  heading: "Experience True Stewardship",
+  subheading: "Let us take responsibility for your assets so you can focus on your core business.",
+  buttonText: "Partner With Us",
+};
+const pgFeatureIconMap = [ZapIcon, PlaneIcon, DatabaseIcon];
+
 function StewardshipHero() {
+  const { data } = useSectionData("power-generation", "PGHero", defaultPGHeroData);
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-30">
@@ -60,17 +88,11 @@ function StewardshipHero() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            Operating With An <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
-              Owner's Mindset
-            </span>
+            {data.heroTitle}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            We don't just "maintain" plants; we steward them. By adopting the
-            owner's perspective, we focus on reliability, risk management, and
-            long-term health, ensuring that every megawatt produced is
-            optimized.
+            {data.heroSubtitle}
           </p>
         </motion.div>
       </div>
@@ -78,26 +100,8 @@ function StewardshipHero() {
   );
 }
 function StewardshipFeatures() {
-  const features = [
-    {
-      title: "Thermal & Supercritical Mastery",
-      description:
-        "We manage some of India’s largest facilities, such as the 2x700 MW supercritical plant at Rajpura, with a focus on zero-error operations and maximum availability.",
-      icon: ZapIcon,
-    },
-    {
-      title: "Airport Utility Management",
-      description:
-        "We are the silent force behind international hubs like DIAL, managing critical high-voltage assets, fire safety, and mechanical systems to ensure uninterrupted operations.",
-      icon: PlaneIcon,
-    },
-    {
-      title: "Integrated ERP Support",
-      description:
-        "All our sites are linked via a single ERP system, providing central project management and inventory support from our Noida headquarters for seamless operations.",
-      icon: DatabaseIcon,
-    },
-  ];
+  const { data } = useSectionData("power-generation", "PGFeatures", defaultPGFeaturesData);
+  const features = (data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: pgFeatureIconMap[i] || ZapIcon }));
 
   return (
     <section className="py-28 bg-white relative overflow-hidden">
@@ -140,6 +144,7 @@ function StewardshipFeatures() {
   );
 }
 function StewardshipPhilosophy() {
+  const { data } = useSectionData("power-generation", "PGPhilosophy", defaultPGPhilosophyData);
   return (
     <section className="py-28 bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -160,23 +165,12 @@ function StewardshipPhilosophy() {
               duration: 0.8,
             }}
           >
-            <h2 className="text-4xl md:text-5xl font-black mb-8">
-              The Difference Between <br />
-              <span className="text-brand-pink">Maintenance & Stewardship</span>
+            <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight">
+              {data.heading}
             </h2>
             <div className="space-y-6 text-lg text-neutral-400 leading-relaxed">
-              <p>
-                Maintenance is reactive; stewardship is proactive. As one of
-                India's top five O&M specialists, we take total responsibility
-                for the health of your assets.
-              </p>
-              <p>
-                Our approach integrates predictive diagnostics, rigorous safety
-                protocols, and continuous performance optimization. We don't
-                just fix what's broken; we prevent failures before they occur,
-                maximizing the lifespan and profitability of your
-                infrastructure.
-              </p>
+              <p>{data.para1}</p>
+              <p>{data.para2}</p>
             </div>
           </motion.div>
 
@@ -229,7 +223,35 @@ function StewardshipPhilosophy() {
     </section>
   );
 }
+function StewardshipCTA() {
+  const { data } = useSectionData("power-generation", "PGCTA", defaultPGCTAData);
+  return (
+    <section className="py-32 bg-white text-center">
+      <div className="max-w-4xl mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
+          {data.heading}
+        </h2>
+        <p className="text-xl text-neutral-600 mb-10">
+          {data.subheading}
+        </p>
+        <Link
+          to="/contact"
+          className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+        >
+          {data.buttonText}
+          <ArrowRightIcon size={20} />
+        </Link>
+      </div>
+    </section>
+  );
+}
 export function PowerGeneration() {
+  useSEO(
+    "service/power-generation",
+    "Power Generation & O&M | Encotec Asset Stewardship",
+    "Encotec is one of India's top five O&M specialists, providing complete power plant operation, maintenance, and asset stewardship."
+  );
+
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}
@@ -238,25 +260,7 @@ export function PowerGeneration() {
       <StewardshipHero />
       <StewardshipFeatures />
       <StewardshipPhilosophy />
-
-      <section className="py-32 bg-white text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
-            Experience True Stewardship
-          </h2>
-          <p className="text-xl text-neutral-600 mb-10">
-            Let us take responsibility for your assets so you can focus on your
-            core business.
-          </p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
-          >
-            Partner With Us
-            <ArrowRightIcon size={20} />
-          </Link>
-        </div>
-      </section>
+      <StewardshipCTA />
 
       <Footer />
     </main>

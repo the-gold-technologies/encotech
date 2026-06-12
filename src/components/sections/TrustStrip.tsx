@@ -8,34 +8,40 @@ import {
   ZapIcon,
   ArrowRightIcon } from
 'lucide-react';
-const stats = [
-{
-  value: '2011',
-  label: 'FOUNDED YEAR',
-  icon: CalendarIcon
-},
-{
-  value: '13+',
-  label: 'KEY LOCATIONS',
-  icon: GlobeIcon
-},
-{
-  value: '1800+',
-  label: 'INDUSTRY SPECIALISTS',
-  icon: UsersIcon
-},
-{
-  value: '8000+',
-  label: 'MW POWER CAPACITY',
-  icon: ZapIcon
-}];
+import { useSectionData } from '../../store/useCMSStore';
+
+// --- Default Data ---
+const defaultTrustStripData = {
+  aboutLabel: "About Us",
+  aboutTitle: "Human-Centric Engineering Since 2011",
+  aboutPara1: "Encotec Energy brings an owner's mindset to every project. Founded in 2011, we have grown into a team of 1800+ industry specialists operating across 13+ key locations.",
+  aboutPara2: "From thermal power plants to cutting-edge solar installations, our engineering DNA drives precision, reliability, and sustainable outcomes for clients worldwide.",
+  statsList: [
+    { value: '2011', label: 'FOUNDED YEAR' },
+    { value: '13+', label: 'KEY LOCATIONS' },
+    { value: '1800+', label: 'INDUSTRY SPECIALISTS' },
+    { value: '8000+', label: 'MW POWER CAPACITY' }
+  ],
+  badgeTitle: "Est. 2011",
+  badgeSubtitle: "Pioneering Energy",
+  bannerTitle: "Experience Global Engineering Excellence.",
+  bannerSubtitle: "From India to Turkey, see how we are setting new standards in power infrastructure."
+};
+
+const trustStripIcons = [CalendarIcon, GlobeIcon, UsersIcon, ZapIcon];
 
 export function AboutSection() {
+  const { data } = useSectionData("home", "HomeTrustStrip", defaultTrustStripData);
+  const stats = (data.statsList || defaultTrustStripData.statsList).map((stat: any, i: number) => ({
+    ...stat,
+    icon: trustStripIcons[i % trustStripIcons.length] || ZapIcon
+  }));
+
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       {/* Subtle grid background */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.25]"
+        className="absolute inset-0 pointer-events-none opacity-[0.35]"
         style={{
           backgroundImage:
           'linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)',
@@ -67,7 +73,7 @@ export function AboutSection() {
               
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                About Us
+                {data.aboutLabel}
               </span>
             </motion.div>
 
@@ -90,8 +96,12 @@ export function AboutSection() {
               }}
               className="text-4xl md:text-5xl lg:text-[3.5rem] font-black text-neutral-900 leading-[1.08] tracking-tight uppercase mb-8">
               
-              Human-Centric Engineering{' '}
-              <span className="text-brand-pink">Since 2011</span>
+              {data.aboutTitle.includes("Since 2011") ? (
+                <>
+                  Human-Centric Engineering{' '}
+                  <span className="text-brand-pink">Since 2011</span>
+                </>
+              ) : data.aboutTitle}
             </motion.h2>
 
             {/* Body Text */}
@@ -114,20 +124,16 @@ export function AboutSection() {
               className="space-y-5 mb-8">
               
               <p className="text-neutral-500 leading-relaxed">
-                Encotec Energy brings an owner's mindset to every project.
-                Founded in 2011, we have grown into a team of 1800+ industry
-                specialists operating across 13+ key locations.
+                {data.aboutPara1}
               </p>
               <p className="text-neutral-500 leading-relaxed">
-                From thermal power plants to cutting-edge solar installations,
-                our engineering DNA drives precision, reliability, and
-                sustainable outcomes for clients worldwide.
+                {data.aboutPara2}
               </p>
             </motion.div>
 
             {/* Learn More Link */}
             <motion.a
-              href="#"
+              href="/about"
               initial={{
                 opacity: 0
               }}
@@ -142,7 +148,6 @@ export function AboutSection() {
                 delay: 0.3
               }}
               className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-brand-pink uppercase hover:gap-3 transition-all duration-300 mb-12">
-              
               Learn More
               <ArrowRightIcon size={14} />
             </motion.a>
@@ -167,16 +172,15 @@ export function AboutSection() {
               className="grid grid-cols-2 gap-4">
               
               {stats.map((stat, i) =>
-              <div
-                key={i}
-                className="p-5 border border-neutral-200 hover:border-brand-pink/30 transition-colors duration-300 group">
-                
+                <div
+                  key={i}
+                  className="p-5 border border-neutral-200 hover:border-brand-pink/30 transition-colors duration-300 group">
+                  
                   <div className="mb-4">
                     <stat.icon
-                    size={22}
-                    className="text-brand-pink/60 group-hover:text-brand-pink transition-colors duration-300"
-                    strokeWidth={1.5} />
-                  
+                      size={22}
+                      className="text-brand-pink/60 group-hover:text-brand-pink transition-colors duration-300"
+                      strokeWidth={1.5} />
                   </div>
                   <div className="text-2xl md:text-3xl font-black text-neutral-900 tracking-tight leading-none">
                     {stat.value}
@@ -242,10 +246,10 @@ export function AboutSection() {
                 </div>
                 <div>
                   <div className="text-sm font-black leading-none">
-                    Est. 2011
+                    {data.badgeTitle}
                   </div>
                   <div className="text-[9px] font-bold text-neutral-400 tracking-[0.15em] uppercase mt-0.5">
-                    Pioneering Energy
+                    {data.badgeSubtitle}
                   </div>
                 </div>
               </div>
@@ -272,23 +276,22 @@ export function AboutSection() {
           className="mt-28 py-20 bg-neutral-50 -mx-6 lg:-mx-10 px-6 lg:px-10 text-center">
           
           <h3 className="text-2xl md:text-3xl font-black text-neutral-900 tracking-tight uppercase mb-4">
-            Experience Global Engineering Excellence.
+            {data.bannerTitle}
           </h3>
           <p className="text-neutral-500 max-w-lg mx-auto mb-8">
-            From India to Turkey, see how we are setting new standards in power
-            infrastructure.
+            {data.bannerSubtitle}
           </p>
           <Link
             to="/contact"
             className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-            
             View Our Global Reach
             <ArrowRightIcon size={14} />
           </Link>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
+
 // Keep backward-compatible export
 export { AboutSection as TrustStrip };

@@ -17,6 +17,21 @@ import {
   ChevronRightIcon,
   MailIcon,
 } from "lucide-react";
+import { useSectionData } from "../store/useCMSStore";
+import { useSEO } from "../hooks/useSEO";
+
+// --- Default Data ---
+const defaultInsightsHeroData = {
+  heroTitle: "INSIGHTS, CASE STUDIES & INDUSTRY PERSPECTIVES",
+  heroSubtitle: "Explore our thought leadership, project successes, and the latest updates from the forefront of global energy engineering.",
+};
+const defaultInsightsStatsData = {
+  stat1Value: 15, stat1Label: "Case Studies Published",
+  stat2Value: 50, stat2Label: "Articles & Insights",
+  stat3Value: 8, stat3Label: "Countries Covered",
+  stat4Value: 10, stat4Label: "Monthly Readers (K+)",
+};
+
 // Animated Counter Component
 function AnimatedCounter({
   target,
@@ -221,6 +236,7 @@ function InsightsHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
+  const { data } = useSectionData("insights", "InsightsHero", defaultInsightsHeroData);
   return (
     <section className="relative min-h-[80vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
@@ -306,7 +322,7 @@ function InsightsHero() {
             }}
             className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-8"
           >
-            INSIGHTS, CASE STUDIES & INDUSTRY PERSPECTIVES
+            {data.heroTitle}
           </motion.h1>
 
           {/* Subtitle */}
@@ -325,8 +341,7 @@ function InsightsHero() {
             }}
             className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12"
           >
-            Explore our thought leadership, project successes, and the latest
-            updates from the forefront of global energy engineering.
+            {data.heroSubtitle}
           </motion.p>
 
           {/* Category Pills */}
@@ -608,27 +623,12 @@ function ContentGrid() {
 }
 // Stats Banner
 function StatsBanner() {
+  const { data } = useSectionData("insights", "InsightsStats", defaultInsightsStatsData);
   const stats = [
-    {
-      value: 15,
-      suffix: "+",
-      label: "Case Studies Published",
-    },
-    {
-      value: 50,
-      suffix: "+",
-      label: "Articles & Insights",
-    },
-    {
-      value: 8,
-      suffix: "",
-      label: "Countries Covered",
-    },
-    {
-      value: 10,
-      suffix: "K+",
-      label: "Monthly Readers",
-    },
+    { value: data.stat1Value, suffix: "+", label: data.stat1Label },
+    { value: data.stat2Value, suffix: "+", label: data.stat2Label },
+    { value: data.stat3Value, suffix: "", label: data.stat3Label },
+    { value: data.stat4Value, suffix: "K+", label: data.stat4Label },
   ];
 
   return (
@@ -786,6 +786,12 @@ function CTASection() {
 }
 // Main Component
 export function Insights() {
+  useSEO(
+    "insights",
+    "Insights & Case Studies | Encotec",
+    "Explore Encotec's news, insights, articles, and case studies detailing our achievements in energy infrastructure, asset stewardship, and construction."
+  );
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

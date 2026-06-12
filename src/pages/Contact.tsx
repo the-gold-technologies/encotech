@@ -23,6 +23,15 @@ import {
   ClockIcon,
   BuildingIcon,
 } from "lucide-react";
+import { useSectionData } from "../store/useCMSStore";
+import { useSEO } from "../hooks/useSEO";
+
+// --- Default Data ---
+const defaultContactHeroData = {
+  heroTitle: "Let's Build the Future of Energy Together",
+  heroSubtitle: "Reach out to our team of experts for project inquiries, strategic partnerships, or to learn more about our engineering capabilities."
+};
+
 // --- Map Data & Configuration ---
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 interface Location {
@@ -203,6 +212,7 @@ const connections: Array<[[number, number], [number, number]]> = [
 ];
 // --- Components ---
 function ContactHero() {
+  const { data } = useSectionData("contact", "ContactHero", defaultContactHeroData);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
@@ -289,9 +299,9 @@ function ContactHero() {
               duration: 0.8,
               delay: 0.4,
             }}
-            className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-8 uppercase"
+            className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-8 uppercase select-text selection:bg-brand-pink selection:text-white"
           >
-            Let's Build the Future of Energy Together
+            {data.heroTitle}
           </motion.h1>
 
           {/* Subtitle */}
@@ -310,8 +320,7 @@ function ContactHero() {
             }}
             className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12"
           >
-            Reach out to our team of experts for project inquiries, strategic
-            partnerships, or to learn more about our engineering capabilities.
+            {data.heroSubtitle}
           </motion.p>
         </motion.div>
       </div>
@@ -752,8 +761,8 @@ function GlobalOfficesMap() {
               }}
             >
               <Geographies geography={geoUrl}>
-                {({ geographies }) =>
-                  geographies.map((geo) => (
+                {({ geographies }: any) =>
+                  geographies.map((geo: any) => (
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
@@ -1034,6 +1043,12 @@ function GlobalOfficesMap() {
   );
 }
 export function Contact() {
+  useSEO(
+    "contact",
+    "Contact Us | Encotec Energy Infrastructure Partner",
+    "Get in touch with Encotec for project conceptualization, construction, O&M, advisory services, global sourcing, or general inquiries."
+  );
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

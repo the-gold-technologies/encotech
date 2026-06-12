@@ -22,174 +22,87 @@ import {
   UsersIcon,
   FileTextIcon,
 } from "lucide-react";
+import { useSectionData } from "../store/useCMSStore";
+import { useSEO } from "../hooks/useSEO";
+// --- Default Data ---
+const defaultHeroData = {
+  heroTitle: "SHAPE THE FUTURE OF GLOBAL ENERGY",
+  heroSubtitle: "Join a team of world-class engineers and energy professionals delivering critical infrastructure across 23+ countries.",
+};
+
+const defaultCultureData = {
+  cultureHeading: "Engineering Careers That Matter",
+  culturePara1: "At Encotec, we don't just build power plants; we engineer the foundation of modern society. Our team works on some of the most complex and critical energy infrastructure projects globally, from massive supercritical thermal plants to utility-scale renewable energy parks.",
+  culturePara2: "We foster a culture of technical excellence, continuous learning, and collaborative problem-solving. When you join Encotec, you gain global exposure, working alongside industry veterans who are passionate about mentoring the next generation of engineering leaders.",
+  cultureQuote: "We empower our engineers to take ownership, innovate, and deliver solutions that have a tangible impact on global energy security.",
+};
+
+const defaultBenefitsData = {
+  benefitsList: [
+    { title: "Global Exposure", description: "Work on critical energy infrastructure projects across 23+ countries with diverse international teams." },
+    { title: "Technical Growth", description: "Access to cutting-edge technologies, specialized training, and continuous learning programs." },
+    { title: "Competitive Compensation", description: "Industry-leading salary packages with performance-based bonuses and comprehensive benefits." },
+    { title: "Health & Wellness", description: "Comprehensive medical insurance, wellness programs, and support for physical and mental health." },
+    { title: "Work-Life Balance", description: "Flexible working arrangements, generous leave policies, and a supportive team environment." },
+    { title: "Career Progression", description: "Clear growth paths, leadership development, and mentorship from seasoned industry veterans." },
+  ],
+};
+
+const defaultJobsData = {
+  jobsList: [
+    { title: "Senior Power Plant Engineer", dept: "Engineering", location: "Mumbai, India", type: "Full-time", desc: "Lead engineering design and technical reviews for supercritical thermal power projects." },
+    { title: "Renewable Energy Analyst", dept: "Engineering", location: "Dubai, UAE", type: "Full-time", desc: "Conduct energy yield analysis and feasibility studies for solar and wind projects." },
+    { title: "Project Manager — EPC", dept: "Project Management", location: "Riyadh, KSA", type: "Full-time", desc: "Manage end-to-end execution of large-scale EPC projects in the Middle East." },
+    { title: "Commissioning Engineer", dept: "Engineering", location: "Houston, USA", type: "Contract", desc: "Oversee testing and commissioning of power generation equipment and systems." },
+    { title: "O&M Site Manager", dept: "Operations", location: "Rajpura, India", type: "Full-time", desc: "Lead day-to-day operations and maintenance of a 2x700 MW supercritical plant." },
+    { title: "Electrical Design Engineer", dept: "Engineering", location: "Mumbai, India", type: "Full-time", desc: "Design transmission lines (33kV-765kV) and substation systems (AIS/GIS)." },
+    { title: "Business Development Manager", dept: "Corporate", location: "Singapore", type: "Full-time", desc: "Drive business growth across the Asia-Pacific region for energy services." },
+    { title: "Quality Assurance Lead", dept: "Operations", location: "Frankfurt, Germany", type: "Full-time", desc: "Implement and oversee quality management systems across European projects." },
+  ],
+};
+
+const defaultGalleryData = {
+  galleryList: [
+    { image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800", caption: "Team Collaboration" },
+    { image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800", caption: "On-Site Engineering" },
+    { image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800", caption: "Strategic Planning" },
+    { image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800", caption: "Field Operations" },
+    { image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800", caption: "Team Celebrations" },
+    { image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800", caption: "Project Reviews" },
+  ],
+};
+
+const defaultProcessData = {
+  processSteps: [
+    { title: "Apply Online", description: "Submit your resume and cover letter through our portal." },
+    { title: "Initial Screening", description: "Our HR team reviews your application within 5 business days." },
+    { title: "Technical Interview", description: "Meet with our engineering leads for a technical discussion." },
+    { title: "Final Offer", description: "Receive your offer and begin your journey with Encotec." },
+  ],
+};
+
+const defaultCTAData = {
+  ctaHeading: "Don't See the Right Role?",
+  ctaSubtitle: "We're always looking for talented engineers and energy professionals. Send us your resume and we'll keep you in mind for future opportunities.",
+  hrEmail: "careers@encotec.com",
+};
+
+// Benefit icon map (by index)
+const benefitIcons = [GlobeIcon, TrendingUpIcon, DollarSignIcon, HeartIcon, ClockIcon, AwardIcon];
+// Process step icon map (by index)
+const processIcons = [FileTextIcon, SearchIcon, UsersIcon, CheckCircle2Icon];
+
 // --- Data ---
-const benefits = [
-  {
-    title: "Global Exposure",
-    description:
-      "Work on critical energy infrastructure projects across 23+ countries with diverse international teams.",
-    icon: GlobeIcon,
-  },
-  {
-    title: "Technical Growth",
-    description:
-      "Access to cutting-edge technologies, specialized training, and continuous learning programs.",
-    icon: TrendingUpIcon,
-  },
-  {
-    title: "Competitive Compensation",
-    description:
-      "Industry-leading salary packages with performance-based bonuses and comprehensive benefits.",
-    icon: DollarSignIcon,
-  },
-  {
-    title: "Health & Wellness",
-    description:
-      "Comprehensive medical insurance, wellness programs, and support for physical and mental health.",
-    icon: HeartIcon,
-  },
-  {
-    title: "Work-Life Balance",
-    description:
-      "Flexible working arrangements, generous leave policies, and a supportive team environment.",
-    icon: ClockIcon,
-  },
-  {
-    title: "Career Progression",
-    description:
-      "Clear growth paths, leadership development, and mentorship from seasoned industry veterans.",
-    icon: AwardIcon,
-  },
-];
 
-const jobs = [
-  {
-    id: 1,
-    title: "Senior Power Plant Engineer",
-    dept: "Engineering",
-    location: "Mumbai, India",
-    type: "Full-time",
-    desc: "Lead engineering design and technical reviews for supercritical thermal power projects.",
-  },
-  {
-    id: 2,
-    title: "Renewable Energy Analyst",
-    dept: "Engineering",
-    location: "Dubai, UAE",
-    type: "Full-time",
-    desc: "Conduct energy yield analysis and feasibility studies for solar and wind projects.",
-  },
-  {
-    id: 3,
-    title: "Project Manager — EPC",
-    dept: "Project Management",
-    location: "Riyadh, KSA",
-    type: "Full-time",
-    desc: "Manage end-to-end execution of large-scale EPC projects in the Middle East.",
-  },
-  {
-    id: 4,
-    title: "Commissioning Engineer",
-    dept: "Engineering",
-    location: "Houston, USA",
-    type: "Contract",
-    desc: "Oversee testing and commissioning of power generation equipment and systems.",
-  },
-  {
-    id: 5,
-    title: "O&M Site Manager",
-    dept: "Operations",
-    location: "Rajpura, India",
-    type: "Full-time",
-    desc: "Lead day-to-day operations and maintenance of a 2x700 MW supercritical plant.",
-  },
-  {
-    id: 6,
-    title: "Electrical Design Engineer",
-    dept: "Engineering",
-    location: "Mumbai, India",
-    type: "Full-time",
-    desc: "Design transmission lines (33kV-765kV) and substation systems (AIS/GIS).",
-  },
-  {
-    id: 7,
-    title: "Business Development Manager",
-    dept: "Corporate",
-    location: "Singapore",
-    type: "Full-time",
-    desc: "Drive business growth across the Asia-Pacific region for energy services.",
-  },
-  {
-    id: 8,
-    title: "Quality Assurance Lead",
-    dept: "Operations",
-    location: "Frankfurt, Germany",
-    type: "Full-time",
-    desc: "Implement and oversee quality management systems across European projects.",
-  },
-];
 
-const gallery = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800",
-    caption: "Team Collaboration",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800",
-    caption: "On-Site Engineering",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800",
-    caption: "Strategic Planning",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800",
-    caption: "Field Operations",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800",
-    caption: "Team Celebrations",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800",
-    caption: "Project Reviews",
-  },
-];
 
-const processSteps = [
-  {
-    title: "Apply Online",
-    description: "Submit your resume and cover letter through our portal.",
-    icon: FileTextIcon,
-  },
-  {
-    title: "Initial Screening",
-    description: "Our HR team reviews your application within 5 business days.",
-    icon: SearchIcon,
-  },
-  {
-    title: "Technical Interview",
-    description: "Meet with our engineering leads for a technical discussion.",
-    icon: UsersIcon,
-  },
-  {
-    title: "Final Offer",
-    description: "Receive your offer and begin your journey with Encotec.",
-    icon: CheckCircle2Icon,
-  },
-];
 
 // --- Components ---
 function CareersHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
+  const { data } = useSectionData("careers", "CareersHero", defaultHeroData);
   return (
     <section className="relative min-h-[80vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
@@ -275,7 +188,7 @@ function CareersHero() {
             }}
             className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8"
           >
-            SHAPE THE FUTURE OF GLOBAL ENERGY
+            {data.heroTitle}
           </motion.h1>
 
           {/* Subtitle */}
@@ -294,8 +207,7 @@ function CareersHero() {
             }}
             className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl"
           >
-            Join a team of world-class engineers and energy professionals
-            delivering critical infrastructure across 23+ countries.
+            {data.heroSubtitle}
           </motion.p>
 
           {/* Floating Badges */}
@@ -327,6 +239,7 @@ function CareersHero() {
   );
 }
 function WhyEncotecSection() {
+  const { data } = useSectionData("careers", "CareersCulture", defaultCultureData);
   return (
     <section className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -356,31 +269,20 @@ function WhyEncotecSection() {
             </div>
 
             <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8 leading-tight">
-              Engineering Careers That Matter
+              {data.cultureHeading}
             </h2>
 
             <div className="space-y-6 text-lg text-neutral-700 leading-relaxed">
               <p>
-                At Encotec, we don't just build power plants; we engineer the
-                foundation of modern society. Our team works on some of the most
-                complex and critical energy infrastructure projects globally,
-                from massive supercritical thermal plants to utility-scale
-                renewable energy parks.
+                {data.culturePara1}
               </p>
               <p>
-                We foster a culture of technical excellence, continuous
-                learning, and collaborative problem-solving. When you join
-                Encotec, you gain global exposure, working alongside industry
-                veterans who are passionate about mentoring the next generation
-                of engineering leaders.
+                {data.culturePara2}
               </p>
 
-              {/* Callout */}
               <div className="mt-8 p-8 bg-brand-panel border-l-4 border-brand-pink">
                 <p className="text-xl text-neutral-900 font-medium italic">
-                  "We empower our engineers to take ownership, innovate, and
-                  deliver solutions that have a tangible impact on global energy
-                  security."
+                  "{data.cultureQuote}"
                 </p>
               </div>
             </div>
@@ -426,6 +328,11 @@ function WhyEncotecSection() {
   );
 }
 function BenefitsSection() {
+  const { data } = useSectionData("careers", "CareersBenefits", defaultBenefitsData);
+  const benefits = (data.benefitsList || []).map((b: any, i: number) => ({
+    ...b,
+    icon: benefitIcons[i] || AwardIcon,
+  }));
   return (
     <section className="py-32 bg-neutral-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -497,6 +404,8 @@ function BenefitsSection() {
   );
 }
 function OpenPositionsSection() {
+  const { data } = useSectionData("careers", "CareersOpenPositions", defaultJobsData);
+  const jobs = (data.jobsList || []).map((job: any, index: number) => ({ ...job, id: index + 1 }));
   const [activeFilter, setActiveFilter] = useState("All");
   const filters = [
     "All",
@@ -506,7 +415,7 @@ function OpenPositionsSection() {
     "Corporate",
   ];
 
-  const filteredJobs = jobs.filter((job) => {
+  const filteredJobs = jobs.filter((job: any) => {
     if (activeFilter === "All") return true;
     return job.dept === activeFilter;
   });
@@ -644,6 +553,8 @@ function OpenPositionsSection() {
   );
 }
 function CultureGallery() {
+  const { data } = useSectionData("careers", "CareersGallery", defaultGalleryData);
+  const gallery: Array<{ image: string; caption: string }> = data.galleryList || [];
   return (
     <section className="py-32 bg-neutral-900 text-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -713,6 +624,11 @@ function CultureGallery() {
   );
 }
 function ApplicationProcess() {
+  const { data } = useSectionData("careers", "CareersProcess", defaultProcessData);
+  const processSteps = (data.processSteps || []).map((step: any, i: number) => ({
+    ...step,
+    icon: processIcons[i] || CheckCircle2Icon,
+  }));
   return (
     <section className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -779,6 +695,7 @@ function ApplicationProcess() {
   );
 }
 function CTASection() {
+  const { data } = useSectionData("careers", "CareersCTA", defaultCTAData);
   const scrollToJobs = () => {
     const element = document.getElementById("open-positions");
     if (element) {
@@ -811,17 +728,15 @@ function CTASection() {
           }}
         >
           <h2 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
-            Don't See the Right Role?
+            {data.ctaHeading}
           </h2>
           <p className="text-xl text-neutral-300 mb-12 leading-relaxed">
-            We're always looking for talented engineers and energy
-            professionals. Send us your resume and we'll keep you in mind for
-            future opportunities.
+            {data.ctaSubtitle}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="mailto:careers@encotec.com"
+              href={`mailto:${data.hrEmail}`}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
             >
               Send Your Resume
@@ -840,6 +755,12 @@ function CTASection() {
   );
 }
 export function Careers() {
+  useSEO(
+    "careers",
+    "Careers at Encotec | Join Our Engineering & Services Team",
+    "Join the Encotec family. Explore open positions in energy infrastructure, engineering, O&M, and plant construction globally."
+  );
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

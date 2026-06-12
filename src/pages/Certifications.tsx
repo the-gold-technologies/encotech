@@ -12,6 +12,8 @@ import {
   BuildingIcon,
   GlobeIcon,
 } from "lucide-react";
+import { useSectionData } from "../store/useCMSStore";
+import { useSEO } from "../hooks/useSEO";
 // --- Animated Counter Component ---
 function AnimatedCounter({
   target,
@@ -51,11 +53,71 @@ function AnimatedCounter({
     </span>
   );
 }
+// --- Default Data ---
+const defaultHeroData = {
+  heroTitle: "CERTIFICATIONS & PARTNERS",
+  heroSubtitle:
+    "Our commitment to global standards of quality, safety, and environmental management, backed by strategic alliances with industry leaders.",
+};
+
+const defaultCertificationsData = {
+  certificationsList: [
+    { title: "ISO 9001:2015", category: "Quality Management", desc: "Ensuring consistent quality in our engineering, procurement, and construction services." },
+    { title: "ISO 14001:2015", category: "Environmental Management", desc: "Commitment to minimizing our environmental footprint across all project sites." },
+    { title: "ISO 45001:2018", category: "Occupational Health & Safety", desc: "Maintaining the highest standards of workplace safety for our employees and contractors." },
+    { title: "ASME 'U' & 'S' Stamps", category: "Boiler & Pressure Vessel", desc: "Authorized to manufacture and assemble power boilers and pressure vessels." },
+    { title: "NABL Accreditation", category: "Testing & Calibration", desc: "Recognized competence of our testing and calibration laboratories." },
+    { title: "IBR Certification", category: "Indian Boiler Regulations", desc: "Certified as a special class boiler repairer and erector under IBR 1950." },
+  ],
+};
+
+const defaultPartnersData = {
+  partnersList: [
+    { name: "Siemens Energy", monogram: "SE", role: "Gas Turbine Technology" },
+    { name: "GE Vernova", monogram: "GE", role: "Power Generation Systems" },
+    { name: "BHEL", monogram: "BH", role: "Heavy Electrical Equipment" },
+    { name: "NTPC", monogram: "NT", role: "Thermal Power Operations" },
+    { name: "L&T Energy", monogram: "LT", role: "EPC & Construction" },
+    { name: "Tata Power", monogram: "TP", role: "Integrated Power Solutions" },
+    { name: "Adani Power", monogram: "AP", role: "Private Sector Energy" },
+    { name: "JSW Energy", monogram: "JW", role: "Diversified Energy Portfolio" },
+  ],
+};
+
+const defaultMembershipsData = {
+  membershipsList: [
+    { name: "Confederation of Indian Industry (CII)", year: "2010" },
+    { name: "Federation of Indian Chambers of Commerce (FICCI)", year: "2012" },
+    { name: "Indian Electrical & Electronics Mfrs. Assoc. (IEEMA)", year: "2014" },
+    { name: "Central Board of Irrigation and Power (CBIP)", year: "2015" },
+    { name: "Independent Power Producers Assoc. (IPPAI)", year: "2016" },
+    { name: "Associated Chambers of Commerce (ASSOCHAM)", year: "2018" },
+  ],
+};
+
+const defaultTrustStatsData = {
+  stats1Value: "15", stats1Label: "Years of Excellence", stats1Suffix: "+",
+  stats2Value: "100", stats2Label: "Compliance Rate", stats2Suffix: "%",
+  stats3Value: "50", stats3Label: "Global Audits Passed", stats3Suffix: "+",
+  stats4Value: "23", stats4Label: "Countries Recognized", stats4Suffix: "+",
+};
+
+// Icon mapping for certifications grid
+const certIconMap: Record<string, React.ComponentType<any>> = {
+  "ISO 9001:2015": ShieldCheckIcon,
+  "ISO 14001:2015": GlobeIcon,
+  "ISO 45001:2018": CheckCircle2Icon,
+  "ASME 'U' & 'S' Stamps": AwardIcon,
+  "NABL Accreditation": FileTextIcon,
+  "IBR Certification": BuildingIcon,
+};
+
 // --- Sections ---
 function CertificationsHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
+  const { data } = useSectionData("certifications", "CertificationsHero", defaultHeroData);
   return (
     <section className="relative min-h-screen w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
@@ -140,7 +202,7 @@ function CertificationsHero() {
             }}
             className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8 max-w-5xl"
           >
-            CERTIFICATIONS & PARTNERS
+            {data.heroTitle}
           </motion.h1>
 
           {/* Subtitle */}
@@ -159,9 +221,7 @@ function CertificationsHero() {
             }}
             className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light max-w-3xl mb-12"
           >
-            Our commitment to global standards of quality, safety, and
-            environmental management, backed by strategic alliances with
-            industry leaders.
+            {data.heroSubtitle}
           </motion.p>
 
           {/* Floating Stat Badges */}
@@ -224,50 +284,12 @@ function CertificationsHero() {
   );
 }
 function CertificationsGrid() {
-  const certifications = [
-    {
-      id: "iso-9001",
-      title: "ISO 9001:2015",
-      category: "Quality Management",
-      desc: "Ensuring consistent quality in our engineering, procurement, and construction services.",
-      icon: ShieldCheckIcon,
-    },
-    {
-      id: "iso-14001",
-      title: "ISO 14001:2015",
-      category: "Environmental Management",
-      desc: "Commitment to minimizing our environmental footprint across all project sites.",
-      icon: GlobeIcon,
-    },
-    {
-      id: "iso-45001",
-      title: "ISO 45001:2018",
-      category: "Occupational Health & Safety",
-      desc: "Maintaining the highest standards of workplace safety for our employees and contractors.",
-      icon: CheckCircle2Icon,
-    },
-    {
-      id: "asme",
-      title: "ASME 'U' & 'S' Stamps",
-      category: "Boiler & Pressure Vessel",
-      desc: "Authorized to manufacture and assemble power boilers and pressure vessels.",
-      icon: AwardIcon,
-    },
-    {
-      id: "nabl",
-      title: "NABL Accreditation",
-      category: "Testing & Calibration",
-      desc: "Recognized competence of our testing and calibration laboratories.",
-      icon: FileTextIcon,
-    },
-    {
-      id: "ibr",
-      title: "IBR Certification",
-      category: "Indian Boiler Regulations",
-      desc: "Certified as a special class boiler repairer and erector under IBR 1950.",
-      icon: BuildingIcon,
-    },
-  ];
+  const { data } = useSectionData("certifications", "CertificationsGrid", defaultCertificationsData);
+  const certifications = (data.certificationsList || []).map((cert: any, index: number) => ({
+    ...cert,
+    id: `cert-${index}`,
+    icon: certIconMap[cert.title] || ShieldCheckIcon,
+  }));
 
   return (
     <section className="py-32 bg-neutral-50 relative overflow-hidden">
@@ -339,48 +361,8 @@ function CertificationsGrid() {
   );
 }
 function StrategicPartners() {
-  const partners = [
-    {
-      name: "Siemens Energy",
-      monogram: "SE",
-      role: "Gas Turbine Technology",
-    },
-    {
-      name: "GE Vernova",
-      monogram: "GE",
-      role: "Power Generation Systems",
-    },
-    {
-      name: "BHEL",
-      monogram: "BH",
-      role: "Heavy Electrical Equipment",
-    },
-    {
-      name: "NTPC",
-      monogram: "NT",
-      role: "Thermal Power Operations",
-    },
-    {
-      name: "L&T Energy",
-      monogram: "LT",
-      role: "EPC & Construction",
-    },
-    {
-      name: "Tata Power",
-      monogram: "TP",
-      role: "Integrated Power Solutions",
-    },
-    {
-      name: "Adani Power",
-      monogram: "AP",
-      role: "Private Sector Energy",
-    },
-    {
-      name: "JSW Energy",
-      monogram: "JW",
-      role: "Diversified Energy Portfolio",
-    },
-  ];
+  const { data } = useSectionData("certifications", "StrategicPartners", defaultPartnersData);
+  const partners: Array<{ name: string; monogram: string; role: string }> = data.partnersList || [];
 
   return (
     <section className="py-32 bg-dark-bg text-white relative overflow-hidden">
@@ -475,32 +457,8 @@ function StrategicPartners() {
   );
 }
 function IndustryMemberships() {
-  const memberships = [
-    {
-      name: "Confederation of Indian Industry (CII)",
-      year: "2010",
-    },
-    {
-      name: "Federation of Indian Chambers of Commerce (FICCI)",
-      year: "2012",
-    },
-    {
-      name: "Indian Electrical & Electronics Mfrs. Assoc. (IEEMA)",
-      year: "2014",
-    },
-    {
-      name: "Central Board of Irrigation and Power (CBIP)",
-      year: "2015",
-    },
-    {
-      name: "Independent Power Producers Assoc. (IPPAI)",
-      year: "2016",
-    },
-    {
-      name: "Associated Chambers of Commerce (ASSOCHAM)",
-      year: "2018",
-    },
-  ];
+  const { data } = useSectionData("certifications", "IndustryMemberships", defaultMembershipsData);
+  const memberships: Array<{ name: string; year: string }> = data.membershipsList || [];
 
   return (
     <section className="py-32 bg-white overflow-hidden">
@@ -593,44 +551,29 @@ function IndustryMemberships() {
   );
 }
 function TrustStats() {
+  const { data } = useSectionData("certifications", "TrustStats", defaultTrustStatsData);
+  const stats = [
+    { value: parseInt(data.stats1Value) || 15, label: data.stats1Label || "Years of Excellence", suffix: data.stats1Suffix || "+" },
+    { value: parseInt(data.stats2Value) || 100, label: data.stats2Label || "Compliance Rate", suffix: data.stats2Suffix || "%" },
+    { value: parseInt(data.stats3Value) || 50, label: data.stats3Label || "Global Audits Passed", suffix: data.stats3Suffix || "+" },
+    { value: parseInt(data.stats4Value) || 23, label: data.stats4Label || "Countries Recognized", suffix: data.stats4Suffix || "+" },
+  ];
   return (
     <section className="py-24 bg-neutral-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 divide-x divide-white/10">
-          <div className="flex flex-col items-center text-center px-4">
-            <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
-              <AnimatedCounter target={15} suffix="+" />
+          {stats.map((stat, i) => (
+            <div key={i} className="flex flex-col items-center text-center px-4">
+              <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
+                <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+              </div>
+              <div className="text-sm font-bold tracking-wider uppercase text-neutral-400">
+                {stat.label}
+              </div>
             </div>
-            <div className="text-sm font-bold tracking-wider uppercase text-neutral-400">
-              Years of Excellence
-            </div>
-          </div>
-          <div className="flex flex-col items-center text-center px-4">
-            <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
-              <AnimatedCounter target={100} suffix="%" />
-            </div>
-            <div className="text-sm font-bold tracking-wider uppercase text-neutral-400">
-              Compliance Rate
-            </div>
-          </div>
-          <div className="flex flex-col items-center text-center px-4">
-            <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
-              <AnimatedCounter target={50} suffix="+" />
-            </div>
-            <div className="text-sm font-bold tracking-wider uppercase text-neutral-400">
-              Global Audits Passed
-            </div>
-          </div>
-          <div className="flex flex-col items-center text-center px-4">
-            <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
-              <AnimatedCounter target={23} suffix="+" />
-            </div>
-            <div className="text-sm font-bold tracking-wider uppercase text-neutral-400">
-              Countries Recognized
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -676,6 +619,12 @@ function CTASection() {
   );
 }
 export function Certifications() {
+  useSEO(
+    "certifications",
+    "Certifications & Quality Standards | Encotec",
+    "Encotec is triple ISO certified in Quality (9001), Environment (14001), and Safety (45001), representing the peak of compliance and excellence."
+  );
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

@@ -11,7 +11,25 @@ import {
   ActivityIcon,
   CheckCircle2Icon,
 } from "lucide-react";
+import { useSectionData } from "../../store/useCMSStore";
+import { useSEO } from "../../hooks/useSEO";
+
+// --- Default Data ---
+const defaultAirportHeroData = {
+  heroTitle: "Making Informed Decisions For the Long Term",
+  heroSubtitle: "Before you buy an old plant or decide to move one, you need to know if it's fit for the future. Our due diligence services provide the technical truth about your assets.",
+};
+const defaultAirportFeaturesData = {
+  featuresList: [
+    { title: "Residual Life Assessment (RLA)", description: "We conduct exhaustive studies to determine how many more years of efficient life your plant equipment actually has, helping you plan for replacements or upgrades." },
+    { title: "Technical Due Diligence", description: "We provide independent technical audits for plant acquisitions, helping you understand the true value, operational risks, and hidden costs of an investment." },
+    { title: "Restoration Strategy", description: "For older plants, we provide comprehensive revamping and restoration plans to improve performance, extend lifecycle, and meet modern environmental standards." },
+  ],
+};
+const airportFeatureIconMap = [ActivityIcon, FileCheckIcon, RefreshCwIcon];
+
 function DueDiligenceHero() {
+  const { data } = useSectionData("airport-services", "AirportHero", defaultAirportHeroData);
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-10">
@@ -60,16 +78,11 @@ function DueDiligenceHero() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            Making Informed Decisions <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
-              For the Long Term
-            </span>
+            {data.heroTitle}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            Before you buy an old plant or decide to move one, you need to know
-            if it's fit for the future. Our due diligence services provide the
-            technical truth about your assets.
+            {data.heroSubtitle}
           </p>
         </motion.div>
       </div>
@@ -77,26 +90,8 @@ function DueDiligenceHero() {
   );
 }
 function HealthFeatures() {
-  const features = [
-    {
-      title: "Residual Life Assessment (RLA)",
-      description:
-        "We conduct exhaustive studies to determine how many more years of efficient life your plant equipment actually has, helping you plan for replacements or upgrades.",
-      icon: ActivityIcon,
-    },
-    {
-      title: "Technical Due Diligence",
-      description:
-        "We provide independent technical audits for plant acquisitions, helping you understand the true value, operational risks, and hidden costs of an investment.",
-      icon: FileCheckIcon,
-    },
-    {
-      title: "Restoration Strategy",
-      description:
-        "For older plants, we provide comprehensive revamping and restoration plans to improve performance, extend lifecycle, and meet modern environmental standards.",
-      icon: RefreshCwIcon,
-    },
-  ];
+  const { data } = useSectionData("airport-services", "AirportFeatures", defaultAirportFeaturesData);
+  const features = (data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: airportFeatureIconMap[i] || ActivityIcon }));
 
   return (
     <section className="py-28 bg-white relative overflow-hidden">
@@ -221,6 +216,12 @@ function ValueProtection() {
   );
 }
 export function AirportServices() {
+  useSEO(
+    "service/airport-services",
+    "Airport Utility Management & Services | Encotec",
+    "Encotec manages critical high-voltage assets, fire safety, mechanical utilities, and support services for international airport hubs."
+  );
+
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}

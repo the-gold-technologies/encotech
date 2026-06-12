@@ -16,11 +16,83 @@ import {
   LeafIcon,
   BriefcaseIcon,
 } from "lucide-react";
+import { useSectionData } from "../store/useCMSStore";
+import { useSEO } from "../hooks/useSEO";
+
+// --- Default Data ---
+const defaultAboutHeroData = {
+  heroTitle: "Engineering Excellence, Delivered with Ownership",
+  heroSubtitle: "A full-spectrum engineering and services company operating across power generation, transmission & distribution, and renewable energy sectors.",
+};
+const defaultWhoWeAreData = {
+  heading: "Energy is More Than Just Infrastructure",
+  para1: "At Encotec, we believe that energy infrastructure is about more than just steel and circuits — it is about the responsibility of keeping the world moving. We have evolved from a traditional consulting firm into a Global Service Provider that offers end-to-end solutions for the entire life of your project.",
+  para2: "We approach every plant, every substation, and every utility we manage with what we call an \"Owner's Mindset\". This means we don't just provide a service; we take total responsibility for your assets, treating them with the same care, accountability, and long-term vision as if they were our own.",
+};
+const defaultMVVData = {
+  missionText: "To deliver error-free, high-standard services through continuous innovation and a relentless commitment to \"finding new ways to energy solutions\".",
+  visionText: "To be the most trusted global partner in energy stewardship, leading the transition from traditional power to a sustainable future.",
+  valuesList: [
+    { title: "Accountability", description: "We treat every site with the care of an owner, taking full responsibility for outcomes." },
+    { title: "Innovation", description: "We constantly find new ways to improve energy solutions for reliability and efficiency." },
+    { title: "Safety First", description: "We ensure excellence isn't just a goal — it's our standard at every project site." },
+    { title: "Quality Standards", description: "Triple ISO Certified in Quality (9001), Environment (14001), and Safety (45001)." },
+    { title: "Client Partnership", description: "We work as trusted partners, aligning our solutions with client objectives." },
+    { title: "Sustainability", description: "Bridging the gap between traditional power and the renewable future." },
+  ],
+};
+const defaultScaleData = {
+  stat1Value: "1,800+", stat1Label: "Dedicated Staff", stat1Desc: "Working across global sites",
+  stat2Value: "300+", stat2Label: "Specialized Engineers", stat2Desc: "Providing high-level expert advisory and diagnostics",
+  stat3Value: "8,000+", stat3Label: "MW Managed", stat3Desc: "Total power capacity under our stewardship",
+  stat4Value: "Triple ISO", stat4Label: "Certified", stat4Desc: "Quality (9001), Environment (14001), Safety (45001)",
+  stat5Value: "65+", stat5Label: "Global OEMs", stat5Desc: "Tie-ups across China, Vietnam, Korea, and India",
+};
+const defaultTimelineData = {
+  phasesList: [
+    { title: "2011–2012: Construction Beginnings", description: "We began our major journey with complex IBR piping erection and commissioning for the massive 2x660 MW Obra 'C' project." },
+    { title: "2013: Renewable Expansion", description: "Expanded into the green frontier, successfully commissioning 10 MWp Solar PV projects in Gujarat and Solar Thermal projects in Rajasthan." },
+    { title: "2014–2021: O&M Leadership", description: "Solidified our reputation as top-tier stewards with the long-term O&M management of 2x600 MW units at Tuticorin." },
+    { title: "2018: Supercritical Excellence", description: "Embarked on our flagship O&M partnership for the 2x700 MW Supercritical Power Plant at Jhajjar." },
+    { title: "2021: Going Global", description: "Took our expertise global, managing critical commissioning projects internationally." },
+    { title: "2025 & Beyond: New Chapters", description: "We are currently providing specialized utility management for international hubs like Delhi (DIAL) and Noida (YIAPL) International Airports." },
+  ],
+};
+const defaultSustainabilityData = {
+  para1: "Sustainability is not a policy at Encotec; it is our promise. We are committed to sustainable development by integrating high standards of environmental management into everything we do.",
+  para2: "Our in-house Encotec-Dornier team conducts specialized energy audits to identify savings and reduce the carbon footprints of operational plants. Through our expert advisory and Residual Life Assessments (RLA), we help owners revitalize old plants, making them more efficient and environmentally compliant.",
+  focusList: [
+    "Specialized energy audits by our in-house Encotec-Dornier team to identify savings and reduce carbon footprints",
+    "Residual Life Assessments (RLA) to help owners revitalize older plants for improved efficiency and environmental compliance",
+    "ISO 14001 environmental management integrated into daily operations across all sites",
+    "Supporting the transition from traditional power to a sustainable, renewable future",
+  ],
+};
+const defaultGlobalPresenceData = {
+  para: "While our headquarters is in Noida, our footprints span the world. In India, we are present in 13+ key cities from Jamshedpur to Vizag. Internationally, we have established strong roots in Turkey, Bahrain, and Greece, ensuring that wherever infrastructure needs stewardship, Encotec is there.",
+  areasList: [
+    { title: "International Operations", desc: "Turkey, Bahrain, Greece" },
+    { title: "Headquarters", desc: "Noida, India" },
+    { title: "Eastern & Central India", desc: "Jamshedpur, Haldia, Khandwa" },
+    { title: "Coastal & Southern India", desc: "Vizag and expanding regions" },
+  ],
+};
+const defaultAboutLeadershipData = {
+  leader1Role: "Managing Director",
+  leader1Name: "[Name]",
+  leader1Bio: "Brings extensive leadership experience in engineering, project execution, and energy infrastructure development.",
+  leader2Role: "Director – Operations",
+  leader2Name: "[Name]",
+  leader2Bio: "Leads operational delivery across multiple projects, ensuring efficient execution, adherence to quality standards, and optimal resource utilization.",
+};
+const mvvIconMap = [HeartHandshakeIcon, AwardIcon, ShieldCheckIcon, TrendingUpIcon, UsersIcon, LeafIcon];
+
 // Hero Section
 function AboutHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const { data } = useSectionData("about", "AboutHero", defaultAboutHeroData);
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Background Image with Parallax */}
@@ -104,10 +176,7 @@ function AboutHero() {
             }}
             className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8"
           >
-            Engineering Excellence,{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
-              Delivered with Ownership
-            </span>
+            {data.heroTitle}
           </motion.h1>
 
           <motion.p
@@ -125,9 +194,7 @@ function AboutHero() {
             }}
             className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light"
           >
-            A full-spectrum engineering and services company operating across
-            power generation, transmission & distribution, and renewable energy
-            sectors.
+            {data.heroSubtitle}
           </motion.p>
         </motion.div>
       </div>
@@ -176,6 +243,7 @@ function AboutHero() {
 }
 // Who We Are Section
 function WhoWeAre() {
+  const { data } = useSectionData("about", "WhoWeAre", defaultWhoWeAreData);
   return (
     <section className="py-28 bg-white relative overflow-hidden">
       <div
@@ -212,25 +280,12 @@ function WhoWeAre() {
           </div>
 
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 leading-tight mb-8">
-            Energy is More Than <br />
-            <span className="text-brand-pink">Just Infrastructure</span>
+            {data.heading}
           </h2>
 
           <div className="space-y-6 text-lg text-neutral-700 leading-relaxed">
-            <p>
-              At Encotec, we believe that energy infrastructure is about more
-              than just steel and circuits — it is about the responsibility of
-              keeping the world moving. We have evolved from a traditional
-              consulting firm into a Global Service Provider that offers
-              end-to-end solutions for the entire life of your project.
-            </p>
-            <p className="text-neutral-900 font-semibold">
-              We approach every plant, every substation, and every utility we
-              manage with what we call an "Owner's Mindset". This means we don't
-              just provide a service; we take total responsibility for your
-              assets, treating them with the same care, accountability, and
-              long-term vision as if they were our own.
-            </p>
+            <p>{data.para1}</p>
+            <p className="text-neutral-900 font-semibold">{data.para2}</p>
           </div>
         </motion.div>
       </div>
@@ -239,6 +294,8 @@ function WhoWeAre() {
 }
 // Mission, Vision & Values
 function MissionVisionValues() {
+  const { data } = useSectionData("about", "MissionVisionValues", defaultMVVData);
+  const values = (data.valuesList || []).map((v: any, i: number) => ({ ...v, icon: mvvIconMap[i] || AwardIcon }));
   return (
     <section className="py-28 bg-neutral-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -291,11 +348,7 @@ function MissionVisionValues() {
             <h3 className="text-2xl font-black text-neutral-900 mb-4 uppercase tracking-tight">
               Mission
             </h3>
-            <p className="text-neutral-700 leading-relaxed">
-              To deliver error-free, high-standard services through continuous
-              innovation and a relentless commitment to "finding new ways to
-              energy solutions".
-            </p>
+            <p className="text-neutral-700 leading-relaxed">{data.missionText}</p>
           </motion.div>
 
           <motion.div
@@ -318,11 +371,7 @@ function MissionVisionValues() {
             <h3 className="text-2xl font-black text-neutral-900 mb-4 uppercase tracking-tight">
               Vision
             </h3>
-            <p className="text-neutral-700 leading-relaxed">
-              To be the most trusted global partner in energy stewardship,
-              leading the transition from traditional power to a sustainable
-              future.
-            </p>
+            <p className="text-neutral-700 leading-relaxed">{data.visionText}</p>
           </motion.div>
         </div>
 
@@ -355,44 +404,7 @@ function MissionVisionValues() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            {
-              title: "Accountability",
-              description:
-                "We treat every site with the care of an owner, taking full responsibility for outcomes.",
-              icon: HeartHandshakeIcon,
-            },
-            {
-              title: "Innovation",
-              description:
-                "We constantly find new ways to improve energy solutions for reliability and efficiency.",
-              icon: AwardIcon,
-            },
-            {
-              title: "Safety First",
-              description:
-                "We ensure excellence isn't just a goal — it's our standard at every project site.",
-              icon: ShieldCheckIcon,
-            },
-            {
-              title: "Quality Standards",
-              description:
-                "Triple ISO Certified in Quality (9001), Environment (14001), and Safety (45001).",
-              icon: TrendingUpIcon,
-            },
-            {
-              title: "Client Partnership",
-              description:
-                "We work as trusted partners, aligning our solutions with client objectives.",
-              icon: UsersIcon,
-            },
-            {
-              title: "Sustainability",
-              description:
-                "Bridging the gap between traditional power and the renewable future.",
-              icon: LeafIcon,
-            },
-          ].map((value, i) => (
+          {values.map((value: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -434,37 +446,13 @@ function MissionVisionValues() {
 }
 // Scale & Impact (KPIs)
 function ScaleImpact() {
+  const { data } = useSectionData("about", "ScaleImpact", defaultScaleData);
   const stats = [
-    {
-      value: "1,800+",
-      label: "Dedicated Staff",
-      description: "Working across global sites",
-      icon: UsersIcon,
-    },
-    {
-      value: "300+",
-      label: "Specialized Engineers",
-      description: "Providing high-level expert advisory and diagnostics",
-      icon: BriefcaseIcon,
-    },
-    {
-      value: "8,000+",
-      label: "MW Managed",
-      description: "Total power capacity under our stewardship",
-      icon: ZapIcon,
-    },
-    {
-      value: "Triple ISO",
-      label: "Certified",
-      description: "Quality (9001), Environment (14001), Safety (45001)",
-      icon: ShieldCheckIcon,
-    },
-    {
-      value: "65+",
-      label: "Global OEMs",
-      description: "Tie-ups across China, Vietnam, Korea, and India",
-      icon: GlobeIcon,
-    },
+    { value: data.stat1Value, label: data.stat1Label, description: data.stat1Desc, icon: UsersIcon },
+    { value: data.stat2Value, label: data.stat2Label, description: data.stat2Desc, icon: BriefcaseIcon },
+    { value: data.stat3Value, label: data.stat3Label, description: data.stat3Desc, icon: ZapIcon },
+    { value: data.stat4Value, label: data.stat4Label, description: data.stat4Desc, icon: ShieldCheckIcon },
+    { value: data.stat5Value, label: data.stat5Label, description: data.stat5Desc, icon: GlobeIcon },
   ];
 
   return (
@@ -565,38 +553,8 @@ function ScaleImpact() {
 }
 // Timeline
 function Timeline() {
-  const phases = [
-    {
-      title: "2011–2012: Construction Beginnings",
-      description:
-        "We began our major journey with complex IBR piping erection and commissioning for the massive 2x660 MW Obra 'C' project.",
-    },
-    {
-      title: "2013: Renewable Expansion",
-      description:
-        "Expanded into the green frontier, successfully commissioning 10 MWp Solar PV projects in Gujarat and Solar Thermal projects in Rajasthan.",
-    },
-    {
-      title: "2014–2021: O&M Leadership",
-      description:
-        "Solidified our reputation as top-tier stewards with the long-term O&M management of 2x600 MW units at Tuticorin.",
-    },
-    {
-      title: "2018: Supercritical Excellence",
-      description:
-        "Embarked on our flagship O&M partnership for the 2x700 MW Supercritical Power Plant at Jhajjar.",
-    },
-    {
-      title: "2021: Going Global",
-      description:
-        "Took our expertise global, managing critical commissioning projects internationally.",
-    },
-    {
-      title: "2025 & Beyond: New Chapters",
-      description:
-        "We are currently providing specialized utility management for international hubs like Delhi (DIAL) and Noida (YIAPL) International Airports.",
-    },
-  ];
+  const { data } = useSectionData("about", "Timeline", defaultTimelineData);
+  const phases: Array<{ title: string; description: string }> = data.phasesList || [];
 
   return (
     <section className="py-28 bg-white">
@@ -683,12 +641,8 @@ function Timeline() {
 }
 // Sustainability Section
 function Sustainability() {
-  const focuses = [
-    "Specialized energy audits by our in-house Encotec-Dornier team to identify savings and reduce carbon footprints",
-    "Residual Life Assessments (RLA) to help owners revitalize older plants for improved efficiency and environmental compliance",
-    "ISO 14001 environmental management integrated into daily operations across all sites",
-    "Supporting the transition from traditional power to a sustainable, renewable future",
-  ];
+  const { data } = useSectionData("about", "Sustainability", defaultSustainabilityData);
+  const focuses: string[] = data.focusList || [];
 
   return (
     <section className="py-28 bg-neutral-50">
@@ -720,18 +674,8 @@ function Sustainability() {
               Committed to a Greener Tomorrow
             </h2>
             <div className="space-y-4 text-neutral-700 leading-relaxed">
-              <p>
-                Sustainability is not a policy at Encotec; it is our promise. We
-                are committed to sustainable development by integrating high
-                standards of environmental management into everything we do.
-              </p>
-              <p>
-                Our in-house Encotec-Dornier team conducts specialized energy
-                audits to identify savings and reduce the carbon footprints of
-                operational plants. Through our expert advisory and Residual
-                Life Assessments (RLA), we help owners revitalize old plants,
-                making them more efficient and environmentally compliant.
-              </p>
+              <p>{data.para1}</p>
+              <p>{data.para2}</p>
             </div>
           </motion.div>
 
@@ -813,6 +757,8 @@ function Sustainability() {
 }
 // Global Presence
 function GlobalPresence() {
+  const { data } = useSectionData("about", "GlobalPresence", defaultGlobalPresenceData);
+  const areas: Array<{ title: string; desc: string }> = data.areasList || [];
   return (
     <section className="py-28 bg-white">
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
@@ -845,34 +791,11 @@ function GlobalPresence() {
           </h2>
 
           <div className="space-y-6 text-lg text-neutral-700 leading-relaxed mb-12">
-            <p>
-              While our headquarters is in Noida, our footprints span the world.
-              In India, we are present in 13+ key cities from Jamshedpur to
-              Vizag. Internationally, we have established strong roots in
-              Turkey, Bahrain, and Greece, ensuring that wherever infrastructure
-              needs stewardship, Encotec is there.
-            </p>
+            <p>{data.para}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            {[
-              {
-                title: "International Operations",
-                desc: "Turkey, Bahrain, Greece",
-              },
-              {
-                title: "Headquarters",
-                desc: "Noida, India",
-              },
-              {
-                title: "Eastern & Central India",
-                desc: "Jamshedpur, Haldia, Khandwa",
-              },
-              {
-                title: "Coastal & Southern India",
-                desc: "Vizag and expanding regions",
-              },
-            ].map((area, i) => (
+            {areas.map((area, i) => (
               <motion.div
                 key={i}
                 initial={{
@@ -936,17 +859,10 @@ function GlobalPresence() {
 }
 // Leadership Section
 function Leadership() {
+  const { data } = useSectionData("about", "AboutLeadership", defaultAboutLeadershipData);
   const leaders = [
-    {
-      role: "Managing Director",
-      name: "[Name]",
-      bio: "Brings extensive leadership experience in engineering, project execution, and energy infrastructure development. With a deep understanding of large-scale power and industrial projects, has been instrumental in shaping the strategic direction of Encotec. Under this leadership, the organization has expanded its capabilities across engineering, project management, and operations, establishing a strong presence in both domestic and international markets. Focuses on driving long-term value creation through operational excellence, technical innovation, and strong client partnerships.",
-    },
-    {
-      role: "Director – Operations",
-      name: "[Name]",
-      bio: "Leads operational delivery across multiple projects, ensuring efficient execution, adherence to quality standards, and optimal resource utilization. With significant experience in operation and maintenance of power plants, substations, and infrastructure systems, plays a key role in maintaining performance, reliability, and safety across all sites. This expertise ensures that projects are executed with precision while meeting both technical and commercial objectives.",
-    },
+    { role: data.leader1Role, name: data.leader1Name, bio: data.leader1Bio },
+    { role: data.leader2Role, name: data.leader2Name, bio: data.leader2Bio },
   ];
 
   return (
@@ -1056,6 +972,12 @@ function ClosingStatement() {
 }
 // Main About Page Component
 export function About() {
+  useSEO(
+    "about",
+    "About Encotec | Engineering Excellence & Energy Stewardship",
+    "Learn about Encotec, our mission, vision, values, global presence, leadership team, and our commitment to finding new ways to energy solutions."
+  );
+
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}
