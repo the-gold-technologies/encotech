@@ -86,7 +86,7 @@ function ConstructionHero() {
           <div className="flex items-center gap-3 mb-8">
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Construction, Commissioning & Relocation
+              {data.label}
             </span>
           </div>
 
@@ -124,17 +124,15 @@ function CapabilitiesSection() {
           className="text-center mb-16">
           
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
-            Physical Realization at Scale
+            {data.heading}
           </h2>
           <p className="text-neutral-600 text-lg max-w-2xl mx-auto">
-            Whether it's a new build or moving an entire plant across borders,
-            we handle the complex installation and synchronization of your
-            assets.
+            {data.description}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {capabilities.map((cap, i) =>
+          {capabilities.map((cap: any, i: number) =>
           <motion.div
             key={i}
             initial={{
@@ -171,6 +169,10 @@ function CapabilitiesSection() {
 
 }
 function ProcessFlow() {
+  const { data } = useSectionData<any>("transmission-distribution", "ProcessFlow");
+  const bullets: string[] = data.bullets || [];
+  const steps: any[] = data.steps || [];
+
   return (
     <section className="py-28 bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -192,22 +194,14 @@ function ProcessFlow() {
             }}>
             
             <h2 className="text-4xl md:text-5xl font-black mb-8">
-              The Relocation <span className="text-brand-pink">Advantage</span>
+              {data.heading}
             </h2>
             <p className="text-lg text-neutral-400 leading-relaxed mb-8">
-              Asset relocation is a highly specialized service that requires
-              meticulous planning, precise execution, and deep engineering
-              knowledge. Encotec is one of the few global providers with a
-              proven track record in cross-border plant relocations.
+              {data.description}
             </p>
 
             <div className="space-y-6">
-              {[
-              'Detailed dismantling protocols and tagging',
-              'Logistics planning and customs clearance support',
-              'Refurbishment of critical components during transit',
-              'Re-erection and synchronization at the new site'].
-              map((item, i) =>
+              {bullets.map((item: string, i: number) =>
               <div key={i} className="flex items-start gap-4">
                   <CheckCircle2Icon
                   className="text-brand-pink flex-shrink-0 mt-1"
@@ -239,34 +233,18 @@ function ProcessFlow() {
             <div className="absolute inset-0 bg-gradient-to-r from-brand-pink/20 to-brand-light/20 blur-3xl" />
             <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 p-8">
               <div className="grid grid-cols-2 gap-6">
-                <div className="bg-neutral-900/50 p-6 border border-white/5">
-                  <SettingsIcon className="text-brand-pink mb-4" size={28} />
-                  <div className="font-bold mb-2">Dismantle</div>
-                  <div className="text-sm text-neutral-400">
-                    Precision teardown
-                  </div>
-                </div>
-                <div className="bg-neutral-900/50 p-6 border border-white/5">
-                  <TruckIcon className="text-brand-pink mb-4" size={28} />
-                  <div className="font-bold mb-2">Transport</div>
-                  <div className="text-sm text-neutral-400">
-                    Global logistics
-                  </div>
-                </div>
-                <div className="bg-neutral-900/50 p-6 border border-white/5">
-                  <HardHatIcon className="text-brand-pink mb-4" size={28} />
-                  <div className="font-bold mb-2">Erect</div>
-                  <div className="text-sm text-neutral-400">
-                    Expert installation
-                  </div>
-                </div>
-                <div className="bg-neutral-900/50 p-6 border border-white/5">
-                  <ZapIcon className="text-brand-pink mb-4" size={28} />
-                  <div className="font-bold mb-2">Commission</div>
-                  <div className="text-sm text-neutral-400">
-                    Grid sync & testing
-                  </div>
-                </div>
+                {steps.map((item: any, i: number) => {
+                  const Icon = item.icon === "Settings" ? SettingsIcon : item.icon === "Truck" ? TruckIcon : item.icon === "HardHat" ? HardHatIcon : ZapIcon;
+                  return (
+                    <div key={i} className="bg-neutral-900/50 p-6 border border-white/5">
+                      <Icon className="text-brand-pink mb-4" size={28} />
+                      <div className="font-bold mb-2">{item.title}</div>
+                      <div className="text-sm text-neutral-400">
+                        {item.desc}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </motion.div>
@@ -274,6 +252,27 @@ function ProcessFlow() {
       </div>
     </section>);
 
+}
+function CTASection() {
+  const { data } = useSectionData<any>("transmission-distribution", "CTASection");
+  return (
+    <section className="py-32 bg-white text-center">
+      <div className="max-w-4xl mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
+          {data.heading}
+        </h2>
+        <p className="text-xl text-neutral-600 mb-10">
+          {data.description}
+        </p>
+        <Link
+          to={data.ctaUrl || "/contact"}
+          className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
+          {data.ctaLabel}
+          <ArrowRightIcon size={20} />
+        </Link>
+      </div>
+    </section>
+  );
 }
 export function TransmissionDistribution() {
   useSEO("service/transmission-distribution");
@@ -286,25 +285,7 @@ export function TransmissionDistribution() {
       <ConstructionHero />
       <CapabilitiesSection />
       <ProcessFlow />
-
-      <section className="py-32 bg-white text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
-            Ready to Bring Your Asset Online?
-          </h2>
-          <p className="text-xl text-neutral-600 mb-10">
-            From new builds to complex cross-border relocations, our teams are
-            ready to execute.
-          </p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-            
-            Discuss Your Project
-            <ArrowRightIcon size={20} />
-          </Link>
-        </div>
-      </section>
+      <CTASection />
 
       <Footer />
     </main>);

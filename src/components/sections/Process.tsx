@@ -11,8 +11,13 @@ import {
 } from "lucide-react";
 import { useSectionData } from "../../store/useCMSStore";
 
-
-const processStepIcons = [SearchIcon, PenToolIcon, HardHatIcon, CheckCircle2Icon, ActivityIcon];
+const processStepIcons = [
+  SearchIcon,
+  PenToolIcon,
+  HardHatIcon,
+  CheckCircle2Icon,
+  ActivityIcon,
+];
 
 export function Process() {
   const { data } = useSectionData<any>("home", "ProcessSection");
@@ -97,7 +102,9 @@ export function Process() {
                   Workflow Followed <br className="hidden md:block" />
                   for Each Project
                 </>
-              ) : (data.heading || "")}
+              ) : (
+                data.heading || ""
+              )}
             </h2>
           </motion.div>
 
@@ -166,7 +173,7 @@ export function Process() {
                 <span
                   className={`absolute top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold tracking-wider uppercase whitespace-nowrap transition-colors duration-300 ${i <= activeIndex ? "text-brand-pink" : "text-neutral-400"}`}
                 >
-                  0{step.id || (i + 1)}
+                  0{step.id || i + 1}
                 </span>
               </button>
             ))}
@@ -222,7 +229,7 @@ export function Process() {
                     <span
                       className={`text-5xl font-black tracking-tighter transition-colors duration-500 ${index === activeIndex ? "text-brand-pink" : "text-neutral-200"}`}
                     >
-                      0{step.id || (index + 1)}
+                      0{step.id || index + 1}
                     </span>
                     <div
                       className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${index === activeIndex ? "bg-brand-pink/20 text-brand-pink" : "bg-brand-panel text-brand-pink"}`}

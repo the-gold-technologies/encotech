@@ -52,7 +52,7 @@ function CareersHero() {
         className="absolute inset-0"
       >
         <img
-          src={data.backgroundImage || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2400"}
+          src={data.backgroundImage}
           alt="Team collaboration"
           className="w-full h-full object-cover opacity-40"
         />
@@ -203,7 +203,7 @@ function WhyEncotecSection() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                Why Join Us
+                {data.cultureTagline}
               </span>
             </div>
 
@@ -253,7 +253,7 @@ function WhyEncotecSection() {
               }}
             >
               <img
-                src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200"
+                src={data.cultureImage}
                 alt="Engineers working"
                 className="w-full h-[600px] object-cover shadow-2xl"
               />
@@ -302,7 +302,7 @@ function BenefitsSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {benefits.map((benefit, i) => (
+          {benefits.map((benefit: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -421,7 +421,7 @@ function OpenPositionsSection() {
         {/* Job List */}
         <motion.div layout className="space-y-4">
           <AnimatePresence mode="popLayout">
-            {filteredJobs.map((job, index) => (
+            {filteredJobs.map((job: any, index: number) => (
               <motion.div
                 key={job.id}
                 layout
@@ -594,7 +594,7 @@ function ApplicationProcess() {
           {/* Connecting Line (Desktop) */}
           <div className="hidden md:block absolute top-12 left-1/8 right-1/8 h-[2px] bg-neutral-200 z-0" />
 
-          {processSteps.map((step, i) => (
+          {processSteps.map((step: any, i: number) => (
             <motion.div
               key={i}
               initial={{

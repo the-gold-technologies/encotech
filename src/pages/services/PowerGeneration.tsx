@@ -61,16 +61,16 @@ function StewardshipHero() {
           <div className="flex items-center gap-3 mb-8">
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Asset Stewardship (O&M)
+              {data.label}
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            {data.heroTitle}
+            {data.heading}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            {data.heroSubtitle}
+            {data.description}
           </p>
         </motion.div>
       </div>
@@ -85,7 +85,7 @@ function StewardshipFeatures() {
     <section className="py-28 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {features.map((feature, i) => (
+          {features.map((feature: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -210,13 +210,13 @@ function StewardshipCTA() {
           {data.heading}
         </h2>
         <p className="text-xl text-neutral-600 mb-10">
-          {data.subheading}
+          {data.description}
         </p>
         <Link
-          to="/contact"
+          to={data.ctaUrl || "/contact"}
           className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
         >
-          {data.buttonText}
+          {data.ctaLabel}
           <ArrowRightIcon size={20} />
         </Link>
       </div>

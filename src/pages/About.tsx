@@ -39,7 +39,7 @@ function AboutHero() {
         className="absolute inset-0"
       >
         <img
-          src={data.backgroundImage || "https://images.unsplash.com/photo-1497435334941-8c899a9bd6a2?auto=format&fit=crop&q=80&w=2400"}
+          src={data.backgroundImage}
           alt="Energy infrastructure"
           className="w-full h-full object-cover opacity-30"
         />
@@ -93,7 +93,7 @@ function AboutHero() {
           >
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              About Encotec Energy
+              {data.tagline}
             </span>
           </motion.div>
 
@@ -211,7 +211,7 @@ function WhoWeAre() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-[3px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Who We Are
+              {data.tagline}
             </span>
           </div>
 
@@ -254,13 +254,12 @@ function MissionVisionValues() {
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-10 h-[3px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Our Heart and Soul
+              {data.tagline}
             </span>
             <div className="w-10 h-[3px] bg-brand-pink" />
           </div>
           <p className="text-2xl md:text-3xl font-light text-neutral-900 max-w-4xl mx-auto">
-            Our purpose is to bridge the gap between technical complexity and
-            business success.
+            {data.description}
           </p>
         </motion.div>
 
@@ -284,7 +283,7 @@ function MissionVisionValues() {
             className="p-10 bg-white border-l-4 border-brand-pink"
           >
             <h3 className="text-2xl font-black text-neutral-900 mb-4 uppercase tracking-tight">
-              Mission
+              {data.missionTitle}
             </h3>
             <p className="text-neutral-700 leading-relaxed">{missionText}</p>
           </motion.div>
@@ -307,7 +306,7 @@ function MissionVisionValues() {
             className="p-10 bg-white border-l-4 border-brand-pink"
           >
             <h3 className="text-2xl font-black text-neutral-900 mb-4 uppercase tracking-tight">
-              Vision
+              {data.visionTitle}
             </h3>
             <p className="text-neutral-700 leading-relaxed">{visionText}</p>
           </motion.div>
@@ -332,12 +331,10 @@ function MissionVisionValues() {
           className="mb-12 text-center"
         >
           <h3 className="text-3xl md:text-4xl font-black text-neutral-900 mb-6">
-            Core Values
+            {data.valuesTitle}
           </h3>
           <p className="text-lg text-neutral-700 max-w-3xl mx-auto leading-relaxed">
-            We are defined by Accountability, Innovation, and Total Care. By
-            adopting the owner's perspective, we ensure that safety and
-            efficiency are never compromised.
+            {data.valuesDesc}
           </p>
         </motion.div>
 
@@ -422,15 +419,15 @@ function ScaleImpact() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-black mb-6">
-            {data.heading || "Encotec by the Numbers"}
+            {data.heading}
           </h2>
           <p className="text-neutral-400 text-lg max-w-3xl mx-auto">
-            {data.description || "Our growth is a testament to the trust our partners place in us. As of 2025–26, our impact is felt across the industry."}
+            {data.description}
           </p>
         </motion.div>
 
         <div className="flex flex-wrap justify-center gap-6 mb-12">
-          {stats.map((stat, i) => (
+          {stats.map((stat: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -480,7 +477,7 @@ function ScaleImpact() {
           }}
           className="text-center text-neutral-400 italic max-w-4xl mx-auto"
         >
-          {data.footerNote || "Our scale is not just a measure of size, but a reflection of our ability to consistently deliver high-performance outcomes across complex engineering environments."}
+          {data.footerNote}
         </motion.p>
       </div>
     </section>
@@ -511,14 +508,14 @@ function Timeline() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-[3px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              {data.tagline || "Our Journey"}
+              {data.tagline}
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
-            {data.heading || "A Timeline of Growth"}
+            {data.heading}
           </h2>
           <p className="text-lg text-neutral-600 max-w-3xl leading-relaxed">
-            {data.description || "We have spent over a decade building a legacy of excellence, one project at a time."}
+            {data.description}
           </p>
         </motion.div>
 
@@ -601,11 +598,11 @@ function Sustainability() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-[3px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                {data.tagline || "ESG Commitment"}
+                {data.tagline}
               </span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-neutral-900 leading-tight mb-8">
-              {data.heading || "Committed to a Greener Tomorrow"}
+              {data.heading}
             </h2>
             <div className="space-y-4 text-neutral-700 leading-relaxed">
               <p>{data.paragraphs?.[0]}</p>
@@ -681,9 +678,7 @@ function Sustainability() {
           }}
           className="text-center text-neutral-600 italic max-w-4xl mx-auto mt-16 text-lg"
         >
-          Our approach ensures that sustainability is not an afterthought, but
-          an integral part of how we design, execute, and operate energy
-          systems.
+          {data.footerNote}
         </motion.p>
       </div>
     </section>
@@ -778,10 +773,10 @@ function GlobalPresence() {
             className="p-8 bg-brand-panel border-l-4 border-brand-pink"
           >
             <h3 className="text-xl font-bold text-neutral-900 mb-3">
-              {data.calloutTitle || "Wherever Energy is Needed"}
+              {data.calloutTitle}
             </h3>
             <p className="text-neutral-700 leading-relaxed">
-              {data.calloutDesc || "We combine local execution strength with global engineering expertise, ensuring that we bring the same \"Owner's Mindset\" to every project, no matter the geography."}
+              {data.calloutDesc}
             </p>
           </motion.div>
         </motion.div>
@@ -812,16 +807,15 @@ function Leadership() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-black mb-4">
-            Leadership Team
+            {data.heading}
           </h2>
           <p className="text-neutral-400 text-lg max-w-3xl mx-auto">
-            Experienced leaders driving operational excellence and strategic
-            growth
+            {data.description}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {leaders.map((leader, i) => (
+          {leaders.map((leader: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -856,8 +850,8 @@ function Leadership() {
 // Closing Statement
 function ClosingStatement() {
   const { data } = useSectionData<any>("about", "ClosingStatement");
-  const heading = data.heading || "Encotec integrates engineering expertise, execution capability, and operational excellence to deliver solutions that perform";
-  const highlight = "engineering expertise, execution capability, and operational excellence";
+  const heading = data.heading || "";
+  const highlight = data.highlight || "engineering expertise, execution capability, and operational excellence";
   const parts = heading.split(highlight);
 
   return (
@@ -889,14 +883,14 @@ function ClosingStatement() {
             {parts[1]}
           </h2>
           <p className="text-2xl text-neutral-600 leading-relaxed font-light">
-            {data.description || "— not just at commissioning, but throughout the lifecycle of every asset."}
+            {data.description}
           </p>
 
           <Link
             to={data.ctaUrl || "/contact"}
             className="inline-flex items-center gap-3 px-10 py-5 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300 shadow-2xl shadow-brand-pink/30 mt-12"
           >
-            {data.ctaLabel || "Partner With Us"}
+            {data.ctaLabel}
             <ArrowRightIcon size={18} />
           </Link>
         </motion.div>

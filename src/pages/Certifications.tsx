@@ -81,7 +81,7 @@ function CertificationsHero() {
         className="absolute inset-0"
       >
         <img
-          src={data.backgroundImage || "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=2400"}
+          src={data.backgroundImage}
           alt="Certifications and Quality Assurance"
           className="w-full h-full object-cover opacity-40"
         />
@@ -276,7 +276,7 @@ function CertificationsGrid() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {certifications.map((cert, index) => (
+          {certifications.map((cert: any, index: number) => (
             <motion.div
               key={cert.id}
               initial={{

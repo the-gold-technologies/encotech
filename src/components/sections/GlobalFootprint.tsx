@@ -20,172 +20,21 @@ interface Location {
   suite: string;
   phone: string;
 }
-const locations: Location[] = [
-  // India — Headquarters
-  {
-    name: "Noida (HQ)",
-    coordinates: [77.39, 28.58],
-    region: "India",
-    address: "Corporate Headquarters",
-    suite: "Noida, Uttar Pradesh",
-    phone: "+91 120 555 0100",
-  },
-  // India — Key Locations
-  {
-    name: "New Delhi",
-    coordinates: [77.21, 28.61],
-    region: "India",
-    address: "Regional Office",
-    suite: "New Delhi, India",
-    phone: "+91 11 555 0200",
-  },
-  {
-    name: "Jamshedpur",
-    coordinates: [86.18, 22.8],
-    region: "India",
-    address: "Project Site",
-    suite: "Jamshedpur, Jharkhand",
-    phone: "+91 657 555 0300",
-  },
-  {
-    name: "Jhajjar",
-    coordinates: [76.66, 28.61],
-    region: "India",
-    address: "Power Plant O&M",
-    suite: "Jhajjar, Haryana",
-    phone: "+91 1251 555 0400",
-  },
-  {
-    name: "Haldia",
-    coordinates: [88.06, 22.03],
-    region: "India",
-    address: "Project Site",
-    suite: "Haldia, West Bengal",
-    phone: "+91 3224 555 0500",
-  },
-  {
-    name: "Khandwa",
-    coordinates: [76.35, 21.82],
-    region: "India",
-    address: "Project Site",
-    suite: "Khandwa, Madhya Pradesh",
-    phone: "+91 733 555 0600",
-  },
-  {
-    name: "Rajpura",
-    coordinates: [76.59, 30.48],
-    region: "India",
-    address: "2x700 MW Supercritical Plant",
-    suite: "Rajpura, Punjab",
-    phone: "+91 1762 555 0700",
-  },
-  {
-    name: "Obra",
-    coordinates: [82.98, 24.42],
-    region: "India",
-    address: "2x660 MW Thermal Project",
-    suite: "Obra, Uttar Pradesh",
-    phone: "+91 5446 555 0800",
-  },
-  {
-    name: "Singrauli",
-    coordinates: [82.67, 24.2],
-    region: "India",
-    address: "Power Plant Operations",
-    suite: "Singrauli, Madhya Pradesh",
-    phone: "+91 7805 555 0900",
-  },
-  {
-    name: "Vizag",
-    coordinates: [83.3, 17.69],
-    region: "India",
-    address: "Project Site",
-    suite: "Visakhapatnam, Andhra Pradesh",
-    phone: "+91 891 555 1000",
-  },
-  {
-    name: "Panki",
-    coordinates: [80.3, 26.47],
-    region: "India",
-    address: "Power Plant",
-    suite: "Panki, Uttar Pradesh",
-    phone: "+91 512 555 1100",
-  },
-  {
-    name: "Jewar",
-    coordinates: [77.55, 28.13],
-    region: "India",
-    address: "Airport MEP Services",
-    suite: "Jewar, Uttar Pradesh",
-    phone: "+91 120 555 1200",
-  },
-  {
-    name: "Shahjahanpur",
-    coordinates: [79.91, 27.88],
-    region: "India",
-    address: "Project Site",
-    suite: "Shahjahanpur, Uttar Pradesh",
-    phone: "+91 5842 555 1300",
-  },
-  {
-    name: "Bela",
-    coordinates: [83.95, 24.65],
-    region: "India",
-    address: "Project Site",
-    suite: "Bela, Uttar Pradesh",
-    phone: "+91 5446 555 1400",
-  },
-  // Global
-  {
-    name: "Turkey",
-    coordinates: [32.86, 39.93],
-    region: "International",
-    address: "Celikler Energy Project",
-    suite: "Ankara, Turkey",
-    phone: "+90 312 555 0100",
-  },
-  {
-    name: "Bahrain",
-    coordinates: [50.58, 26.07],
-    region: "International",
-    address: "Energy Infrastructure",
-    suite: "Manama, Bahrain",
-    phone: "+973 1755 0200",
-  },
-];
-
-const connections: Array<[[number, number], [number, number]]> = [
-  // Noida HQ to key India locations
-  [
-    [77.39, 28.58],
-    [86.18, 22.8],
-  ],
-  [
-    [77.39, 28.58],
-    [76.59, 30.48],
-  ],
-  [
-    [77.39, 28.58],
-    [82.98, 24.42],
-  ],
-  [
-    [77.39, 28.58],
-    [83.3, 17.69],
-  ],
-  // Noida HQ to international
-  [
-    [77.39, 28.58],
-    [32.86, 39.93],
-  ],
-  [
-    [77.39, 28.58],
-    [50.58, 26.07],
-  ],
-];
-
 export function GlobalFootprint() {
   const { data } = useSectionData<any>("home", "GlobalFootprintSection");
   const stats = data.stats || [];
+
+  const locations: Location[] = data.locations || [];
+  const hqLocation = locations.find(
+    (loc) =>
+      loc.name.toLowerCase().includes("noida") ||
+      loc.name.toLowerCase().includes("hq")
+  ) || locations[0];
+  const hqCoords = hqLocation?.coordinates || [77.39, 28.58];
+
+  const connections = locations
+    .filter((loc) => loc.name !== hqLocation?.name)
+    .map((loc) => [hqCoords, loc.coordinates] as [[number, number], [number, number]]);
 
   const sectionRef = useRef<HTMLElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);

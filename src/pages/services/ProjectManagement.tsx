@@ -309,7 +309,7 @@ function CoreOfferings() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {offerings.map((offering, i) => (
+          {offerings.map((offering: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -344,79 +344,61 @@ function CoreOfferings() {
   );
 }
 function StatsSection() {
+  const { data } = useSectionData<any>("project-management", "StatsSection");
+  const stats = data.stats || [];
   return (
     <section className="py-20 bg-brand-pink text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-          >
-            <div className="text-5xl md:text-6xl font-black mb-2">
-              <AnimatedCounter target={8000} suffix="+" />
-            </div>
-            <div className="text-sm font-bold uppercase tracking-wider opacity-90">
-              MW Conceptualised
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              delay: 0.2,
-            }}
-          >
-            <div className="text-5xl md:text-6xl font-black mb-2">
-              <AnimatedCounter target={100} suffix="%" />
-            </div>
-            <div className="text-sm font-bold uppercase tracking-wider opacity-90">
-              Owner's Mindset
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              delay: 0.4,
-            }}
-          >
-            <div className="text-5xl md:text-6xl font-black mb-2">
-              <AnimatedCounter target={300} suffix="+" />
-            </div>
-            <div className="text-sm font-bold uppercase tracking-wider opacity-90">
-              Specialized Engineers
-            </div>
-          </motion.div>
+          {stats.map((stat: any, i: number) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                delay: i * 0.2,
+              }}
+            >
+              <div className="text-5xl md:text-6xl font-black mb-2">
+                <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+              </div>
+              <div className="text-sm font-bold uppercase tracking-wider opacity-90">
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
         </div>
+      </div>
+    </section>
+  );
+}
+function CTASection() {
+  const { data } = useSectionData<any>("project-management", "CTASection");
+  return (
+    <section className="py-32 bg-white text-center">
+      <div className="max-w-4xl mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
+          {data.heading}
+        </h2>
+        <p className="text-xl text-neutral-600 mb-10">
+          {data.description}
+        </p>
+        <Link
+          to={data.ctaUrl || "/contact"}
+          className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+        >
+          {data.ctaLabel}
+          <ArrowRightIcon size={20} />
+        </Link>
       </div>
     </section>
   );
@@ -433,26 +415,7 @@ export function ProjectManagement() {
       <PhilosophySection />
       <CoreOfferings />
       <StatsSection />
-
-      {/* CTA Section */}
-      <section className="py-32 bg-white text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
-            Ready to Build Your Vision?
-          </h2>
-          <p className="text-xl text-neutral-600 mb-10">
-            Let's start your project on a logical foundation with our expert
-            conceptualisation and development services.
-          </p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
-          >
-            Start the Conversation
-            <ArrowRightIcon size={20} />
-          </Link>
-        </div>
-      </section>
+      <CTASection />
 
       <Footer />
     </main>

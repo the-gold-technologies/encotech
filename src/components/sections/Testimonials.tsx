@@ -145,7 +145,7 @@ export function Testimonials() {
           <div className="flex items-center justify-between mt-8">
             {/* Dots */}
             <div className="flex items-center gap-2">
-              {testimonials.map((_, i) =>
+              {testimonials.map((_: any, i: number) =>
                 <button
                   key={i}
                   onClick={() => {

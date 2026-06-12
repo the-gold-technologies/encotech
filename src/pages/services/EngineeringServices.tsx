@@ -82,7 +82,7 @@ function EngineeringHero() {
         className="absolute inset-0"
       >
         <img
-          src={data.backgroundImage || "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=2400"}
+          src={data.backgroundImage}
           alt="Power engineering facility"
           className="w-full h-full object-cover opacity-40"
         />
@@ -288,7 +288,7 @@ function OverviewSection() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                Overview
+                {data.tagline}
               </span>
             </div>
 
@@ -335,7 +335,7 @@ function OverviewSection() {
               }}
             >
               <img
-                src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200"
+                src={data.image}
                 alt="Engineers reviewing blueprints"
                 className="w-full h-[600px] object-cover shadow-2xl"
               />
@@ -403,7 +403,7 @@ function CapabilitiesSection() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Capabilities
+              {data.tagline}
             </span>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 mb-6">
@@ -415,7 +415,7 @@ function CapabilitiesSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {capabilities.map((cap, i) => (
+          {capabilities.map((cap: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -505,7 +505,7 @@ function ProcessSection() {
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Our Approach
+              {data.tagline}
             </span>
             <div className="w-8 h-[2px] bg-brand-pink" />
           </div>
@@ -521,7 +521,7 @@ function ProcessSection() {
           {/* Connecting Line */}
           <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-brand-pink via-brand-pink/50 to-transparent hidden lg:block" />
 
-          {steps.map((step, i) => (
+          {steps.map((step: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -709,7 +709,7 @@ function FeaturedProjectSection() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Featured Project
+              {data.tagline}
             </span>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900">
@@ -743,7 +743,7 @@ function FeaturedProjectSection() {
               className="relative"
             >
               <img
-                src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=2400"
+                src={data.projectImage}
                 alt="Obra C Thermal Power Plant"
                 className="w-full h-[600px] object-cover shadow-2xl"
               />
@@ -848,7 +848,7 @@ function ValueSection() {
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Value Delivered
+              {data.tagline}
             </span>
             <div className="w-8 h-[2px] bg-brand-pink" />
           </div>
@@ -861,7 +861,7 @@ function ValueSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {values.map((value, i) => (
+          {values.map((value: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -904,32 +904,8 @@ function ValueSection() {
 }
 // Related Services Section
 function RelatedServicesSection() {
-  const services = [
-    {
-      title: "Project Management",
-      description:
-        "Structured planning, coordination, and control across all project phases",
-      link: "/services/project-management",
-      image:
-        "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200",
-    },
-    {
-      title: "EPC & Construction",
-      description:
-        "Execution support across engineering, procurement, and construction",
-      link: "/services",
-      image:
-        "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200",
-    },
-    {
-      title: "O&M Services",
-      description:
-        "Long-term operational excellence and performance optimization",
-      link: "/services",
-      image:
-        "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200",
-    },
-  ];
+  const { data } = useSectionData<any>("engineering-services", "RelatedServicesSection");
+  const services = data.services || [];
 
   return (
     <section className="py-32 bg-white">
@@ -951,16 +927,16 @@ function RelatedServicesSection() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Related Services
+              {data.tagline}
             </span>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900">
-            Explore More Services
+            {data.heading}
           </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {services.map((service, i) => (
+          {services.map((service: any, i: number) => (
             <motion.div
               key={i}
               initial={{
@@ -1055,22 +1031,22 @@ function CTASection() {
             {data.heading}
           </h2>
           <p className="text-xl text-neutral-300 mb-12 leading-relaxed">
-            {data.subheading}
+            {data.description}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/contact"
+              to={data.primaryBtnUrl || "/contact"}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
             >
-              Get Started
+              {data.primaryBtnLabel}
               <ArrowRightIcon size={16} />
             </Link>
             <Link
-              to="/services"
+              to={data.secondaryBtnUrl || "/services"}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300"
             >
-              View All Services
+              {data.secondaryBtnLabel}
             </Link>
           </div>
         </motion.div>

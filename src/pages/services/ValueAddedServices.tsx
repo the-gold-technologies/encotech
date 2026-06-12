@@ -94,7 +94,7 @@ function SourcingFeatures() {
     <section className="py-28 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {features.map((feature, i) =>
+          {features.map((feature: any, i: number) =>
           <motion.div
             key={i}
             initial={{
@@ -131,6 +131,10 @@ function SourcingFeatures() {
 
 }
 function SourcingAdvantage() {
+  const { data } = useSectionData<any>("value-added", "SourcingAdvantage");
+  const paragraphs = data.paragraphs || [];
+  const cards = data.cards || [];
+
   return (
     <section className="py-28 bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -152,22 +156,15 @@ function SourcingAdvantage() {
             }}>
             
             <h2 className="text-4xl md:text-5xl font-black mb-8">
-              More Than Just <br />
-              <span className="text-brand-pink">Procurement</span>
+              {data.heading}
             </h2>
             <div className="space-y-6 text-lg text-neutral-400 leading-relaxed">
               <p>
-                Procurement is transactional; strategic sourcing is a
-                partnership. Because we operate plants ourselves, we understand
-                the critical difference between a part that "fits" and a part
-                that "performs".
+                {data.description}
               </p>
-              <p>
-                Our engineering team vets every supplier and verifies every
-                specification. We handle the complex logistics, customs
-                clearance, and quality assurance, delivering peace of mind along
-                with your critical spares.
-              </p>
+              {paragraphs.map((p: string, i: number) => (
+                <p key={i}>{p}</p>
+              ))}
             </div>
           </motion.div>
 
@@ -188,37 +185,43 @@ function SourcingAdvantage() {
             }}
             className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             
-            {[
-            {
-              title: 'Quality Assured',
-              icon: ShieldCheckIcon
-            },
-            {
-              title: '65+ Global OEMs',
-              icon: GlobeIcon
-            },
-            {
-              title: 'Logistics Managed',
-              icon: TruckIcon
-            },
-            {
-              title: 'Engineering Backed',
-              icon: WrenchIcon
-            }].
-            map((item, i) =>
-            <div
-              key={i}
-              className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 flex flex-col items-center text-center hover:bg-white/10 transition-colors duration-300">
-              
-                <item.icon className="text-brand-pink mb-4" size={32} />
-                <div className="font-bold">{item.title}</div>
-              </div>
-            )}
+            {cards.map((item: any, i: number) => {
+              const Icon = item.icon === "ShieldCheck" ? ShieldCheckIcon : item.icon === "Globe" ? GlobeIcon : item.icon === "Truck" ? TruckIcon : WrenchIcon;
+              return (
+                <div
+                  key={i}
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 flex flex-col items-center text-center hover:bg-white/10 transition-colors duration-300">
+                  <Icon className="text-brand-pink mb-4" size={32} />
+                  <div className="font-bold">{item.title}</div>
+                </div>
+              );
+            })}
           </motion.div>
         </div>
       </div>
     </section>);
 
+}
+function CTASection() {
+  const { data } = useSectionData<any>("value-added", "CTASection");
+  return (
+    <section className="py-32 bg-white text-center">
+      <div className="max-w-4xl mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
+          {data.heading}
+        </h2>
+        <p className="text-xl text-neutral-600 mb-10">
+          {data.description}
+        </p>
+        <Link
+          to={data.ctaUrl || "/contact"}
+          className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
+          {data.ctaLabel}
+          <ArrowRightIcon size={20} />
+        </Link>
+      </div>
+    </section>
+  );
 }
 export function ValueAddedServices() {
   useSEO("service/value-added");
@@ -231,25 +234,7 @@ export function ValueAddedServices() {
       <SourcingHero />
       <SourcingFeatures />
       <SourcingAdvantage />
-
-      <section className="py-32 bg-white text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
-            Sourcing Critical Spares?
-          </h2>
-          <p className="text-xl text-neutral-600 mb-10">
-            Access our network of major OEMs in China, Vietnam, and beyond for
-            your spare part needs.
-          </p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-            
-            Request a Quote
-            <ArrowRightIcon size={20} />
-          </Link>
-        </div>
-      </section>
+      <CTASection />
 
       <Footer />
     </main>);

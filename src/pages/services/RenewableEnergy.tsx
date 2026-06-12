@@ -82,7 +82,7 @@ function AdvisoryFeatures() {
     <section className="py-28 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {features.map((feature, i) =>
+          {features.map((feature: any, i: number) =>
           <motion.div
             key={i}
             initial={{
@@ -119,6 +119,9 @@ function AdvisoryFeatures() {
 
 }
 function DiagnosticProcess() {
+  const { data } = useSectionData<any>("renewable-energy", "DiagnosticProcess");
+  const steps = data.steps || [];
+
   return (
     <section className="py-28 bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -137,37 +140,15 @@ function DiagnosticProcess() {
           className="text-center mb-16">
           
           <h2 className="text-4xl md:text-5xl font-black mb-6">
-            Our Diagnostic Approach
+            {data.heading}
           </h2>
           <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
-            We don't guess; we measure. Our advisory services are built on hard
-            data and deep engineering expertise.
+            {data.description}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {[
-          {
-            step: '01',
-            title: 'Assess',
-            desc: 'Comprehensive site evaluation and data gathering'
-          },
-          {
-            step: '02',
-            title: 'Analyze',
-            desc: 'Deep dive into performance metrics and NDT results'
-          },
-          {
-            step: '03',
-            title: 'Advise',
-            desc: 'Actionable recommendations for improvement'
-          },
-          {
-            step: '04',
-            title: 'Optimize',
-            desc: 'Implementation support and verification'
-          }].
-          map((item, i) =>
+          {steps.map((item: any, i: number) =>
           <motion.div
             key={i}
             initial={{
@@ -211,12 +192,12 @@ function AdvisoryCTA() {
           {data.heading}
         </h2>
         <p className="text-xl text-neutral-600 mb-10">
-          {data.subheading}
+          {data.description}
         </p>
         <Link
-          to="/contact"
+          to={data.ctaUrl || "/contact"}
           className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-          {data.buttonText}
+          {data.ctaLabel}
           <ArrowRightIcon size={20} />
         </Link>
       </div>

@@ -37,174 +37,8 @@ interface Location {
   suite: string;
   phone: string;
 }
-const locations: Location[] = [
-  // India — Headquarters
-  {
-    name: "Noida (HQ)",
-    coordinates: [77.39, 28.58],
-    region: "India",
-    address: "Corporate Headquarters",
-    suite: "Noida, Uttar Pradesh",
-    phone: "+91 120 555 0100",
-  },
-  // India — Key Locations
-  {
-    name: "New Delhi",
-    coordinates: [77.21, 28.61],
-    region: "India",
-    address: "Regional Office",
-    suite: "New Delhi, India",
-    phone: "+91 11 555 0200",
-  },
-  {
-    name: "Jamshedpur",
-    coordinates: [86.18, 22.8],
-    region: "India",
-    address: "Project Site",
-    suite: "Jamshedpur, Jharkhand",
-    phone: "+91 657 555 0300",
-  },
-  {
-    name: "Jhajjar",
-    coordinates: [76.66, 28.61],
-    region: "India",
-    address: "Power Plant O&M",
-    suite: "Jhajjar, Haryana",
-    phone: "+91 1251 555 0400",
-  },
-  {
-    name: "Haldia",
-    coordinates: [88.06, 22.03],
-    region: "India",
-    address: "Project Site",
-    suite: "Haldia, West Bengal",
-    phone: "+91 3224 555 0500",
-  },
-  {
-    name: "Khandwa",
-    coordinates: [76.35, 21.82],
-    region: "India",
-    address: "Project Site",
-    suite: "Khandwa, Madhya Pradesh",
-    phone: "+91 733 555 0600",
-  },
-  {
-    name: "Rajpura",
-    coordinates: [76.59, 30.48],
-    region: "India",
-    address: "2x700 MW Supercritical Plant",
-    suite: "Rajpura, Punjab",
-    phone: "+91 1762 555 0700",
-  },
-  {
-    name: "Obra",
-    coordinates: [82.98, 24.42],
-    region: "India",
-    address: "2x660 MW Thermal Project",
-    suite: "Obra, Uttar Pradesh",
-    phone: "+91 5446 555 0800",
-  },
-  {
-    name: "Singrauli",
-    coordinates: [82.67, 24.2],
-    region: "India",
-    address: "Power Plant Operations",
-    suite: "Singrauli, Madhya Pradesh",
-    phone: "+91 7805 555 0900",
-  },
-  {
-    name: "Vizag",
-    coordinates: [83.3, 17.69],
-    region: "India",
-    address: "Project Site",
-    suite: "Visakhapatnam, Andhra Pradesh",
-    phone: "+91 891 555 1000",
-  },
-  {
-    name: "Panki",
-    coordinates: [80.3, 26.47],
-    region: "India",
-    address: "Power Plant",
-    suite: "Panki, Uttar Pradesh",
-    phone: "+91 512 555 1100",
-  },
-  {
-    name: "Jewar",
-    coordinates: [77.55, 28.13],
-    region: "India",
-    address: "Airport MEP Services",
-    suite: "Jewar, Uttar Pradesh",
-    phone: "+91 120 555 1200",
-  },
-  {
-    name: "Shahjahanpur",
-    coordinates: [79.91, 27.88],
-    region: "India",
-    address: "Project Site",
-    suite: "Shahjahanpur, Uttar Pradesh",
-    phone: "+91 5842 555 1300",
-  },
-  {
-    name: "Bela",
-    coordinates: [83.95, 24.65],
-    region: "India",
-    address: "Project Site",
-    suite: "Bela, Uttar Pradesh",
-    phone: "+91 5446 555 1400",
-  },
-  // Global
-  {
-    name: "Turkey",
-    coordinates: [32.86, 39.93],
-    region: "International",
-    address: "Celikler Energy Project",
-    suite: "Ankara, Turkey",
-    phone: "+90 312 555 0100",
-  },
-  {
-    name: "Bahrain",
-    coordinates: [50.58, 26.07],
-    region: "International",
-    address: "Energy Infrastructure",
-    suite: "Manama, Bahrain",
-    phone: "+973 1755 0200",
-  },
-];
+// Locations and connections will be computed dynamically from CMS data inside the component.
 
-const connections: Array<[[number, number], [number, number]]> = [
-  // Noida HQ to key India locations
-  [
-    [77.39, 28.58],
-    [86.18, 22.8],
-  ],
-
-  [
-    [77.39, 28.58],
-    [76.59, 30.48],
-  ],
-
-  [
-    [77.39, 28.58],
-    [82.98, 24.42],
-  ],
-
-  [
-    [77.39, 28.58],
-    [83.3, 17.69],
-  ],
-
-  // Noida HQ to international
-  [
-    [77.39, 28.58],
-    [32.86, 39.93],
-  ],
-
-  [
-    [77.39, 28.58],
-    [50.58, 26.07],
-  ],
-  // Noida → Bahrain
-];
 // --- Components ---
 function ContactHero() {
   const { data } = useSectionData<any>("contact", "ContactHero");
@@ -221,7 +55,7 @@ function ContactHero() {
         className="absolute inset-0"
       >
         <img
-          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2400"
+          src={data.backgroundImage}
           alt="Modern office building"
           className="w-full h-full object-cover opacity-40"
         />
@@ -276,7 +110,7 @@ function ContactHero() {
           >
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Get in Touch
+              {data.tagline || ""}
             </span>
           </motion.div>
 
@@ -296,27 +130,32 @@ function ContactHero() {
             }}
             className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-8 uppercase select-text selection:bg-brand-pink selection:text-white"
           >
-            {data.heroTitle}
+            {data.headingPart1 || ""}{" "}
+            <span className="italic font-light text-neutral-400">
+              {data.headingItalicHighlight || ""}
+            </span>
           </motion.h1>
 
           {/* Subtitle */}
-          <motion.p
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.6,
-            }}
-            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12"
-          >
-            {data.heroSubtitle}
-          </motion.p>
+          {data.heroSubtitle && (
+            <motion.p
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.6,
+              }}
+              className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12"
+            >
+              {data.heroSubtitle}
+            </motion.p>
+          )}
         </motion.div>
       </div>
     </section>
@@ -328,11 +167,7 @@ function ContactFormSection() {
     e.preventDefault();
     // Form submission logic would go here
   };
-  const openingHours = data.openingHours || [
-    { days: "Monday - Friday", hours: "9:00 AM - 6:00 PM IST" },
-    { days: "Saturday", hours: "9:00 AM - 1:00 PM IST" },
-    { days: "Sunday", hours: "Closed" }
-  ];
+  const openingHours = data.openingHours || [];
   return (
     <section className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -498,7 +333,7 @@ function ContactFormSection() {
                 <BuildingIcon size={24} strokeWidth={1.5} />
               </div>
               <h3 className="text-xl font-bold mb-4 uppercase tracking-tight">
-                {data.locationTitle || "Headquarters"}
+                {data.locationTitle || ""}
               </h3>
               <div className="space-y-3 text-neutral-400">
                 <p className="flex items-start gap-3">
@@ -508,9 +343,8 @@ function ContactFormSection() {
                   />
 
                   <span>
-                    {data.addressLine1 || "Bandra Kurla Complex, BKC"}
-                    <br />
-                    {data.addressLine2 || "Mumbai 400051, India"}
+                    {data.addressLine1 || ""}
+                    {data.addressLine2 && <><br />{data.addressLine2}</>}
                   </span>
                 </p>
                 <p className="flex items-center gap-3">
@@ -519,7 +353,7 @@ function ContactFormSection() {
                     className="text-brand-pink flex-shrink-0"
                   />
 
-                  <span>{data.phoneNumber || "+91 22 6655 0178"}</span>
+                  <span>{data.phoneNumber || ""}</span>
                 </p>
                 <p className="flex items-center gap-3">
                   <MailIcon
@@ -527,7 +361,7 @@ function ContactFormSection() {
                     className="text-brand-pink flex-shrink-0"
                   />
 
-                  <span>{data.emailAddress || "info@encotec.com"}</span>
+                  <span>{data.emailAddress || ""}</span>
                 </p>
               </div>
             </div>
@@ -566,10 +400,10 @@ function ContactFormSection() {
                     General Inquiries
                   </div>
                   <a
-                    href={`mailto:${data.emailAddress || "info@encotec.com"}`}
+                    href={`mailto:${data.emailAddress || ""}`}
                     className="text-white hover:text-brand-pink transition-colors"
                   >
-                    {data.emailAddress || "info@encotec.com"}
+                    {data.emailAddress || ""}
                   </a>
                 </div>
                 <div>
@@ -592,6 +426,19 @@ function ContactFormSection() {
   );
 }
 function GlobalOfficesMap() {
+  const { data: footprintData } = useSectionData<any>("home", "GlobalFootprintSection");
+  const locations: Location[] = footprintData.locations || [];
+  const hqLocation = locations.find(
+    (loc) =>
+      loc.name.toLowerCase().includes("noida") ||
+      loc.name.toLowerCase().includes("hq")
+  ) || locations[0];
+  const hqCoords = hqLocation?.coordinates || [77.39, 28.58];
+
+  const connections = locations
+    .filter((loc) => loc.name !== hqLocation?.name)
+    .map((loc) => [hqCoords, loc.coordinates] as [[number, number], [number, number]]);
+
   const sectionRef = useRef<HTMLElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, {

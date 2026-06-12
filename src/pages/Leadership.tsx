@@ -84,7 +84,7 @@ function LeadershipHero() {
         className="absolute inset-0"
       >
         <img
-          src={data.backgroundImage || "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=2400"}
+          src={data.backgroundImage}
           alt="Leadership and Team"
           className="w-full h-full object-cover opacity-40"
         />
@@ -247,7 +247,7 @@ function LeadershipPhilosophy() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                Our Philosophy
+                {data.philosophyTagline}
               </span>
             </div>
 
@@ -291,7 +291,7 @@ function LeadershipPhilosophy() {
               }}
             >
               <img
-                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=1200"
+                src={data.philosophyImage}
                 alt="Leadership Philosophy"
                 className="w-full h-[500px] object-cover"
               />
@@ -418,7 +418,7 @@ function ExecutiveTeam() {
                   {exec.bio}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-auto pb-24">
-                  {exec.tags.map((tag) => (
+                  {exec.tags.map((tag: any) => (
                     <span
                       key={tag}
                       className="px-3 py-1 border border-brand-pink/50 text-brand-pink text-xs font-bold uppercase tracking-wider"
