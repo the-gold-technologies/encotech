@@ -10,29 +10,12 @@ import {
 'lucide-react';
 import { useSectionData } from '../../store/useCMSStore';
 
-// --- Default Data ---
-const defaultTrustStripData = {
-  aboutLabel: "About Us",
-  aboutTitle: "Human-Centric Engineering Since 2011",
-  aboutPara1: "Encotec Energy brings an owner's mindset to every project. Founded in 2011, we have grown into a team of 1800+ industry specialists operating across 13+ key locations.",
-  aboutPara2: "From thermal power plants to cutting-edge solar installations, our engineering DNA drives precision, reliability, and sustainable outcomes for clients worldwide.",
-  statsList: [
-    { value: '2011', label: 'FOUNDED YEAR' },
-    { value: '13+', label: 'KEY LOCATIONS' },
-    { value: '1800+', label: 'INDUSTRY SPECIALISTS' },
-    { value: '8000+', label: 'MW POWER CAPACITY' }
-  ],
-  badgeTitle: "Est. 2011",
-  badgeSubtitle: "Pioneering Energy",
-  bannerTitle: "Experience Global Engineering Excellence.",
-  bannerSubtitle: "From India to Turkey, see how we are setting new standards in power infrastructure."
-};
 
 const trustStripIcons = [CalendarIcon, GlobeIcon, UsersIcon, ZapIcon];
 
 export function AboutSection() {
-  const { data } = useSectionData("home", "HomeTrustStrip", defaultTrustStripData);
-  const stats = (data.statsList || defaultTrustStripData.statsList).map((stat: any, i: number) => ({
+  const { data } = useSectionData<any>("home", "HomeTrustStrip");
+  const stats = (data.statsList || []).map((stat: any, i: number) => ({
     ...stat,
     icon: trustStripIcons[i % trustStripIcons.length] || ZapIcon
   }));
@@ -96,12 +79,12 @@ export function AboutSection() {
               }}
               className="text-4xl md:text-5xl lg:text-[3.5rem] font-black text-neutral-900 leading-[1.08] tracking-tight uppercase mb-8">
               
-              {data.aboutTitle.includes("Since 2011") ? (
+              {data.aboutTitle?.includes("Since 2011") ? (
                 <>
                   Human-Centric Engineering{' '}
                   <span className="text-brand-pink">Since 2011</span>
                 </>
-              ) : data.aboutTitle}
+              ) : (data.aboutTitle || "")}
             </motion.h2>
 
             {/* Body Text */}
@@ -171,7 +154,7 @@ export function AboutSection() {
               }}
               className="grid grid-cols-2 gap-4">
               
-              {stats.map((stat, i) =>
+              {stats.map((stat: any, i: number) =>
                 <div
                   key={i}
                   className="p-5 border border-neutral-200 hover:border-brand-pink/30 transition-colors duration-300 group">

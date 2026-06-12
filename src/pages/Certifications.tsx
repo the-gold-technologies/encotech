@@ -53,54 +53,7 @@ function AnimatedCounter({
     </span>
   );
 }
-// --- Default Data ---
-const defaultHeroData = {
-  heroTitle: "CERTIFICATIONS & PARTNERS",
-  heroSubtitle:
-    "Our commitment to global standards of quality, safety, and environmental management, backed by strategic alliances with industry leaders.",
-};
 
-const defaultCertificationsData = {
-  certificationsList: [
-    { title: "ISO 9001:2015", category: "Quality Management", desc: "Ensuring consistent quality in our engineering, procurement, and construction services." },
-    { title: "ISO 14001:2015", category: "Environmental Management", desc: "Commitment to minimizing our environmental footprint across all project sites." },
-    { title: "ISO 45001:2018", category: "Occupational Health & Safety", desc: "Maintaining the highest standards of workplace safety for our employees and contractors." },
-    { title: "ASME 'U' & 'S' Stamps", category: "Boiler & Pressure Vessel", desc: "Authorized to manufacture and assemble power boilers and pressure vessels." },
-    { title: "NABL Accreditation", category: "Testing & Calibration", desc: "Recognized competence of our testing and calibration laboratories." },
-    { title: "IBR Certification", category: "Indian Boiler Regulations", desc: "Certified as a special class boiler repairer and erector under IBR 1950." },
-  ],
-};
-
-const defaultPartnersData = {
-  partnersList: [
-    { name: "Siemens Energy", monogram: "SE", role: "Gas Turbine Technology" },
-    { name: "GE Vernova", monogram: "GE", role: "Power Generation Systems" },
-    { name: "BHEL", monogram: "BH", role: "Heavy Electrical Equipment" },
-    { name: "NTPC", monogram: "NT", role: "Thermal Power Operations" },
-    { name: "L&T Energy", monogram: "LT", role: "EPC & Construction" },
-    { name: "Tata Power", monogram: "TP", role: "Integrated Power Solutions" },
-    { name: "Adani Power", monogram: "AP", role: "Private Sector Energy" },
-    { name: "JSW Energy", monogram: "JW", role: "Diversified Energy Portfolio" },
-  ],
-};
-
-const defaultMembershipsData = {
-  membershipsList: [
-    { name: "Confederation of Indian Industry (CII)", year: "2010" },
-    { name: "Federation of Indian Chambers of Commerce (FICCI)", year: "2012" },
-    { name: "Indian Electrical & Electronics Mfrs. Assoc. (IEEMA)", year: "2014" },
-    { name: "Central Board of Irrigation and Power (CBIP)", year: "2015" },
-    { name: "Independent Power Producers Assoc. (IPPAI)", year: "2016" },
-    { name: "Associated Chambers of Commerce (ASSOCHAM)", year: "2018" },
-  ],
-};
-
-const defaultTrustStatsData = {
-  stats1Value: "15", stats1Label: "Years of Excellence", stats1Suffix: "+",
-  stats2Value: "100", stats2Label: "Compliance Rate", stats2Suffix: "%",
-  stats3Value: "50", stats3Label: "Global Audits Passed", stats3Suffix: "+",
-  stats4Value: "23", stats4Label: "Countries Recognized", stats4Suffix: "+",
-};
 
 // Icon mapping for certifications grid
 const certIconMap: Record<string, React.ComponentType<any>> = {
@@ -117,7 +70,7 @@ function CertificationsHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
-  const { data } = useSectionData("certifications", "CertificationsHero", defaultHeroData);
+  const { data } = useSectionData<any>("certifications", "CertificationsHero");
   return (
     <section className="relative min-h-screen w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
@@ -284,7 +237,7 @@ function CertificationsHero() {
   );
 }
 function CertificationsGrid() {
-  const { data } = useSectionData("certifications", "CertificationsGrid", defaultCertificationsData);
+  const { data } = useSectionData<any>("certifications", "CertificationsGrid");
   const certifications = (data.certificationsList || []).map((cert: any, index: number) => ({
     ...cert,
     id: `cert-${index}`,
@@ -361,7 +314,7 @@ function CertificationsGrid() {
   );
 }
 function StrategicPartners() {
-  const { data } = useSectionData("certifications", "StrategicPartners", defaultPartnersData);
+  const { data } = useSectionData<any>("certifications", "StrategicPartners");
   const partners: Array<{ name: string; monogram: string; role: string }> = data.partnersList || [];
 
   return (
@@ -457,7 +410,7 @@ function StrategicPartners() {
   );
 }
 function IndustryMemberships() {
-  const { data } = useSectionData("certifications", "IndustryMemberships", defaultMembershipsData);
+  const { data } = useSectionData<any>("certifications", "IndustryMemberships");
   const memberships: Array<{ name: string; year: string }> = data.membershipsList || [];
 
   return (
@@ -551,7 +504,7 @@ function IndustryMemberships() {
   );
 }
 function TrustStats() {
-  const { data } = useSectionData("certifications", "TrustStats", defaultTrustStatsData);
+  const { data } = useSectionData<any>("certifications", "TrustStats");
   const stats = [
     { value: parseInt(data.stats1Value) || 15, label: data.stats1Label || "Years of Excellence", suffix: data.stats1Suffix || "+" },
     { value: parseInt(data.stats2Value) || 100, label: data.stats2Label || "Compliance Rate", suffix: data.stats2Suffix || "%" },
@@ -619,11 +572,7 @@ function CTASection() {
   );
 }
 export function Certifications() {
-  useSEO(
-    "certifications",
-    "Certifications & Quality Standards | Encotec",
-    "Encotec is triple ISO certified in Quality (9001), Environment (14001), and Safety (45001), representing the peak of compliance and excellence."
-  );
+  useSEO("certifications");
 
   useEffect(() => {
     window.scrollTo(0, 0);

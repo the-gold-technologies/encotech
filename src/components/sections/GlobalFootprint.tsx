@@ -10,17 +10,6 @@ import {
 import { MapPinIcon, PhoneIcon } from "lucide-react";
 import { useSectionData } from "../../store/useCMSStore";
 
-// --- Default Data ---
-const defaultGlobalFootprintData = {
-  footprintLabel: "Global Presence",
-  footprintTitle: "Connected Intelligence",
-  footprintSubtitle: "A live network of energy systems operating in synchronization across continents.",
-  statsList: [
-    { value: "14+", label: "India Locations" },
-    { value: "8000+", label: "MW Capacity" },
-    { value: "1,800+", label: "Professionals" }
-  ]
-};
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 interface Location {
@@ -195,8 +184,8 @@ const connections: Array<[[number, number], [number, number]]> = [
 ];
 
 export function GlobalFootprint() {
-  const { data } = useSectionData("home", "HomeGlobalFootprint", defaultGlobalFootprintData);
-  const stats = data.statsList || defaultGlobalFootprintData.statsList;
+  const { data } = useSectionData<any>("home", "HomeGlobalFootprint");
+  const stats = data.statsList || [];
 
   const sectionRef = useRef<HTMLElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);

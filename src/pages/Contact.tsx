@@ -26,11 +26,6 @@ import {
 import { useSectionData } from "../store/useCMSStore";
 import { useSEO } from "../hooks/useSEO";
 
-// --- Default Data ---
-const defaultContactHeroData = {
-  heroTitle: "Let's Build the Future of Energy Together",
-  heroSubtitle: "Reach out to our team of experts for project inquiries, strategic partnerships, or to learn more about our engineering capabilities."
-};
 
 // --- Map Data & Configuration ---
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
@@ -212,7 +207,7 @@ const connections: Array<[[number, number], [number, number]]> = [
 ];
 // --- Components ---
 function ContactHero() {
-  const { data } = useSectionData("contact", "ContactHero", defaultContactHeroData);
+  const { data } = useSectionData<any>("contact", "ContactHero");
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
@@ -1043,11 +1038,7 @@ function GlobalOfficesMap() {
   );
 }
 export function Contact() {
-  useSEO(
-    "contact",
-    "Contact Us | Encotec Energy Infrastructure Partner",
-    "Get in touch with Encotec for project conceptualization, construction, O&M, advisory services, global sourcing, or general inquiries."
-  );
+  useSEO("contact");
 
   useEffect(() => {
     window.scrollTo(0, 0);

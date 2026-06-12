@@ -4,38 +4,10 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRightIcon } from 'lucide-react';
 import { useSectionData } from '../../store/useCMSStore';
 
-// --- Default Data ---
-const defaultProjectShowcaseData = {
-  showcaseLabel: "Case Studies",
-  showcaseTitle: "Stewardship in Action",
-  showcaseSubtitle: "Delivering critical energy infrastructure with precision engineering and an owner's mindset.",
-  projectsList: [
-    {
-      title: 'Supercritical Mastery at Rajpura',
-      location: 'Rajpura, Punjab',
-      category: 'Asset Stewardship',
-      description:
-        "Providing comprehensive O&M for a 2x700 MW Supercritical plant, ensuring long-term reliability for Punjab's energy heart.",
-      image:
-        'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&q=80&w=2000'
-    },
-    {
-      title: "Powering India's Gateway (DIAL)",
-      location: 'New Delhi',
-      category: 'Airport Utility Management',
-      description:
-        'Five years of flawless utility management at Delhi International Airport, recently renewed for another five years due to exceptional performance.',
-      image:
-        'https://images.unsplash.com/photo-1436491865332-7a61a109db05?auto=format&fit=crop&q=80&w=2000',
-      backgroundImage:
-        'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?auto=format&fit=crop&q=80&w=2000'
-    }
-  ]
-};
 
 export function ProjectShowcase() {
-  const { data } = useSectionData("home", "HomeProjectShowcase", defaultProjectShowcaseData);
-  const projects = data.projectsList || defaultProjectShowcaseData.projectsList;
+  const { data } = useSectionData<any>("home", "HomeProjectShowcase");
+  const projects = data.projectsList || [];
 
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({

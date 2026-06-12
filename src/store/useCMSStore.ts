@@ -47,8 +47,10 @@ export const useCMSStore = create<CMSState>((set, get) => ({
       },
     }));
 
+    const apiSlug = slug === "value-added-services" ? "value-added" : slug;
+
     try {
-      const response = await fetch(`${API_BASE_URL}/api/pages/${slug}`);
+      const response = await fetch(`${API_BASE_URL}/api/pages/${apiSlug}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch page data: ${response.statusText}`);
       }
@@ -59,9 +61,145 @@ export const useCMSStore = create<CMSState>((set, get) => ({
 
       // Transform sections array into a Record<string, any>
       const sectionsMap: Record<string, any> = {};
+
+      const mapSection = (type: string, content: any) => {
+        if (!content) return;
+
+        // 1. Home Section Mappings
+        if (type === "HeroSection") {
+          sectionsMap["HomeHero"] = {
+            heroLabel: content.tagline,
+            heroTitle: content.headlineLine1,
+            heroSubtitle: content.description,
+            serviceTags: content.serviceTags,
+            projectsCount: content.projectsBadgeNumber,
+            projectsLabel: content.projectsBadgeLabel,
+            heroStats: [
+              { label: content.stat1Label, value: content.stat1Value },
+              { label: content.stat2Label, value: content.stat2Value },
+              { label: content.stat3Label, value: content.stat3Value },
+              { label: content.stat4Label, value: content.stat4Value }
+            ].filter((s: any) => s.label && s.value)
+          };
+        } else if (type === "AboutUs") {
+          sectionsMap["HomeTrustStrip"] = {
+            aboutLabel: content.upperTag,
+            aboutTitle: content.headingLabel + (content.headingItalicHighlight ? " " + content.headingItalicHighlight : ""),
+            aboutPara1: content.paragraphs?.[0],
+            aboutPara2: content.paragraphs?.[1],
+            badgeTitle: content.badgeLabel,
+            badgeSubtitle: content.badgeValue,
+            bannerTitle: content.bannerHeading,
+            bannerSubtitle: content.bannerDescription,
+            statsList: content.stats
+          };
+        } else if (type === "ServicesSection") {
+          sectionsMap["HomeServices"] = {
+            servicesLabel: content.tagline,
+            servicesTitle: content.heading,
+            servicesSubtitle: content.description,
+            servicesList: content.services
+          };
+        } else if (type === "ProcessSection" && slug === "home") {
+          sectionsMap["HomeProcess"] = {
+            workflowLabel: content.tagline,
+            workflowTitle: content.heading,
+            stepsList: content.steps
+          };
+        } else if (type === "ProjectShowcaseSection") {
+          sectionsMap["HomeProjectShowcase"] = {
+            showcaseLabel: content.tagline,
+            showcaseTitle: content.heading,
+            showcaseSubtitle: content.description,
+            projectsList: content.projects
+          };
+        } else if (type === "GlobalFootprintSection") {
+          sectionsMap["HomeGlobalFootprint"] = {
+            footprintLabel: content.tagline,
+            footprintTitle: content.heading,
+            footprintSubtitle: content.description,
+            statsList: content.stats
+          };
+        } else if (type === "WhyEncotecSection") {
+          sectionsMap["HomeWhyEncotec"] = {
+            wordsList: [content.revealWord1, content.revealWord2, content.revealWord3].filter(Boolean),
+            ctaBlocks: content.ctaBlocks
+          };
+        } else if (type === "Testimonials") {
+          sectionsMap["HomeTestimonials"] = {
+            testimonialsLabel: content.tagline,
+            testimonialsTitle: content.heading,
+            testimonialsList: content.testimonials
+          };
+        } else if (type === "LogoStripSection") {
+          sectionsMap["HomeLogoStrip"] = {
+            logoStripTitle: content.tagline,
+            logos: content.logos
+          };
+        } else if (type === "CTASection" && slug === "home") {
+          sectionsMap["HomeCTA"] = {
+            ctaLabel: content.tagline,
+            ctaTitle: content.heading,
+            ctaDescription: content.description,
+            primaryBtnLabel: content.primaryBtnLabel,
+            primaryBtnUrl: content.primaryBtnUrl,
+            secondaryBtnLabel: content.secondaryBtnLabel,
+            secondaryBtnUrl: content.secondaryBtnUrl
+          };
+        }
+        // 2. Power Generation / Stewardship Section Mappings
+        else if (type === "StewardshipHero") {
+          sectionsMap["PGHero"] = content;
+        } else if (type === "StewardshipFeatures") {
+          sectionsMap["PGFeatures"] = content;
+        } else if (type === "StewardshipPhilosophy") {
+          sectionsMap["PGPhilosophy"] = content;
+        } else if (type === "CTASection" && slug === "power-generation") {
+          sectionsMap["PGCTA"] = content;
+        }
+        // 3. Transmission & Distribution Section Mappings
+        else if (type === "ConstructionHero") {
+          sectionsMap["TDHero"] = content;
+        } else if (type === "CapabilitiesSection" && slug === "transmission-distribution") {
+          sectionsMap["TDCapabilities"] = content;
+        }
+        // 4. Renewable Energy Section Mappings
+        else if (type === "AdvisoryHero") {
+          sectionsMap["REHero"] = content;
+        } else if (type === "AdvisoryFeatures") {
+          sectionsMap["REFeatures"] = content;
+        } else if (type === "CTASection" && slug === "renewable-energy") {
+          sectionsMap["RECTA"] = content;
+        }
+        // 5. Airport Services Section Mappings
+        else if (type === "DueDiligenceHero") {
+          sectionsMap["AirportHero"] = content;
+        } else if (type === "HealthFeatures") {
+          sectionsMap["AirportFeatures"] = content;
+        }
+        // 6. Value Added Services Section Mappings
+        else if (type === "SourcingHero") {
+          sectionsMap["VASHero"] = content;
+        } else if (type === "SourcingFeatures") {
+          sectionsMap["VASFeatures"] = content;
+        }
+        // 7. Project Management Section Mappings
+        else if (type === "CoreOfferings") {
+          sectionsMap["PMOfferings"] = content;
+        }
+        // 8. About Section Mappings
+        else if (type === "Leadership" && slug === "about") {
+          sectionsMap["AboutLeadership"] = content;
+        }
+        // Fallback: copy directly
+        else {
+          sectionsMap[type] = content;
+        }
+      };
+
       if (Array.isArray(json.data.sections)) {
         for (const section of json.data.sections) {
-          sectionsMap[section.type] = section.content;
+          mapSection(section.type, section.content);
         }
       }
 
@@ -102,7 +240,7 @@ export const useCMSStore = create<CMSState>((set, get) => ({
 export function useSectionData<T>(
   pageSlug: string,
   sectionType: string,
-  defaultData: T
+  defaultData?: T
 ): { data: T; loading: boolean; error: string | null } {
   const pageState = useCMSStore((state) => state.pages[pageSlug]);
   const fetchPage = useCMSStore((state) => state.fetchPage);
@@ -118,9 +256,27 @@ export function useSectionData<T>(
   const sectionContent = pageState?.sections?.[sectionType];
 
   // Merge default data with CMS content if content is found, otherwise return defaultData
-  const data = sectionContent
-    ? { ...defaultData, ...sectionContent }
-    : defaultData;
+  // If defaultData is not provided, return sectionContent or a safe fallback empty object.
+  const data = (sectionContent
+    ? (defaultData ? { ...defaultData, ...sectionContent } : sectionContent)
+    : (defaultData || {})) as T;
 
   return { data, loading, error };
 }
+
+export function usePageLoading(pageSlug: string): { loading: boolean; error: string | null } {
+  const pageState = useCMSStore((state) => state.pages[pageSlug]);
+  const fetchPage = useCMSStore((state) => state.fetchPage);
+
+  useEffect(() => {
+    if (!pageState) {
+      fetchPage(pageSlug);
+    }
+  }, [pageSlug, pageState, fetchPage]);
+
+  const loading = pageState?.loading ?? true;
+  const error = pageState?.error ?? null;
+
+  return { loading, error };
+}
+

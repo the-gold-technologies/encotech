@@ -4,31 +4,11 @@ import { motion } from 'framer-motion';
 import { ArrowRightIcon } from 'lucide-react';
 import { useSectionData } from '../../store/useCMSStore';
 
-// --- Default Data ---
-const defaultHeroData = {
-  heroLabel: "Global Energy Stewardship",
-  heroTitle: "Your Assets. Our Stewardship. End-to-End Solutions for a Global Future",
-  heroSubtitle: "We are more than consultants; we are your partners in progress. By adopting an \"Owner's Mindset,\" we take total responsibility for your infrastructure — from the first feasibility study to long-term operational excellence.",
-  serviceTags: [
-    'STEWARDSHIP',
-    'COMMISSIONING',
-    'ADVISORY',
-    'GLOBAL SOURCING'
-  ],
-  heroStats: [
-    { value: '2011', label: 'FOUNDED YEAR' },
-    { value: '13+', label: 'CITIES IN INDIA' },
-    { value: '300+', label: 'SPECIALIZED ENGINEERS' },
-    { value: '8000+', label: 'MW UNDER STEWARDSHIP' }
-  ],
-  projectsCount: "150+",
-  projectsLabel: "Projects Delivered"
-};
 
 export function Hero() {
-  const { data } = useSectionData("home", "HomeHero", defaultHeroData);
-  const serviceTags = data.serviceTags || defaultHeroData.serviceTags;
-  const heroStats = data.heroStats || defaultHeroData.heroStats;
+  const { data } = useSectionData<any>("home", "HomeHero");
+  const serviceTags = data.serviceTags || [];
+  const heroStats = data.heroStats || [];
 
   return (
     <section className="relative w-full bg-white pt-28 pb-16 overflow-hidden">
@@ -82,13 +62,13 @@ export function Hero() {
               }}
               className="text-[2.6rem] md:text-[3.5rem] lg:text-[4rem] font-black text-neutral-900 leading-[1.05] tracking-tight uppercase mb-8 select-text selection:bg-brand-pink selection:text-white cursor-text">
               
-              {data.heroTitle.includes("Our Stewardship") ? (
+              {data.heroTitle?.includes("Our Stewardship") ? (
                 <>
                   Your Assets. Our{' '}
                   <span className="text-brand-pink">Stewardship.</span> End-to-End
                   Solutions for a Global Future
                 </>
-              ) : data.heroTitle}
+              ) : (data.heroTitle || "")}
             </motion.h1>
 
             {/* Subtitle */}

@@ -14,22 +14,10 @@ import {
 import { useSectionData } from "../../store/useCMSStore";
 import { useSEO } from "../../hooks/useSEO";
 
-// --- Default Data ---
-const defaultAirportHeroData = {
-  heroTitle: "Making Informed Decisions For the Long Term",
-  heroSubtitle: "Before you buy an old plant or decide to move one, you need to know if it's fit for the future. Our due diligence services provide the technical truth about your assets.",
-};
-const defaultAirportFeaturesData = {
-  featuresList: [
-    { title: "Residual Life Assessment (RLA)", description: "We conduct exhaustive studies to determine how many more years of efficient life your plant equipment actually has, helping you plan for replacements or upgrades." },
-    { title: "Technical Due Diligence", description: "We provide independent technical audits for plant acquisitions, helping you understand the true value, operational risks, and hidden costs of an investment." },
-    { title: "Restoration Strategy", description: "For older plants, we provide comprehensive revamping and restoration plans to improve performance, extend lifecycle, and meet modern environmental standards." },
-  ],
-};
 const airportFeatureIconMap = [ActivityIcon, FileCheckIcon, RefreshCwIcon];
 
 function DueDiligenceHero() {
-  const { data } = useSectionData("airport-services", "AirportHero", defaultAirportHeroData);
+  const { data } = useSectionData<any>("airport-services", "AirportHero");
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-10">
@@ -90,7 +78,7 @@ function DueDiligenceHero() {
   );
 }
 function HealthFeatures() {
-  const { data } = useSectionData("airport-services", "AirportFeatures", defaultAirportFeaturesData);
+  const { data } = useSectionData<any>("airport-services", "AirportFeatures");
   const features = (data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: airportFeatureIconMap[i] || ActivityIcon }));
 
   return (
@@ -216,11 +204,7 @@ function ValueProtection() {
   );
 }
 export function AirportServices() {
-  useSEO(
-    "service/airport-services",
-    "Airport Utility Management & Services | Encotec",
-    "Encotec manages critical high-voltage assets, fire safety, mechanical utilities, and support services for international airport hubs."
-  );
+  useSEO("service/airport-services");
 
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">

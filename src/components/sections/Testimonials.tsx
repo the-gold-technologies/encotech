@@ -3,49 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { QuoteIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useSectionData } from '../../store/useCMSStore';
 
-// --- Default Data ---
-const defaultTestimonialsData = {
-  testimonialsLabel: "Testimonials",
-  testimonialsTitle: "Trusted by Industry Leaders",
-  testimonialsList: [
-    {
-      quote:
-        "Encotec's O&M team transformed our plant's performance. Their owner's mindset approach meant they treated our 700 MW facility as if it were their own — uptime improved by 12% in the first year alone.",
-      name: 'Rajesh Mehta',
-      title: 'Senior Vice President, Operations',
-      company: 'National Thermal Power Corp.',
-      initials: 'RM'
-    },
-    {
-      quote:
-        'From feasibility to commissioning, Encotec delivered our 200 MW solar project on schedule and under budget. Their engineering precision and attention to detail set a new benchmark for our portfolio.',
-      name: 'Sarah Al-Rashid',
-      title: 'Project Director, Renewable Energy',
-      company: 'Gulf Energy Solutions',
-      initials: 'SA'
-    },
-    {
-      quote:
-        'Working with Encotec on our 765 kV substation was exceptional. Their deep expertise in transmission infrastructure and commitment to safety standards gave us complete confidence throughout the project.',
-      name: 'Dr. Klaus Werner',
-      title: 'Chief Engineer, Grid Infrastructure',
-      company: 'European Power Networks',
-      initials: 'KW'
-    },
-    {
-      quote:
-        "Encotec's project management capabilities are world-class. They coordinated complex multi-disciplinary teams across three countries, delivering our airport MEP systems with zero safety incidents.",
-      name: 'Priya Sharma',
-      title: 'Managing Director',
-      company: 'Apex Infrastructure Group',
-      initials: 'PS'
-    }
-  ]
-};
 
 export function Testimonials() {
-  const { data } = useSectionData("home", "HomeTestimonials", defaultTestimonialsData);
-  const testimonials = data.testimonialsList || defaultTestimonialsData.testimonialsList;
+  const { data } = useSectionData<any>("home", "HomeTestimonials");
+  const testimonials = data.testimonialsList || [];
 
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);

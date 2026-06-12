@@ -12,27 +12,10 @@ import {
 import { useSectionData } from "../../store/useCMSStore";
 import { useSEO } from "../../hooks/useSEO";
 
-// --- Default Data ---
-const defaultREHeroData = {
-  heroTitle: "Solving the Hardest Engineering Problems",
-  heroSubtitle: "When a plant is running but not performing, or when technical faults disrupt your peace of mind, our expert advisory team steps in. We provide high-level problem solving that goes beyond basic maintenance.",
-};
-const defaultREFeaturesData = {
-  featuresList: [
-    { title: "Specialised Testing (NDT)", description: "We use Non-Destructive Testing to assess the health of your equipment without causing further downtime. Identify micro-fractures and wear before they lead to catastrophic failure." },
-    { title: "Efficiency Audits", description: "Our in-house team conducts energy efficiency and steam path audits to identify savings and reduce your carbon footprint. We find the lost megawatts in your system." },
-    { title: "5S & Process Improvement", description: "We implement industrial standards (5S) to improve workplace safety and operational flow. A clean, organized plant is a safe and efficient plant." },
-  ],
-};
-const defaultRECTAData = {
-  heading: "Is Your Asset Reaching Its Full Potential?",
-  subheading: "Speak with our specialized engineers about our expert advisory and performance audits.",
-  buttonText: "Request an Audit",
-};
 const reFeatureIconMap = [SearchIcon, ActivityIcon, TrendingUpIcon];
 
 function AdvisoryHero() {
-  const { data } = useSectionData("renewable-energy", "REHero", defaultREHeroData);
+  const { data } = useSectionData<any>("renewable-energy", "REHero");
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-20">
@@ -92,7 +75,7 @@ function AdvisoryHero() {
 
 }
 function AdvisoryFeatures() {
-  const { data } = useSectionData("renewable-energy", "REFeatures", defaultREFeaturesData);
+  const { data } = useSectionData<any>("renewable-energy", "REFeatures");
   const features = (data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: reFeatureIconMap[i] || SearchIcon }));
 
   return (
@@ -220,7 +203,7 @@ function DiagnosticProcess() {
 
 }
 function AdvisoryCTA() {
-  const { data } = useSectionData("renewable-energy", "RECTA", defaultRECTAData);
+  const { data } = useSectionData<any>("renewable-energy", "RECTA");
   return (
     <section className="py-32 bg-white text-center">
       <div className="max-w-4xl mx-auto px-6">
@@ -241,11 +224,7 @@ function AdvisoryCTA() {
   );
 }
 export function RenewableEnergy() {
-  useSEO(
-    "service/renewable-energy",
-    "Renewable Energy & Advisory | Encotec Solutions",
-    "Encotec provides specialized testing (NDT), energy efficiency audits, process improvement, and advisory services for renewable energy assets."
-  );
+  useSEO("service/renewable-energy");
 
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">

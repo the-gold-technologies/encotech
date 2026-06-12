@@ -14,22 +14,10 @@ import {
 import { useSectionData } from "../../store/useCMSStore";
 import { useSEO } from "../../hooks/useSEO";
 
-// --- Default Data ---
-const defaultVASHeroData = {
-  heroTitle: "The Global Link for Critical Equipment",
-  heroSubtitle: "Downtime is often caused by a missing part, not a missing plan. Encotec acts as your strategic sourcing partner, leveraging deep relationships with manufacturers to get you what you need, when you need it.",
-};
-const defaultVASFeaturesData = {
-  featuresList: [
-    { title: "Global OEM Network", description: "We have established tie-ups with over 65 major OEMs in China, Vietnam, Korea, and India, giving you direct access to high-quality components without the logistical headache." },
-    { title: "Comprehensive Inventory", description: "We supply everything from high-pressure boiler spares to coal mill rollers and specialized electrical actuators, ensuring your entire plant is covered." },
-    { title: "Technical Support", description: "We don't just supply parts; we provide the engineering support to ensure they are integrated correctly and perform to specification within your existing systems." },
-  ],
-};
 const vasFeatureIconMap = [GlobeIcon, PackageIcon, WrenchIcon];
 
 function SourcingHero() {
-  const { data } = useSectionData("value-added-services", "VASHero", defaultVASHeroData);
+  const { data } = useSectionData<any>("value-added-services", "VASHero");
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-10">
@@ -99,7 +87,7 @@ function SourcingHero() {
 
 }
 function SourcingFeatures() {
-  const { data } = useSectionData("value-added-services", "VASFeatures", defaultVASFeaturesData);
+  const { data } = useSectionData<any>("value-added-services", "VASFeatures");
   const features = (data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: vasFeatureIconMap[i] || GlobeIcon }));
 
   return (
@@ -233,11 +221,7 @@ function SourcingAdvantage() {
 
 }
 export function ValueAddedServices() {
-  useSEO(
-    "service/value-added",
-    "Value Added Services & Global Sourcing | Encotec",
-    "Encotec acts as a strategic sourcing partner, providing high-quality spare parts, boiler components, actuators, and logistics support through global OEMs."
-  );
+  useSEO("service/value-added");
 
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">

@@ -13,11 +13,7 @@ import { CTA } from '../components/sections/CTA';
 import { useSEO } from '../hooks/useSEO';
 
 export function Home() {
-  useSEO(
-    "home",
-    "Encotec | Energy Solutions, Asset Stewardship & Engineering",
-    "Encotec is a leading global service provider of engineering, asset stewardship (O&M), and advisory services across traditional power, transmission & distribution, and renewable energy sectors."
-  );
+  useSEO("home");
 
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">

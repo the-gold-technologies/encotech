@@ -17,23 +17,6 @@ import {
 import { useSectionData } from "../../store/useCMSStore";
 import { useSEO } from "../../hooks/useSEO";
 
-// --- Default Data ---
-const defaultPMHeroData = {
-  heroTitle: "Building Your Vision on a Logical Foundation",
-  heroSubtitle: "A great project doesn't start with a shovel in the ground; it starts with a logical, well-vetted plan. We are your strategic developers who ensure your project is technically sound and financially viable from day one.",
-};
-const defaultPMPhilosophyData = {
-  heading: "Not Just Detailed Engineering. Strategic Development.",
-  para1: "We are not a \"detailed engineering\" firm that gets lost in the minutiae. We understand that the earliest decisions in a project's lifecycle have the most profound impact on its ultimate success.",
-  para2: "By adopting an \"Owner's Mindset\" from the very beginning, we evaluate site conditions, resource potential, and financial models to ensure your investment is built on reality, not just theory.",
-};
-const defaultPMOfferingsData = {
-  offeringsList: [
-    { title: "Feasibility & Pre-Feasibility Studies", description: "We evaluate site conditions and resource potential to ensure your investment is built on reality, not just theory. Our comprehensive studies cover technical, economic, and environmental factors." },
-    { title: "Detailed Project Reports (DPR)", description: "We provide the technical and financial clarity required for stakeholder confidence and project approval. Our DPRs serve as the definitive blueprint for project execution and financing." },
-    { title: "Strategic Sourcing & EPC Selection", description: "We develop rigorous technical specifications and help you finalise EPC contractors, ensuring you have the right partners by your side. We manage the entire tendering and evaluation process." },
-  ],
-};
 const pmOfferingIconMap = [MapIcon, FileTextIcon, BriefcaseIcon];
 
 // Animated Counter Component
@@ -76,7 +59,7 @@ function AnimatedCounter({
   );
 }
 function ProjectHero() {
-  const { data } = useSectionData("project-management", "ProjectHero", defaultPMHeroData);
+  const { data } = useSectionData<any>("project-management", "ProjectHero");
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       {/* Strategic Grid Pattern */}
@@ -202,7 +185,7 @@ function ProjectHero() {
   );
 }
 function PhilosophySection() {
-  const { data } = useSectionData("project-management", "PhilosophySection", defaultPMPhilosophyData);
+  const { data } = useSectionData<any>("project-management", "PhilosophySection");
   return (
     <section className="py-28 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -298,7 +281,7 @@ function PhilosophySection() {
   );
 }
 function CoreOfferings() {
-  const { data } = useSectionData("project-management", "PMOfferings", defaultPMOfferingsData);
+  const { data } = useSectionData<any>("project-management", "PMOfferings");
   const offerings = (data.offeringsList || []).map((o: any, i: number) => ({ ...o, icon: pmOfferingIconMap[i] || FileTextIcon }));
   return (
     <section className="py-28 bg-neutral-900 text-white">
@@ -439,11 +422,7 @@ function StatsSection() {
   );
 }
 export function ProjectManagement() {
-  useSEO(
-    "service/project-management",
-    "Project Conceptualisation & Development | Encotec",
-    "Encotec provides pre-feasibility, feasibility, Detailed Project Reports (DPR), and EPC contractor selection support with an owner's mindset."
-  );
+  useSEO("service/project-management");
 
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">

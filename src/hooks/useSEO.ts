@@ -12,8 +12,8 @@ export interface SEOData {
 
 export function useSEO(
   slug: string,
-  defaultTitle: string,
-  defaultDescription: string
+  defaultTitle?: string,
+  defaultDescription?: string
 ) {
   const [seoData, setSeoData] = useState<SEOData | null>(null);
 
@@ -44,8 +44,8 @@ export function useSEO(
   }, [slug]);
 
   useEffect(() => {
-    const title = seoData?.metaTitle || defaultTitle;
-    const description = seoData?.metaDescription || defaultDescription;
+    const title = seoData?.metaTitle || defaultTitle || "Encotec";
+    const description = seoData?.metaDescription || defaultDescription || "Encotec | Asset Stewardship & Engineering";
 
     document.title = title;
 

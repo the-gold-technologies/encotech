@@ -11,49 +11,12 @@ import {
 } from "lucide-react";
 import { useSectionData } from "../../store/useCMSStore";
 
-// --- Default Data ---
-const defaultProcessData = {
-  workflowLabel: "Our Workflow",
-  workflowTitle: "Workflow Followed for Each Project",
-  stepsList: [
-    {
-      id: 1,
-      title: "Logical Foundation",
-      description:
-        "We start by conceptualizing the project through rigorous feasibility studies and Detailed Project Reports (DPR).",
-    },
-    {
-      id: 2,
-      title: "Strategic Alignment",
-      description:
-        "Our team develops technical specifications and assists in the selection of the right partners to ensure a solid start.",
-    },
-    {
-      id: 3,
-      title: "Technical Realization",
-      description:
-        "We manage the precision erection and commissioning of assets, whether they are new builds or relocated plants.",
-    },
-    {
-      id: 4,
-      title: "Owner's O&M",
-      description:
-        "We transition into long-term stewardship, providing operation and maintenance with the same care as the asset owner.",
-    },
-    {
-      id: 5,
-      title: "Continuous Improvement",
-      description:
-        "Through regular performance diagnostics and energy audits, we ensure your asset remains efficient and reliable for its entire lifecycle.",
-    },
-  ],
-};
 
 const processStepIcons = [SearchIcon, PenToolIcon, HardHatIcon, CheckCircle2Icon, ActivityIcon];
 
 export function Process() {
-  const { data } = useSectionData("home", "HomeProcess", defaultProcessData);
-  const rawSteps = data.stepsList || defaultProcessData.stepsList;
+  const { data } = useSectionData<any>("home", "HomeProcess");
+  const rawSteps = data.stepsList || [];
   const steps = rawSteps.map((step: any, i: number) => ({
     ...step,
     icon: processStepIcons[i % processStepIcons.length] || SearchIcon,
@@ -129,12 +92,12 @@ export function Process() {
               {data.workflowLabel}
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mt-2 selection:bg-brand-pink selection:text-white select-text cursor-text">
-              {data.workflowTitle.includes("Workflow Followed") ? (
+              {data.workflowTitle?.includes("Workflow Followed") ? (
                 <>
                   Workflow Followed <br className="hidden md:block" />
                   for Each Project
                 </>
-              ) : data.workflowTitle}
+              ) : (data.workflowTitle || "")}
             </h2>
           </motion.div>
 

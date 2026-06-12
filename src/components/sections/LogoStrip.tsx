@@ -2,23 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useSectionData } from '../../store/useCMSStore';
 
-// --- Default Data ---
-const defaultLogoStripData = {
-  logosLabel: "Trusted by Industry Leaders",
-  logosList: [
-    'Siemens Energy',
-    'General Electric',
-    'Vestas',
-    'NextEra',
-    'Orsted',
-    'Enel',
-    'Iberdrola'
-  ]
-};
 
 export function LogoStrip() {
-  const { data } = useSectionData("home", "HomeLogoStrip", defaultLogoStripData);
-  const logos = data.logosList || defaultLogoStripData.logosList;
+  const { data } = useSectionData<any>("home", "HomeLogoStrip");
+  const logos = data.logosList || [];
 
   return (
     <section className="py-16 bg-neutral-50 border-y border-neutral-200 overflow-hidden">

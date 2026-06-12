@@ -4,45 +4,11 @@ import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { useSectionData } from '../../store/useCMSStore';
 
-// --- Default Data ---
-const defaultWhyEncotecData = {
-  wordsList: [
-    'Engineering Precision.',
-    'Global Execution.',
-    'Reliable Energy Solutions.'
-  ],
-  ctaBlocks: [
-    {
-      headline: 'Ready to Move from Consultancy to Partnership?',
-      text: 'Discover how our "Owner\'s Mindset" can transform your project\'s performance.'
-    },
-    {
-      headline: "Let's Build Your Project's Future Together.",
-      text: 'Contact us for end-to-end solutions, from conceptualization to commissioning.'
-    },
-    {
-      headline: 'Is Your Asset Reaching Its Full Potential?',
-      text: 'Speak with our 300+ engineers about our expert advisory and performance audits.'
-    },
-    {
-      headline: "Sourcing Critical Spares? We've Got the Global Reach.",
-      text: 'Access our network of major OEMs in China, Vietnam, and beyond for your spare part needs.'
-    },
-    {
-      headline: 'Join the 13+ Cities That Trust Encotec.',
-      text: 'Experience the peace of mind that comes with a top-tier O&M partner.'
-    },
-    {
-      headline: 'Planning an Asset Relocation?',
-      text: 'Let our experts manage the complex transition of your plant from one site — or country — to another.'
-    }
-  ]
-};
 
 export function WhyEncotec() {
-  const { data } = useSectionData("home", "HomeWhyEncotec", defaultWhyEncotecData);
-  const wordsList = data.wordsList || defaultWhyEncotecData.wordsList;
-  const ctaBlocks = data.ctaBlocks || defaultWhyEncotecData.ctaBlocks;
+  const { data } = useSectionData<any>("home", "HomeWhyEncotec");
+  const wordsList = data.wordsList || [];
+  const ctaBlocks = data.ctaBlocks || [];
 
   return (
     <section className="py-28 bg-white">

@@ -20,17 +20,6 @@ import {
 import { useSectionData } from "../store/useCMSStore";
 import { useSEO } from "../hooks/useSEO";
 
-// --- Default Data ---
-const defaultInsightsHeroData = {
-  heroTitle: "INSIGHTS, CASE STUDIES & INDUSTRY PERSPECTIVES",
-  heroSubtitle: "Explore our thought leadership, project successes, and the latest updates from the forefront of global energy engineering.",
-};
-const defaultInsightsStatsData = {
-  stat1Value: 15, stat1Label: "Case Studies Published",
-  stat2Value: 50, stat2Label: "Articles & Insights",
-  stat3Value: 8, stat3Label: "Countries Covered",
-  stat4Value: 10, stat4Label: "Monthly Readers (K+)",
-};
 
 // Animated Counter Component
 function AnimatedCounter({
@@ -236,7 +225,7 @@ function InsightsHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
-  const { data } = useSectionData("insights", "InsightsHero", defaultInsightsHeroData);
+  const { data } = useSectionData<any>("insights", "InsightsHero");
   return (
     <section className="relative min-h-[80vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
@@ -623,7 +612,7 @@ function ContentGrid() {
 }
 // Stats Banner
 function StatsBanner() {
-  const { data } = useSectionData("insights", "InsightsStats", defaultInsightsStatsData);
+  const { data } = useSectionData<any>("insights", "InsightsStats");
   const stats = [
     { value: data.stat1Value, suffix: "+", label: data.stat1Label },
     { value: data.stat2Value, suffix: "+", label: data.stat2Label },
@@ -786,11 +775,7 @@ function CTASection() {
 }
 // Main Component
 export function Insights() {
-  useSEO(
-    "insights",
-    "Insights & Case Studies | Encotec",
-    "Explore Encotec's news, insights, articles, and case studies detailing our achievements in energy infrastructure, asset stewardship, and construction."
-  );
+  useSEO("insights");
 
   useEffect(() => {
     window.scrollTo(0, 0);

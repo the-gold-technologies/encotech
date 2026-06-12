@@ -51,60 +51,7 @@ function AnimatedCounter({
     </span>
   );
 }
-// --- Default Data ---
-const defaultHeroData = {
-  heroTitle: "LEADERSHIP & TEAM",
-  heroSubtitle: "Meet the experienced leaders and engineers driving operational excellence and strategic growth across global energy markets.",
-  heroBadge1: "200+ Professionals",
-  heroBadge2: "15+ Years Average Experience",
-  heroBadge3: "23+ Countries",
-};
 
-const defaultPhilosophyData = {
-  philosophyHeading: "Leading With an Owner's Mindset",
-  philosophyPara1: "At Encotec, leadership is not just about managing teams; it's about taking full accountability for the outcomes we deliver. Our leadership team brings decades of hands-on experience from the world's most complex energy projects.",
-  philosophyPara2: "We believe that true engineering excellence requires a culture where every team member is empowered to think critically, act decisively, and prioritize long-term asset performance over short-term gains.",
-  philosophyQuote: "We don't just manage projects — we take ownership of outcomes, treating every asset as if it were our own.",
-};
-
-const defaultExecutiveData = {
-  exec1Name: "Vikram Sharma",
-  exec1Role: "Managing Director & Founder",
-  exec1Bio: "25+ years of leadership in energy infrastructure. Founded Encotec with a vision to bring an owner's mindset to every project. Under his leadership, Encotec has grown from a specialized engineering firm to a full-spectrum energy services provider operating across 23+ countries.",
-  exec1Tags: "Strategic Leadership, Business Development, Energy Policy",
-  exec2Name: "Rajesh Patel",
-  exec2Role: "Director – Operations",
-  exec2Bio: "20+ years in power plant operations and project execution. Leads operational delivery across multiple projects, ensuring efficient execution, quality standards, and optimal resource utilization across thermal, renewable, and transmission projects.",
-  exec2Tags: "Operations Management, Plant Commissioning, Asset Optimization",
-};
-
-const defaultSeniorLeaderData = {
-  leader1Name: "Dr. Anita Desai", leader1Role: "VP Engineering", leader1Bio: "PhD in Thermal Engineering. 18+ years leading complex engineering design for power generation and transmission projects.",
-  leader2Name: "Sanjay Mehta", leader2Role: "VP Business Development", leader2Bio: "15+ years driving strategic growth across India, Middle East, and Southeast Asia.",
-  leader3Name: "Priya Krishnan", leader3Role: "Head of Renewable Energy", leader3Bio: "12+ years in solar and wind energy project development and execution.",
-  leader4Name: "Arjun Reddy", leader4Role: "Head of Project Management", leader4Bio: "16+ years managing large-scale EPC projects across diverse geographies.",
-  leader5Name: "Dr. Klaus Werner", leader5Role: "Head of Quality & Safety", leader5Bio: "20+ years in quality management systems and international safety standards.",
-  leader6Name: "Meera Iyer", leader6Role: "Chief Financial Officer", leader6Bio: "14+ years in financial strategy and corporate governance for engineering firms.",
-};
-
-const defaultTeamStatsData = {
-  stats1Value: "1800", stats1Label: "Total Professionals", stats1Suffix: "+",
-  stats2Value: "150", stats2Label: "Senior Engineers", stats2Suffix: "+",
-  stats3Value: "23", stats3Label: "Countries of Operation", stats3Suffix: "+",
-  stats4Value: "15", stats4Label: "Years Avg Experience", stats4Suffix: "+",
-};
-
-const defaultCultureData = {
-  value1Title: "Technical Mastery", value1Desc: "Deep domain expertise across every discipline",
-  value2Title: "Collaborative Spirit", value2Desc: "Cross-functional teams solving complex challenges",
-  value3Title: "Global Perspective", value3Desc: "Diverse experiences from 23+ countries",
-  value4Title: "Continuous Growth", value4Desc: "Investment in learning and professional development",
-};
-
-const defaultJoinCTAData = {
-  joinHeading: "Join Our Team of Experts",
-  joinSubtitle: "We're always looking for talented engineers and energy professionals who share our passion for excellence.",
-};
 
 // Leader image placeholders (not stored in CMS - visual only)
 const execImages = [
@@ -126,7 +73,7 @@ function LeadershipHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
-  const { data } = useSectionData("leadership", "LeadershipHero", defaultHeroData);
+  const { data } = useSectionData<any>("leadership", "LeadershipHero");
   return (
     <section className="relative min-h-screen w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
@@ -275,7 +222,7 @@ function LeadershipHero() {
   );
 }
 function LeadershipPhilosophy() {
-  const { data } = useSectionData("leadership", "LeadershipPhilosophy", defaultPhilosophyData);
+  const { data } = useSectionData<any>("leadership", "LeadershipPhilosophy");
   return (
     <section className="py-32 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -385,7 +332,7 @@ function LeadershipPhilosophy() {
   );
 }
 function ExecutiveTeam() {
-  const { data } = useSectionData("leadership", "ExecutiveTeam", defaultExecutiveData);
+  const { data } = useSectionData<any>("leadership", "ExecutiveTeam");
   const executives = [
     {
       name: data.exec1Name,
@@ -499,7 +446,7 @@ function ExecutiveTeam() {
   );
 }
 function SeniorLeadership() {
-  const { data } = useSectionData("leadership", "SeniorLeadership", defaultSeniorLeaderData);
+  const { data } = useSectionData<any>("leadership", "SeniorLeadership");
   const leaders = [
     { name: data.leader1Name, role: data.leader1Role, bio: data.leader1Bio, image: seniorImages[0] },
     { name: data.leader2Name, role: data.leader2Role, bio: data.leader2Bio, image: seniorImages[1] },
@@ -591,7 +538,7 @@ function SeniorLeadership() {
   );
 }
 function TeamByNumbers() {
-  const { data } = useSectionData("leadership", "TeamByNumbers", defaultTeamStatsData);
+  const { data } = useSectionData<any>("leadership", "TeamByNumbers");
   const stats = [
     { value: parseInt(data.stats1Value) || 1800, label: data.stats1Label || "Total Professionals", suffix: data.stats1Suffix || "+" },
     { value: parseInt(data.stats2Value) || 150, label: data.stats2Label || "Senior Engineers", suffix: data.stats2Suffix || "+" },
@@ -620,7 +567,7 @@ function TeamByNumbers() {
   );
 }
 function CultureValues() {
-  const { data } = useSectionData("leadership", "CultureValues", defaultCultureData);
+  const { data } = useSectionData<any>("leadership", "CultureValues");
   const values = [
     { title: data.value1Title, desc: data.value1Desc, icon: cultureIcons[0] },
     { title: data.value2Title, desc: data.value2Desc, icon: cultureIcons[1] },
@@ -700,7 +647,7 @@ function CultureValues() {
   );
 }
 function JoinCTA() {
-  const { data } = useSectionData("leadership", "JoinCTA", defaultJoinCTAData);
+  const { data } = useSectionData<any>("leadership", "JoinCTA");
   return (
     <section className="py-32 bg-neutral-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-20">
@@ -752,11 +699,7 @@ function JoinCTA() {
   );
 }
 export function Leadership() {
-  useSEO(
-    "leadership",
-    "Leadership Team | Encotec Management & Governance",
-    "Meet Encotec's board of directors, executive management, and senior leadership steering global energy solutions."
-  );
+  useSEO("leadership");
 
   useEffect(() => {
     window.scrollTo(0, 0);

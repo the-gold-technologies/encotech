@@ -5,16 +5,9 @@ import { ArrowRightIcon } from 'lucide-react';
 import { Footer } from '../Footer';
 import { useSectionData } from '../../store/useCMSStore';
 
-// --- Default Data ---
-const defaultCTASectionData = {
-  ctaLabel: "Partner With Us",
-  ctaTitle: "Experience Global Engineering Excellence.",
-  ctaSubtitle: "From India to Turkey, see how we are setting new standards in power infrastructure. Join the 13+ cities that rely on Encotec for their critical power needs.",
-  ctaFooterNote: "Looking for precision and reliability? Get in touch to learn more about our certified quality and safety-first approach."
-};
 
 export function CTA() {
-  const { data } = useSectionData("home", "HomeCTA", defaultCTASectionData);
+  const { data } = useSectionData<any>("home", "HomeCTA");
 
   return (
     <section className="py-32 relative overflow-hidden flex items-center justify-center">
@@ -65,14 +58,14 @@ export function CTA() {
             once: true
           }}
           className="text-4xl md:text-6xl lg:text-7xl font-black text-neutral-900 mb-6 tracking-tight leading-[1.1] selection:bg-brand-pink selection:text-white select-text cursor-text">
-          {data.ctaTitle.includes("Engineering Excellence.") ? (
+          {data.ctaTitle?.includes("Engineering Excellence.") ? (
             <>
               Experience Global{' '}
               <span className="text-transparent bg-clip-text bg-gradient-brand">
                 Engineering Excellence.
               </span>
             </>
-          ) : data.ctaTitle}
+          ) : (data.ctaTitle || "")}
         </motion.h2>
 
         <motion.p
