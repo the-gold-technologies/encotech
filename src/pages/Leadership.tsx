@@ -84,7 +84,7 @@ function LeadershipHero() {
         className="absolute inset-0"
       >
         <img
-          src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=2400"
+          src={data.backgroundImage || "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=2400"}
           alt="Leadership and Team"
           className="w-full h-full object-cover opacity-40"
         />

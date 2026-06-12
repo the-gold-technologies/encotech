@@ -15,8 +15,8 @@ import { useSectionData } from "../../store/useCMSStore";
 const processStepIcons = [SearchIcon, PenToolIcon, HardHatIcon, CheckCircle2Icon, ActivityIcon];
 
 export function Process() {
-  const { data } = useSectionData<any>("home", "HomeProcess");
-  const rawSteps = data.stepsList || [];
+  const { data } = useSectionData<any>("home", "ProcessSection");
+  const rawSteps = data.steps || [];
   const steps = rawSteps.map((step: any, i: number) => ({
     ...step,
     icon: processStepIcons[i % processStepIcons.length] || SearchIcon,
@@ -89,15 +89,15 @@ export function Process() {
             }}
           >
             <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
-              {data.workflowLabel}
+              {data.tagline}
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mt-2 selection:bg-brand-pink selection:text-white select-text cursor-text">
-              {data.workflowTitle?.includes("Workflow Followed") ? (
+              {data.heading?.includes("Workflow Followed") ? (
                 <>
                   Workflow Followed <br className="hidden md:block" />
                   for Each Project
                 </>
-              ) : (data.workflowTitle || "")}
+              ) : (data.heading || "")}
             </h2>
           </motion.div>
 

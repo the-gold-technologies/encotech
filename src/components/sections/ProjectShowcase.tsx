@@ -6,8 +6,8 @@ import { useSectionData } from '../../store/useCMSStore';
 
 
 export function ProjectShowcase() {
-  const { data } = useSectionData<any>("home", "HomeProjectShowcase");
-  const projects = data.projectsList || [];
+  const { data } = useSectionData<any>("home", "ProjectShowcaseSection");
+  const projects = data.projects || [];
 
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -25,14 +25,14 @@ export function ProjectShowcase() {
         <div className="flex flex-col md:flex-row justify-between items-end gap-8">
           <div>
             <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
-              {data.showcaseLabel}
+              {data.tagline}
             </span>
             <h2 className="text-4xl md:text-6xl font-bold mt-2 selection:bg-brand-pink selection:text-white select-text cursor-text">
-              {data.showcaseTitle}
+              {data.heading}
             </h2>
           </div>
           <p className="text-neutral-400 max-w-md text-lg">
-            {data.showcaseSubtitle}
+            {data.description}
           </p>
         </div>
       </div>

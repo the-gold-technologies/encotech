@@ -15,7 +15,7 @@ import { useSEO } from "../../hooks/useSEO";
 const reFeatureIconMap = [SearchIcon, ActivityIcon, TrendingUpIcon];
 
 function AdvisoryHero() {
-  const { data } = useSectionData<any>("renewable-energy", "REHero");
+  const { data } = useSectionData<any>("renewable-energy", "AdvisoryHero");
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-20">
@@ -75,7 +75,7 @@ function AdvisoryHero() {
 
 }
 function AdvisoryFeatures() {
-  const { data } = useSectionData<any>("renewable-energy", "REFeatures");
+  const { data } = useSectionData<any>("renewable-energy", "AdvisoryFeatures");
   const features = (data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: reFeatureIconMap[i] || SearchIcon }));
 
   return (
@@ -203,7 +203,7 @@ function DiagnosticProcess() {
 
 }
 function AdvisoryCTA() {
-  const { data } = useSectionData<any>("renewable-energy", "RECTA");
+  const { data } = useSectionData<any>("renewable-energy", "CTASection");
   return (
     <section className="py-32 bg-white text-center">
       <div className="max-w-4xl mx-auto px-6">

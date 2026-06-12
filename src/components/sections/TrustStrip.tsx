@@ -14,8 +14,8 @@ import { useSectionData } from '../../store/useCMSStore';
 const trustStripIcons = [CalendarIcon, GlobeIcon, UsersIcon, ZapIcon];
 
 export function AboutSection() {
-  const { data } = useSectionData<any>("home", "HomeTrustStrip");
-  const stats = (data.statsList || []).map((stat: any, i: number) => ({
+  const { data } = useSectionData<any>("home", "AboutUs");
+  const stats = (data.stats || []).map((stat: any, i: number) => ({
     ...stat,
     icon: trustStripIcons[i % trustStripIcons.length] || ZapIcon
   }));
@@ -56,7 +56,7 @@ export function AboutSection() {
               
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                {data.aboutLabel}
+                {data.upperTag}
               </span>
             </motion.div>
 
@@ -79,12 +79,12 @@ export function AboutSection() {
               }}
               className="text-4xl md:text-5xl lg:text-[3.5rem] font-black text-neutral-900 leading-[1.08] tracking-tight uppercase mb-8">
               
-              {data.aboutTitle?.includes("Since 2011") ? (
+              {data.headingItalicHighlight ? (
                 <>
-                  Human-Centric Engineering{' '}
-                  <span className="text-brand-pink">Since 2011</span>
+                  {data.headingLabel}{' '}
+                  <span className="text-brand-pink">{data.headingItalicHighlight}</span>
                 </>
-              ) : (data.aboutTitle || "")}
+              ) : (data.headingLabel || "")}
             </motion.h2>
 
             {/* Body Text */}
@@ -107,10 +107,10 @@ export function AboutSection() {
               className="space-y-5 mb-8">
               
               <p className="text-neutral-500 leading-relaxed">
-                {data.aboutPara1}
+                {data.paragraphs?.[0]}
               </p>
               <p className="text-neutral-500 leading-relaxed">
-                {data.aboutPara2}
+                {data.paragraphs?.[1]}
               </p>
             </motion.div>
 
@@ -196,9 +196,9 @@ export function AboutSection() {
             className="relative">
             
             <div className="relative overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000"
-                alt="Engineer working on advanced equipment"
+               <img
+                src={data.image || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000"}
+                alt={data.imageAlt || "Engineer working on advanced equipment"}
                 className="w-full h-[500px] lg:h-[620px] object-cover" />
               
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
@@ -229,10 +229,10 @@ export function AboutSection() {
                 </div>
                 <div>
                   <div className="text-sm font-black leading-none">
-                    {data.badgeTitle}
+                    {data.badgeLabel}
                   </div>
                   <div className="text-[9px] font-bold text-neutral-400 tracking-[0.15em] uppercase mt-0.5">
-                    {data.badgeSubtitle}
+                    {data.badgeValue}
                   </div>
                 </div>
               </div>
@@ -259,10 +259,10 @@ export function AboutSection() {
           className="mt-28 py-20 bg-neutral-50 -mx-6 lg:-mx-10 px-6 lg:px-10 text-center">
           
           <h3 className="text-2xl md:text-3xl font-black text-neutral-900 tracking-tight uppercase mb-4">
-            {data.bannerTitle}
+            {data.bannerHeading}
           </h3>
           <p className="text-neutral-500 max-w-lg mx-auto mb-8">
-            {data.bannerSubtitle}
+            {data.bannerDescription}
           </p>
           <Link
             to="/contact"

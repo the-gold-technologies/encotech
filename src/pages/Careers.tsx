@@ -52,7 +52,7 @@ function CareersHero() {
         className="absolute inset-0"
       >
         <img
-          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2400"
+          src={data.backgroundImage || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2400"}
           alt="Team collaboration"
           className="w-full h-full object-cover opacity-40"
         />

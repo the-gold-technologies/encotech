@@ -6,8 +6,8 @@ import { useSectionData } from '../../store/useCMSStore';
 
 
 export function WhyEncotec() {
-  const { data } = useSectionData<any>("home", "HomeWhyEncotec");
-  const wordsList = data.wordsList || [];
+  const { data } = useSectionData<any>("home", "WhyEncotecSection");
+  const wordsList = [data.revealWord1, data.revealWord2, data.revealWord3].filter(Boolean);
   const ctaBlocks = data.ctaBlocks || [];
 
   return (

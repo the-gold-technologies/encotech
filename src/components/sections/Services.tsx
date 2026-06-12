@@ -15,8 +15,8 @@ import { useSectionData } from "../../store/useCMSStore";
 const servicesIcons = [ClipboardCheckIcon, NetworkIcon, FlameIcon, SearchIcon, WrenchIcon];
 
 export function Services() {
-  const { data } = useSectionData<any>("home", "HomeServices");
-  const rawList = data.servicesList || [];
+  const { data } = useSectionData<any>("home", "ServicesSection");
+  const rawList = data.services || [];
   const services = rawList.map((service: any, i: number) => ({
     ...service,
     icon: servicesIcons[i % servicesIcons.length] || ClipboardCheckIcon,
@@ -40,13 +40,13 @@ export function Services() {
           className="text-center mb-16"
         >
           <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
-            {data.servicesLabel}
+            {data.tagline}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-4 mt-2">
-            {data.servicesTitle}
+            {data.heading}
           </h2>
           <p className="text-neutral-500 max-w-2xl mx-auto text-lg">
-            {data.servicesSubtitle}
+            {data.description}
           </p>
         </motion.div>
 

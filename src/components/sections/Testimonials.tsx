@@ -5,8 +5,8 @@ import { useSectionData } from '../../store/useCMSStore';
 
 
 export function Testimonials() {
-  const { data } = useSectionData<any>("home", "HomeTestimonials");
-  const testimonials = data.testimonialsList || [];
+  const { data } = useSectionData<any>("home", "Testimonials");
+  const testimonials = data.testimonials || [];
 
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -64,10 +64,10 @@ export function Testimonials() {
           className="text-center mb-16">
           
           <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
-            {data.testimonialsLabel}
+            {data.tagline}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mt-2 selection:bg-brand-pink selection:text-white select-text cursor-text">
-            {data.testimonialsTitle}
+            {data.heading}
           </h2>
         </motion.div>
 

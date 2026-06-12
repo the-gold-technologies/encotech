@@ -184,8 +184,8 @@ const connections: Array<[[number, number], [number, number]]> = [
 ];
 
 export function GlobalFootprint() {
-  const { data } = useSectionData<any>("home", "HomeGlobalFootprint");
-  const stats = data.statsList || [];
+  const { data } = useSectionData<any>("home", "GlobalFootprintSection");
+  const stats = data.stats || [];
 
   const sectionRef = useRef<HTMLElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -257,7 +257,7 @@ export function GlobalFootprint() {
               color: "#B6005E",
             }}
           >
-            {data.footprintLabel}
+            {data.tagline}
           </motion.span>
           <motion.h2
             initial={{
@@ -277,7 +277,7 @@ export function GlobalFootprint() {
             }}
             className="text-4xl md:text-6xl font-black tracking-tight mb-4 select-text cursor-text selection:bg-[#B6005E] selection:text-white"
           >
-            {data.footprintTitle}
+            {data.heading}
           </motion.h2>
           <motion.p
             initial={{
@@ -295,7 +295,7 @@ export function GlobalFootprint() {
             }}
             className="text-neutral-400 max-w-xl mx-auto text-lg"
           >
-            {data.footprintSubtitle}
+            {data.description}
           </motion.p>
         </div>
 

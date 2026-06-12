@@ -19,7 +19,7 @@ import { useSEO } from "../../hooks/useSEO";
 const pgFeatureIconMap = [ZapIcon, PlaneIcon, DatabaseIcon];
 
 function StewardshipHero() {
-  const { data } = useSectionData<any>("power-generation", "PGHero");
+  const { data } = useSectionData<any>("power-generation", "StewardshipHero");
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-30">
@@ -78,7 +78,7 @@ function StewardshipHero() {
   );
 }
 function StewardshipFeatures() {
-  const { data } = useSectionData<any>("power-generation", "PGFeatures");
+  const { data } = useSectionData<any>("power-generation", "StewardshipFeatures");
   const features = (data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: pgFeatureIconMap[i] || ZapIcon }));
 
   return (
@@ -122,7 +122,7 @@ function StewardshipFeatures() {
   );
 }
 function StewardshipPhilosophy() {
-  const { data } = useSectionData<any>("power-generation", "PGPhilosophy");
+  const { data } = useSectionData<any>("power-generation", "StewardshipPhilosophy");
   return (
     <section className="py-28 bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -202,7 +202,7 @@ function StewardshipPhilosophy() {
   );
 }
 function StewardshipCTA() {
-  const { data } = useSectionData<any>("power-generation", "PGCTA");
+  const { data } = useSectionData<any>("power-generation", "CTASection");
   return (
     <section className="py-32 bg-white text-center">
       <div className="max-w-4xl mx-auto px-6">

@@ -4,7 +4,7 @@ import { useSectionData } from '../../store/useCMSStore';
 
 
 export function LogoStrip() {
-  const { data } = useSectionData<any>("home", "HomeLogoStrip");
+  const { data } = useSectionData<any>("home", "LogoStripSection");
   const logos = data.logosList || [];
 
   return (

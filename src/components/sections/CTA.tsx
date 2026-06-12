@@ -7,7 +7,7 @@ import { useSectionData } from '../../store/useCMSStore';
 
 
 export function CTA() {
-  const { data } = useSectionData<any>("home", "HomeCTA");
+  const { data } = useSectionData<any>("home", "CTASection");
 
   return (
     <section className="py-32 relative overflow-hidden flex items-center justify-center">
@@ -41,7 +41,7 @@ export function CTA() {
           }}
           className="mb-4">
           <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
-            {data.ctaLabel}
+            {data.tagline}
           </span>
         </motion.div>
 
@@ -58,14 +58,14 @@ export function CTA() {
             once: true
           }}
           className="text-4xl md:text-6xl lg:text-7xl font-black text-neutral-900 mb-6 tracking-tight leading-[1.1] selection:bg-brand-pink selection:text-white select-text cursor-text">
-          {data.ctaTitle?.includes("Engineering Excellence.") ? (
+          {data.heading?.includes("Engineering Excellence.") ? (
             <>
               Experience Global{' '}
               <span className="text-transparent bg-clip-text bg-gradient-brand">
                 Engineering Excellence.
               </span>
             </>
-          ) : (data.ctaTitle || "")}
+          ) : (data.heading || "")}
         </motion.h2>
 
         <motion.p

@@ -17,7 +17,7 @@ import { useSEO } from "../../hooks/useSEO";
 const vasFeatureIconMap = [GlobeIcon, PackageIcon, WrenchIcon];
 
 function SourcingHero() {
-  const { data } = useSectionData<any>("value-added-services", "VASHero");
+  const { data } = useSectionData<any>("value-added", "SourcingHero");
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-10">
@@ -87,7 +87,7 @@ function SourcingHero() {
 
 }
 function SourcingFeatures() {
-  const { data } = useSectionData<any>("value-added-services", "VASFeatures");
+  const { data } = useSectionData<any>("value-added", "SourcingFeatures");
   const features = (data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: vasFeatureIconMap[i] || GlobeIcon }));
 
   return (

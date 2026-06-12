@@ -17,7 +17,7 @@ import { useSEO } from "../../hooks/useSEO";
 const airportFeatureIconMap = [ActivityIcon, FileCheckIcon, RefreshCwIcon];
 
 function DueDiligenceHero() {
-  const { data } = useSectionData<any>("airport-services", "AirportHero");
+  const { data } = useSectionData<any>("airport-services", "DueDiligenceHero");
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-10">
@@ -78,7 +78,7 @@ function DueDiligenceHero() {
   );
 }
 function HealthFeatures() {
-  const { data } = useSectionData<any>("airport-services", "AirportFeatures");
+  const { data } = useSectionData<any>("airport-services", "HealthFeatures");
   const features = (data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: airportFeatureIconMap[i] || ActivityIcon }));
 
   return (

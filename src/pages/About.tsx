@@ -27,6 +27,8 @@ function AboutHero() {
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
   const { data } = useSectionData<any>("about", "AboutHero");
+  const heroTitle = data.heading;
+  const heroSubtitle = data.description;
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Background Image with Parallax */}
@@ -37,7 +39,7 @@ function AboutHero() {
         className="absolute inset-0"
       >
         <img
-          src="https://images.unsplash.com/photo-1497435334941-8c899a9bd6a2?auto=format&fit=crop&q=80&w=2400"
+          src={data.backgroundImage || "https://images.unsplash.com/photo-1497435334941-8c899a9bd6a2?auto=format&fit=crop&q=80&w=2400"}
           alt="Energy infrastructure"
           className="w-full h-full object-cover opacity-30"
         />
@@ -110,7 +112,7 @@ function AboutHero() {
             }}
             className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8"
           >
-            {data.heroTitle}
+            {heroTitle}
           </motion.h1>
 
           <motion.p
@@ -128,7 +130,7 @@ function AboutHero() {
             }}
             className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light"
           >
-            {data.heroSubtitle}
+            {heroSubtitle}
           </motion.p>
         </motion.div>
       </div>
@@ -218,8 +220,8 @@ function WhoWeAre() {
           </h2>
 
           <div className="space-y-6 text-lg text-neutral-700 leading-relaxed">
-            <p>{data.para1}</p>
-            <p className="text-neutral-900 font-semibold">{data.para2}</p>
+            <p>{data.paragraphs?.[0]}</p>
+            <p className="text-neutral-900 font-semibold">{data.paragraphs?.[1]}</p>
           </div>
         </motion.div>
       </div>
@@ -229,6 +231,8 @@ function WhoWeAre() {
 // Mission, Vision & Values
 function MissionVisionValues() {
   const { data } = useSectionData<any>("about", "MissionVisionValues");
+  const missionText = data.missionDesc;
+  const visionText = data.visionDesc;
   const values = (data.valuesList || []).map((v: any, i: number) => ({ ...v, icon: mvvIconMap[i] || AwardIcon }));
   return (
     <section className="py-28 bg-neutral-50">
@@ -282,7 +286,7 @@ function MissionVisionValues() {
             <h3 className="text-2xl font-black text-neutral-900 mb-4 uppercase tracking-tight">
               Mission
             </h3>
-            <p className="text-neutral-700 leading-relaxed">{data.missionText}</p>
+            <p className="text-neutral-700 leading-relaxed">{missionText}</p>
           </motion.div>
 
           <motion.div
@@ -305,7 +309,7 @@ function MissionVisionValues() {
             <h3 className="text-2xl font-black text-neutral-900 mb-4 uppercase tracking-tight">
               Vision
             </h3>
-            <p className="text-neutral-700 leading-relaxed">{data.visionText}</p>
+            <p className="text-neutral-700 leading-relaxed">{visionText}</p>
           </motion.div>
         </div>
 
@@ -381,13 +385,13 @@ function MissionVisionValues() {
 // Scale & Impact (KPIs)
 function ScaleImpact() {
   const { data } = useSectionData<any>("about", "ScaleImpact");
-  const stats = [
-    { value: data.stat1Value, label: data.stat1Label, description: data.stat1Desc, icon: UsersIcon },
-    { value: data.stat2Value, label: data.stat2Label, description: data.stat2Desc, icon: BriefcaseIcon },
-    { value: data.stat3Value, label: data.stat3Label, description: data.stat3Desc, icon: ZapIcon },
-    { value: data.stat4Value, label: data.stat4Label, description: data.stat4Desc, icon: ShieldCheckIcon },
-    { value: data.stat5Value, label: data.stat5Label, description: data.stat5Desc, icon: GlobeIcon },
-  ];
+  const statsIcons = [UsersIcon, BriefcaseIcon, ZapIcon, ShieldCheckIcon, GlobeIcon];
+  const stats = (data.stats || []).map((s: any, idx: number) => ({
+    value: s.value,
+    label: s.label,
+    description: s.description,
+    icon: statsIcons[idx] || UsersIcon
+  }));
 
   return (
     <section className="py-28 bg-neutral-900 text-white relative overflow-hidden">
@@ -488,6 +492,7 @@ function ScaleImpact() {
 // Timeline
 function Timeline() {
   const { data } = useSectionData<any>("about", "Timeline");
+  const phasesList = data.phases || [];
   const phases: Array<{ title: string; description: string }> = data.phasesList || [];
 
   return (
@@ -576,6 +581,7 @@ function Timeline() {
 // Sustainability Section
 function Sustainability() {
   const { data } = useSectionData<any>("about", "Sustainability");
+  const focusList = data.focuses || [];
   const focuses: string[] = data.focusList || [];
 
   return (
@@ -608,8 +614,8 @@ function Sustainability() {
               Committed to a Greener Tomorrow
             </h2>
             <div className="space-y-4 text-neutral-700 leading-relaxed">
-              <p>{data.para1}</p>
-              <p>{data.para2}</p>
+              <p>{data.paragraphs?.[0]}</p>
+              <p>{data.paragraphs?.[1]}</p>
             </div>
           </motion.div>
 
@@ -692,7 +698,7 @@ function Sustainability() {
 // Global Presence
 function GlobalPresence() {
   const { data } = useSectionData<any>("about", "GlobalPresence");
-  const areas: Array<{ title: string; desc: string }> = data.areasList || [];
+  const areas: Array<{ title: string; desc: string }> = data.areas || [];
   return (
     <section className="py-28 bg-white">
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
@@ -725,7 +731,7 @@ function GlobalPresence() {
           </h2>
 
           <div className="space-y-6 text-lg text-neutral-700 leading-relaxed mb-12">
-            <p>{data.para}</p>
+            <p>{data.description}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
@@ -778,12 +784,10 @@ function GlobalPresence() {
             className="p-8 bg-brand-panel border-l-4 border-brand-pink"
           >
             <h3 className="text-xl font-bold text-neutral-900 mb-3">
-              Wherever Energy is Needed
+              {data.calloutTitle || "Wherever Energy is Needed"}
             </h3>
             <p className="text-neutral-700 leading-relaxed">
-              We combine local execution strength with global engineering
-              expertise, ensuring that we bring the same "Owner's Mindset" to
-              every project, no matter the geography.
+              {data.calloutDesc || "We combine local execution strength with global engineering expertise, ensuring that we bring the same \"Owner's Mindset\" to every project, no matter the geography."}
             </p>
           </motion.div>
         </motion.div>
@@ -793,11 +797,8 @@ function GlobalPresence() {
 }
 // Leadership Section
 function Leadership() {
-  const { data } = useSectionData<any>("about", "AboutLeadership");
-  const leaders = [
-    { role: data.leader1Role, name: data.leader1Name, bio: data.leader1Bio },
-    { role: data.leader2Role, name: data.leader2Name, bio: data.leader2Bio },
-  ];
+  const { data } = useSectionData<any>("about", "Leadership");
+  const leaders = data.leaders || [];
 
   return (
     <section className="py-28 bg-neutral-900 text-white">

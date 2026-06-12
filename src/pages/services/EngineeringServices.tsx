@@ -82,7 +82,7 @@ function EngineeringHero() {
         className="absolute inset-0"
       >
         <img
-          src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=2400"
+          src={data.backgroundImage || "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=2400"}
           alt="Power engineering facility"
           className="w-full h-full object-cover opacity-40"
         />

@@ -18,7 +18,7 @@ import { useSEO } from "../../hooks/useSEO";
 const tdCapIconMap = [HardHatIcon, GlobeIcon, TruckIcon];
 
 function ConstructionHero() {
-  const { data } = useSectionData<any>("transmission-distribution", "TDHero");
+  const { data } = useSectionData<any>("transmission-distribution", "ConstructionHero");
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       {/* Blueprint Grid Pattern */}
@@ -103,7 +103,7 @@ function ConstructionHero() {
 
 }
 function CapabilitiesSection() {
-  const { data } = useSectionData<any>("transmission-distribution", "TDCapabilities");
+  const { data } = useSectionData<any>("transmission-distribution", "CapabilitiesSection");
   const capabilities = (data.capabilitiesList || []).map((c: any, i: number) => ({ ...c, icon: tdCapIconMap[i] || HardHatIcon }));
 
   return (

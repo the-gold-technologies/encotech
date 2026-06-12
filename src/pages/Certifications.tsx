@@ -81,7 +81,7 @@ function CertificationsHero() {
         className="absolute inset-0"
       >
         <img
-          src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=2400"
+          src={data.backgroundImage || "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=2400"}
           alt="Certifications and Quality Assurance"
           className="w-full h-full object-cover opacity-40"
         />

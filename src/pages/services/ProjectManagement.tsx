@@ -281,7 +281,7 @@ function PhilosophySection() {
   );
 }
 function CoreOfferings() {
-  const { data } = useSectionData<any>("project-management", "PMOfferings");
+  const { data } = useSectionData<any>("project-management", "CoreOfferings");
   const offerings = (data.offeringsList || []).map((o: any, i: number) => ({ ...o, icon: pmOfferingIconMap[i] || FileTextIcon }));
   return (
     <section className="py-28 bg-neutral-900 text-white">

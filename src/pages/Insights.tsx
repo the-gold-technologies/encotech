@@ -236,7 +236,7 @@ function InsightsHero() {
         className="absolute inset-0"
       >
         <img
-          src="https://images.unsplash.com/photo-1497435334941-8c899a9bd6a2?auto=format&fit=crop&q=80&w=2400"
+          src={data.backgroundImage || "https://images.unsplash.com/photo-1497435334941-8c899a9bd6a2?auto=format&fit=crop&q=80&w=2400"}
           alt="Energy infrastructure"
           className="w-full h-full object-cover opacity-40"
         />
