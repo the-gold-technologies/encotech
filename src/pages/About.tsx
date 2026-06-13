@@ -19,7 +19,14 @@ import {
 import { useSectionData } from "../store/useCMSStore";
 import { useSEO } from "../hooks/useSEO";
 
-const mvvIconMap = [HeartHandshakeIcon, AwardIcon, ShieldCheckIcon, TrendingUpIcon, UsersIcon, LeafIcon];
+const mvvIconMap = [
+  HeartHandshakeIcon,
+  AwardIcon,
+  ShieldCheckIcon,
+  TrendingUpIcon,
+  UsersIcon,
+  LeafIcon,
+];
 
 // Hero Section
 function AboutHero() {
@@ -27,7 +34,6 @@ function AboutHero() {
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
   const { data } = useSectionData<any>("about", "AboutHero");
-  const heroTitle = data.heading;
   const heroSubtitle = data.description;
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center">
@@ -112,7 +118,11 @@ function AboutHero() {
             }}
             className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8"
           >
-            {heroTitle}
+            {data.headingPart1 || ""}
+            <br />
+            <span className="text-[#C50066]">
+              {data.headingItalicHighlight || ""}
+            </span>
           </motion.h1>
 
           <motion.p
@@ -216,12 +226,17 @@ function WhoWeAre() {
           </div>
 
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 leading-tight mb-8">
-            {data.heading}
+            {data.headingPart1 || ""} <br />
+            <span className="text-brand-pink">
+              {data.headingHighlight || ""}
+            </span>
           </h2>
 
           <div className="space-y-6 text-lg text-neutral-700 leading-relaxed">
             <p>{data.paragraphs?.[0]}</p>
-            <p className="text-neutral-900 font-semibold">{data.paragraphs?.[1]}</p>
+            <p className="text-neutral-900 font-semibold">
+              {data.paragraphs?.[1]}
+            </p>
           </div>
         </motion.div>
       </div>
@@ -233,7 +248,10 @@ function MissionVisionValues() {
   const { data } = useSectionData<any>("about", "MissionVisionValues");
   const missionText = data.missionDesc;
   const visionText = data.visionDesc;
-  const values = (data.valuesList || []).map((v: any, i: number) => ({ ...v, icon: mvvIconMap[i] || AwardIcon }));
+  const values = (data.valuesList || []).map((v: any, i: number) => ({
+    ...v,
+    icon: mvvIconMap[i] || AwardIcon,
+  }));
   return (
     <section className="py-28 bg-neutral-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -382,12 +400,18 @@ function MissionVisionValues() {
 // Scale & Impact (KPIs)
 function ScaleImpact() {
   const { data } = useSectionData<any>("about", "ScaleImpact");
-  const statsIcons = [UsersIcon, BriefcaseIcon, ZapIcon, ShieldCheckIcon, GlobeIcon];
+  const statsIcons = [
+    UsersIcon,
+    BriefcaseIcon,
+    ZapIcon,
+    ShieldCheckIcon,
+    GlobeIcon,
+  ];
   const stats = (data.stats || []).map((s: any, idx: number) => ({
     value: s.value,
     label: s.label,
     description: s.description,
-    icon: statsIcons[idx] || UsersIcon
+    icon: statsIcons[idx] || UsersIcon,
   }));
 
   return (
@@ -486,7 +510,8 @@ function ScaleImpact() {
 // Timeline
 function Timeline() {
   const { data } = useSectionData<any>("about", "Timeline");
-  const phases: Array<{ title: string; description: string }> = data.phases || data.phasesList || [];
+  const phases: Array<{ title: string; description: string }> =
+    data.phases || data.phasesList || [];
 
   return (
     <section className="py-28 bg-white">
@@ -715,8 +740,11 @@ function GlobalPresence() {
           </div>
 
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 leading-tight mb-8">
-            A Global Presence <br />
-            <span className="text-brand-pink">with a Local Touch</span>
+            {data.headingPart1 || ""}
+            <br />
+            <span className="text-brand-pink">
+              {data.headingHighlight || ""}
+            </span>
           </h2>
 
           <div className="space-y-6 text-lg text-neutral-700 leading-relaxed mb-12">
@@ -850,9 +878,6 @@ function Leadership() {
 // Closing Statement
 function ClosingStatement() {
   const { data } = useSectionData<any>("about", "ClosingStatement");
-  const heading = data.heading || "";
-  const highlight = data.highlight || "engineering expertise, execution capability, and operational excellence";
-  const parts = heading.split(highlight);
 
   return (
     <section className="py-32 bg-white">
@@ -874,13 +899,11 @@ function ClosingStatement() {
           }}
         >
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 leading-tight mb-8">
-            {parts[0]}
-            {heading.includes(highlight) && (
-              <span className="text-transparent bg-clip-text bg-gradient-brand">
-                {highlight}
-              </span>
-            )}
-            {parts[1]}
+            {data.headingPart1 || ""}
+            <span className="text-transparent bg-clip-text bg-gradient-brand">
+              {data.headingHighlight || ""}
+            </span>
+            {data.headingPart2 || ""}
           </h2>
           <p className="text-2xl text-neutral-600 leading-relaxed font-light">
             {data.description}

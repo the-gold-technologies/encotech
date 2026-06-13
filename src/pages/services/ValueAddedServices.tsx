@@ -70,16 +70,16 @@ function SourcingHero() {
           <div className="flex items-center gap-3 mb-8">
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Strategic Global Sourcing
+              {data.label || ""}
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            {data.heroTitle}
+            {data.heading || ""}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            {data.heroSubtitle}
+            {data.description || ""}
           </p>
         </motion.div>
       </div>

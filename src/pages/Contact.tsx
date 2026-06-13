@@ -26,7 +26,6 @@ import {
 import { useSectionData } from "../store/useCMSStore";
 import { useSEO } from "../hooks/useSEO";
 
-
 // --- Map Data & Configuration ---
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 interface Location {
@@ -131,7 +130,7 @@ function ContactHero() {
             className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-8 uppercase select-text selection:bg-brand-pink selection:text-white"
           >
             {data.headingPart1 || ""}{" "}
-            <span className="italic font-light text-neutral-400">
+            <span className=" text-[#c50066]">
               {data.headingItalicHighlight || ""}
             </span>
           </motion.h1>
@@ -191,7 +190,7 @@ function ContactFormSection() {
             className="lg:col-span-7"
           >
             <h2 className="text-3xl font-black text-neutral-900 mb-8 uppercase tracking-tight">
-              Send us a message
+              {data.formHeading || ""}
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -201,14 +200,14 @@ function ContactFormSection() {
                     htmlFor="fullName"
                     className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
                   >
-                    Full Name *
+                    {data.fullNameLabel || ""}
                   </label>
                   <input
                     type="text"
                     id="fullName"
                     required
                     className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300"
-                    placeholder="John Doe"
+                    placeholder={data.fullNamePlaceholder || ""}
                   />
                 </div>
                 <div className="space-y-2">
@@ -216,14 +215,14 @@ function ContactFormSection() {
                     htmlFor="email"
                     className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
                   >
-                    Email Address *
+                    {data.emailAddressLabel || ""}
                   </label>
                   <input
                     type="email"
                     id="email"
                     required
                     className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300"
-                    placeholder="john@company.com"
+                    placeholder={data.emailAddressPlaceholder || ""}
                   />
                 </div>
               </div>
@@ -234,13 +233,13 @@ function ContactFormSection() {
                     htmlFor="phone"
                     className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
                   >
-                    Phone Number
+                    {data.phoneNumberLabel || ""}
                   </label>
                   <input
                     type="tel"
                     id="phone"
                     className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300"
-                    placeholder="+1 (555) 000-0000"
+                    placeholder={data.phoneNumberPlaceholder || ""}
                   />
                 </div>
                 <div className="space-y-2">
@@ -248,13 +247,13 @@ function ContactFormSection() {
                     htmlFor="company"
                     className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
                   >
-                    Company Name
+                    {data.companyNameLabel || ""}
                   </label>
                   <input
                     type="text"
                     id="company"
                     className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300"
-                    placeholder="Company Ltd."
+                    placeholder={data.companyNamePlaceholder || ""}
                   />
                 </div>
               </div>
@@ -264,15 +263,16 @@ function ContactFormSection() {
                   htmlFor="subject"
                   className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
                 >
-                  Subject *
+                  {data.subjectLabel || ""}
                 </label>
                 <select
                   id="subject"
                   required
+                  defaultValue=""
                   className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300 appearance-none rounded-none"
                 >
-                  <option value="" disabled selected>
-                    Select a subject
+                  <option value="" disabled>
+                    {data.selectSubjectDefault || ""}
                   </option>
                   <option value="general">General Inquiry</option>
                   <option value="project">Project Discussion</option>
@@ -287,14 +287,14 @@ function ContactFormSection() {
                   htmlFor="message"
                   className="text-sm font-bold text-neutral-700 uppercase tracking-wider"
                 >
-                  Message *
+                  {data.messageLabel || ""}
                 </label>
                 <textarea
                   id="message"
                   required
                   rows={5}
                   className="w-full px-6 py-4 bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all duration-300 resize-none"
-                  placeholder="How can we help you?"
+                  placeholder={data.messagePlaceholder || ""}
                 ></textarea>
               </div>
 
@@ -302,7 +302,7 @@ function ContactFormSection() {
                 type="submit"
                 className="w-full inline-flex items-center justify-center gap-2 px-8 py-5 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
               >
-                Send Message
+                {data.submitButtonLabel || ""}
                 <ArrowRightIcon size={16} />
               </button>
             </form>
@@ -344,7 +344,12 @@ function ContactFormSection() {
 
                   <span>
                     {data.addressLine1 || ""}
-                    {data.addressLine2 && <><br />{data.addressLine2}</>}
+                    {data.addressLine2 && (
+                      <>
+                        <br />
+                        {data.addressLine2}
+                      </>
+                    )}
                   </span>
                 </p>
                 <p className="flex items-center gap-3">
@@ -372,13 +377,18 @@ function ContactFormSection() {
                 <ClockIcon size={24} strokeWidth={1.5} />
               </div>
               <h3 className="text-xl font-bold mb-4 uppercase tracking-tight">
-                Business Hours
+                {data.businessHoursTitle || ""}
               </h3>
               <div className="space-y-3 text-neutral-400">
                 {openingHours.map((item: any, i: number) => (
-                  <div key={i} className={`flex justify-between items-center ${i < openingHours.length - 1 ? 'border-b border-white/10 pb-2' : 'pt-1'}`}>
+                  <div
+                    key={i}
+                    className={`flex justify-between items-center ${i < openingHours.length - 1 ? "border-b border-white/10 pb-2" : "pt-1"}`}
+                  >
                     <span>{item.days}</span>
-                    <span className={`font-medium ${item.hours?.toLowerCase() === 'closed' ? 'text-brand-pink' : 'text-white'}`}>
+                    <span
+                      className={`font-medium ${item.hours?.toLowerCase() === "closed" ? "text-brand-pink" : "text-white"}`}
+                    >
                       {item.hours}
                     </span>
                   </div>
@@ -392,12 +402,12 @@ function ContactFormSection() {
                 <MailIcon size={24} strokeWidth={1.5} />
               </div>
               <h3 className="text-xl font-bold mb-4 uppercase tracking-tight">
-                Quick Contact
+                {data.quickContactTitle || ""}
               </h3>
               <div className="space-y-4 text-neutral-400">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-1">
-                    General Inquiries
+                    {data.generalInquiriesLabel || ""}
                   </div>
                   <a
                     href={`mailto:${data.emailAddress || ""}`}
@@ -408,13 +418,13 @@ function ContactFormSection() {
                 </div>
                 <div>
                   <div className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-1">
-                    Careers
+                    {data.careersLabel || ""}
                   </div>
                   <a
-                    href="mailto:careers@encotec.com"
+                    href={`mailto:${data.careersEmailAddress || ""}`}
                     className="text-white hover:text-brand-pink transition-colors"
                   >
-                    careers@encotec.com
+                    {data.careersEmailAddress || ""}
                   </a>
                 </div>
               </div>
@@ -426,18 +436,25 @@ function ContactFormSection() {
   );
 }
 function GlobalOfficesMap() {
-  const { data: footprintData } = useSectionData<any>("home", "GlobalFootprintSection");
+  const { data: footprintData } = useSectionData<any>(
+    "home",
+    "GlobalFootprintSection",
+  );
   const locations: Location[] = footprintData.locations || [];
-  const hqLocation = locations.find(
-    (loc) =>
-      loc.name.toLowerCase().includes("noida") ||
-      loc.name.toLowerCase().includes("hq")
-  ) || locations[0];
+  const hqLocation =
+    locations.find(
+      (loc) =>
+        loc.name.toLowerCase().includes("noida") ||
+        loc.name.toLowerCase().includes("hq"),
+    ) || locations[0];
   const hqCoords = hqLocation?.coordinates || [77.39, 28.58];
 
   const connections = locations
     .filter((loc) => loc.name !== hqLocation?.name)
-    .map((loc) => [hqCoords, loc.coordinates] as [[number, number], [number, number]]);
+    .map(
+      (loc) =>
+        [hqCoords, loc.coordinates] as [[number, number], [number, number]],
+    );
 
   const sectionRef = useRef<HTMLElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);

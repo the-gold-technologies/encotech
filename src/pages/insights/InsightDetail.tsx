@@ -11,6 +11,7 @@ import {
   MapPinIcon,
   ArrowRightIcon,
 } from "lucide-react";
+import { useSectionData } from "../../store/useCMSStore";
 // Comprehensive Data Map for all 12 Insights
 const insightsData = [
   // Case Studies
@@ -527,6 +528,7 @@ const insightsData = [
 
 export function InsightDetail() {
   const { slug } = useParams();
+  const { data: relatedData } = useSectionData<any>("insights", "RelatedInsights");
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   // Scroll to top on mount and when slug changes
@@ -749,13 +751,13 @@ export function InsightDetail() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="flex items-center justify-between mb-12">
             <h2 className="text-3xl font-black text-neutral-900 uppercase tracking-tight">
-              Related Insights
+              {relatedData.heading || ""}
             </h2>
             <Link
               to="/insights"
               className="text-sm font-bold text-brand-pink hover:text-[#a0004f] transition-colors uppercase tracking-wider"
             >
-              View All
+              {relatedData.viewAllLabel || ""}
             </Link>
           </div>
 
@@ -811,7 +813,7 @@ export function InsightDetail() {
                       {item.description}
                     </p>
                     <div className="inline-flex items-center gap-2 text-xs font-bold text-neutral-900 group-hover:text-brand-pink transition-colors uppercase tracking-wider mt-auto">
-                      Read More
+                      {relatedData.readMoreLabel || ""}
                       <ArrowRightIcon size={14} />
                     </div>
                   </div>

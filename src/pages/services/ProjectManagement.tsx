@@ -147,37 +147,35 @@ function ProjectHero() {
           <div className="flex items-center gap-3 mb-8">
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Project Conceptualisation & Development
+              {data.label || ""}
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            {data.heroTitle}
+            {data.headline || data.heading || ""}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            {data.heroSubtitle}
+            {data.description || ""}
           </p>
 
           <div className="flex flex-wrap gap-6">
-            <div className="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 px-6 py-4">
-              <MapIcon className="text-brand-pink" size={24} />
-              <span className="font-bold tracking-wider uppercase text-sm">
-                Pre-Feasibility
-              </span>
-            </div>
-            <div className="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 px-6 py-4">
-              <FileTextIcon className="text-brand-pink" size={24} />
-              <span className="font-bold tracking-wider uppercase text-sm">
-                DPR Creation
-              </span>
-            </div>
-            <div className="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 px-6 py-4">
-              <BriefcaseIcon className="text-brand-pink" size={24} />
-              <span className="font-bold tracking-wider uppercase text-sm">
-                EPC Selection
-              </span>
-            </div>
+            {(data.floatingBadges || []).map((badge: any, i: number) => {
+              const badgeIconMap: Record<string, any> = {
+                Map: MapIcon,
+                FileText: FileTextIcon,
+                Briefcase: BriefcaseIcon,
+              };
+              const IconComponent = badgeIconMap[badge.icon] || MapIcon;
+              return (
+                <div key={i} className="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 px-6 py-4">
+                  <IconComponent className="text-brand-pink" size={24} />
+                  <span className="font-bold tracking-wider uppercase text-sm">
+                    {badge.text}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </motion.div>
       </div>

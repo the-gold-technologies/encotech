@@ -67,16 +67,16 @@ function DueDiligenceHero() {
           <div className="flex items-center gap-3 mb-8">
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              {data.label || "Due Diligence & Asset Health"}
+              {data.label || ""}
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            {data.heading || data.heroTitle}
+            {data.heading || ""}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            {data.description || data.heroSubtitle}
+            {data.description || ""}
           </p>
         </motion.div>
       </div>
@@ -85,7 +85,12 @@ function DueDiligenceHero() {
 }
 function HealthFeatures() {
   const { data } = useSectionData<any>("airport-services", "HealthFeatures");
-  const features = (data.features || data.featuresList || []).map((f: any, i: number) => ({ ...f, icon: airportFeatureIconMap[i] || ActivityIcon }));
+  const features = (data.features || data.featuresList || []).map(
+    (f: any, i: number) => ({
+      ...f,
+      icon: airportFeatureIconMap[i] || ActivityIcon,
+    }),
+  );
 
   return (
     <section className="py-28 bg-white relative overflow-hidden">
@@ -129,22 +134,9 @@ function HealthFeatures() {
 }
 function ValueProtection() {
   const { data } = useSectionData<any>("airport-services", "ValueProtection");
-  const heading = data.heading || "Protecting Your Investment";
-  const highlight = "Investment";
-  const parts = heading.split(highlight);
-  
-  const paragraphs = data.paragraphs || [
-    "Acquiring or relocating an industrial asset involves significant capital risk. Without a clear understanding of the asset's true condition, you may be inheriting expensive liabilities.",
-    "Our independent technical audits provide the objective data you need to negotiate effectively, plan capital expenditures accurately, and ensure that your investment will deliver the expected returns over its intended lifecycle."
-  ];
 
-  const bullets = data.bullets || [
-    "Structural integrity and material degradation",
-    "Historical O&M records and failure analysis",
-    "Environmental compliance and emissions",
-    "Control systems obsolescence",
-    "Thermodynamic performance baseline"
-  ];
+  const paragraphs = data.paragraphs || [];
+  const bullets = data.bullets || [];
 
   return (
     <section className="py-28 bg-neutral-900 text-white">
@@ -167,11 +159,10 @@ function ValueProtection() {
             }}
           >
             <h2 className="text-4xl md:text-5xl font-black mb-8">
-              {parts[0]}
-              {heading.includes(highlight) && (
-                <span className="text-brand-pink">{highlight}</span>
-              )}
-              {parts[1]}
+              {data.headingPart1 || ""}
+              <span className="text-brand-pink">
+                {data.headingHighlight || ""}
+              </span>
             </h2>
             <div className="space-y-6 text-lg text-neutral-400 leading-relaxed">
               {paragraphs.map((para: string, idx: number) => (
@@ -197,7 +188,9 @@ function ValueProtection() {
             }}
             className="bg-white/5 border border-white/10 p-10"
           >
-            <h3 className="text-2xl font-bold mb-6">{data.bulletHeading || "What We Evaluate"}</h3>
+            <h3 className="text-2xl font-bold mb-6">
+              {data.bulletHeading || ""}
+            </h3>
             <ul className="space-y-4">
               {bullets.map((item: string, i: number) => (
                 <li key={i} className="flex items-start gap-3">
@@ -221,16 +214,16 @@ function CTASection() {
     <section className="py-32 bg-white text-center">
       <div className="max-w-4xl mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
-          {data.heading || "Planning an Acquisition or Relocation?"}
+          {data.heading || ""}
         </h2>
         <p className="text-xl text-neutral-600 mb-10">
-          {data.description || "Get the technical truth about your assets before you make a decision."}
+          {data.description || ""}
         </p>
         <Link
-          to={data.ctaUrl || "/contact"}
+          to={data.ctaUrl || ""}
           className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
         >
-          {data.ctaLabel || "Request an Assessment"}
+          {data.ctaLabel || ""}
           <ArrowRightIcon size={20} />
         </Link>
       </div>
