@@ -41,29 +41,73 @@ interface CMSState {
   fetchGlobalSEO: () => Promise<void>;
 }
 
+const slugMap: Record<string, string> = {
+  "service/engineering": "engineering-services",
+  "service/project-management": "project-management",
+  "service/power-generation": "power-generation",
+  "service/transmission-distribution": "transmission-distribution",
+  "service/renewable-energy": "renewable-energy",
+  "service/airport-services": "airport-services",
+  "service/value-added": "value-added",
+};
+
+const reverseSlugMap: Record<string, string> = {};
+for (const [key, value] of Object.entries(slugMap)) {
+  reverseSlugMap[value] = key;
+}
+
+const getRelatedSlugs = (slug: string): string[] => {
+  const list = [slug];
+  if (slugMap[slug]) list.push(slugMap[slug]);
+  if (reverseSlugMap[slug]) list.push(reverseSlugMap[slug]);
+  return list;
+};
+
 export const useCMSStore = create<CMSState>((set, get) => ({
   pages: {},
   globalSEO: null,
   globalSEOFetched: false,
   fetchPage: async (slug: string) => {
-    const currentPage = get().pages[slug];
-    // If already loading or already fetched, don't refetch
-    if (currentPage?.loading || currentPage?.fetched) return;
+    const relatedSlugs = getRelatedSlugs(slug);
+    const alreadyFetchedOrLoading = relatedSlugs.some((s) => {
+      const page = get().pages[s];
+      return page?.loading || page?.fetched;
+    });
 
-    set((state) => ({
-      pages: {
-        ...state.pages,
-        [slug]: {
+    if (alreadyFetchedOrLoading) {
+      const existingPage = relatedSlugs
+        .map((s) => get().pages[s])
+        .find((p) => p !== undefined);
+      if (existingPage) {
+        set((state) => {
+          const newPages = { ...state.pages };
+          relatedSlugs.forEach((s) => {
+            if (!newPages[s]) {
+              newPages[s] = existingPage;
+            }
+          });
+          return { pages: newPages };
+        });
+      }
+      return;
+    }
+
+    set((state) => {
+      const newPages = { ...state.pages };
+      relatedSlugs.forEach((s) => {
+        newPages[s] = {
           loading: true,
           error: null,
-          sections: currentPage?.sections || {},
-          seo: currentPage?.seo || null,
+          sections: state.pages[s]?.sections || {},
+          seo: state.pages[s]?.seo || null,
           fetched: false,
-        },
-      },
-    }));
+        };
+      });
+      return { pages: newPages };
+    });
 
-    const apiSlug = slug === "value-added-services" ? "value-added" : slug;
+    const mappedSlug = slugMap[slug] || slug;
+    const apiSlug = mappedSlug === "value-added-services" ? "value-added" : mappedSlug;
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/pages/${apiSlug}`);
@@ -83,36 +127,38 @@ export const useCMSStore = create<CMSState>((set, get) => ({
         }
       }
 
-      set((state) => ({
-        pages: {
-          ...state.pages,
-          [slug]: {
+      set((state) => {
+        const newPages = { ...state.pages };
+        relatedSlugs.forEach((s) => {
+          newPages[s] = {
             loading: false,
             error: null,
             sections: sectionsMap,
             seo: json.data.seo || null,
             fetched: true,
-          },
-        },
-      }));
+          };
+        });
+        return { pages: newPages };
+      });
     } catch (err: any) {
       console.warn(
         `CMS Fetch Error for "${slug}":`,
         err.message,
         "- Falling back to mock data"
       );
-      set((state) => ({
-        pages: {
-          ...state.pages,
-          [slug]: {
+      set((state) => {
+        const newPages = { ...state.pages };
+        relatedSlugs.forEach((s) => {
+          newPages[s] = {
             loading: false,
             error: err.message || "Unknown error",
-            sections: currentPage?.sections || {},
-            seo: currentPage?.seo || null,
-            fetched: true, // Mark as fetched even on error to prevent infinite retries
-          },
-        },
-      }));
+            sections: state.pages[s]?.sections || {},
+            seo: state.pages[s]?.seo || null,
+            fetched: true,
+          };
+        });
+        return { pages: newPages };
+      });
     }
   },
   fetchGlobalSEO: async () => {

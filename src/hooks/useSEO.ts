@@ -43,11 +43,89 @@ export function useSEO(
       document.head.appendChild(metaDescription);
     }
     metaDescription.setAttribute('content', description);
+
+    // Canonical URL
+    const canonicalUrl = seoData?.canonicalUrl || (window.location.origin + window.location.pathname);
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (canonicalUrl) {
+      if (!canonicalLink) {
+        canonicalLink = document.createElement('link');
+        canonicalLink.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonicalLink);
+      }
+      canonicalLink.setAttribute('href', canonicalUrl);
+    } else {
+      if (canonicalLink) {
+        canonicalLink.remove();
+      }
+    }
+
+    // Robots (noindex)
+    let robotsMeta = document.querySelector('meta[name="robots"]');
+    if (seoData?.noIndex) {
+      if (!robotsMeta) {
+        robotsMeta = document.createElement('meta');
+        robotsMeta.setAttribute('name', 'robots');
+        document.head.appendChild(robotsMeta);
+      }
+      robotsMeta.setAttribute('content', 'noindex, nofollow');
+    } else {
+      if (robotsMeta) {
+        robotsMeta.remove();
+      }
+    }
+
+    // OG Title
+    const ogTitleVal = seoData?.ogTitle || title;
+    let ogTitleMeta = document.querySelector('meta[property="og:title"]');
+    if (ogTitleVal) {
+      if (!ogTitleMeta) {
+        ogTitleMeta = document.createElement('meta');
+        ogTitleMeta.setAttribute('property', 'og:title');
+        document.head.appendChild(ogTitleMeta);
+      }
+      ogTitleMeta.setAttribute('content', ogTitleVal);
+    }
+
+    // OG Description
+    const ogDescVal = seoData?.ogDescription || description;
+    let ogDescMeta = document.querySelector('meta[property="og:description"]');
+    if (ogDescVal) {
+      if (!ogDescMeta) {
+        ogDescMeta = document.createElement('meta');
+        ogDescMeta.setAttribute('property', 'og:description');
+        document.head.appendChild(ogDescMeta);
+      }
+      ogDescMeta.setAttribute('content', ogDescVal);
+    }
+
+    // OG Image
+    const ogImageVal = seoData?.ogImage || seoData?.featuredImage || globalSEO?.favicon || "";
+    let ogImageMeta = document.querySelector('meta[property="og:image"]');
+    if (ogImageVal) {
+      if (!ogImageMeta) {
+        ogImageMeta = document.createElement('meta');
+        ogImageMeta.setAttribute('property', 'og:image');
+        document.head.appendChild(ogImageMeta);
+      }
+      ogImageMeta.setAttribute('content', ogImageVal);
+    } else {
+      if (ogImageMeta) {
+        ogImageMeta.remove();
+      }
+    }
   }, [
     seoData?.metaTitle,
     seoData?.metaDescription,
+    seoData?.canonicalUrl,
+    seoData?.noIndex,
+    seoData?.ogTitle,
+    seoData?.ogDescription,
+    seoData?.ogImage,
+    seoData?.featuredImage,
     globalSEO?.siteTitle,
     globalSEO?.siteDescription,
+    globalSEO?.favicon,
     defaultTitle,
     defaultDescription,
     slug
