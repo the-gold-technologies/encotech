@@ -30,14 +30,16 @@ export function App() {
     if (!globalSEO) return;
 
     // 1. Apply Favicon
+    let faviconLink = document.querySelector("link[rel*='icon']");
     if (globalSEO.favicon) {
-      let faviconLink = document.querySelector("link[rel*='icon']");
       if (!faviconLink) {
         faviconLink = document.createElement("link");
         faviconLink.setAttribute("rel", "shortcut icon");
         document.head.appendChild(faviconLink);
       }
       faviconLink.setAttribute("href", globalSEO.favicon);
+    } else if (faviconLink) {
+      faviconLink.remove();
     }
 
     // 2. Apply Google Site Verification
