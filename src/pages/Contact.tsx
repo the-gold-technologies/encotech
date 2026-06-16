@@ -197,10 +197,53 @@ function ContactFormSection() {
     careersLabel: "Careers",
     careersEmailAddress: "careers@encotec.com",
   });
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Form submission logic would go here
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    const form = e.currentTarget;
+    const fullName = (form.querySelector("#fullName") as HTMLInputElement).value;
+    const email = (form.querySelector("#email") as HTMLInputElement).value;
+    const phone = (form.querySelector("#phone") as HTMLInputElement).value;
+    const company = (form.querySelector("#company") as HTMLInputElement).value;
+    const subject = (form.querySelector("#subject") as HTMLSelectElement).value;
+    const message = (form.querySelector("#message") as HTMLTextAreaElement).value;
+
+    const API_BASE_URL = import.meta.env.VITE_CMS_API_URL || "https://cms-encotec.vercel.app";
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/enquiries`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: fullName,
+          email: email,
+          interestedIn: subject,
+          budget: company,
+          projectGoals: `Phone: ${phone || "N/A"}\nCompany: ${company || "N/A"}\nMessage:\n${message}`,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit enquiry");
+      }
+
+      setSubmitStatus("success");
+      form.reset();
+    } catch (err) {
+      console.error("Enquiry submit error:", err);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
   const openingHours = data.openingHours || [];
   return (
     <section className="py-32 bg-white">
@@ -333,12 +376,31 @@ function ContactFormSection() {
                 ></textarea>
               </div>
 
+              {submitStatus === "success" && (
+                <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold rounded-lg flex items-center gap-2 animate-in fade-in duration-300">
+                  <svg className="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Your message has been sent successfully! We will get back to you shortly.</span>
+                </div>
+              )}
+
+              {submitStatus === "error" && (
+                <div className="p-4 bg-rose-50 border border-rose-200 text-rose-800 text-sm font-semibold rounded-lg flex items-center gap-2 animate-in fade-in duration-300">
+                  <svg className="w-5 h-5 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Something went wrong. Please try again later.</span>
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 px-8 py-5 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+                disabled={isSubmitting}
+                className="w-full inline-flex items-center justify-center gap-2 px-8 py-5 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {data.submitButtonLabel || ""}
-                <ArrowRightIcon size={16} />
+                {isSubmitting ? "Sending..." : (data.submitButtonLabel || "Send Message")}
+                {!isSubmitting && <ArrowRightIcon size={16} />}
               </button>
             </form>
           </motion.div>
