@@ -1,10 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { ArrowRightIcon } from 'lucide-react';
-import { Footer } from '../Footer';
-import { useSectionData } from '../../store/useCMSStore';
-
+import React from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { ArrowRightIcon } from "lucide-react";
+import { Footer } from "../Footer";
+import { useSectionData } from "../../store/useCMSStore";
 
 export function CTA() {
   const { data } = useSectionData<any>("home", "CTASection");
@@ -16,30 +15,31 @@ export function CTA() {
       <motion.div
         animate={{
           scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3]
+          opacity: [0.3, 0.5, 0.3],
         }}
         transition={{
           duration: 8,
           repeat: Infinity,
-          ease: 'easeInOut'
+          ease: "easeInOut",
         }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-pink/20 rounded-full blur-[100px]" />
-      
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-pink/20 rounded-full blur-[100px]"
+      />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
         <motion.div
           initial={{
             opacity: 0,
-            y: 10
+            y: 10,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="mb-4">
+          className="mb-4"
+        >
           <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
             {data.tagline}
           </span>
@@ -48,90 +48,91 @@ export function CTA() {
         <motion.h2
           initial={{
             opacity: 0,
-            y: 30
+            y: 30,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="text-4xl md:text-6xl lg:text-7xl font-black text-neutral-900 mb-6 tracking-tight leading-[1.1] selection:bg-brand-pink selection:text-white select-text cursor-text">
-          {data.heading?.includes("Engineering Excellence.") ? (
-            <>
-              Experience Global{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-brand">
-                Engineering Excellence.
-              </span>
-            </>
-          ) : (data.heading || "")}
+          className="text-4xl md:text-6xl lg:text-7xl font-black text-neutral-900 mb-6 tracking-tight leading-[1.1] selection:bg-brand-pink selection:text-white select-text cursor-text"
+        >
+          {data.headingPart1}{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-brand">
+            {data.headingHighlight}
+          </span>
         </motion.h2>
 
         <motion.p
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            delay: 0.1
+            delay: 0.1,
           }}
-          className="text-lg md:text-xl text-neutral-600 mb-10 max-w-2xl mx-auto">
-          {data.ctaSubtitle}
+          className="text-lg md:text-xl text-neutral-600 mb-10 max-w-2xl mx-auto"
+        >
+          {data.description}
         </motion.p>
 
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            delay: 0.2
+            delay: 0.2,
           }}
-          className="flex flex-col sm:flex-row gap-4 justify-center">
-          
+          className="flex flex-col sm:flex-row gap-4 justify-center"
+        >
           <Link
-            to="/contact"
-            className="inline-flex items-center justify-center gap-2 text-lg px-10 py-5 bg-gradient-brand text-white shadow-2xl shadow-brand-pink/30 hover:shadow-brand-pink/40 hover:scale-[1.02] font-medium transition-all duration-300 rounded-full">
-            Start Your Project
+            to={data.primaryBtnUrl}
+            className="inline-flex items-center justify-center gap-2 text-lg px-10 py-5 bg-gradient-brand text-white shadow-2xl shadow-brand-pink/30 hover:shadow-brand-pink/40 hover:scale-[1.02] font-medium transition-all duration-300 rounded-full"
+          >
+            {data.primaryBtnLabel}
             <ArrowRightIcon className="h-4 w-4" />
           </Link>
           <Link
-            to="/contact"
-            className="inline-flex items-center justify-center text-lg px-10 py-5 bg-white text-neutral-900 border border-neutral-200 hover:border-brand-pink/30 hover:bg-brand-panel font-medium transition-all duration-300 rounded-full">
-            Talk to an Expert
+            to={data.secondaryBtnUrl}
+            className="inline-flex items-center justify-center text-lg px-10 py-5 bg-white text-neutral-900 border border-neutral-200 hover:border-brand-pink/30 hover:bg-brand-panel font-medium transition-all duration-300 rounded-full"
+          >
+            {data.secondaryBtnLabel}
           </Link>
         </motion.div>
 
         <motion.p
           initial={{
-            opacity: 0
+            opacity: 0,
           }}
           whileInView={{
-            opacity: 1
+            opacity: 1,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            delay: 0.4
+            delay: 0.4,
           }}
-          className="mt-8 text-sm text-neutral-400">
-          {data.ctaFooterNote}
+          className="mt-8 text-sm text-neutral-400"
+        >
+          {data.footerNote}
         </motion.p>
 
         <Footer variant="embedded" />

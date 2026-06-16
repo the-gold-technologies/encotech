@@ -229,10 +229,10 @@ export function AboutSection() {
                 </div>
                 <div>
                   <div className="text-sm font-black leading-none">
-                    {data.badgeLabel}
+                    {data.badgeValue}
                   </div>
                   <div className="text-[9px] font-bold text-neutral-400 tracking-[0.15em] uppercase mt-0.5">
-                    {data.badgeValue}
+                    {data.badgeLabel}
                   </div>
                 </div>
               </div>

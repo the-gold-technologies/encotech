@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Footer } from '../../components/Footer';
-import { Navigation } from '../../components/Navigation';
-import { motion } from 'framer-motion';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Footer } from "../../components/Footer";
+import { Navigation } from "../../components/Navigation";
+import { motion } from "framer-motion";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -11,14 +11,25 @@ import {
   TruckIcon,
   CheckCircle2Icon,
   ZapIcon,
-  SettingsIcon } from 'lucide-react';
+  SettingsIcon,
+} from "lucide-react";
 import { useSectionData } from "../../store/useCMSStore";
 import { useSEO } from "../../hooks/useSEO";
 
 const tdCapIconMap = [HardHatIcon, GlobeIcon, TruckIcon];
 
 function ConstructionHero() {
-  const { data } = useSectionData<any>("transmission-distribution", "ConstructionHero");
+  const { data } = useSectionData<any>(
+    "transmission-distribution",
+    "ConstructionHero",
+    {
+      label: "Construction, Commissioning & Relocation",
+      headingPart1: "Bringing Complex ",
+      headingHighlight: "Infrastructure to Life",
+      description:
+        'At Encotec, we thrive on the challenge of "physical realization". From the massive IBR piping of a thermal plant to the precision mounting of solar modules, we bring your assets online with speed and safety.',
+    },
+  );
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       {/* Blueprint Grid Pattern */}
@@ -26,35 +37,36 @@ function ConstructionHero() {
         className="absolute inset-0 opacity-20"
         style={{
           backgroundImage:
-          'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-          backgroundSize: '40px 40px'
-        }} />
-      
+            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      />
 
       {/* Animated Construction Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           className="absolute top-[20%] left-[10%] w-64 h-64 border border-brand-pink/30 rounded-full"
           animate={{
-            rotate: 360
+            rotate: 360,
           }}
           transition={{
             duration: 40,
             repeat: Infinity,
-            ease: 'linear'
-          }} />
-        
+            ease: "linear",
+          }}
+        />
+
         <motion.div
           className="absolute bottom-[20%] right-[10%] w-96 h-96 border border-brand-light/20 rounded-full"
           animate={{
-            rotate: -360
+            rotate: -360,
           }}
           transition={{
             duration: 50,
             repeat: Infinity,
-            ease: 'linear'
-          }} />
-        
+            ease: "linear",
+          }}
+        />
       </div>
 
       <div className="absolute inset-0 bg-gradient-to-b from-neutral-900 via-transparent to-neutral-900" />
@@ -63,22 +75,22 @@ function ConstructionHero() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 40
+            y: 40,
           }}
           animate={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           transition={{
             duration: 1,
-            ease: 'easeOut'
+            ease: "easeOut",
           }}
-          className="max-w-4xl">
-          
+          className="max-w-4xl"
+        >
           <Link
             to="/services"
-            className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300 mb-12">
-            
+            className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300 mb-12"
+          >
             <ArrowLeftIcon size={16} />
             Back to Services
           </Link>
@@ -91,7 +103,15 @@ function ConstructionHero() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            {data.heading || ""}
+            {data.headingPart1 || ""}
+            {data.headingHighlight && (
+              <>
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
+                  {data.headingHighlight}
+                </span>
+              </>
+            )}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
@@ -99,12 +119,39 @@ function ConstructionHero() {
           </p>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function CapabilitiesSection() {
-  const { data } = useSectionData<any>("transmission-distribution", "CapabilitiesSection");
-  const capabilities = (data.capabilitiesList || []).map((c: any, i: number) => ({ ...c, icon: tdCapIconMap[i] || HardHatIcon }));
+  const { data } = useSectionData<any>(
+    "transmission-distribution",
+    "CapabilitiesSection",
+    {
+      heading: "Physical Realization at Scale",
+      description:
+        "Whether it's a new build or moving an entire plant across borders, we handle the complex installation and synchronization of your assets.",
+      capabilitiesList: [
+        {
+          title: "Multi-Sector Expertise",
+          description:
+            "We have delivered construction excellence across thermal power, solar PV, and wind projects globally. Our teams handle everything from civil works to complex mechanical erection.",
+        },
+        {
+          title: "International Commissioning",
+          description:
+            "Our teams have managed grid synchronization and performance tests in diverse markets, including Greece and Turkey. We ensure your plant meets all local and international standards.",
+        },
+        {
+          title: "Asset Relocation Services",
+          description:
+            "Unique to Encotec, we support owners in the complex process of dismantling, shifting, and reinstalling plants from one site—or country—to another, ensuring minimal downtime.",
+        },
+      ],
+    },
+  );
+  const capabilities = (data.capabilities || data.capabilitiesList || []).map(
+    (c: any, i: number) => ({ ...c, icon: tdCapIconMap[i] || HardHatIcon }),
+  );
 
   return (
     <section className="py-28 bg-white relative overflow-hidden">
@@ -112,17 +159,17 @@ function CapabilitiesSection() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="text-center mb-16">
-          
+          className="text-center mb-16"
+        >
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
             {data.heading}
           </h2>
@@ -132,26 +179,26 @@ function CapabilitiesSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {capabilities.map((cap: any, i: number) =>
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.2
-            }}
-            className="p-10 bg-neutral-50 border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 group">
-            
+          {capabilities.map((cap: any, i: number) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.2,
+              }}
+              className="p-10 bg-neutral-50 border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 group"
+            >
               <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center text-brand-pink mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300">
                 <cap.icon size={32} strokeWidth={1.5} />
               </div>
@@ -162,14 +209,35 @@ function CapabilitiesSection() {
                 {cap.description}
               </p>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function ProcessFlow() {
-  const { data } = useSectionData<any>("transmission-distribution", "ProcessFlow");
+  const { data } = useSectionData<any>(
+    "transmission-distribution",
+    "ProcessFlow",
+    {
+      headingPart1: "The Relocation ",
+      headingHighlight: "Advantage",
+      description:
+        "Asset relocation is a highly specialized service that requires meticulous planning, precise execution, and deep engineering knowledge. Encotec is one of the few global providers with a proven track record in cross-border plant relocations.",
+      bullets: [
+        "Detailed dismantling protocols and tagging",
+        "Logistics planning and customs clearance support",
+        "Refurbishment of critical components during transit",
+        "Re-erection and synchronization at the new site",
+      ],
+      steps: [
+        { title: "Dismantle", desc: "Precision teardown", icon: "Settings" },
+        { title: "Transport", desc: "Global logistics", icon: "Truck" },
+        { title: "Erect", desc: "Expert installation", icon: "HardHat" },
+        { title: "Commission", desc: "Grid sync & testing", icon: "Zap" },
+      ],
+    },
+  );
   const bullets: string[] = data.bullets || [];
   const steps: any[] = data.steps || [];
 
@@ -180,63 +248,77 @@ function ProcessFlow() {
           <motion.div
             initial={{
               opacity: 0,
-              x: -40
+              x: -40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
-            }}>
-            
+              duration: 0.8,
+            }}
+          >
             <h2 className="text-4xl md:text-5xl font-black mb-8">
-              {data.heading}
+              {data.headingPart1 || ""}
+              <span className="text-brand-pink">
+                {data.headingHighlight || ""}
+              </span>
             </h2>
             <p className="text-lg text-neutral-400 leading-relaxed mb-8">
               {data.description}
             </p>
 
             <div className="space-y-6">
-              {bullets.map((item: string, i: number) =>
-              <div key={i} className="flex items-start gap-4">
+              {bullets.map((item: string, i: number) => (
+                <div key={i} className="flex items-start gap-4">
                   <CheckCircle2Icon
-                  className="text-brand-pink flex-shrink-0 mt-1"
-                  size={20} />
-                
+                    className="text-brand-pink flex-shrink-0 mt-1"
+                    size={20}
+                  />
+
                   <span className="text-neutral-300">{item}</span>
                 </div>
-              )}
+              ))}
             </div>
           </motion.div>
 
           <motion.div
             initial={{
               opacity: 0,
-              x: 40
+              x: 40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
+              duration: 0.8,
             }}
-            className="relative">
-            
+            className="relative"
+          >
             <div className="absolute inset-0 bg-gradient-to-r from-brand-pink/20 to-brand-light/20 blur-3xl" />
             <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 p-8">
               <div className="grid grid-cols-2 gap-6">
                 {steps.map((item: any, i: number) => {
-                  const Icon = item.icon === "Settings" ? SettingsIcon : item.icon === "Truck" ? TruckIcon : item.icon === "HardHat" ? HardHatIcon : ZapIcon;
+                  const Icon =
+                    item.icon === "Settings"
+                      ? SettingsIcon
+                      : item.icon === "Truck"
+                        ? TruckIcon
+                        : item.icon === "HardHat"
+                          ? HardHatIcon
+                          : ZapIcon;
                   return (
-                    <div key={i} className="bg-neutral-900/50 p-6 border border-white/5">
+                    <div
+                      key={i}
+                      className="bg-neutral-900/50 p-6 border border-white/5"
+                    >
                       <Icon className="text-brand-pink mb-4" size={28} />
                       <div className="font-bold mb-2">{item.title}</div>
                       <div className="text-sm text-neutral-400">
@@ -250,23 +332,32 @@ function ProcessFlow() {
           </motion.div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function CTASection() {
-  const { data } = useSectionData<any>("transmission-distribution", "CTASection");
+  const { data } = useSectionData<any>(
+    "transmission-distribution",
+    "CTASection",
+    {
+      heading: "Ready to Bring Your Asset Online?",
+      description:
+        "From new builds to complex cross-border relocations, our teams are ready to execute.",
+      ctaLabel: "Discuss Your Project",
+      ctaUrl: "/contact",
+    },
+  );
   return (
     <section className="py-32 bg-white text-center">
       <div className="max-w-4xl mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
           {data.heading}
         </h2>
-        <p className="text-xl text-neutral-600 mb-10">
-          {data.description}
-        </p>
+        <p className="text-xl text-neutral-600 mb-10">{data.description}</p>
         <Link
           to={data.ctaUrl || "/contact"}
-          className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
+          className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+        >
           {data.ctaLabel}
           <ArrowRightIcon size={20} />
         </Link>
@@ -288,6 +379,6 @@ export function TransmissionDistribution() {
       <CTASection />
 
       <Footer />
-    </main>);
-
+    </main>
+  );
 }

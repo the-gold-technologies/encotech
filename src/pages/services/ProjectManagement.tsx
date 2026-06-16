@@ -59,7 +59,18 @@ function AnimatedCounter({
   );
 }
 function ProjectHero() {
-  const { data } = useSectionData<any>("project-management", "ProjectHero");
+  const { data } = useSectionData<any>("project-management", "ProjectHero", {
+    label: "Project Conceptualisation & Development",
+    headingPart1: "Building Your Vision on a ",
+    headingHighlight: "Logical Foundation",
+    description:
+      "A great project doesn't start with a shovel in the ground; it starts with a logical, well-vetted plan. We are your strategic developers who ensure your project is technically sound and financially viable from day one.",
+    floatingBadges: [
+      { text: "Pre-Feasibility", icon: "Map" },
+      { text: "DPR Creation", icon: "FileText" },
+      { text: "EPC Selection", icon: "Briefcase" },
+    ],
+  });
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       {/* Strategic Grid Pattern */}
@@ -152,7 +163,15 @@ function ProjectHero() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            {data.headline || data.heading || ""}
+            {data.headingPart1 || ""}{" "}
+            {data.headingHighlight && (
+              <>
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
+                  {data.headingHighlight}
+                </span>
+              </>
+            )}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
@@ -168,7 +187,10 @@ function ProjectHero() {
               };
               const IconComponent = badgeIconMap[badge.icon] || MapIcon;
               return (
-                <div key={i} className="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 px-6 py-4">
+                <div
+                  key={i}
+                  className="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 px-6 py-4"
+                >
                   <IconComponent className="text-brand-pink" size={24} />
                   <span className="font-bold tracking-wider uppercase text-sm">
                     {badge.text}
@@ -183,7 +205,18 @@ function ProjectHero() {
   );
 }
 function PhilosophySection() {
-  const { data } = useSectionData<any>("project-management", "PhilosophySection");
+  const { data } = useSectionData<any>(
+    "project-management",
+    "PhilosophySection",
+    {
+      headingPart1: "Not Just Detailed Engineering. ",
+      headingHighlight: "Strategic Development.",
+      para1:
+        'We are not a "detailed engineering" firm that gets lost in the minutiae. We understand that the earliest decisions in a project\'s lifecycle have the most profound impact on its ultimate success.',
+      para2:
+        'By adopting an "Owner\'s Mindset" from the very beginning, we evaluate site conditions, resource potential, and financial models to ensure your investment is built on reality, not just theory. We provide the clarity required for stakeholder confidence and project approval.',
+    },
+  );
   return (
     <section className="py-28 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -205,15 +238,19 @@ function PhilosophySection() {
             }}
           >
             <h2 className="text-4xl md:text-5xl font-black text-neutral-900 leading-tight mb-8">
-              {data.heading}
+              {data.headingPart1 || ""}{" "}
+              {data.headingHighlight && (
+                <>
+                  <br />
+                  <span className="text-brand-pink">
+                    {data.headingHighlight}
+                  </span>
+                </>
+              )}
             </h2>
             <div className="space-y-6 text-lg text-neutral-700 leading-relaxed">
-              <p>
-                {data.para1}
-              </p>
-              <p>
-                {data.para2}
-              </p>
+              <p>{data.para1}</p>
+              <p>{data.para2}</p>
             </div>
           </motion.div>
 
@@ -279,8 +316,32 @@ function PhilosophySection() {
   );
 }
 function CoreOfferings() {
-  const { data } = useSectionData<any>("project-management", "CoreOfferings");
-  const offerings = (data.offeringsList || []).map((o: any, i: number) => ({ ...o, icon: pmOfferingIconMap[i] || FileTextIcon }));
+  const { data } = useSectionData<any>("project-management", "CoreOfferings", {
+    heading: "Our Development Services",
+    description:
+      "End-to-end conceptualisation to ensure your project starts strong.",
+    offeringsList: [
+      {
+        title: "Feasibility & Pre-Feasibility Studies",
+        description:
+          "We evaluate site conditions and resource potential to ensure your investment is built on reality, not just theory. Our comprehensive studies cover technical, economic, and environmental factors.",
+      },
+      {
+        title: "Detailed Project Reports (DPR)",
+        description:
+          "We provide the technical and financial clarity required for stakeholder confidence and project approval. Our DPRs serve as the definitive blueprint for project execution and financing.",
+      },
+      {
+        title: "Strategic Sourcing & EPC Selection",
+        description:
+          "We develop rigorous technical specifications and help you finalise EPC contractors, ensuring you have the right partners by your side. We manage the entire tendering and evaluation process.",
+      },
+    ],
+  });
+  const offerings = (data.offeringsList || []).map((o: any, i: number) => ({
+    ...o,
+    icon: pmOfferingIconMap[i] || FileTextIcon,
+  }));
   return (
     <section className="py-28 bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -342,7 +403,13 @@ function CoreOfferings() {
   );
 }
 function StatsSection() {
-  const { data } = useSectionData<any>("project-management", "StatsSection");
+  const { data } = useSectionData<any>("project-management", "StatsSection", {
+    stats: [
+      { value: 8000, suffix: "+", label: "MW Conceptualised" },
+      { value: 100, suffix: "%", label: "Owner's Mindset" },
+      { value: 300, suffix: "+", label: "Specialized Engineers" },
+    ],
+  });
   const stats = data.stats || [];
   return (
     <section className="py-20 bg-brand-pink text-white">
@@ -380,16 +447,20 @@ function StatsSection() {
   );
 }
 function CTASection() {
-  const { data } = useSectionData<any>("project-management", "CTASection");
+  const { data } = useSectionData<any>("project-management", "CTASection", {
+    heading: "Ready to Build Your Vision?",
+    description:
+      "Let's start your project on a logical foundation with our expert conceptualisation and development services.",
+    ctaLabel: "Start the Conversation",
+    ctaUrl: "/contact",
+  });
   return (
     <section className="py-32 bg-white text-center">
       <div className="max-w-4xl mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
           {data.heading}
         </h2>
-        <p className="text-xl text-neutral-600 mb-10">
-          {data.description}
-        </p>
+        <p className="text-xl text-neutral-600 mb-10">{data.description}</p>
         <Link
           to={data.ctaUrl || "/contact"}
           className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"

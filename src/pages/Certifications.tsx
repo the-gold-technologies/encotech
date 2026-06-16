@@ -54,7 +54,6 @@ function AnimatedCounter({
   );
 }
 
-
 // Icon mapping for certifications grid
 const certIconMap: Record<string, React.ComponentType<any>> = {
   "ISO 9001:2015": ShieldCheckIcon,
@@ -70,7 +69,17 @@ function CertificationsHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
-  const { data } = useSectionData<any>("certifications", "CertificationsHero");
+  const { data } = useSectionData<any>("certifications", "CertificationsHero", {
+    heroTitle: "CERTIFICATIONS & PARTNERS",
+    heroSubtitle:
+      "Our commitment to global standards of quality, safety, and environmental management, backed by strategic alliances with industry leaders.",
+    tagline: "Trust & Excellence",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=2400",
+    badge1Text: "ISO Certified",
+    badge2Text: "ASME Compliant",
+    badge3Text: "15+ Years Excellence",
+  });
   return (
     <section className="relative min-h-screen w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
@@ -135,7 +144,7 @@ function CertificationsHero() {
           >
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Trust & Excellence
+              {data.tagline}
             </span>
           </motion.div>
 
@@ -194,7 +203,7 @@ function CertificationsHero() {
               }}
               className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase"
             >
-              ISO Certified
+              {data.badge1Text}
             </motion.div>
             <motion.div
               initial={{
@@ -211,7 +220,7 @@ function CertificationsHero() {
               }}
               className="px-6 py-3 bg-white/90 backdrop-blur-sm text-neutral-900 font-bold text-sm tracking-wider uppercase"
             >
-              ASME Compliant
+              {data.badge2Text}
             </motion.div>
             <motion.div
               initial={{
@@ -228,7 +237,7 @@ function CertificationsHero() {
               }}
               className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-sm tracking-wider uppercase"
             >
-              15+ Years Excellence
+              {data.badge3Text}
             </motion.div>
           </div>
         </motion.div>
@@ -237,12 +246,49 @@ function CertificationsHero() {
   );
 }
 function CertificationsGrid() {
-  const { data } = useSectionData<any>("certifications", "CertificationsGrid");
-  const certifications = (data.certificationsList || []).map((cert: any, index: number) => ({
-    ...cert,
-    id: `cert-${index}`,
-    icon: certIconMap[cert.title] || ShieldCheckIcon,
-  }));
+  const { data } = useSectionData<any>("certifications", "CertificationsGrid", {
+    tagline: "Global Standards",
+    heading: "Accreditations That Define Our Quality",
+    certificationsList: [
+      {
+        title: "ISO 9001:2015",
+        category: "Quality Management",
+        desc: "Ensuring consistent quality in our engineering, procurement, and construction services.",
+      },
+      {
+        title: "ISO 14001:2015",
+        category: "Environmental Management",
+        desc: "Commitment to minimizing our environmental footprint across all project sites.",
+      },
+      {
+        title: "ISO 45001:2018",
+        category: "Occupational Health & Safety",
+        desc: "Maintaining the highest standards of workplace safety for our employees and contractors.",
+      },
+      {
+        title: "ASME 'U' & 'S' Stamps",
+        category: "Boiler & Pressure Vessel",
+        desc: "Authorized to manufacture and assemble power boilers and pressure vessels.",
+      },
+      {
+        title: "NABL Accreditation",
+        category: "Testing & Calibration",
+        desc: "Recognized competence of our testing and calibration laboratories.",
+      },
+      {
+        title: "IBR Certification",
+        category: "Indian Boiler Regulations",
+        desc: "Certified as a special class boiler repairer and erector under IBR 1950.",
+      },
+    ],
+  });
+  const certifications = (data.certificationsList || []).map(
+    (cert: any, index: number) => ({
+      ...cert,
+      id: `cert-${index}`,
+      icon: certIconMap[cert.title] || ShieldCheckIcon,
+    }),
+  );
 
   return (
     <section className="py-32 bg-neutral-50 relative overflow-hidden">
@@ -267,11 +313,11 @@ function CertificationsGrid() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Global Standards
+              {data.tagline}
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 leading-tight max-w-3xl">
-            Accreditations That Define Our Quality
+            {data.heading}
           </h2>
         </motion.div>
 
@@ -314,8 +360,36 @@ function CertificationsGrid() {
   );
 }
 function StrategicPartners() {
-  const { data } = useSectionData<any>("certifications", "StrategicPartners");
-  const partners: Array<{ name: string; monogram: string; role: string }> = data.partnersList || [];
+  const { data } = useSectionData<any>("certifications", "StrategicPartners", {
+    tagline: "Strategic Alliances",
+    heading: "Trusted by Industry Leaders",
+    description:
+      "We collaborate with the world's leading technology providers and energy conglomerates to deliver state-of-the-art solutions.",
+    partnersList: [
+      {
+        name: "Siemens Energy",
+        monogram: "SE",
+        role: "Gas Turbine Technology",
+      },
+      { name: "GE Vernova", monogram: "GE", role: "Power Generation Systems" },
+      { name: "BHEL", monogram: "BH", role: "Heavy Electrical Equipment" },
+      { name: "NTPC", monogram: "NT", role: "Thermal Power Operations" },
+      { name: "L&T Energy", monogram: "LT", role: "EPC & Construction" },
+      {
+        name: "Tata Power",
+        monogram: "TP",
+        role: "Integrated Power Solutions",
+      },
+      { name: "Adani Power", monogram: "AP", role: "Private Sector Energy" },
+      {
+        name: "JSW Energy",
+        monogram: "JW",
+        role: "Diversified Energy Portfolio",
+      },
+    ],
+  });
+  const partners: Array<{ name: string; monogram: string; role: string }> =
+    data.partnersList || [];
 
   return (
     <section className="py-32 bg-dark-bg text-white relative overflow-hidden">
@@ -343,11 +417,11 @@ function StrategicPartners() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                Strategic Alliances
+                {data.tagline}
               </span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black leading-tight">
-              Trusted by Industry Leaders
+              {data.heading}
             </h2>
           </motion.div>
           <motion.p
@@ -367,8 +441,7 @@ function StrategicPartners() {
             }}
             className="text-neutral-400 max-w-md leading-relaxed"
           >
-            We collaborate with the world's leading technology providers and
-            energy conglomerates to deliver state-of-the-art solutions.
+            {data.description}
           </motion.p>
         </div>
 
@@ -410,8 +483,31 @@ function StrategicPartners() {
   );
 }
 function IndustryMemberships() {
-  const { data } = useSectionData<any>("certifications", "IndustryMemberships");
-  const memberships: Array<{ name: string; year: string }> = data.membershipsList || [];
+  const { data } = useSectionData<any>(
+    "certifications",
+    "IndustryMemberships",
+    {
+      heading: "INDUSTRY MEMBERSHIPS",
+      description:
+        "Active participation in shaping the future of India's energy sector through key industry bodies and associations.",
+      membershipsList: [
+        { name: "Confederation of Indian Industry (CII)", year: "2010" },
+        {
+          name: "Federation of Indian Chambers of Commerce (FICCI)",
+          year: "2012",
+        },
+        {
+          name: "Indian Electrical & Electronics Mfrs. Assoc. (IEEMA)",
+          year: "2014",
+        },
+        { name: "Central Board of Irrigation and Power (CBIP)", year: "2015" },
+        { name: "Independent Power Producers Assoc. (IPPAI)", year: "2016" },
+        { name: "Associated Chambers of Commerce (ASSOCHAM)", year: "2018" },
+      ],
+    },
+  );
+  const memberships: Array<{ name: string; year: string }> =
+    data.membershipsList || [];
 
   return (
     <section className="py-32 bg-white overflow-hidden">
@@ -434,11 +530,10 @@ function IndustryMemberships() {
           className="text-center"
         >
           <h2 className="text-3xl md:text-4xl font-black text-neutral-900 mb-6">
-            INDUSTRY MEMBERSHIPS
+            {data.heading}
           </h2>
           <p className="text-neutral-600 max-w-2xl mx-auto">
-            Active participation in shaping the future of India's energy sector
-            through key industry bodies and associations.
+            {data.description}
           </p>
         </motion.div>
       </div>
@@ -504,12 +599,41 @@ function IndustryMemberships() {
   );
 }
 function TrustStats() {
-  const { data } = useSectionData<any>("certifications", "TrustStats");
+  const { data } = useSectionData<any>("certifications", "TrustStats", {
+    stats1Value: "15",
+    stats1Label: "Years of Excellence",
+    stats1Suffix: "+",
+    stats2Value: "100",
+    stats2Label: "Compliance Rate",
+    stats2Suffix: "%",
+    stats3Value: "50",
+    stats3Label: "Global Audits Passed",
+    stats3Suffix: "+",
+    stats4Value: "23",
+    stats4Label: "Countries Recognized",
+    stats4Suffix: "+",
+  });
   const stats = [
-    { value: parseInt(data.stats1Value) || 15, label: data.stats1Label || "Years of Excellence", suffix: data.stats1Suffix || "+" },
-    { value: parseInt(data.stats2Value) || 100, label: data.stats2Label || "Compliance Rate", suffix: data.stats2Suffix || "%" },
-    { value: parseInt(data.stats3Value) || 50, label: data.stats3Label || "Global Audits Passed", suffix: data.stats3Suffix || "+" },
-    { value: parseInt(data.stats4Value) || 23, label: data.stats4Label || "Countries Recognized", suffix: data.stats4Suffix || "+" },
+    {
+      value: parseInt(data.stats1Value) || 15,
+      label: data.stats1Label,
+      suffix: data.stats1Suffix,
+    },
+    {
+      value: parseInt(data.stats2Value) || 100,
+      label: data.stats2Label,
+      suffix: data.stats2Suffix,
+    },
+    {
+      value: parseInt(data.stats3Value) || 50,
+      label: data.stats3Label,
+      suffix: data.stats3Suffix,
+    },
+    {
+      value: parseInt(data.stats4Value) || 23,
+      label: data.stats4Label,
+      suffix: data.stats4Suffix,
+    },
   ];
   return (
     <section className="py-24 bg-neutral-900 text-white relative overflow-hidden">
@@ -518,7 +642,10 @@ function TrustStats() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 divide-x divide-white/10">
           {stats.map((stat, i) => (
-            <div key={i} className="flex flex-col items-center text-center px-4">
+            <div
+              key={i}
+              className="flex flex-col items-center text-center px-4"
+            >
               <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
                 <AnimatedCounter target={stat.value} suffix={stat.suffix} />
               </div>
@@ -533,6 +660,13 @@ function TrustStats() {
   );
 }
 function CTASection() {
+  const { data } = useSectionData<any>("certifications", "CertificationsCTA", {
+    ctaHeading: "Partner With Excellence",
+    ctaSubtitle:
+      "Experience engineering services backed by global certifications and a commitment to uncompromising quality.",
+    ctaLabel: "Discuss Your Project",
+    ctaUrl: "/contact",
+  });
   return (
     <section className="py-32 bg-neutral-50">
       <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
@@ -553,17 +687,16 @@ function CTASection() {
           }}
         >
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 mb-8 leading-tight">
-            Partner With Excellence
+            {data.ctaHeading}
           </h2>
           <p className="text-xl text-neutral-600 mb-12 leading-relaxed">
-            Experience engineering services backed by global certifications and
-            a commitment to uncompromising quality.
+            {data.ctaSubtitle}
           </p>
           <Link
-            to="/contact"
+            to={data.ctaUrl}
             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
           >
-            Discuss Your Project
+            {data.ctaLabel}
             <ArrowRightIcon size={16} />
           </Link>
         </motion.div>

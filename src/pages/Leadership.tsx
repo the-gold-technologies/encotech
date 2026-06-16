@@ -52,7 +52,6 @@ function AnimatedCounter({
   );
 }
 
-
 // Leader image placeholders (not stored in CMS - visual only)
 const execImages = [
   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
@@ -73,7 +72,16 @@ function LeadershipHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
-  const { data } = useSectionData<any>("leadership", "LeadershipHero");
+  const { data } = useSectionData<any>("leadership", "LeadershipHero", {
+    heroTitle: "LEADERSHIP & TEAM",
+    heroSubtitle:
+      "Meet the experienced leaders and engineers driving operational excellence and strategic growth across global energy markets.",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=2400",
+    heroBadge1: "200+ Professionals",
+    heroBadge2: "15+ Years Average Experience",
+    heroBadge3: "23+ Countries",
+  });
   return (
     <section className="relative min-h-screen w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
@@ -222,7 +230,18 @@ function LeadershipHero() {
   );
 }
 function LeadershipPhilosophy() {
-  const { data } = useSectionData<any>("leadership", "LeadershipPhilosophy");
+  const { data } = useSectionData<any>("leadership", "LeadershipPhilosophy", {
+    philosophyTagline: "Our Philosophy",
+    philosophyHeading: "Leading With an Owner's Mindset",
+    philosophyPara1:
+      "At Encotec, leadership is not just about managing teams; it's about taking full accountability for the outcomes we deliver. Our leadership team brings decades of hands-on experience from the world's most complex energy projects.",
+    philosophyPara2:
+      "We believe that true engineering excellence requires a culture where every team member is empowered to think critically, act decisively, and prioritize long-term asset performance over short-term gains.",
+    philosophyQuote:
+      "We don't just manage projects — we take ownership of outcomes, treating every asset as if it were our own.",
+    philosophyImage:
+      "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=1200",
+  });
   return (
     <section className="py-32 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -256,12 +275,8 @@ function LeadershipPhilosophy() {
             </h2>
 
             <div className="space-y-6 text-lg text-neutral-700 leading-relaxed">
-              <p>
-                {data.philosophyPara1}
-              </p>
-              <p>
-                {data.philosophyPara2}
-              </p>
+              <p>{data.philosophyPara1}</p>
+              <p>{data.philosophyPara2}</p>
             </div>
           </motion.div>
 
@@ -332,7 +347,20 @@ function LeadershipPhilosophy() {
   );
 }
 function ExecutiveTeam() {
-  const { data } = useSectionData<any>("leadership", "ExecutiveTeam");
+  const { data } = useSectionData<any>("leadership", "ExecutiveTeam", {
+    tagline: "Executive Leadership",
+    heading: "Visionaries Driving Our Mission",
+    exec1Name: "Vikram Sharma",
+    exec1Role: "Managing Director & Founder",
+    exec1Bio:
+      "25+ years of leadership in energy infrastructure. Founded Encotec with a vision to bring an owner's mindset to every project. Under his leadership, Encotec has grown from a specialized engineering firm to a full-spectrum energy services provider operating across 23+ countries.",
+    exec1Tags: "Strategic Leadership, Business Development, Energy Policy",
+    exec2Name: "Rajesh Patel",
+    exec2Role: "Director – Operations",
+    exec2Bio:
+      "20+ years in power plant operations and project execution. Leads operational delivery across multiple projects, ensuring efficient execution, quality standards, and optimal resource utilization across thermal, renewable, and transmission projects.",
+    exec2Tags: "Operations Management, Plant Commissioning, Asset Optimization",
+  });
   const executives = [
     {
       name: data.exec1Name,
@@ -373,11 +401,11 @@ function ExecutiveTeam() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Executive Leadership
+              {data.tagline || "Executive Leadership"}
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-black leading-tight uppercase tracking-tight">
-            Visionaries Driving Our Mission
+            {data.heading || "Visionaries Driving Our Mission"}
           </h2>
         </motion.div>
 
@@ -446,14 +474,71 @@ function ExecutiveTeam() {
   );
 }
 function SeniorLeadership() {
-  const { data } = useSectionData<any>("leadership", "SeniorLeadership");
+  const { data } = useSectionData<any>("leadership", "SeniorLeadership", {
+    tagline: "Senior Leadership",
+    heading: "Department Heads",
+    leader1Name: "Dr. Anita Desai",
+    leader1Role: "VP Engineering",
+    leader1Bio:
+      "PhD in Thermal Engineering. 18+ years leading complex engineering design for power generation and transmission projects.",
+    leader2Name: "Sanjay Mehta",
+    leader2Role: "VP Business Development",
+    leader2Bio:
+      "15+ years driving strategic growth across India, Middle East, and Southeast Asia.",
+    leader3Name: "Priya Krishnan",
+    leader3Role: "Head of Renewable Energy",
+    leader3Bio:
+      "12+ years in solar and wind energy project development and execution.",
+    leader4Name: "Arjun Reddy",
+    leader4Role: "Head of Project Management",
+    leader4Bio:
+      "16+ years managing large-scale EPC projects across diverse geographies.",
+    leader5Name: "Dr. Klaus Werner",
+    leader5Role: "Head of Quality & Safety",
+    leader5Bio:
+      "20+ years in quality management systems and international safety standards.",
+    leader6Name: "Meera Iyer",
+    leader6Role: "Chief Financial Officer",
+    leader6Bio:
+      "14+ years in financial strategy and corporate governance for engineering firms.",
+  });
   const leaders = [
-    { name: data.leader1Name, role: data.leader1Role, bio: data.leader1Bio, image: seniorImages[0] },
-    { name: data.leader2Name, role: data.leader2Role, bio: data.leader2Bio, image: seniorImages[1] },
-    { name: data.leader3Name, role: data.leader3Role, bio: data.leader3Bio, image: seniorImages[2] },
-    { name: data.leader4Name, role: data.leader4Role, bio: data.leader4Bio, image: seniorImages[3] },
-    { name: data.leader5Name, role: data.leader5Role, bio: data.leader5Bio, image: seniorImages[4] },
-    { name: data.leader6Name, role: data.leader6Role, bio: data.leader6Bio, image: seniorImages[5] },
+    {
+      name: data.leader1Name,
+      role: data.leader1Role,
+      bio: data.leader1Bio,
+      image: seniorImages[0],
+    },
+    {
+      name: data.leader2Name,
+      role: data.leader2Role,
+      bio: data.leader2Bio,
+      image: seniorImages[1],
+    },
+    {
+      name: data.leader3Name,
+      role: data.leader3Role,
+      bio: data.leader3Bio,
+      image: seniorImages[2],
+    },
+    {
+      name: data.leader4Name,
+      role: data.leader4Role,
+      bio: data.leader4Bio,
+      image: seniorImages[3],
+    },
+    {
+      name: data.leader5Name,
+      role: data.leader5Role,
+      bio: data.leader5Bio,
+      image: seniorImages[4],
+    },
+    {
+      name: data.leader6Name,
+      role: data.leader6Role,
+      bio: data.leader6Bio,
+      image: seniorImages[5],
+    },
   ];
 
   return (
@@ -479,12 +564,12 @@ function SeniorLeadership() {
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Senior Leadership
+              {data.tagline || "Senior Leadership"}
             </span>
             <div className="w-8 h-[2px] bg-brand-pink" />
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 uppercase tracking-tight">
-            Department Heads
+            {data.heading || "Department Heads"}
           </h2>
         </motion.div>
 
@@ -538,12 +623,41 @@ function SeniorLeadership() {
   );
 }
 function TeamByNumbers() {
-  const { data } = useSectionData<any>("leadership", "TeamByNumbers");
+  const { data } = useSectionData<any>("leadership", "TeamByNumbers", {
+    stats1Value: "1800",
+    stats1Label: "Total Professionals",
+    stats1Suffix: "+",
+    stats2Value: "150",
+    stats2Label: "Senior Engineers",
+    stats2Suffix: "+",
+    stats3Value: "23",
+    stats3Label: "Countries of Operation",
+    stats3Suffix: "+",
+    stats4Value: "15",
+    stats4Label: "Years Avg Experience",
+    stats4Suffix: "+",
+  });
   const stats = [
-    { value: parseInt(data.stats1Value) || 1800, label: data.stats1Label || "Total Professionals", suffix: data.stats1Suffix || "+" },
-    { value: parseInt(data.stats2Value) || 150, label: data.stats2Label || "Senior Engineers", suffix: data.stats2Suffix || "+" },
-    { value: parseInt(data.stats3Value) || 23, label: data.stats3Label || "Countries of Operation", suffix: data.stats3Suffix || "+" },
-    { value: parseInt(data.stats4Value) || 15, label: data.stats4Label || "Years Avg Experience", suffix: data.stats4Suffix || "+" },
+    {
+      value: parseInt(data.stats1Value) || 1800,
+      label: data.stats1Label || "Total Professionals",
+      suffix: data.stats1Suffix || "+",
+    },
+    {
+      value: parseInt(data.stats2Value) || 150,
+      label: data.stats2Label || "Senior Engineers",
+      suffix: data.stats2Suffix || "+",
+    },
+    {
+      value: parseInt(data.stats3Value) || 23,
+      label: data.stats3Label || "Countries of Operation",
+      suffix: data.stats3Suffix || "+",
+    },
+    {
+      value: parseInt(data.stats4Value) || 15,
+      label: data.stats4Label || "Years Avg Experience",
+      suffix: data.stats4Suffix || "+",
+    },
   ];
   return (
     <section className="py-24 bg-neutral-900 text-white relative overflow-hidden">
@@ -552,7 +666,10 @@ function TeamByNumbers() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 divide-x divide-white/10">
           {stats.map((stat, i) => (
-            <div key={i} className="flex flex-col items-center text-center px-4">
+            <div
+              key={i}
+              className="flex flex-col items-center text-center px-4"
+            >
               <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
                 <AnimatedCounter target={stat.value} suffix={stat.suffix} />
               </div>
@@ -567,7 +684,18 @@ function TeamByNumbers() {
   );
 }
 function CultureValues() {
-  const { data } = useSectionData<any>("leadership", "CultureValues");
+  const { data } = useSectionData<any>("leadership", "CultureValues", {
+    tagline: "Our Culture",
+    heading: "What Defines Us",
+    value1Title: "Technical Mastery",
+    value1Desc: "Deep domain expertise across every discipline",
+    value2Title: "Collaborative Spirit",
+    value2Desc: "Cross-functional teams solving complex challenges",
+    value3Title: "Global Perspective",
+    value3Desc: "Diverse experiences from 23+ countries",
+    value4Title: "Continuous Growth",
+    value4Desc: "Investment in learning and professional development",
+  });
   const values = [
     { title: data.value1Title, desc: data.value1Desc, icon: cultureIcons[0] },
     { title: data.value2Title, desc: data.value2Desc, icon: cultureIcons[1] },
@@ -598,11 +726,11 @@ function CultureValues() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Our Culture
+              {data.tagline || "Our Culture"}
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 uppercase tracking-tight">
-            What Defines Us
+            {data.heading || "What Defines Us"}
           </h2>
         </motion.div>
 
@@ -647,7 +775,15 @@ function CultureValues() {
   );
 }
 function JoinCTA() {
-  const { data } = useSectionData<any>("leadership", "JoinCTA");
+  const { data } = useSectionData<any>("leadership", "JoinCTA", {
+    joinHeading: "Join Our Team of Experts",
+    joinSubtitle:
+      "We're always looking for talented engineers and energy professionals who share our passion for excellence.",
+    ctaLabel1: "View Open Positions",
+    ctaUrl1: "/careers",
+    ctaLabel2: "Contact Us",
+    ctaUrl2: "/contact",
+  });
   return (
     <section className="py-32 bg-neutral-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-20">
@@ -680,17 +816,17 @@ function JoinCTA() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/careers"
+              to={data.ctaUrl1 || "/careers"}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
             >
-              View Open Positions
+              {data.ctaLabel1 || "View Open Positions"}
               <ArrowRightIcon size={16} />
             </Link>
             <Link
-              to="/contact"
+              to={data.ctaUrl2 || "/contact"}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300"
             >
-              Contact Us
+              {data.ctaLabel2 || "Contact Us"}
             </Link>
           </div>
         </motion.div>

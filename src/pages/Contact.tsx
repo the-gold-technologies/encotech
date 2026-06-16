@@ -40,7 +40,15 @@ interface Location {
 
 // --- Components ---
 function ContactHero() {
-  const { data } = useSectionData<any>("contact", "ContactHero");
+  const { data } = useSectionData<any>("contact", "ContactHero", {
+    tagline: "Get in Touch",
+    headingPart1: "Let's Build the Future of",
+    headingItalicHighlight: "Energy Together",
+    heroSubtitle:
+      "Reach out to our team of experts for project inquiries, strategic partnerships, or to learn more about our engineering capabilities.",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2400",
+  });
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
@@ -129,10 +137,7 @@ function ContactHero() {
             }}
             className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-8 uppercase select-text selection:bg-brand-pink selection:text-white"
           >
-            {data.headingPart1 || ""}{" "}
-            <span className=" text-[#c50066]">
-              {data.headingItalicHighlight || ""}
-            </span>
+            {data.headingPart1 || ""} {data.headingItalicHighlight || ""}
           </motion.h1>
 
           {/* Subtitle */}
@@ -161,7 +166,37 @@ function ContactHero() {
   );
 }
 function ContactFormSection() {
-  const { data } = useSectionData<any>("contact", "ContactInfo");
+  const { data } = useSectionData<any>("contact", "ContactInfo", {
+    formHeading: "Send us a message",
+    fullNameLabel: "Full Name *",
+    fullNamePlaceholder: "John Doe",
+    emailAddressLabel: "Email Address *",
+    emailAddressPlaceholder: "john@company.com",
+    phoneNumberLabel: "Phone Number",
+    phoneNumberPlaceholder: "+1 (555) 000-0000",
+    companyNameLabel: "Company Name",
+    companyNamePlaceholder: "Company Ltd.",
+    subjectLabel: "Subject *",
+    selectSubjectDefault: "Select a subject",
+    messageLabel: "Message *",
+    messagePlaceholder: "How can we help you?",
+    submitButtonLabel: "Send Message",
+    locationTitle: "Headquarters",
+    addressLine1: "Bandra Kurla Complex, BKC",
+    addressLine2: "Mumbai 400051, India",
+    phoneNumber: "+91 22 6655 0178",
+    emailAddress: "info@encotec.com",
+    businessHoursTitle: "Business Hours",
+    openingHours: [
+      { days: "Monday - Friday", hours: "9:00 AM - 6:00 PM IST" },
+      { days: "Saturday", hours: "9:00 AM - 1:00 PM IST" },
+      { days: "Sunday", hours: "Closed" },
+    ],
+    quickContactTitle: "Quick Contact",
+    generalInquiriesLabel: "General Inquiries",
+    careersLabel: "Careers",
+    careersEmailAddress: "careers@encotec.com",
+  });
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Form submission logic would go here
@@ -439,6 +474,142 @@ function GlobalOfficesMap() {
   const { data: footprintData } = useSectionData<any>(
     "home",
     "GlobalFootprintSection",
+    {
+      tagline: "Global Presence",
+      heading: "Connected Intelligence",
+      description:
+        "A live network of energy systems operating in synchronization across continents.",
+      locations: [
+        {
+          name: "Noida (HQ)",
+          coordinates: [77.39, 28.58],
+          region: "India",
+          address: "Corporate Headquarters",
+          suite: "Noida, Uttar Pradesh",
+          phone: "+91 120 555 0100",
+        },
+        {
+          name: "New Delhi",
+          coordinates: [77.21, 28.61],
+          region: "India",
+          address: "Regional Office",
+          suite: "New Delhi, India",
+          phone: "+91 11 555 0200",
+        },
+        {
+          name: "Jamshedpur",
+          coordinates: [86.18, 22.8],
+          region: "India",
+          address: "Project Site",
+          suite: "Jamshedpur, Jharkhand",
+          phone: "+91 657 555 0300",
+        },
+        {
+          name: "Jhajjar",
+          coordinates: [76.66, 28.61],
+          region: "India",
+          address: "Power Plant O&M",
+          suite: "Jhajjar, Haryana",
+          phone: "+91 1251 555 0400",
+        },
+        {
+          name: "Haldia",
+          coordinates: [88.06, 22.03],
+          region: "India",
+          address: "Project Site",
+          suite: "Haldia, West Bengal",
+          phone: "+91 3224 555 0500",
+        },
+        {
+          name: "Khandwa",
+          coordinates: [76.35, 21.82],
+          region: "India",
+          address: "Project Site",
+          suite: "Khandwa, Madhya Pradesh",
+          phone: "+91 733 555 0600",
+        },
+        {
+          name: "Rajpura",
+          coordinates: [76.59, 30.48],
+          region: "India",
+          address: "2x700 MW Supercritical Plant",
+          suite: "Rajpura, Punjab",
+          phone: "+91 1762 555 0700",
+        },
+        {
+          name: "Obra",
+          coordinates: [82.98, 24.42],
+          region: "India",
+          address: "2x660 MW Thermal Project",
+          suite: "Obra, Uttar Pradesh",
+          phone: "+91 5446 555 0800",
+        },
+        {
+          name: "Singrauli",
+          coordinates: [82.67, 24.2],
+          region: "India",
+          address: "Power Plant Operations",
+          suite: "Singrauli, Madhya Pradesh",
+          phone: "+91 7805 555 0900",
+        },
+        {
+          name: "Vizag",
+          coordinates: [83.3, 17.69],
+          region: "India",
+          address: "Project Site",
+          suite: "Visakhapatnam, Andhra Pradesh",
+          phone: "+91 891 555 1000",
+        },
+        {
+          name: "Panki",
+          coordinates: [80.3, 26.47],
+          region: "India",
+          address: "Power Plant",
+          suite: "Panki, Uttar Pradesh",
+          phone: "+91 512 555 1100",
+        },
+        {
+          name: "Jewar",
+          coordinates: [77.55, 28.13],
+          region: "India",
+          address: "Airport MEP Services",
+          suite: "Jewar, Uttar Pradesh",
+          phone: "+91 120 555 1200",
+        },
+        {
+          name: "Shahjahanpur",
+          coordinates: [79.91, 27.88],
+          region: "India",
+          address: "Project Site",
+          suite: "Shahjahanpur, Uttar Pradesh",
+          phone: "+91 5842 555 1300",
+        },
+        {
+          name: "Bela",
+          coordinates: [83.95, 24.65],
+          region: "India",
+          address: "Project Site",
+          suite: "Bela, Uttar Pradesh",
+          phone: "+91 5446 555 1400",
+        },
+        {
+          name: "Turkey",
+          coordinates: [32.86, 39.93],
+          region: "International",
+          address: "Celikler Energy Project",
+          suite: "Ankara, Turkey",
+          phone: "+90 312 555 0100",
+        },
+        {
+          name: "Bahrain",
+          coordinates: [50.58, 26.07],
+          region: "International",
+          address: "Energy Infrastructure",
+          suite: "Manama, Bahrain",
+          phone: "+973 1755 0200",
+        },
+      ],
+    },
   );
   const locations: Location[] = footprintData.locations || [];
   const hqLocation =
@@ -522,7 +693,7 @@ function GlobalOfficesMap() {
           >
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Global Presence
+              {footprintData.tagline || "Global Presence"}
             </span>
             <div className="w-8 h-[2px] bg-brand-pink" />
           </motion.div>
@@ -544,7 +715,7 @@ function GlobalOfficesMap() {
             }}
             className="text-4xl md:text-6xl font-black tracking-tight mb-6 uppercase"
           >
-            Connected Intelligence
+            {footprintData.heading || "Connected Intelligence"}
           </motion.h2>
           <motion.p
             initial={{
@@ -562,8 +733,8 @@ function GlobalOfficesMap() {
             }}
             className="text-neutral-400 max-w-2xl mx-auto text-lg"
           >
-            A live network of energy systems operating in synchronization across
-            continents.
+            {footprintData.description ||
+              "A live network of energy systems operating in synchronization across continents."}
           </motion.p>
         </div>
 

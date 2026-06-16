@@ -20,7 +20,6 @@ import {
 import { useSectionData } from "../store/useCMSStore";
 import { useSEO } from "../hooks/useSEO";
 
-
 // Animated Counter Component
 function AnimatedCounter({
   target,
@@ -61,171 +60,21 @@ function AnimatedCounter({
   );
 }
 // Data
-const insightsData = [
-  // Case Studies
-  {
-    id: 1,
-    slug: "obra-c-thermal-success",
-    title: "The Obra 'C' Thermal Success",
-    category: "Case Study",
-    description:
-      "Executing complex IBR piping erection and commissioning for a massive 2x660 MW project in Uttar Pradesh.",
-    date: "March 2024",
-    location: "Uttar Pradesh, India",
-    image:
-      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: 2,
-    slug: "ensuring-reliability-rajpura",
-    title: "Ensuring Reliability for Punjab's Power Heart",
-    category: "Case Study",
-    description:
-      "Comprehensive O&M for the 2x700 MW Rajpura Supercritical Power Plant, managing operations with an owner's mindset.",
-    date: "January 2024",
-    location: "Rajpura, Punjab",
-    image:
-      "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: 3,
-    slug: "greener-future-gujarat-solar",
-    title: "Engineering a Greener Future in the Sands of Gujarat",
-    category: "Case Study",
-    description:
-      "End-to-end installation and commissioning of a 10 MWp ground-mounted solar project, turning intense sun into sustainable power.",
-    date: "November 2023",
-    location: "Jainabad, Gujarat",
-    image:
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: 4,
-    slug: "powering-gateway-india-airport",
-    title: "Powering the Gateway to India",
-    category: "Case Study",
-    description:
-      "Specialized utility and electrical O&M for Indira Gandhi International Airport, ensuring the critical nervous system remains flawless.",
-    date: "September 2023",
-    location: "New Delhi, India",
-    image:
-      "https://images.unsplash.com/photo-1556388158-158ea5ccacbd?auto=format&fit=crop&q=80&w=1200",
-  },
-  // News
-  {
-    id: 5,
-    slug: "insurance-surety-bonds-replace-bank-guarantees",
-    title: "Insurance Surety Bonds Replace Bank Guarantees in Power Sector",
-    category: "News",
-    description:
-      "Ministry of Power introduces Insurance Surety Bonds as an alternative to traditional Bank Guarantees across all power procurement frameworks.",
-    date: "April 8, 2026",
-    image:
-      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: 6,
-    slug: "india-270gw-peak-power-demand",
-    title: "India Braces for Record 270 GW Peak Power Demand",
-    category: "News",
-    description:
-      "India is fully prepared to handle a record 270 GW peak power demand this summer through strengthened generation capacity and grid management.",
-    date: "March 20, 2026",
-    image:
-      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: 7,
-    slug: "green-signal-3200mw-thermal-projects",
-    title: "Green Signal for 3,200 MW of New Thermal Projects",
-    category: "News",
-    description:
-      "Expert Appraisal Committee recommends environmental clearance for two massive 1,600 MW ultra-supercritical coal-based projects.",
-    date: "April 6, 2026",
-    image:
-      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: 8,
-    slug: "ghaziabad-mandates-rooftop-solar",
-    title: "Ghaziabad Mandates Rooftop Solar for New Buildings",
-    category: "News",
-    description:
-      "Ghaziabad makes rooftop solar installations mandatory for all building plan approvals, aligning with national solar adoption efforts.",
-    date: "April 9, 2026",
-    image:
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: 9,
-    slug: "765kv-transmission-corridor-commissioned",
-    title: "Massive 765 kV Transmission Corridor Commissioned",
-    category: "News",
-    description:
-      "A new 765 kV double-circuit transmission corridor spanning 700 km between Fatehgarh and Beawar has been commissioned for renewable energy evacuation.",
-    date: "April 6, 2026",
-    image:
-      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: 10,
-    slug: "new-directions-imported-coal-power-plants",
-    title: "New Directions for Imported Coal-Based Power Plants",
-    category: "News",
-    description:
-      "Ministry of Power issues fresh directions under Section 11 of the Electricity Act to ensure imported coal plants remain operational during high-demand months.",
-    date: "March 27, 2026",
-    image:
-      "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200",
-  },
-  // Blogs
-  {
-    id: 11,
-    slug: "owners-mindset-power-plant-care",
-    title:
-      "Treating Your Power Plant Like Our Own: The Magic of the Owner's Mindset",
-    category: "Blog",
-    description:
-      "What does having an Owner's Mindset mean for the people on the ground? It means our 250+ engineers see a vital asset that supports thousands of lives.",
-    date: "April 2026",
-    readTime: "6 min read",
-    image:
-      "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: 12,
-    slug: "sunbeams-to-megawatts-renewable-future",
-    title:
-      "From Sunbeams to Megawatts: Engineering the Journey to a Renewable Future",
-    category: "Blog",
-    description:
-      "Our journey into renewables is a commitment to sustainable development — bridging the gap between traditional power and a solar future.",
-    date: "March 2026",
-    readTime: "7 min read",
-    image:
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: 13,
-    slug: "silent-force-behind-your-flight",
-    title:
-      "Powering the Gateway: The Specialized World of Airport Utility Management",
-    category: "Blog",
-    description:
-      "What keeps an international airport running flawlessly 24/7? Behind the scenes at DIAL and Noida International Airport, Encotec is at work.",
-    date: "February 2026",
-    readTime: "5 min read",
-    image:
-      "https://images.unsplash.com/photo-1583339793403-3d9b001b6008?auto=format&fit=crop&q=80&w=1200",
-  },
-];
 
 // Hero Section
 function InsightsHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
-  const { data } = useSectionData<any>("insights", "InsightsHero");
+  const { data } = useSectionData<any>("insights", "InsightsHero", {
+    tagline: "Insights & Resources",
+    heroTitle: "INSIGHTS, CASE STUDIES & INDUSTRY PERSPECTIVES",
+    heroSubtitle:
+      "Explore our thought leadership, project successes, and the latest updates from the forefront of global energy engineering.",
+    tab1Label: "Case Studies",
+    tab2Label: "News & Updates",
+    tab3Label: "Blog & Articles",
+  });
   return (
     <section className="relative min-h-[80vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
@@ -291,7 +140,7 @@ function InsightsHero() {
           >
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Insights & Resources
+              {data.tagline}
             </span>
           </motion.div>
 
@@ -350,13 +199,13 @@ function InsightsHero() {
             className="flex flex-wrap gap-4"
           >
             <div className="px-6 py-2.5 bg-brand-pink/20 border border-brand-pink/30 text-brand-pink font-bold text-sm tracking-wider uppercase rounded-full">
-              Case Studies
+              {data.tab1Label}
             </div>
             <div className="px-6 py-2.5 bg-blue-500/20 border border-blue-500/30 text-blue-400 font-bold text-sm tracking-wider uppercase rounded-full">
-              News & Updates
+              {data.tab2Label}
             </div>
             <div className="px-6 py-2.5 bg-green-500/20 border border-green-500/30 text-green-400 font-bold text-sm tracking-wider uppercase rounded-full">
-              Blog & Articles
+              {data.tab3Label}
             </div>
           </motion.div>
         </motion.div>
@@ -368,6 +217,13 @@ function InsightsHero() {
 function FeaturedInsight() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -100]);
+  const { data } = useSectionData<any>("insights", "FeaturedInsight", {
+    badgeLabel: "Featured Case Study",
+    btnLabel: "Read Full Case Study",
+  });
+
+  if (!data.latestArticleTitle) return null;
+
   return (
     <section className="py-20 bg-neutral-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -396,8 +252,8 @@ function FeaturedInsight() {
             className="absolute inset-0 h-[120%] -top-[10%]"
           >
             <img
-              src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=2400"
-              alt="Obra C Thermal"
+              src={data.latestArticleImage}
+              alt={data.latestArticleTitle}
               className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000"
             />
 
@@ -406,35 +262,35 @@ function FeaturedInsight() {
 
           {/* Content */}
           <Link
-            to="/insights/obra-c-thermal-success"
+            to={`/insights/${data.latestArticleSlug}`}
             className="absolute inset-0 p-10 md:p-16 flex flex-col justify-end"
           >
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase mb-6">
-                Featured Case Study
+                {data.badgeLabel}
               </div>
               <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight tracking-tight group-hover:text-brand-pink/90 transition-colors duration-300">
-                The Obra 'C' Thermal Success
+                {data.latestArticleTitle}
               </h2>
               <p className="text-xl text-neutral-300 mb-8 leading-relaxed max-w-2xl">
-                Executing complex IBR piping erection and commissioning for a
-                massive 2x660 MW project in Uttar Pradesh, delivering on time
-                and exceeding quality standards.
+                {data.latestArticleSummary}
               </p>
 
               <div className="flex items-center gap-6 text-sm font-medium text-neutral-400 mb-8">
                 <div className="flex items-center gap-2">
                   <CalendarIcon size={16} />
-                  March 2024
+                  {data.latestArticleDate}
                 </div>
-                <div className="flex items-center gap-2">
-                  <MapPinIcon size={16} />
-                  Uttar Pradesh, India
-                </div>
+                {data.latestArticleLocation && (
+                  <div className="flex items-center gap-2">
+                    <MapPinIcon size={16} />
+                    {data.latestArticleLocation}
+                  </div>
+                )}
               </div>
 
               <button className="inline-flex items-center gap-2 text-sm font-bold text-white hover:gap-4 transition-all duration-300 uppercase tracking-wider">
-                Read Full Case Study
+                {data.btnLabel}
                 <ArrowRightIcon size={16} className="text-brand-pink" />
               </button>
             </div>
@@ -446,9 +302,24 @@ function FeaturedInsight() {
 }
 // Content Grid Section
 function ContentGrid() {
+  const { data: articlesData } = useSectionData<any>(
+    "insights",
+    "ArticlesList",
+    {
+      emptyMessage: "No insights found for this category.",
+      articles: [],
+    },
+  );
+  const { data: relatedData } = useSectionData<any>(
+    "insights",
+    "RelatedInsights",
+    { readMoreLabel: "Read Article" },
+  );
+  const displayArticles = articlesData.articles;
+
   const [activeFilter, setActiveFilter] = useState("All");
   const filters = ["All", "Case Studies", "News", "Blogs"];
-  const filteredData = insightsData.filter((item) => {
+  const filteredData = displayArticles.filter((item: any) => {
     if (activeFilter === "All") return true;
     if (activeFilter === "Case Studies") return item.category === "Case Study";
     if (activeFilter === "News") return item.category === "News";
@@ -500,7 +371,7 @@ function ContentGrid() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           <AnimatePresence mode="popLayout">
-            {filteredData.map((item, index) => (
+            {filteredData.map((item: any, index: number) => (
               <motion.div
                 key={item.id}
                 layout
@@ -591,7 +462,7 @@ function ContentGrid() {
                     </p>
 
                     <div className="inline-flex items-center gap-2 text-sm font-bold text-neutral-900 group-hover:text-brand-pink group-hover:gap-3 transition-all duration-300 uppercase tracking-wider mt-auto">
-                      Read Article
+                      {relatedData.readMoreLabel}
                       <ChevronRightIcon size={16} />
                     </div>
                   </div>
@@ -603,7 +474,7 @@ function ContentGrid() {
 
         {filteredData.length === 0 && (
           <div className="py-20 text-center text-neutral-500">
-            No insights found for this category.
+            {articlesData.emptyMessage}
           </div>
         )}
       </div>
@@ -663,6 +534,12 @@ function StatsBanner() {
 }
 // Newsletter Section
 function NewsletterSection() {
+  const { data } = useSectionData<any>("insights", "NewsletterSection", {
+    privacyNote: "We respect your privacy. Unsubscribe at any time.",
+  });
+
+  if (!data.heading) return null;
+
   return (
     <section className="py-32 bg-white">
       <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
@@ -686,12 +563,21 @@ function NewsletterSection() {
             <MailIcon size={32} strokeWidth={1.5} />
           </div>
 
+          {data.tagline && (
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-8 h-[2px] bg-brand-pink" />
+              <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
+                {data.tagline}
+              </span>
+              <div className="w-8 h-[2px] bg-brand-pink" />
+            </div>
+          )}
+
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6 tracking-tight">
-            Stay Ahead in Energy Engineering
+            {data.heading}
           </h2>
           <p className="text-xl text-neutral-600 mb-12 leading-relaxed max-w-2xl mx-auto">
-            Subscribe to our newsletter to receive the latest case studies,
-            industry insights, and technical articles directly in your inbox.
+            {data.description}
           </p>
 
           <form
@@ -712,9 +598,7 @@ function NewsletterSection() {
               Subscribe
             </button>
           </form>
-          <p className="text-xs text-neutral-400 mt-4">
-            We respect your privacy. Unsubscribe at any time.
-          </p>
+          <p className="text-xs text-neutral-400 mt-4">{data.privacyNote}</p>
         </motion.div>
       </div>
     </section>
@@ -722,6 +606,15 @@ function NewsletterSection() {
 }
 // CTA Section
 function CTASection() {
+  const { data } = useSectionData<any>("insights", "InsightsCTA", {
+    primaryBtnLabel: "Start Your Project",
+    primaryBtnUrl: "/contact",
+    secondaryBtnLabel: "View Our Services",
+    secondaryBtnUrl: "/services",
+  });
+
+  if (!data.ctaHeading) return null;
+
   return (
     <section className="py-32 bg-neutral-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-20">
@@ -746,26 +639,25 @@ function CTASection() {
           }}
         >
           <h2 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
-            Have a Project in Mind?
+            {data.ctaHeading}
           </h2>
           <p className="text-xl text-neutral-300 mb-12 leading-relaxed">
-            Let's discuss how our engineering expertise can bring value to your
-            next energy infrastructure project.
+            {data.ctaSubtitle}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/contact"
+              to={data.primaryBtnUrl}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
             >
-              Start Your Project
+              {data.primaryBtnLabel}
               <ArrowRightIcon size={16} />
             </Link>
             <Link
-              to="/services"
+              to={data.secondaryBtnUrl}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300"
             >
-              View Our Services
+              {data.secondaryBtnLabel}
             </Link>
           </div>
         </motion.div>

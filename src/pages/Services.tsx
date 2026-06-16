@@ -74,19 +74,19 @@ function ServicesHero() {
           <div className="flex items-center gap-3 mb-8">
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              {data.tagline || ""}
+              {data.tagline}
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            {data.headingPart1 || ""}
-            <span className="text-[#C50066]">
-              {data.headingItalicHighlight || ""}
+            {data.headingPart1}{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-brand">
+              {data.headingItalicHighlight}
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-10">
-            {data.description || ""}
+            {data.description}
           </p>
         </motion.div>
       </div>
@@ -117,10 +117,10 @@ function IntroSection() {
           className="text-center space-y-6"
         >
           <p className="text-xl text-neutral-700 leading-relaxed">
-            {data.paragraph1 || ""}
+            {data.paragraph1}
           </p>
           <p className="text-lg text-neutral-600 leading-relaxed">
-            {data.paragraph2 || ""}
+            {data.paragraph2}
           </p>
         </motion.div>
       </div>
@@ -187,7 +187,7 @@ function ServiceCard({
           onClick={() => setIsExpanded(!isExpanded)}
           className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300"
         >
-          {isExpanded ? (labels.showLessLabel || "Show Less") : (labels.viewDetailsLabel || "View Details")}
+          {isExpanded ? labels.showLessLabel : labels.viewDetailsLabel}
           <ChevronDownIcon
             size={16}
             className={`transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
@@ -211,7 +211,7 @@ function ServiceCard({
           {/* Key Capabilities */}
           <div className="mb-6">
             <h4 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-4">
-              {labels.keyCapabilitiesLabel || "Key Capabilities"}
+              {labels.keyCapabilitiesLabel}
             </h4>
             <ul className="space-y-2">
               {service.capabilities.map((cap: string, i: number) => (
@@ -231,7 +231,7 @@ function ServiceCard({
           {/* Value Delivered */}
           <div className="mb-6">
             <h4 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-4">
-              {labels.valueDeliveredLabel || "Value Delivered"}
+              {labels.valueDeliveredLabel}
             </h4>
             <div className="space-y-2">
               {service.value.map((val: string, i: number) => (
@@ -252,7 +252,7 @@ function ServiceCard({
               to={service.link}
               className="inline-flex items-center gap-2 px-6 py-3 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] hover:gap-3 transition-all duration-300"
             >
-              {labels.exploreServiceLabel || "Explore Service"}
+              {labels.exploreServiceLabel}
               <ArrowRightIcon size={16} />
             </Link>
           )}
@@ -264,24 +264,25 @@ function ServiceCard({
 // Core Services Section
 function CoreServices() {
   const { data } = useSectionData<any>("services", "CoreServices");
-  const services = (data.services || data.servicesList || []).map(
-    (s: any, i: number) => ({
-      ...s,
-      icon: serviceIconMap[i] || TargetIcon,
-      capabilities:
-        typeof s.capabilities === "string"
-          ? s.capabilities.split("|")
-          : s.capabilities || [],
-      value: typeof s.value === "string" ? s.value.split("|") : s.value || [],
-    }),
-  );
+
+  if (!data.services) return null;
+
+  const services = data.services.map((s: any, i: number) => ({
+    ...s,
+    icon: serviceIconMap[i] || TargetIcon,
+    capabilities:
+      typeof s.capabilities === "string"
+        ? s.capabilities.split("|")
+        : s.capabilities,
+    value: typeof s.value === "string" ? s.value.split("|") : s.value,
+  }));
 
   const labels = {
-    showLessLabel: data.showLessLabel || "",
-    viewDetailsLabel: data.viewDetailsLabel || "",
-    keyCapabilitiesLabel: data.keyCapabilitiesLabel || "",
-    valueDeliveredLabel: data.valueDeliveredLabel || "",
-    exploreServiceLabel: data.exploreServiceLabel || "",
+    showLessLabel: data.showLessLabel,
+    viewDetailsLabel: data.viewDetailsLabel,
+    keyCapabilitiesLabel: data.keyCapabilitiesLabel,
+    valueDeliveredLabel: data.valueDeliveredLabel,
+    exploreServiceLabel: data.exploreServiceLabel,
   };
 
   return (
@@ -304,11 +305,11 @@ function CoreServices() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-[3px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              {labels.keyCapabilitiesLabel || "Key Capabilities"}
+              {labels.keyCapabilitiesLabel}
             </span>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 leading-tight">
-            {data.heading || ""}
+            {data.heading}
           </h2>
         </motion.div>
 
@@ -329,9 +330,13 @@ function CoreServices() {
 // Industries Section
 function IndustriesSection() {
   const { data } = useSectionData<any>("services", "IndustriesSection");
-  const industries = (data.industries || data.industriesList || []).map(
-    (ind: any, i: number) => ({ ...ind, icon: industryIconMap[i] || ZapIcon }),
-  );
+
+  if (!data.industries) return null;
+
+  const industries = data.industries.map((ind: any, i: number) => ({
+    ...ind,
+    icon: industryIconMap[i] || ZapIcon,
+  }));
 
   return (
     <section className="py-28 bg-white">
@@ -351,10 +356,10 @@ function IndustriesSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-4">
-            {data.heading || ""}
+            {data.heading}
           </h2>
           <p className="text-neutral-600 max-w-2xl mx-auto">
-            {data.description || ""}
+            {data.description}
           </p>
         </motion.div>
 
@@ -399,8 +404,10 @@ function IndustriesSection() {
 // Process Section
 function ProcessSection() {
   const { data } = useSectionData<any>("services", "ProcessSection");
+
+  if (!data.steps) return null;
   const steps: Array<{ title: string; description: string; number: string }> =
-    data.steps || data.stepsList || [];
+    data.steps;
 
   return (
     <section className="py-28 bg-neutral-900 text-white relative overflow-hidden">
@@ -425,13 +432,13 @@ function ProcessSection() {
           className="text-center mb-16"
         >
           <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
-            {data.tagline || ""}
+            {data.tagline}
           </span>
           <h2 className="text-4xl md:text-5xl font-black mb-4 mt-2">
-            {data.heading || ""}
+            {data.heading}
           </h2>
           <p className="text-neutral-400 max-w-2xl mx-auto">
-            {data.description || ""}
+            {data.description}
           </p>
         </motion.div>
 
@@ -457,7 +464,7 @@ function ProcessSection() {
               className="relative p-8 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-brand-pink/50 transition-all duration-300 group"
             >
               <div className="text-6xl font-black text-brand-pink/20 group-hover:text-brand-pink/40 transition-colors mb-4">
-                {step.number || `0${i + 1}`}
+                {step.number}
               </div>
               <h3 className="text-2xl font-black mb-2 uppercase">
                 {step.title}
@@ -494,18 +501,18 @@ function ClosingSection() {
           }}
         >
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 leading-tight mb-8">
-            {data.headingPart1 || ""}
+            {data.headingPart1}
             <span className="text-transparent bg-clip-text bg-gradient-brand">
-              {data.headingHighlight || ""}
+              {data.headingHighlight}
             </span>
-            {data.headingPart2 || ""}
+            {data.headingPart2}
           </h2>
 
           <Link
-            to={data.ctaUrl || ""}
+            to={data.ctaUrl}
             className="inline-flex items-center gap-3 px-10 py-5 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300 shadow-2xl shadow-brand-pink/30 mt-8"
           >
-            {data.ctaLabel || ""}
+            {data.ctaLabel}
             <ArrowRightIcon size={18} />
           </Link>
         </motion.div>

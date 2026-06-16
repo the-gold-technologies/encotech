@@ -25,23 +25,35 @@ import {
 import { useSectionData } from "../store/useCMSStore";
 import { useSEO } from "../hooks/useSEO";
 
-
 // Benefit icon map (by index)
-const benefitIcons = [GlobeIcon, TrendingUpIcon, DollarSignIcon, HeartIcon, ClockIcon, AwardIcon];
+const benefitIcons = [
+  GlobeIcon,
+  TrendingUpIcon,
+  DollarSignIcon,
+  HeartIcon,
+  ClockIcon,
+  AwardIcon,
+];
 // Process step icon map (by index)
 const processIcons = [FileTextIcon, SearchIcon, UsersIcon, CheckCircle2Icon];
 
 // --- Data ---
-
-
-
 
 // --- Components ---
 function CareersHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
-  const { data } = useSectionData<any>("careers", "CareersHero");
+  const { data } = useSectionData<any>("careers", "CareersHero", {
+    heroTagline: "Careers at Encotec",
+    heroTitle: "SHAPE THE FUTURE OF GLOBAL ENERGY",
+    heroSubtitle:
+      "Join a team of world-class engineers and energy professionals delivering critical infrastructure across 23+ countries.",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2400",
+    badge1Text: "200+ Team Members",
+    badge2Text: "Offices in 8 Countries",
+  });
   return (
     <section className="relative min-h-[80vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
@@ -107,7 +119,7 @@ function CareersHero() {
           >
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Careers at Encotec
+              {data.heroTagline}
             </span>
           </motion.div>
 
@@ -166,10 +178,10 @@ function CareersHero() {
             className="flex flex-wrap gap-4"
           >
             <div className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase">
-              200+ Team Members
+              {data.badge1Text}
             </div>
             <div className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-sm tracking-wider uppercase">
-              Offices in 8 Countries
+              {data.badge2Text}
             </div>
           </motion.div>
         </motion.div>
@@ -178,7 +190,18 @@ function CareersHero() {
   );
 }
 function WhyEncotecSection() {
-  const { data } = useSectionData<any>("careers", "CareersCulture");
+  const { data } = useSectionData<any>("careers", "CareersCulture", {
+    cultureTagline: "Why Join Us",
+    cultureHeading: "Engineering Careers That Matter",
+    culturePara1:
+      "At Encotec, we don't just build power plants; we engineer the foundation of modern society. Our team works on some of the most complex and critical energy infrastructure projects globally, from massive supercritical thermal plants to utility-scale renewable energy parks.",
+    culturePara2:
+      "We foster a culture of technical excellence, continuous learning, and collaborative problem-solving. When you join Encotec, you gain global exposure, working alongside industry veterans who are passionate about mentoring the next generation of engineering leaders.",
+    cultureQuote:
+      "We empower our engineers to take ownership, innovate, and deliver solutions that have a tangible impact on global energy security.",
+    cultureImage:
+      "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200",
+  });
   return (
     <section className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -212,12 +235,8 @@ function WhyEncotecSection() {
             </h2>
 
             <div className="space-y-6 text-lg text-neutral-700 leading-relaxed">
-              <p>
-                {data.culturePara1}
-              </p>
-              <p>
-                {data.culturePara2}
-              </p>
+              <p>{data.culturePara1}</p>
+              <p>{data.culturePara2}</p>
 
               <div className="mt-8 p-8 bg-brand-panel border-l-4 border-brand-pink">
                 <p className="text-xl text-neutral-900 font-medium italic">
@@ -267,7 +286,42 @@ function WhyEncotecSection() {
   );
 }
 function BenefitsSection() {
-  const { data } = useSectionData<any>("careers", "CareersBenefits");
+  const { data } = useSectionData<any>("careers", "CareersBenefits", {
+    tagline: "What We Offer",
+    heading: "Benefits & Perks",
+    benefitsList: [
+      {
+        title: "Global Exposure",
+        description:
+          "Work on critical energy infrastructure projects across 23+ countries with diverse international teams.",
+      },
+      {
+        title: "Technical Growth",
+        description:
+          "Access to cutting-edge technologies, specialized training, and continuous learning programs.",
+      },
+      {
+        title: "Competitive Compensation",
+        description:
+          "Industry-leading salary packages with performance-based bonuses and comprehensive benefits.",
+      },
+      {
+        title: "Health & Wellness",
+        description:
+          "Comprehensive medical insurance, wellness programs, and support for physical and mental health.",
+      },
+      {
+        title: "Work-Life Balance",
+        description:
+          "Flexible working arrangements, generous leave policies, and a supportive team environment.",
+      },
+      {
+        title: "Career Progression",
+        description:
+          "Clear growth paths, leadership development, and mentorship from seasoned industry veterans.",
+      },
+    ],
+  });
   const benefits = (data.benefitsList || []).map((b: any, i: number) => ({
     ...b,
     icon: benefitIcons[i] || AwardIcon,
@@ -292,12 +346,12 @@ function BenefitsSection() {
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              What We Offer
+              {data.tagline}
             </span>
             <div className="w-8 h-[2px] bg-brand-pink" />
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900">
-            Benefits & Perks
+            {data.heading}
           </h2>
         </motion.div>
 
@@ -343,8 +397,71 @@ function BenefitsSection() {
   );
 }
 function OpenPositionsSection() {
-  const { data } = useSectionData<any>("careers", "CareersOpenPositions");
-  const jobs = (data.jobsList || []).map((job: any, index: number) => ({ ...job, id: index + 1 }));
+  const { data } = useSectionData<any>("careers", "CareersOpenPositions", {
+    heading: "Current Openings",
+    jobsList: [
+      {
+        title: "Senior Power Plant Engineer",
+        dept: "Engineering",
+        location: "Mumbai, India",
+        type: "Full-time",
+        desc: "Lead engineering design and technical reviews for supercritical thermal power projects.",
+      },
+      {
+        title: "Renewable Energy Analyst",
+        dept: "Engineering",
+        location: "Dubai, UAE",
+        type: "Full-time",
+        desc: "Conduct energy yield analysis and feasibility studies for solar and wind projects.",
+      },
+      {
+        title: "Project Manager — EPC",
+        dept: "Project Management",
+        location: "Riyadh, KSA",
+        type: "Full-time",
+        desc: "Manage end-to-end execution of large-scale EPC projects in the Middle East.",
+      },
+      {
+        title: "Commissioning Engineer",
+        dept: "Engineering",
+        location: "Houston, USA",
+        type: "Contract",
+        desc: "Oversee testing and commissioning of power generation equipment and systems.",
+      },
+      {
+        title: "O&M Site Manager",
+        dept: "Operations",
+        location: "Rajpura, India",
+        type: "Full-time",
+        desc: "Lead day-to-day operations and maintenance of a 2x700 MW supercritical plant.",
+      },
+      {
+        title: "Electrical Design Engineer",
+        dept: "Engineering",
+        location: "Mumbai, India",
+        type: "Full-time",
+        desc: "Design transmission lines (33kV-765kV) and substation systems (AIS/GIS).",
+      },
+      {
+        title: "Business Development Manager",
+        dept: "Corporate",
+        location: "Singapore",
+        type: "Full-time",
+        desc: "Drive business growth across the Asia-Pacific region for energy services.",
+      },
+      {
+        title: "Quality Assurance Lead",
+        dept: "Operations",
+        location: "Frankfurt, Germany",
+        type: "Full-time",
+        desc: "Implement and oversee quality management systems across European projects.",
+      },
+    ],
+  });
+  const jobs = (data.jobsList || []).map((job: any, index: number) => ({
+    ...job,
+    id: index + 1,
+  }));
   const [activeFilter, setActiveFilter] = useState("All");
   const filters = [
     "All",
@@ -390,7 +507,7 @@ function OpenPositionsSection() {
           className="mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
-            Current Openings
+            {data.heading}
           </h2>
 
           {/* Filter Tabs */}
@@ -492,8 +609,44 @@ function OpenPositionsSection() {
   );
 }
 function CultureGallery() {
-  const { data } = useSectionData<any>("careers", "CareersGallery");
-  const gallery: Array<{ image: string; caption: string }> = data.galleryList || [];
+  const { data } = useSectionData<any>("careers", "CareersGallery", {
+    tagline: "Inside Encotec",
+    heading: "Life at Encotec",
+    galleryList: [
+      {
+        image:
+          "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800",
+        caption: "Team Collaboration",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800",
+        caption: "On-Site Engineering",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800",
+        caption: "Strategic Planning",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800",
+        caption: "Field Operations",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800",
+        caption: "Team Celebrations",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800",
+        caption: "Project Reviews",
+      },
+    ],
+  });
+  const gallery: Array<{ image: string; caption: string }> =
+    data.galleryList || [];
   return (
     <section className="py-32 bg-neutral-900 text-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -514,12 +667,12 @@ function CultureGallery() {
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Inside Encotec
+              {data.tagline}
             </span>
             <div className="w-8 h-[2px] bg-brand-pink" />
           </div>
           <h2 className="text-4xl md:text-5xl font-black mb-6">
-            Life at Encotec
+            {data.heading}
           </h2>
         </motion.div>
 
@@ -563,11 +716,35 @@ function CultureGallery() {
   );
 }
 function ApplicationProcess() {
-  const { data } = useSectionData<any>("careers", "CareersProcess");
-  const processSteps = (data.processSteps || []).map((step: any, i: number) => ({
-    ...step,
-    icon: processIcons[i] || CheckCircle2Icon,
-  }));
+  const { data } = useSectionData<any>("careers", "CareersProcess", {
+    heading: "How to Join Us",
+    processSteps: [
+      {
+        title: "Apply Online",
+        description: "Submit your resume and cover letter through our portal.",
+      },
+      {
+        title: "Initial Screening",
+        description:
+          "Our HR team reviews your application within 5 business days.",
+      },
+      {
+        title: "Technical Interview",
+        description:
+          "Meet with our engineering leads for a technical discussion.",
+      },
+      {
+        title: "Final Offer",
+        description: "Receive your offer and begin your journey with Encotec.",
+      },
+    ],
+  });
+  const processSteps = (data.processSteps || []).map(
+    (step: any, i: number) => ({
+      ...step,
+      icon: processIcons[i] || CheckCircle2Icon,
+    }),
+  );
   return (
     <section className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -586,7 +763,7 @@ function ApplicationProcess() {
           className="mb-20 text-center"
         >
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
-            How to Join Us
+            {data.heading}
           </h2>
         </motion.div>
 
@@ -634,7 +811,12 @@ function ApplicationProcess() {
   );
 }
 function CTASection() {
-  const { data } = useSectionData<any>("careers", "CareersCTA");
+  const { data } = useSectionData<any>("careers", "CareersCTA", {
+    ctaHeading: "Don't See the Right Role?",
+    ctaSubtitle:
+      "We're always looking for talented engineers and energy professionals. Send us your resume and we'll keep you in mind for future opportunities.",
+    hrEmail: "careers@encotec.com",
+  });
   const scrollToJobs = () => {
     const element = document.getElementById("open-positions");
     if (element) {

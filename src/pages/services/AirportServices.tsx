@@ -17,7 +17,13 @@ import { useSEO } from "../../hooks/useSEO";
 const airportFeatureIconMap = [ActivityIcon, FileCheckIcon, RefreshCwIcon];
 
 function DueDiligenceHero() {
-  const { data } = useSectionData<any>("airport-services", "DueDiligenceHero");
+  const { data } = useSectionData<any>("airport-services", "DueDiligenceHero", {
+    label: "Due Diligence & Asset Health",
+    headingPart1: "Making Informed Decisions ",
+    headingHighlight: "For the Long Term",
+    description:
+      "Before you buy an old plant or decide to move one, you need to know if it's fit for the future. Our due diligence services provide the technical truth about your assets.",
+  });
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
@@ -72,7 +78,15 @@ function DueDiligenceHero() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            {data.heading || ""}
+            {data.headingPart1 || ""}
+            {data.headingHighlight && (
+              <>
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
+                  {data.headingHighlight}
+                </span>
+              </>
+            )}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
@@ -84,7 +98,25 @@ function DueDiligenceHero() {
   );
 }
 function HealthFeatures() {
-  const { data } = useSectionData<any>("airport-services", "HealthFeatures");
+  const { data } = useSectionData<any>("airport-services", "HealthFeatures", {
+    featuresList: [
+      {
+        title: "Residual Life Assessment (RLA)",
+        description:
+          "We conduct exhaustive studies to determine how many more years of efficient life your plant equipment actually has, helping you plan for replacements or upgrades.",
+      },
+      {
+        title: "Technical Due Diligence",
+        description:
+          "We provide independent technical audits for plant acquisitions, helping you understand the true value, operational risks, and hidden costs of an investment.",
+      },
+      {
+        title: "Restoration Strategy",
+        description:
+          "For older plants, we provide comprehensive revamping and restoration plans to improve performance, extend lifecycle, and meet modern environmental standards.",
+      },
+    ],
+  });
   const features = (data.features || data.featuresList || []).map(
     (f: any, i: number) => ({
       ...f,
@@ -133,7 +165,22 @@ function HealthFeatures() {
   );
 }
 function ValueProtection() {
-  const { data } = useSectionData<any>("airport-services", "ValueProtection");
+  const { data } = useSectionData<any>("airport-services", "ValueProtection", {
+    headingPart1: "Protecting Your ",
+    headingHighlight: "Investment",
+    bulletHeading: "What We Evaluate",
+    paragraphs: [
+      "Acquiring or relocating an industrial asset involves significant capital risk. Without a clear understanding of the asset's true condition, you may be inheriting expensive liabilities.",
+      "Our independent technical audits provide the objective data you need to negotiate effectively, plan capital expenditures accurately, and ensure that your investment will deliver the expected returns over its intended lifecycle.",
+    ],
+    bullets: [
+      "Structural integrity and material degradation",
+      "Historical O&M records and failure analysis",
+      "Environmental compliance and emissions",
+      "Control systems obsolescence",
+      "Thermodynamic performance baseline",
+    ],
+  });
 
   const paragraphs = data.paragraphs || [];
   const bullets = data.bullets || [];
@@ -209,7 +256,13 @@ function ValueProtection() {
   );
 }
 function CTASection() {
-  const { data } = useSectionData<any>("airport-services", "CTASection");
+  const { data } = useSectionData<any>("airport-services", "CTASection", {
+    heading: "Planning an Acquisition or Relocation?",
+    description:
+      "Get the technical truth about your assets before you make a decision.",
+    ctaLabel: "Request an Assessment",
+    ctaUrl: "/contact",
+  });
   return (
     <section className="py-32 bg-white text-center">
       <div className="max-w-4xl mx-auto px-6">

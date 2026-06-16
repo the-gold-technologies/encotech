@@ -735,7 +735,7 @@ function GlobalPresence() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-[3px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Our Reach
+              {data.tagline}
             </span>
           </div>
 

@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { QuoteIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
-import { useSectionData } from '../../store/useCMSStore';
-
+import React, { useCallback, useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { QuoteIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { useSectionData } from "../../store/useCMSStore";
 
 export function Testimonials() {
   const { data } = useSectionData<any>("home", "Testimonials");
@@ -16,7 +15,9 @@ export function Testimonials() {
   }, [testimonials.length]);
   const prev = useCallback(() => {
     setDirection(-1);
-    setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCurrent(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length,
+    );
   }, [testimonials.length]);
 
   // Auto-advance every 6 seconds
@@ -28,16 +29,16 @@ export function Testimonials() {
   const variants = {
     enter: (dir: number) => ({
       x: dir > 0 ? 60 : -60,
-      opacity: 0
+      opacity: 0,
     }),
     center: {
       x: 0,
-      opacity: 1
+      opacity: 1,
     },
     exit: (dir: number) => ({
       x: dir > 0 ? -60 : 60,
-      opacity: 0
-    })
+      opacity: 0,
+    }),
   };
 
   const t = testimonials[current] || testimonials[0];
@@ -52,17 +53,17 @@ export function Testimonials() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="text-center mb-16">
-          
+          className="text-center mb-16"
+        >
           <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
             {data.tagline}
           </span>
@@ -75,24 +76,25 @@ export function Testimonials() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 30
+            y: 30,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="relative">
-          
+          className="relative"
+        >
           <div className="bg-white rounded-3xl border border-neutral-100 shadow-xl shadow-black/[0.03] p-8 md:p-14 relative overflow-hidden min-h-[320px] flex flex-col justify-center">
             {/* Large decorative quote */}
             <div className="absolute top-6 left-8 md:left-12">
               <QuoteIcon
                 size={48}
                 className="text-brand-pink/15"
-                strokeWidth={1.5} />
+                strokeWidth={1.5}
+              />
             </div>
 
             {/* Pink accent corner */}
@@ -109,13 +111,13 @@ export function Testimonials() {
                   exit="exit"
                   transition={{
                     duration: 0.4,
-                    ease: [0.25, 0.1, 0.25, 1]
+                    ease: [0.25, 0.1, 0.25, 1],
                   }}
-                  className="relative z-10">
-                  
+                  className="relative z-10"
+                >
                   {/* Quote */}
                   <blockquote className="text-lg md:text-2xl text-neutral-800 leading-relaxed font-light mb-10 max-w-3xl select-text">
-                    "{t.quote}"
+                    {t.quote}
                   </blockquote>
 
                   {/* Author */}
@@ -129,7 +131,7 @@ export function Testimonials() {
                         {t.name}
                       </div>
                       <div className="text-sm text-neutral-500">
-                        {t.title},{' '}
+                        {t.title},{" "}
                         <span className="text-brand-pink font-medium">
                           {t.company}
                         </span>
@@ -145,7 +147,7 @@ export function Testimonials() {
           <div className="flex items-center justify-between mt-8">
             {/* Dots */}
             <div className="flex items-center gap-2">
-              {testimonials.map((_: any, i: number) =>
+              {testimonials.map((_: any, i: number) => (
                 <button
                   key={i}
                   onClick={() => {
@@ -153,11 +155,13 @@ export function Testimonials() {
                     setCurrent(i);
                   }}
                   className="relative p-1 group"
-                  aria-label={`Go to testimonial ${i + 1}`}>
+                  aria-label={`Go to testimonial ${i + 1}`}
+                >
                   <div
-                    className={`h-1.5 rounded-full transition-all duration-500 ${i === current ? 'w-8 bg-brand-pink' : 'w-1.5 bg-neutral-300 group-hover:bg-brand-pink/50'}`} />
+                    className={`h-1.5 rounded-full transition-all duration-500 ${i === current ? "w-8 bg-brand-pink" : "w-1.5 bg-neutral-300 group-hover:bg-brand-pink/50"}`}
+                  />
                 </button>
-              )}
+              ))}
             </div>
 
             {/* Arrows */}
@@ -165,13 +169,15 @@ export function Testimonials() {
               <button
                 onClick={prev}
                 className="w-10 h-10 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-500 hover:border-brand-pink hover:text-brand-pink transition-all duration-300"
-                aria-label="Previous testimonial">
+                aria-label="Previous testimonial"
+              >
                 <ChevronLeftIcon size={18} />
               </button>
               <button
                 onClick={next}
                 className="w-10 h-10 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-500 hover:border-brand-pink hover:text-brand-pink transition-all duration-300"
-                aria-label="Next testimonial">
+                aria-label="Next testimonial"
+              >
                 <ChevronRightIcon size={18} />
               </button>
             </div>
