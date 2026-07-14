@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/robots.txt",
+      "destination": "https://cms-encotec.vercel.app/api/seo/robots"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "https://cms-encotec.vercel.app/api/seo/sitemap"
+    }
+  ]
+}

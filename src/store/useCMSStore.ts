@@ -17,6 +17,7 @@ interface PageState {
     ogTitle?: string | null;
     ogDescription?: string | null;
     ogImage?: string | null;
+    schema?: string | null;
     headingOptions?: any;
   } | null;
   fetched: boolean;
@@ -31,6 +32,8 @@ interface GlobalSEOData {
   searchConsoleId?: string | null;
   customHeaderScripts?: string | null;
   customFooterScripts?: string | null;
+  schema?: string | null;
+  headingOptions?: any;
 }
 
 interface CMSState {

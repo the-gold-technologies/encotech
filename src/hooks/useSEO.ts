@@ -114,6 +114,27 @@ export function useSEO(
         ogImageMeta.remove();
       }
     }
+    // Page-specific Schema JSON-LD
+    const schemaScriptId = `page-schema-${slug.replace(/\//g, "-")}`;
+    let schemaScript = document.getElementById(schemaScriptId);
+    if (seoData?.schema) {
+      if (!schemaScript) {
+        schemaScript = document.createElement("script");
+        schemaScript.id = schemaScriptId;
+        schemaScript.setAttribute("type", "application/ld+json");
+        document.head.appendChild(schemaScript);
+      }
+      schemaScript.innerHTML = seoData.schema;
+    } else if (schemaScript) {
+      schemaScript.remove();
+    }
+
+    return () => {
+      const script = document.getElementById(schemaScriptId);
+      if (script) {
+        script.remove();
+      }
+    };
   }, [
     seoData?.metaTitle,
     seoData?.metaDescription,
@@ -123,6 +144,7 @@ export function useSEO(
     seoData?.ogDescription,
     seoData?.ogImage,
     seoData?.featuredImage,
+    seoData?.schema,
     globalSEO?.siteTitle,
     globalSEO?.siteDescription,
     globalSEO?.favicon,

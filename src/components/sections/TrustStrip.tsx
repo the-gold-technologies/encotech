@@ -9,6 +9,7 @@ import {
   ArrowRightIcon,
 } from "lucide-react";
 import { useSectionData } from "../../store/useCMSStore";
+import { LinkText } from "../ui/LinkText";
 
 const trustStripIcons = [CalendarIcon, GlobeIcon, UsersIcon, ZapIcon];
 
@@ -104,10 +105,10 @@ export function AboutSection() {
               className="space-y-5 mb-8"
             >
               <p className="text-neutral-500 leading-relaxed">
-                {data.paragraphs?.[0]}
+                <LinkText text={data.paragraphs?.[0]} />
               </p>
               <p className="text-neutral-500 leading-relaxed">
-                {data.paragraphs?.[1]}
+                <LinkText text={data.paragraphs?.[1]} />
               </p>
             </motion.div>
 

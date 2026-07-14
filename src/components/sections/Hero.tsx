@@ -2,10 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRightIcon } from "lucide-react";
-import { useSectionData } from "../../store/useCMSStore";
+import { useSectionData, useCMSStore } from "../../store/useCMSStore";
+import { LinkText } from "../ui/LinkText";
 
 export function Hero() {
   const { data } = useSectionData<any>("home", "HeroSection");
+  const globalSEO = useCMSStore((state) => state.globalSEO);
+  const headingTag = globalSEO?.headingOptions?.heroHeadingTag || "h1";
+  const HeadingTag = (headingTag || "h1") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  const MotionHeading = (motion as any)[HeadingTag] || motion.h1;
+
   const serviceTags = data.serviceTags || [];
   const heroStats = [
     { value: data.stat1Value, label: data.stat1Label },
@@ -52,7 +58,7 @@ export function Hero() {
             </motion.div>
 
             {/* Headline */}
-            <motion.h1
+            <MotionHeading
               initial={{
                 opacity: 0,
                 y: 30,
@@ -70,7 +76,7 @@ export function Hero() {
               {data?.headlineLine1}{" "}
               <span className="text-brand-pink">{data?.headlineHighlight}</span>{" "}
               {data?.headlineLine2}
-            </motion.h1>
+            </MotionHeading>
 
             {/* Subtitle */}
             <motion.p
@@ -88,7 +94,7 @@ export function Hero() {
               }}
               className="text-base md:text-lg text-neutral-500 leading-relaxed max-w-lg mb-8"
             >
-              {data.description}
+              <LinkText text={data.description} />
             </motion.p>
 
             {/* Service Tags */}

@@ -130,6 +130,21 @@ export function App() {
       injectHTML(globalSEO.customFooterScripts, document.body, "body");
     }
 
+    // 7. Global Schema JSON-LD
+    const globalSchemaScriptId = "global-schema-jsonld";
+    let globalSchemaScript = document.getElementById(globalSchemaScriptId);
+    if (globalSEO.schema) {
+      if (!globalSchemaScript) {
+        globalSchemaScript = document.createElement("script");
+        globalSchemaScript.id = globalSchemaScriptId;
+        globalSchemaScript.setAttribute("type", "application/ld+json");
+        document.head.appendChild(globalSchemaScript);
+      }
+      globalSchemaScript.innerHTML = globalSEO.schema;
+    } else if (globalSchemaScript) {
+      globalSchemaScript.remove();
+    }
+
   }, [globalSEO]);
   return (
     <BrowserRouter>
