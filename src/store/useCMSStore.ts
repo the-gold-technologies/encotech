@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { useEffect } from "react";
+import { defaultPagesMeta, defaultPageSections } from "./defaultData";
 
 const API_BASE_URL = import.meta.env.VITE_CMS_API_URL || "https://cms-encotec.vercel.app";
 
@@ -112,6 +113,24 @@ export const useCMSStore = create<CMSState>((set, get) => ({
     const mappedSlug = slugMap[slug] || slug;
     const apiSlug = mappedSlug === "value-added-services" ? "value-added" : mappedSlug;
 
+    // Define defaults for fallback
+    const defaultSections = defaultPageSections[apiSlug] || {};
+    const defaultSeo = defaultPagesMeta[apiSlug]
+      ? {
+          metaTitle: defaultPagesMeta[apiSlug].metaTitle,
+          metaDescription: defaultPagesMeta[apiSlug].metaDescription,
+          targetKeywords: "",
+          canonicalUrl: "",
+          noIndex: false,
+          featuredImage: "",
+          ogTitle: "",
+          ogDescription: "",
+          ogImage: "",
+          schema: "",
+          headingOptions: {},
+        }
+      : null;
+
     try {
       const response = await fetch(`${API_BASE_URL}/api/pages/${apiSlug}`);
       if (!response.ok) {
@@ -122,13 +141,15 @@ export const useCMSStore = create<CMSState>((set, get) => ({
         throw new Error(json.error || "Invalid API response format");
       }
 
-      // Transform sections array into a Record<string, any>
-      const sectionsMap: Record<string, any> = {};
+      // Merge local default sections first, then override with CMS sections
+      const sectionsMap: Record<string, any> = { ...defaultSections };
       if (Array.isArray(json.data.sections)) {
         for (const section of json.data.sections) {
           sectionsMap[section.type] = section.content;
         }
       }
+
+      const mergedSeo = json.data.seo ? { ...defaultSeo, ...json.data.seo } : defaultSeo;
 
       set((state) => {
         const newPages = { ...state.pages };
@@ -137,7 +158,7 @@ export const useCMSStore = create<CMSState>((set, get) => ({
             loading: false,
             error: null,
             sections: sectionsMap,
-            seo: json.data.seo || null,
+            seo: mergedSeo,
             fetched: true,
           };
         });
@@ -147,7 +168,7 @@ export const useCMSStore = create<CMSState>((set, get) => ({
       console.warn(
         `CMS Fetch Error for "${slug}":`,
         err.message,
-        "- Falling back to mock data"
+        "- Falling back to mock/default data"
       );
       set((state) => {
         const newPages = { ...state.pages };
@@ -155,8 +176,8 @@ export const useCMSStore = create<CMSState>((set, get) => ({
           newPages[s] = {
             loading: false,
             error: err.message || "Unknown error",
-            sections: state.pages[s]?.sections || {},
-            seo: state.pages[s]?.seo || null,
+            sections: Object.keys(defaultSections).length > 0 ? defaultSections : (state.pages[s]?.sections || {}),
+            seo: defaultSeo || state.pages[s]?.seo || null,
             fetched: true,
           };
         });
@@ -180,9 +201,24 @@ export const useCMSStore = create<CMSState>((set, get) => ({
       }
     } catch (err: any) {
       console.warn("CMS Global SEO Fetch Error:", err.message);
-      set({ globalSEOFetched: true });
+      set({
+        globalSEO: {
+          siteTitle: "Encotech",
+          siteDescription: "Engineering & Project Management Services - Member of Dornier Group",
+          favicon: null,
+          googleAnalyticsId: "G-CT894VPLS1",
+          gtmId: "GTM-59DCSVDV",
+          searchConsoleId: "4kD9H2fqRgqKEk",
+          customHeaderScripts: null,
+          customFooterScripts: null,
+          socialLinks: [],
+          canonicalOrdering: "default",
+        },
+        globalSEOFetched: true,
+      });
     }
   },
+
 }));
 
 export function useSectionData<T>(
