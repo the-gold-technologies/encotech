@@ -842,8 +842,8 @@ function GlobalOfficesMap() {
             <ComposableMap
               projection="geoMercator"
               projectionConfig={{
-                scale: 600,
-                center: [62, 27],
+                scale: 350,
+                center: [65, 25],
               }}
               style={{
                 width: "100%",
