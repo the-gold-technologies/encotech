@@ -127,7 +127,7 @@ function ServiceCard({ service }: { service: any }) {
           {service.title}
         </h3>
 
-        <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3 group-hover:text-white/90 transition-colors duration-300">
+        <p className="text-white/90 text-sm leading-relaxed mb-4 line-clamp-3 group-hover:text-white/90 transition-colors duration-300">
           {service.description}
         </p>
 

@@ -485,10 +485,10 @@ function ContentGrid() {
 function StatsBanner() {
   const { data } = useSectionData<any>("insights", "InsightsStats");
   const stats = [
-    { value: data.stat1Value, suffix: "+", label: data.stat1Label },
-    { value: data.stat2Value, suffix: "+", label: data.stat2Label },
-    { value: data.stat3Value, suffix: "", label: data.stat3Label },
-    { value: data.stat4Value, suffix: "K+", label: data.stat4Label },
+    { value: parseInt(data.stat1Value) || 15, suffix: data.stat1Suffix || "+", label: data.stat1Label || "Case Studies Published" },
+    { value: parseInt(data.stat2Value) || 50, suffix: data.stat2Suffix || "+", label: data.stat2Label || "Articles & Insights" },
+    { value: parseInt(data.stat3Value) || 10, suffix: data.stat3Suffix || "+", label: data.stat3Label || "Countries Covered" },
+    { value: parseInt(data.stat4Value) || 10, suffix: data.stat4Suffix || "K+", label: data.stat4Label || "Monthly Readers" },
   ];
 
   return (

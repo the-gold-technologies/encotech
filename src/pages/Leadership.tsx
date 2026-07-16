@@ -56,6 +56,7 @@ function AnimatedCounter({
 const execImages = [
   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
   "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800",
+  "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
 ];
 const seniorImages = [
   "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
@@ -376,7 +377,14 @@ function ExecutiveTeam() {
       bio: data.exec2Bio,
       tags: (data.exec2Tags || "").split(", ").filter(Boolean),
     },
-  ];
+    data.exec3Name && {
+      name: data.exec3Name,
+      role: data.exec3Role,
+      image: execImages[2],
+      bio: data.exec3Bio,
+      tags: (data.exec3Tags || "").split(", ").filter(Boolean),
+    },
+  ].filter(Boolean);
 
   return (
     <section className="py-32 bg-dark-bg text-white">

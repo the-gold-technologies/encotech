@@ -614,33 +614,33 @@ function TrustStats() {
     stats4Suffix: "+",
   });
   const stats = [
-    {
+    data.stats1Label && {
       value: parseInt(data.stats1Value) || 15,
       label: data.stats1Label,
       suffix: data.stats1Suffix,
     },
-    {
+    data.stats2Label && {
       value: parseInt(data.stats2Value) || 100,
       label: data.stats2Label,
       suffix: data.stats2Suffix,
     },
-    {
+    data.stats3Label && {
       value: parseInt(data.stats3Value) || 50,
       label: data.stats3Label,
       suffix: data.stats3Suffix,
     },
-    {
+    data.stats4Label && {
       value: parseInt(data.stats4Value) || 23,
       label: data.stats4Label,
       suffix: data.stats4Suffix,
     },
-  ];
+  ].filter(Boolean);
   return (
     <section className="py-24 bg-neutral-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 divide-x divide-white/10">
+        <div className={`grid grid-cols-2 md:grid-cols-${stats.length} gap-12 md:gap-8 divide-x divide-white/10`}>
           {stats.map((stat, i) => (
             <div
               key={i}

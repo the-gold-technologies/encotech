@@ -9,7 +9,13 @@ export function Hero() {
   const { data } = useSectionData<any>("home", "HeroSection");
   const globalSEO = useCMSStore((state) => state.globalSEO);
   const headingTag = globalSEO?.headingOptions?.heroHeadingTag || "h1";
-  const HeadingTag = (headingTag || "h1") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  const HeadingTag = (headingTag || "h1") as
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6";
   const MotionHeading = (motion as any)[HeadingTag] || motion.h1;
 
   const serviceTags = data.serviceTags || [];
@@ -18,6 +24,7 @@ export function Hero() {
     { value: data.stat2Value, label: data.stat2Label },
     { value: data.stat3Value, label: data.stat3Label },
     { value: data.stat4Value, label: data.stat4Label },
+    { value: data.stat5Value, label: data.stat5Label },
   ].filter((s: any) => s.value && s.label);
 
   return (
@@ -168,14 +175,14 @@ export function Hero() {
                 duration: 0.7,
                 delay: 0.55,
               }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 border-t border-neutral-200"
+              className={`grid grid-cols-2 md:grid-cols-${heroStats.length} gap-8 pt-8 border-t border-neutral-200`}
             >
               {heroStats.map((stat: any, i: number) => (
                 <div key={i}>
-                  <div className="text-3xl md:text-4xl font-black text-neutral-900 tracking-tight leading-none">
+                  <div className="text-3xl md:text-3xl font-black text-neutral-900 tracking-tight leading-none">
                     {stat.value}
                   </div>
-                  <div className="text-[10px] font-bold text-neutral-400 tracking-[0.15em] uppercase mt-2 leading-tight">
+                  <div className="text-[9px] font-bold text-neutral-400 tracking-[0.15em] uppercase mt-2 leading-tight">
                     {stat.label}
                   </div>
                 </div>
@@ -221,34 +228,36 @@ export function Hero() {
               </div>
 
               {/* Projects Delivered Badge */}
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 20,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  duration: 0.5,
-                  delay: 1,
-                }}
-                className="absolute -bottom-6 left-4 md:left-8 z-20"
-                style={{
-                  transform: "rotate(-3deg)",
-                }}
-              >
-                <div className="bg-white px-6 py-4 shadow-xl border border-neutral-100">
-                  <div className="text-3xl font-black text-neutral-900 leading-none">
-                    {data.projectsBadgeNumber}
+              {data?.projectsBadgeNumber && data?.projectsBadgeLabel && (
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    y: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 1,
+                  }}
+                  className="absolute -bottom-6 left-4 md:left-8 z-20"
+                  style={{
+                    transform: "rotate(-3deg)",
+                  }}
+                >
+                  <div className="bg-white px-6 py-4 shadow-xl border border-neutral-100">
+                    <div className="text-3xl font-black text-neutral-900 leading-none">
+                      {data.projectsBadgeNumber}
+                    </div>
+                    <div className="text-[10px] font-bold text-neutral-400 tracking-[0.15em] uppercase mt-1">
+                      {data.projectsBadgeLabel}
+                    </div>
+                    <div className="w-10 h-[3px] bg-brand-pink mt-2" />
                   </div>
-                  <div className="text-[10px] font-bold text-neutral-400 tracking-[0.15em] uppercase mt-1">
-                    {data.projectsBadgeLabel}
-                  </div>
-                  <div className="w-10 h-[3px] bg-brand-pink mt-2" />
-                </div>
-              </motion.div>
+                </motion.div>
+              )}
             </motion.div>
           </div>
         </div>

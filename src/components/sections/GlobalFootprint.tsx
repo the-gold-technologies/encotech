@@ -58,10 +58,9 @@ export function GlobalFootprint() {
   return (
     <section
       ref={sectionRef}
-      className="py-24 text-white relative overflow-hidden"
+      className="py-24 text-neutral-900 relative overflow-hidden"
       style={{
-        background:
-          "linear-gradient(180deg, #0D0D0D 0%, #111111 50%, #0D0D0D 100%)",
+        background: "#F8FAFC",
       }}
     >
       {/* Subtle grid overlay */}
@@ -69,7 +68,7 @@ export function GlobalFootprint() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(233,30,140,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.03) 1px, transparent 1px)",
+            "linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
@@ -79,7 +78,7 @@ export function GlobalFootprint() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 60%, rgba(233,30,140,0.06) 0%, transparent 70%)",
+            "radial-gradient(ellipse 80% 60% at 50% 60%, rgba(233,30,140,0.02) 0%, transparent 70%)",
         }}
       />
 
@@ -124,7 +123,7 @@ export function GlobalFootprint() {
               duration: 0.8,
               delay: 0.1,
             }}
-            className="text-4xl md:text-6xl font-black tracking-tight mb-4 select-text cursor-text selection:bg-[#B6005E] selection:text-white"
+            className="text-4xl md:text-6xl font-black tracking-tight mb-4 select-text cursor-text selection:bg-[#B6005E] selection:text-white text-neutral-900"
           >
             {data.heading}
           </motion.h2>
@@ -142,7 +141,7 @@ export function GlobalFootprint() {
               duration: 0.8,
               delay: 0.2,
             }}
-            className="text-neutral-400 max-w-xl mx-auto text-lg"
+            className="text-neutral-500 max-w-xl mx-auto text-lg"
           >
             {data.description}
           </motion.p>
@@ -165,18 +164,17 @@ export function GlobalFootprint() {
             duration: 1,
             delay: 0.3,
           }}
-          className="relative rounded-3xl overflow-hidden border"
+          className="relative rounded-3xl overflow-hidden border shadow-sm"
           style={{
-            background: "rgba(255,255,255,0.02)",
-            borderColor: "rgba(233,30,140,0.12)",
-            backdropFilter: "blur(10px)",
+            background: "#FFFFFF",
+            borderColor: "#E2E8F0",
           }}
         >
           {/* Inner glow */}
           <div
             className="absolute inset-0 pointer-events-none rounded-3xl z-0"
             style={{
-              boxShadow: "inset 0 0 80px rgba(233,30,140,0.04)",
+              boxShadow: "inset 0 0 80px rgba(0,0,0,0.02)",
             }}
           />
 
@@ -190,8 +188,8 @@ export function GlobalFootprint() {
             <ComposableMap
               projection="geoMercator"
               projectionConfig={{
-                scale: 600,
-                center: [62, 27],
+                scale: 350,
+                center: [65, 25],
               }}
               style={{
                 width: "100%",
@@ -206,19 +204,19 @@ export function GlobalFootprint() {
                       geography={geo}
                       style={{
                         default: {
-                          fill: "#1C1C1E",
-                          stroke: "rgba(233,30,140,0.18)",
+                          fill: "#F1F5F9",
+                          stroke: "#CBD5E1",
                           strokeWidth: 0.5,
                           outline: "none",
                         },
                         hover: {
-                          fill: "#252528",
-                          stroke: "rgba(233,30,140,0.35)",
+                          fill: "#E2E8F0",
+                          stroke: "#B6005E",
                           strokeWidth: 0.6,
                           outline: "none",
                         },
                         pressed: {
-                          fill: "#1C1C1E",
+                          fill: "#E2E8F0",
                           outline: "none",
                         },
                       }}
@@ -233,7 +231,7 @@ export function GlobalFootprint() {
                   key={i}
                   from={conn[0]}
                   to={conn[1]}
-                  stroke="rgba(233,30,140,0.22)"
+                  stroke="rgba(182,0,94,0.3)"
                   strokeWidth={0.8}
                   strokeLinecap="round"
                   strokeDasharray="4 6"
@@ -331,8 +329,8 @@ export function GlobalFootprint() {
                       fontSize: "5px",
                       fill:
                         hoveredLocation?.name === loc.name
-                          ? "rgba(255,255,255,0.95)"
-                          : "rgba(255,255,255,0.55)",
+                          ? "#B6005E"
+                          : "#64748B",
                       fontWeight: 700,
                       letterSpacing: "0.08em",
                       pointerEvents: "none",
@@ -480,8 +478,8 @@ export function GlobalFootprint() {
           <div
             className="flex justify-center gap-12 px-8 py-6 border-t"
             style={{
-              borderColor: "rgba(233,30,140,0.1)",
-              background: "rgba(0,0,0,0.3)",
+              borderColor: "#E2E8F0",
+              background: "#F8FAFC",
             }}
           >
             {stats.map((stat: any, i: number) => (
