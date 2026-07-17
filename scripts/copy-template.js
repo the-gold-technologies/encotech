@@ -23,3 +23,10 @@ if (!fs.existsSync(apiDir)) {
 
 fs.writeFileSync(path.resolve(apiDir, 'template.ts'), code);
 console.log('Successfully generated api/template.ts from dist/index.html');
+
+// Delete dist/index.html to force Vercel to route clean URL paths through /api/render
+if (fs.existsSync(htmlPath)) {
+  fs.unlinkSync(htmlPath);
+  console.log('Deleted dist/index.html to enable serverless render rewrites');
+}
+
