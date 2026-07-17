@@ -1,7 +1,8 @@
-import { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Navbar } from '../components/Navbar';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import React, { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import { Footer } from "../components/Footer";
+import { Navigation } from "../components/Navigation";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import {
   ArrowRightIcon,
   ShieldCheckIcon,
@@ -9,20 +10,22 @@ import {
   CheckCircle2Icon,
   FileTextIcon,
   BuildingIcon,
-  GlobeIcon } from
-'lucide-react';
+  GlobeIcon,
+} from "lucide-react";
+import { useSectionData } from "../store/useCMSStore";
+import { useSEO } from "../hooks/useSEO";
 // --- Animated Counter Component ---
 function AnimatedCounter({
   target,
-  suffix = ''
-
-
-
-}: {target: number;suffix?: string;}) {
+  suffix = "",
+}: {
+  target: number;
+  suffix?: string;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, {
     once: true,
-    margin: '-100px'
+    margin: "-100px",
   });
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -47,28 +50,51 @@ function AnimatedCounter({
     <span ref={ref}>
       {count}
       {suffix}
-    </span>);
-
+    </span>
+  );
 }
+
+// Icon mapping for certifications grid
+const certIconMap: Record<string, React.ComponentType<any>> = {
+  "ISO 9001:2015": ShieldCheckIcon,
+  "ISO 14001:2015": GlobeIcon,
+  "ISO 45001:2018": CheckCircle2Icon,
+  "ASME 'U' & 'S' Stamps": AwardIcon,
+  "NABL Accreditation": FileTextIcon,
+  "IBR Certification": BuildingIcon,
+};
+
 // --- Sections ---
 function CertificationsHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
+  const { data } = useSectionData<any>("certifications", "CertificationsHero", {
+    heroTitle: "CERTIFICATIONS & PARTNERS",
+    heroSubtitle:
+      "Our commitment to global standards of quality, safety, and environmental management, backed by strategic alliances with industry leaders.",
+    tagline: "Trust & Excellence",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=2400",
+    badge1Text: "ISO Certified",
+    badge2Text: "ASME Compliant",
+    badge3Text: "15+ Years Excellence",
+  });
   return (
     <section className="relative min-h-screen w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
       <motion.div
         style={{
-          y
+          y,
         }}
-        className="absolute inset-0">
-        
+        className="absolute inset-0"
+      >
         <img
-          src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=2400"
+          src={data.backgroundImage}
           alt="Certifications and Quality Assurance"
-          className="w-full h-full object-cover opacity-40" />
-        
+          className="w-full h-full object-cover opacity-40"
+        />
+
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/90 via-neutral-900/70 to-neutral-900" />
       </motion.div>
 
@@ -77,48 +103,48 @@ function CertificationsHero() {
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage:
-          'linear-gradient(rgba(233,30,140,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.3) 1px, transparent 1px)',
-          backgroundSize: '80px 80px'
-        }} />
-      
+            "linear-gradient(rgba(233,30,140,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.3) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 py-20">
         <motion.div
           style={{
-            opacity
+            opacity,
           }}
           initial={{
             opacity: 0,
-            y: 40
+            y: 40,
           }}
           animate={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           transition={{
             duration: 1,
-            ease: 'easeOut'
-          }}>
-          
+            ease: "easeOut",
+          }}
+        >
           {/* Label */}
           <motion.div
             initial={{
               opacity: 0,
-              x: -20
+              x: -20,
             }}
             animate={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             transition={{
               duration: 0.6,
-              delay: 0.3
+              delay: 0.3,
             }}
-            className="flex items-center gap-3 mb-8">
-            
+            className="flex items-center gap-3 mb-8"
+          >
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Trust & Excellence
+              {data.tagline}
             </span>
           </motion.div>
 
@@ -126,40 +152,38 @@ function CertificationsHero() {
           <motion.h1
             initial={{
               opacity: 0,
-              y: 30
+              y: 30,
             }}
             animate={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.4
+              delay: 0.4,
             }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8 max-w-5xl">
-            
-            CERTIFICATIONS & PARTNERS
+            className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8 max-w-5xl"
+          >
+            {data.heroTitle}
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p
             initial={{
               opacity: 0,
-              y: 20
+              y: 20,
             }}
             animate={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.6
+              delay: 0.6,
             }}
-            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light max-w-3xl mb-12">
-            
-            Our commitment to global standards of quality, safety, and
-            environmental management, backed by strategic alliances with
-            industry leaders.
+            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light max-w-3xl mb-12"
+          >
+            {data.heroSubtitle}
           </motion.p>
 
           {/* Floating Stat Badges */}
@@ -167,104 +191,104 @@ function CertificationsHero() {
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               animate={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               transition={{
                 duration: 0.6,
-                delay: 0.8
+                delay: 0.8,
               }}
-              className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase">
-              
-              ISO Certified
+              className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase"
+            >
+              {data.badge1Text}
             </motion.div>
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               animate={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               transition={{
                 duration: 0.6,
-                delay: 0.9
+                delay: 0.9,
               }}
-              className="px-6 py-3 bg-white/90 backdrop-blur-sm text-neutral-900 font-bold text-sm tracking-wider uppercase">
-              
-              ASME Compliant
+              className="px-6 py-3 bg-white/90 backdrop-blur-sm text-neutral-900 font-bold text-sm tracking-wider uppercase"
+            >
+              {data.badge2Text}
             </motion.div>
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               animate={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               transition={{
                 duration: 0.6,
-                delay: 1.0
+                delay: 1.0,
               }}
-              className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-sm tracking-wider uppercase">
-              
-              15+ Years Excellence
+              className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-sm tracking-wider uppercase"
+            >
+              {data.badge3Text}
             </motion.div>
           </div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function CertificationsGrid() {
-  const certifications = [
-  {
-    id: 'iso-9001',
-    title: 'ISO 9001:2015',
-    category: 'Quality Management',
-    desc: 'Ensuring consistent quality in our engineering, procurement, and construction services.',
-    icon: ShieldCheckIcon
-  },
-  {
-    id: 'iso-14001',
-    title: 'ISO 14001:2015',
-    category: 'Environmental Management',
-    desc: 'Commitment to minimizing our environmental footprint across all project sites.',
-    icon: GlobeIcon
-  },
-  {
-    id: 'iso-45001',
-    title: 'ISO 45001:2018',
-    category: 'Occupational Health & Safety',
-    desc: 'Maintaining the highest standards of workplace safety for our employees and contractors.',
-    icon: CheckCircle2Icon
-  },
-  {
-    id: 'asme',
-    title: "ASME 'U' & 'S' Stamps",
-    category: 'Boiler & Pressure Vessel',
-    desc: 'Authorized to manufacture and assemble power boilers and pressure vessels.',
-    icon: AwardIcon
-  },
-  {
-    id: 'nabl',
-    title: 'NABL Accreditation',
-    category: 'Testing & Calibration',
-    desc: 'Recognized competence of our testing and calibration laboratories.',
-    icon: FileTextIcon
-  },
-  {
-    id: 'ibr',
-    title: 'IBR Certification',
-    category: 'Indian Boiler Regulations',
-    desc: 'Certified as a special class boiler repairer and erector under IBR 1950.',
-    icon: BuildingIcon
-  }];
+  const { data } = useSectionData<any>("certifications", "CertificationsGrid", {
+    tagline: "Global Standards",
+    heading: "Accreditations That Define Our Quality",
+    certificationsList: [
+      {
+        title: "ISO 9001:2015",
+        category: "Quality Management",
+        desc: "Ensuring consistent quality in our engineering, procurement, and construction services.",
+      },
+      {
+        title: "ISO 14001:2015",
+        category: "Environmental Management",
+        desc: "Commitment to minimizing our environmental footprint across all project sites.",
+      },
+      {
+        title: "ISO 45001:2018",
+        category: "Occupational Health & Safety",
+        desc: "Maintaining the highest standards of workplace safety for our employees and contractors.",
+      },
+      {
+        title: "ASME 'U' & 'S' Stamps",
+        category: "Boiler & Pressure Vessel",
+        desc: "Authorized to manufacture and assemble power boilers and pressure vessels.",
+      },
+      {
+        title: "NABL Accreditation",
+        category: "Testing & Calibration",
+        desc: "Recognized competence of our testing and calibration laboratories.",
+      },
+      {
+        title: "IBR Certification",
+        category: "Indian Boiler Regulations",
+        desc: "Certified as a special class boiler repairer and erector under IBR 1950.",
+      },
+    ],
+  });
+  const certifications = (data.certificationsList || []).map(
+    (cert: any, index: number) => ({
+      ...cert,
+      id: `cert-${index}`,
+      icon: certIconMap[cert.title] || ShieldCheckIcon,
+    }),
+  );
 
   return (
     <section className="py-32 bg-neutral-50 relative overflow-hidden">
@@ -272,52 +296,52 @@ function CertificationsGrid() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            duration: 0.8
+            duration: 0.8,
           }}
-          className="mb-16">
-          
+          className="mb-16"
+        >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Global Standards
+              {data.tagline}
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 leading-tight max-w-3xl">
-            Accreditations That Define Our Quality
+            {data.heading}
           </h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {certifications.map((cert, index) =>
-          <motion.div
-            key={cert.id}
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.6,
-              delay: index * 0.1
-            }}
-            className="bg-white p-10 border border-neutral-200 hover:border-brand-pink/30 hover:shadow-xl hover:shadow-brand-pink/5 transition-all duration-500 group">
-            
+          {certifications.map((cert: any, index: number) => (
+            <motion.div
+              key={cert.id}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.1,
+              }}
+              className="bg-white p-10 border border-neutral-200 hover:border-brand-pink/30 hover:shadow-xl hover:shadow-brand-pink/5 transition-all duration-500 group"
+            >
               <div className="w-14 h-14 bg-brand-panel flex items-center justify-center text-brand-pink mb-8 group-hover:scale-110 transition-transform duration-500">
                 <cert.icon size={28} strokeWidth={1.5} />
               </div>
@@ -329,54 +353,43 @@ function CertificationsGrid() {
               </h3>
               <p className="text-neutral-600 leading-relaxed">{cert.desc}</p>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function StrategicPartners() {
-  const partners = [
-  {
-    name: 'Siemens Energy',
-    monogram: 'SE',
-    role: 'Gas Turbine Technology'
-  },
-  {
-    name: 'GE Vernova',
-    monogram: 'GE',
-    role: 'Power Generation Systems'
-  },
-  {
-    name: 'BHEL',
-    monogram: 'BH',
-    role: 'Heavy Electrical Equipment'
-  },
-  {
-    name: 'NTPC',
-    monogram: 'NT',
-    role: 'Thermal Power Operations'
-  },
-  {
-    name: 'L&T Energy',
-    monogram: 'LT',
-    role: 'EPC & Construction'
-  },
-  {
-    name: 'Tata Power',
-    monogram: 'TP',
-    role: 'Integrated Power Solutions'
-  },
-  {
-    name: 'Adani Power',
-    monogram: 'AP',
-    role: 'Private Sector Energy'
-  },
-  {
-    name: 'JSW Energy',
-    monogram: 'JW',
-    role: 'Diversified Energy Portfolio'
-  }];
+  const { data } = useSectionData<any>("certifications", "StrategicPartners", {
+    tagline: "Strategic Alliances",
+    heading: "Trusted by Industry Leaders",
+    description:
+      "We collaborate with the world's leading technology providers and energy conglomerates to deliver state-of-the-art solutions.",
+    partnersList: [
+      {
+        name: "Siemens Energy",
+        monogram: "SE",
+        role: "Gas Turbine Technology",
+      },
+      { name: "GE Vernova", monogram: "GE", role: "Power Generation Systems" },
+      { name: "BHEL", monogram: "BH", role: "Heavy Electrical Equipment" },
+      { name: "NTPC", monogram: "NT", role: "Thermal Power Operations" },
+      { name: "L&T Energy", monogram: "LT", role: "EPC & Construction" },
+      {
+        name: "Tata Power",
+        monogram: "TP",
+        role: "Integrated Power Solutions",
+      },
+      { name: "Adani Power", monogram: "AP", role: "Private Sector Energy" },
+      {
+        name: "JSW Energy",
+        monogram: "JW",
+        role: "Diversified Energy Portfolio",
+      },
+    ],
+  });
+  const partners: Array<{ name: string; monogram: string; role: string }> =
+    data.partnersList || [];
 
   return (
     <section className="py-32 bg-dark-bg text-white relative overflow-hidden">
@@ -387,73 +400,72 @@ function StrategicPartners() {
           <motion.div
             initial={{
               opacity: 0,
-              x: -30
+              x: -30,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
+              duration: 0.8,
             }}
-            className="max-w-2xl">
-            
+            className="max-w-2xl"
+          >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                Strategic Alliances
+                {data.tagline}
               </span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black leading-tight">
-              Trusted by Industry Leaders
+              {data.heading}
             </h2>
           </motion.div>
           <motion.p
             initial={{
               opacity: 0,
-              x: 30
+              x: 30,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
+              duration: 0.8,
             }}
-            className="text-neutral-400 max-w-md leading-relaxed">
-            
-            We collaborate with the world's leading technology providers and
-            energy conglomerates to deliver state-of-the-art solutions.
+            className="text-neutral-400 max-w-md leading-relaxed"
+          >
+            {data.description}
           </motion.p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {partners.map((partner, index) =>
-          <motion.div
-            key={partner.name}
-            initial={{
-              opacity: 0,
-              y: 20
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.5,
-              delay: index * 0.05
-            }}
-            className="bg-white/5 border border-white/10 p-8 flex flex-col items-center justify-center gap-4 hover:bg-white/10 hover:border-brand-pink/50 transition-all duration-300 group">
-            
+          {partners.map((partner, index) => (
+            <motion.div
+              key={partner.name}
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.05,
+              }}
+              className="bg-white/5 border border-white/10 p-8 flex flex-col items-center justify-center gap-4 hover:bg-white/10 hover:border-brand-pink/50 transition-all duration-300 group"
+            >
               <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-xl font-black text-white/50 group-hover:text-brand-pink group-hover:bg-brand-pink/10 transition-colors duration-300">
                 {partner.monogram}
               </div>
@@ -464,38 +476,38 @@ function StrategicPartners() {
                 {partner.role}
               </span>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function IndustryMemberships() {
-  const memberships = [
-  {
-    name: 'Confederation of Indian Industry (CII)',
-    year: '2010'
-  },
-  {
-    name: 'Federation of Indian Chambers of Commerce (FICCI)',
-    year: '2012'
-  },
-  {
-    name: 'Indian Electrical & Electronics Mfrs. Assoc. (IEEMA)',
-    year: '2014'
-  },
-  {
-    name: 'Central Board of Irrigation and Power (CBIP)',
-    year: '2015'
-  },
-  {
-    name: 'Independent Power Producers Assoc. (IPPAI)',
-    year: '2016'
-  },
-  {
-    name: 'Associated Chambers of Commerce (ASSOCHAM)',
-    year: '2018'
-  }];
+  const { data } = useSectionData<any>(
+    "certifications",
+    "IndustryMemberships",
+    {
+      heading: "INDUSTRY MEMBERSHIPS",
+      description:
+        "Active participation in shaping the future of India's energy sector through key industry bodies and associations.",
+      membershipsList: [
+        { name: "Confederation of Indian Industry (CII)", year: "2010" },
+        {
+          name: "Federation of Indian Chambers of Commerce (FICCI)",
+          year: "2012",
+        },
+        {
+          name: "Indian Electrical & Electronics Mfrs. Assoc. (IEEMA)",
+          year: "2014",
+        },
+        { name: "Central Board of Irrigation and Power (CBIP)", year: "2015" },
+        { name: "Independent Power Producers Assoc. (IPPAI)", year: "2016" },
+        { name: "Associated Chambers of Commerce (ASSOCHAM)", year: "2018" },
+      ],
+    },
+  );
+  const memberships: Array<{ name: string; year: string }> =
+    data.membershipsList || [];
 
   return (
     <section className="py-32 bg-white overflow-hidden">
@@ -503,26 +515,25 @@ function IndustryMemberships() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            duration: 0.8
+            duration: 0.8,
           }}
-          className="text-center">
-          
+          className="text-center"
+        >
           <h2 className="text-3xl md:text-4xl font-black text-neutral-900 mb-6">
-            INDUSTRY MEMBERSHIPS
+            {data.heading}
           </h2>
           <p className="text-neutral-600 max-w-2xl mx-auto">
-            Active participation in shaping the future of India's energy sector
-            through key industry bodies and associations.
+            {data.description}
           </p>
         </motion.div>
       </div>
@@ -532,48 +543,48 @@ function IndustryMemberships() {
         <motion.div
           className="flex whitespace-nowrap items-center"
           animate={{
-            x: ['0%', '-50%']
+            x: ["0%", "-50%"],
           }}
           transition={{
             repeat: Infinity,
-            ease: 'linear',
-            duration: 20
-          }}>
-          
-          {[...memberships, ...memberships].map((item, i) =>
-          <div
-            key={i}
-            className="flex items-center gap-8 px-8 text-xl font-bold text-neutral-300 uppercase tracking-widest">
-            
+            ease: "linear",
+            duration: 20,
+          }}
+        >
+          {[...memberships, ...memberships].map((item, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-8 px-8 text-xl font-bold text-neutral-300 uppercase tracking-widest"
+            >
               <span>{item.name}</span>
               <span className="w-2 h-2 rounded-full bg-brand-pink" />
             </div>
-          )}
+          ))}
         </motion.div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {memberships.map((item, index) =>
-          <motion.div
-            key={index}
-            initial={{
-              opacity: 0,
-              y: 20
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.5,
-              delay: index * 0.1
-            }}
-            className="p-6 border border-neutral-200 flex justify-between items-center hover:border-brand-pink transition-colors duration-300">
-            
+          {memberships.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.1,
+              }}
+              className="p-6 border border-neutral-200 flex justify-between items-center hover:border-brand-pink transition-colors duration-300"
+            >
               <span className="font-bold text-neutral-900 text-sm pr-4">
                 {item.name}
               </span>
@@ -581,102 +592,128 @@ function IndustryMemberships() {
                 Since {item.year}
               </span>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function TrustStats() {
+  const { data } = useSectionData<any>("certifications", "TrustStats", {
+    stats1Value: "15",
+    stats1Label: "Years of Excellence",
+    stats1Suffix: "+",
+    stats2Value: "100",
+    stats2Label: "Compliance Rate",
+    stats2Suffix: "%",
+    stats3Value: "50",
+    stats3Label: "Global Audits Passed",
+    stats3Suffix: "+",
+    stats4Value: "23",
+    stats4Label: "Countries Recognized",
+    stats4Suffix: "+",
+  });
+  const stats = [
+    data.stats1Label && {
+      value: parseInt(data.stats1Value) || 15,
+      label: data.stats1Label,
+      suffix: data.stats1Suffix,
+    },
+    data.stats2Label && {
+      value: parseInt(data.stats2Value) || 100,
+      label: data.stats2Label,
+      suffix: data.stats2Suffix,
+    },
+    data.stats3Label && {
+      value: parseInt(data.stats3Value) || 50,
+      label: data.stats3Label,
+      suffix: data.stats3Suffix,
+    },
+    data.stats4Label && {
+      value: parseInt(data.stats4Value) || 23,
+      label: data.stats4Label,
+      suffix: data.stats4Suffix,
+    },
+  ].filter(Boolean);
   return (
     <section className="py-24 bg-neutral-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 divide-x divide-white/10">
-          <div className="flex flex-col items-center text-center px-4">
-            <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
-              <AnimatedCounter target={15} suffix="+" />
+        <div className={`grid grid-cols-2 md:grid-cols-${stats.length} gap-12 md:gap-8 divide-x divide-white/10`}>
+          {stats.map((stat, i) => (
+            <div
+              key={i}
+              className="flex flex-col items-center text-center px-4"
+            >
+              <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
+                <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+              </div>
+              <div className="text-sm font-bold tracking-wider uppercase text-neutral-400">
+                {stat.label}
+              </div>
             </div>
-            <div className="text-sm font-bold tracking-wider uppercase text-neutral-400">
-              Years of Excellence
-            </div>
-          </div>
-          <div className="flex flex-col items-center text-center px-4">
-            <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
-              <AnimatedCounter target={100} suffix="%" />
-            </div>
-            <div className="text-sm font-bold tracking-wider uppercase text-neutral-400">
-              Compliance Rate
-            </div>
-          </div>
-          <div className="flex flex-col items-center text-center px-4">
-            <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
-              <AnimatedCounter target={50} suffix="+" />
-            </div>
-            <div className="text-sm font-bold tracking-wider uppercase text-neutral-400">
-              Global Audits Passed
-            </div>
-          </div>
-          <div className="flex flex-col items-center text-center px-4">
-            <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
-              <AnimatedCounter target={23} suffix="+" />
-            </div>
-            <div className="text-sm font-bold tracking-wider uppercase text-neutral-400">
-              Countries Recognized
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 function CTASection() {
+  const { data } = useSectionData<any>("certifications", "CertificationsCTA", {
+    ctaHeading: "Partner With Excellence",
+    ctaSubtitle:
+      "Experience engineering services backed by global certifications and a commitment to uncompromising quality.",
+    ctaLabel: "Discuss Your Project",
+    ctaUrl: "/contact",
+  });
   return (
     <section className="py-32 bg-neutral-50">
       <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
         <motion.div
           initial={{
             opacity: 0,
-            y: 30
+            y: 30,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            duration: 0.8
-          }}>
-          
+            duration: 0.8,
+          }}
+        >
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 mb-8 leading-tight">
-            Partner With Excellence
+            {data.ctaHeading}
           </h2>
           <p className="text-xl text-neutral-600 mb-12 leading-relaxed">
-            Experience engineering services backed by global certifications and
-            a commitment to uncompromising quality.
+            {data.ctaSubtitle}
           </p>
           <Link
-            to="/contact"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-            
-            Discuss Your Project
+            to={data.ctaUrl}
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+          >
+            {data.ctaLabel}
             <ArrowRightIcon size={16} />
           </Link>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 export function Certifications() {
+  useSEO("certifications");
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
-      <Navbar />
+    <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
+      {/* Navigation */}
+      <Navigation />
 
       <CertificationsHero />
       <CertificationsGrid />
@@ -686,25 +723,7 @@ export function Certifications() {
       <CTASection />
 
       {/* Footer */}
-      <footer className="py-12 border-t border-neutral-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center text-neutral-500 text-sm">
-          <div className="font-black text-neutral-900 text-xl mb-4 md:mb-0 tracking-tighter">
-            ENCOTEC
-          </div>
-          <div className="flex gap-8">
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Terms
-            </a>
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Contact
-            </a>
-          </div>
-          <div className="mt-4 md:mt-0">© 2024 Encotec Engineering.</div>
-        </div>
-      </footer>
-    </main>);
-
+      <Footer />
+    </main>
+  );
 }

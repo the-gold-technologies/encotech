@@ -1,140 +1,113 @@
-import { motion } from 'framer-motion';
+import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   ArrowRightIcon,
   FlameIcon,
   NetworkIcon,
   ClipboardCheckIcon,
   WrenchIcon,
-  SearchIcon } from
-'lucide-react';
-const services = [
-{
-  title: 'Project Conceptualisation & Development',
-  description:
-  'From pre-feasibility and financial assessments to finalizing EPC contractors and developing technical specifications.',
-  icon: ClipboardCheckIcon,
-  delay: 0,
-  image:
-  'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800'
-},
-{
-  title: 'Construction, Commissioning & Relocation',
-  description:
-  'Expert installation of complex power and process industries, including specialized asset shifting and relocation services across borders.',
-  icon: NetworkIcon,
-  delay: 0.1,
-  image:
-  'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800'
-},
-{
-  title: 'Asset Stewardship (O&M)',
-  description:
-  'Specialized management of thermal power plants, international airports, and critical utilities like STPs.',
-  icon: FlameIcon,
-  delay: 0.2,
-  image:
-  'https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&q=80&w=800'
-},
-{
-  title: 'Expert Advisory & Performance Audits',
-  description:
-  'High-level problem solving, energy efficiency audits, and specialized testing (NDT) for operational plants.',
-  icon: SearchIcon,
-  delay: 0.3,
-  image:
-  'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800'
-},
-{
-  title: 'Global Trading & Spare Parts',
-  description:
-  'Strategic sourcing of critical equipment and spares from major OEMs in China, Vietnam, Korea, and India.',
-  icon: WrenchIcon,
-  delay: 0.4,
-  image:
-  'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800'
-}];
+  SearchIcon,
+} from "lucide-react";
+import { useSectionData } from "../../store/useCMSStore";
+
+const servicesIcons = [
+  ClipboardCheckIcon,
+  NetworkIcon,
+  FlameIcon,
+  SearchIcon,
+  WrenchIcon,
+];
 
 export function Services() {
+  const { data } = useSectionData<any>("home", "ServicesSection");
+  const rawList = data.services || [];
+  const services = rawList.map((service: any, i: number) => ({
+    ...service,
+    icon: servicesIcons[i % servicesIcons.length] || ClipboardCheckIcon,
+  }));
+
   return (
     <section className="py-28 bg-neutral-50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="text-center mb-16">
-          
+          className="text-center mb-16"
+        >
           <span className="text-brand-pink font-bold tracking-wider uppercase text-sm">
-            Our Services
+            {data.tagline}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-4 mt-2">
-            Integrated Solutions Across the Asset Lifecycle
+            {data.heading}
           </h2>
           <p className="text-neutral-500 max-w-2xl mx-auto text-lg">
-            We bridge the gap between technical complexity and commercial
-            success. Whether you are conceptualizing a new plant or optimizing
-            an existing one, we provide the end-to-end expertise required to
-            keep your world running.
+            {data.description}
           </p>
         </motion.div>
 
         {/* Top row: 3 cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {services.slice(0, 3).map((service, index) =>
-          <ServiceCard key={index} service={service} />
-          )}
+          {services.slice(0, 3).map((service: any, index: number) => (
+            <ServiceCard key={index} service={service} />
+          ))}
         </div>
 
         {/* Bottom row: 2 cards centered */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {services.slice(3).map((service, index) =>
-          <ServiceCard key={index + 3} service={service} />
-          )}
+          {services.slice(3).map((service: any, index: number) => (
+            <ServiceCard key={index + 3} service={service} />
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
-function ServiceCard({ service }: { service: typeof services[0] }) {
-  return (
+
+function ServiceCard({ service }: { service: any }) {
+  const ctaUrl = service.ctaUrl;
+  const ctaLabel = service.ctaLabel;
+
+  const cardContent = (
     <motion.div
       initial={{
         opacity: 0,
-        y: 50
+        y: 50,
       }}
       whileInView={{
         opacity: 1,
-        y: 0
+        y: 0,
       }}
       viewport={{
         once: true,
-        margin: '-80px'
+        margin: "-80px",
       }}
       transition={{
         duration: 0.8,
         delay: service.delay,
-        ease: 'easeOut'
+        ease: "easeOut",
       }}
       whileHover={{
-        y: -8
+        y: -8,
       }}
-      className="relative h-[340px] rounded-2xl overflow-hidden group cursor-pointer shadow-lg">
-      
+      className="relative h-[340px] rounded-2xl overflow-hidden group cursor-pointer shadow-lg"
+    >
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">
         <img
           src={service.image}
           alt={service.title}
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
-        
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        />
       </div>
 
       {/* Dark Gradient Overlay */}
@@ -154,15 +127,17 @@ function ServiceCard({ service }: { service: typeof services[0] }) {
           {service.title}
         </h3>
 
-        <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3 group-hover:text-white/90 transition-colors duration-300">
+        <p className="text-white/90 text-sm leading-relaxed mb-4 line-clamp-3 group-hover:text-white/90 transition-colors duration-300">
           {service.description}
         </p>
 
         <div className="flex items-center text-sm font-bold text-white/80 group-hover:text-brand-light transition-colors duration-300">
-          Learn more
+          {ctaLabel}
           <ArrowRightIcon className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
         </div>
       </div>
-    </motion.div>);
+    </motion.div>
+  );
 
+  return <Link to={ctaUrl}>{cardContent}</Link>;
 }

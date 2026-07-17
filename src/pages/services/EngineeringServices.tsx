@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Navbar } from '../../components/Navbar';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import React, { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import { Footer } from "../../components/Footer";
+import { Navigation } from "../../components/Navigation";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import {
   ArrowRightIcon,
   ArrowLeftIcon,
@@ -16,20 +17,45 @@ import {
   SearchIcon,
   PencilRulerIcon,
   SettingsIcon,
-  ShieldCheckIcon } from
-'lucide-react';
+  ShieldCheckIcon,
+} from "lucide-react";
+import { useSectionData } from "../../store/useCMSStore";
+import { useSEO } from "../../hooks/useSEO";
+
+const capabilityIcons = [
+  TargetIcon,
+  TrendingUpIcon,
+  FileTextIcon,
+  LayoutIcon,
+  ZapIcon,
+  NetworkIcon,
+];
+const processIcons = [
+  SearchIcon,
+  TrendingUpIcon,
+  PencilRulerIcon,
+  SettingsIcon,
+  ShieldCheckIcon,
+];
+const valueIcons = [
+  ShieldCheckIcon,
+  TargetIcon,
+  ClipboardCheckIcon,
+  CheckCircle2Icon,
+];
+
 // Animated Counter Component
 function AnimatedCounter({
   target,
-  suffix = ''
-
-
-
-}: {target: number;suffix?: string;}) {
+  suffix = "",
+}: {
+  target: number;
+  suffix?: string;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, {
     once: true,
-    margin: '-100px'
+    margin: "-100px",
   });
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -54,11 +80,25 @@ function AnimatedCounter({
     <span ref={ref}>
       {count}
       {suffix}
-    </span>);
-
+    </span>
+  );
 }
 // Immersive Hero Section
 function EngineeringHero() {
+  const { data } = useSectionData<any>(
+    "engineering-services",
+    "EngineeringHero",
+    {
+      heroTitle: "ENGINEERING SERVICES",
+      heroSubtitle:
+        "Comprehensive engineering solutions forming the foundation of reliable and efficient energy infrastructure across power generation, transmission, and renewable energy projects.",
+      backgroundImage:
+        "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=2400",
+      stat1: "500+ Projects Engineered",
+      stat2: "8000+ MW Designed",
+      stat3: "99.2% Design Accuracy",
+    },
+  );
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
@@ -67,15 +107,16 @@ function EngineeringHero() {
       {/* Parallax Background */}
       <motion.div
         style={{
-          y
+          y,
         }}
-        className="absolute inset-0">
-        
+        className="absolute inset-0"
+      >
         <img
-          src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=2400"
+          src={data.backgroundImage}
           alt="Power engineering facility"
-          className="w-full h-full object-cover opacity-40" />
-        
+          className="w-full h-full object-cover opacity-40"
+        />
+
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/90 via-neutral-900/70 to-neutral-900" />
       </motion.div>
 
@@ -84,48 +125,48 @@ function EngineeringHero() {
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage:
-          'linear-gradient(rgba(233,30,140,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.3) 1px, transparent 1px)',
-          backgroundSize: '80px 80px'
-        }} />
-      
+            "linear-gradient(rgba(233,30,140,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(233,30,140,0.3) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 py-20">
         <motion.div
           style={{
-            opacity
+            opacity,
           }}
           initial={{
             opacity: 0,
-            y: 40
+            y: 40,
           }}
           animate={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           transition={{
             duration: 1,
-            ease: 'easeOut'
-          }}>
-          
+            ease: "easeOut",
+          }}
+        >
           {/* Breadcrumb */}
           <motion.div
             initial={{
               opacity: 0,
-              x: -20
+              x: -20,
             }}
             animate={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             transition={{
               duration: 0.6,
-              delay: 0.2
-            }}>
-            
+              delay: 0.2,
+            }}
+          >
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300 mb-12">
-              
+              className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300 mb-12"
+            >
               <ArrowLeftIcon size={16} />
               Back to Services
             </Link>
@@ -135,18 +176,18 @@ function EngineeringHero() {
           <motion.div
             initial={{
               opacity: 0,
-              x: -20
+              x: -20,
             }}
             animate={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             transition={{
               duration: 0.6,
-              delay: 0.3
+              delay: 0.3,
             }}
-            className="flex items-center gap-3 mb-8">
-            
+            className="flex items-center gap-3 mb-8"
+          >
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
               Service 01
@@ -157,40 +198,38 @@ function EngineeringHero() {
           <motion.h1
             initial={{
               opacity: 0,
-              y: 30
+              y: 30,
             }}
             animate={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.4
+              delay: 0.4,
             }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8 max-w-5xl">
-            
-            ENGINEERING SERVICES
+            className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8 max-w-5xl text-white select-text cursor-text selection:bg-brand-pink selection:text-white"
+          >
+            {data.heroTitle}
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p
             initial={{
               opacity: 0,
-              y: 20
+              y: 20,
             }}
             animate={{
               opacity: 1,
-              y: 0
+              y: 0,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.6
+              delay: 0.6,
             }}
-            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light max-w-3xl mb-12">
-            
-            Comprehensive engineering solutions forming the foundation of
-            reliable and efficient energy infrastructure across power
-            generation, transmission, and renewable energy projects.
+            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light max-w-3xl mb-12"
+          >
+            {data.heroSubtitle}
           </motion.p>
 
           {/* Floating Stat Badges */}
@@ -198,62 +237,80 @@ function EngineeringHero() {
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               animate={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               transition={{
                 duration: 0.6,
-                delay: 0.8
+                delay: 0.8,
               }}
-              className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase">
-              
-              500+ Projects Engineered
+              className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase"
+            >
+              {data.stat1}
             </motion.div>
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               animate={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               transition={{
                 duration: 0.6,
-                delay: 0.9
+                delay: 0.9,
               }}
-              className="px-6 py-3 bg-white/90 backdrop-blur-sm text-neutral-900 font-bold text-sm tracking-wider uppercase">
-              
-              8000+ MW Designed
+              className="px-6 py-3 bg-white/90 backdrop-blur-sm text-neutral-900 font-bold text-sm tracking-wider uppercase"
+            >
+              {data.stat2}
             </motion.div>
             <motion.div
               initial={{
                 opacity: 0,
-                y: 20
+                y: 20,
               }}
               animate={{
                 opacity: 1,
-                y: 0
+                y: 0,
               }}
               transition={{
                 duration: 0.6,
-                delay: 1.0
+                delay: 1.0,
               }}
-              className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-sm tracking-wider uppercase">
-              
-              99.2% Design Accuracy
+              className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-sm tracking-wider uppercase"
+            >
+              {data.stat3}
             </motion.div>
           </div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 // Overview Section
 function OverviewSection() {
+  const { data } = useSectionData<any>(
+    "engineering-services",
+    "OverviewSection",
+    {
+      tagline: "Overview",
+      heading: "Building the Foundation of Reliable Energy Infrastructure",
+      para1:
+        "Our engineering services deliver comprehensive solutions that form the foundation of reliable and efficient energy infrastructure. We bring deep technical expertise across feasibility analysis, system design, and detailed engineering for power generation, transmission, and renewable energy projects.",
+      para2:
+        "From initial site assessment to final design validation, our engineering team ensures every project is built on a strong technical foundation that optimizes performance, minimizes risk, and delivers long-term value.",
+      quote:
+        "Engineering excellence is not just about technical precision — it's about understanding the entire lifecycle and designing for reliability, efficiency, and sustainable performance.",
+      image:
+        "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200",
+      badgeTitle: "Engineering Excellence",
+      badgeValue: "Since 2009",
+    },
+  );
   return (
     <section className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -262,52 +319,38 @@ function OverviewSection() {
           <motion.div
             initial={{
               opacity: 0,
-              x: -40
+              x: -40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
-            }}>
-            
+              duration: 0.8,
+            }}
+          >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                Overview
+                {data.tagline}
               </span>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8 leading-tight">
-              Building the Foundation of Reliable Energy Infrastructure
+            <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8 leading-tight selection:bg-brand-pink selection:text-white select-text cursor-text">
+              {data.heading}
             </h2>
 
             <div className="space-y-6 text-lg text-neutral-700 leading-relaxed">
-              <p>
-                Our engineering services deliver comprehensive solutions that
-                form the foundation of reliable and efficient energy
-                infrastructure. We bring deep technical expertise across
-                feasibility analysis, system design, and detailed engineering
-                for power generation, transmission, and renewable energy
-                projects.
-              </p>
-              <p>
-                From initial site assessment to final design validation, our
-                engineering team ensures every project is built on a strong
-                technical foundation that optimizes performance, minimizes risk,
-                and delivers long-term value.
-              </p>
+              <p>{data.para1}</p>
+              <p>{data.para2}</p>
 
               {/* Callout */}
               <div className="mt-8 p-6 bg-brand-panel border-l-4 border-brand-pink">
                 <p className="text-neutral-900 font-medium italic">
-                  "Engineering excellence is not just about technical precision
-                  — it's about understanding the entire lifecycle and designing
-                  for reliability, efficiency, and sustainable performance."
+                  "{data.quote}"
                 </p>
               </div>
             </div>
@@ -317,32 +360,33 @@ function OverviewSection() {
           <motion.div
             initial={{
               opacity: 0,
-              x: 40
+              x: 40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.2
+              delay: 0.2,
             }}
-            className="relative">
-            
+            className="relative"
+          >
             <div
               className="relative"
               style={{
-                transform: 'rotate(2deg)'
-              }}>
-              
+                transform: "rotate(2deg)",
+              }}
+            >
               <img
-                src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200"
+                src={data.image}
                 alt="Engineers reviewing blueprints"
-                className="w-full h-[600px] object-cover shadow-2xl" />
-              
+                className="w-full h-[600px] object-cover shadow-2xl"
+              />
+
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/20 to-transparent" />
             </div>
 
@@ -350,85 +394,96 @@ function OverviewSection() {
             <motion.div
               initial={{
                 opacity: 0,
-                scale: 0.8
+                scale: 0.8,
               }}
               whileInView={{
                 opacity: 1,
-                scale: 1
+                scale: 1,
               }}
               viewport={{
-                once: true
+                once: true,
               }}
               transition={{
                 duration: 0.6,
-                delay: 0.6
+                delay: 0.6,
               }}
-              className="absolute -bottom-6 -left-6 px-6 py-4 bg-white shadow-xl border border-neutral-200">
-              
+              className="absolute -bottom-6 -left-6 px-6 py-4 bg-white shadow-xl border border-neutral-200"
+            >
               <div className="text-xs font-bold text-brand-pink uppercase tracking-wider mb-1">
-                Engineering Excellence
+                {data.badgeTitle}
               </div>
               <div className="text-2xl font-black text-neutral-900">
-                Since 2009
+                {data.badgeValue}
               </div>
             </motion.div>
           </motion.div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 // Key Capabilities Section
 function CapabilitiesSection() {
-  const capabilities = [
-  {
-    title: 'Site Assessment & Evaluation',
-    description:
-    'Comprehensive technical evaluation of site conditions, resource availability, and project feasibility',
-    icon: TargetIcon,
-    image:
-    'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200'
-  },
-  {
-    title: 'Energy Yield Analysis',
-    description:
-    'Detailed resource assessment and energy generation forecasting for optimal project planning',
-    icon: TrendingUpIcon,
-    image:
-    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1200'
-  },
-  {
-    title: 'Feasibility Studies',
-    description:
-    'Pre-feasibility and detailed feasibility studies with technical and commercial evaluation',
-    icon: FileTextIcon,
-    image:
-    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200'
-  },
-  {
-    title: 'Design & Engineering',
-    description:
-    'Design review, detailed engineering, and preparation of comprehensive project reports (DPR)',
-    icon: LayoutIcon,
-    image:
-    'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=1200'
-  },
-  {
-    title: 'System Integration',
-    description:
-    'Power evacuation planning and system integration for seamless grid connectivity',
-    icon: ZapIcon,
-    image:
-    'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200'
-  },
-  {
-    title: 'Transmission & Substation Design',
-    description:
-    'Transmission line design (33kV to 765kV) and substation design (AIS/GIS systems)',
-    icon: NetworkIcon,
-    image:
-    'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200'
-  }];
+  const { data } = useSectionData<any>(
+    "engineering-services",
+    "CapabilitiesSection",
+    {
+      tagline: "Capabilities",
+      heading: "Key Capabilities",
+      subheading:
+        "Our engineering services span the complete project lifecycle, from initial assessment to detailed design and technical validation.",
+      capabilitiesList: [
+        {
+          title: "Site Assessment & Evaluation",
+          description:
+            "Comprehensive technical evaluation of site conditions, resource availability, and project feasibility",
+          image:
+            "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          title: "Energy Yield Analysis",
+          description:
+            "Detailed resource assessment and energy generation forecasting for optimal project planning",
+          image:
+            "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          title: "Feasibility Studies",
+          description:
+            "Pre-feasibility and detailed feasibility studies with technical and commercial evaluation",
+          image:
+            "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          title: "Design & Engineering",
+          description:
+            "Design review, detailed engineering, and preparation of comprehensive project reports (DPR)",
+          image:
+            "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          title: "System Integration",
+          description:
+            "Power evacuation planning and system integration for seamless grid connectivity",
+          image:
+            "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          title: "Transmission & Substation Design",
+          description:
+            "Transmission line design (33kV to 765kV) and substation design (AIS/GIS systems)",
+          image:
+            "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200",
+        },
+      ],
+    },
+  );
+  const capabilities = (data.capabilitiesList || []).map(
+    (cap: any, i: number) => ({
+      ...cap,
+      icon: capabilityIcons[i % capabilityIcons.length] || TargetIcon,
+    }),
+  );
 
   return (
     <section className="py-32 bg-neutral-50">
@@ -436,70 +491,70 @@ function CapabilitiesSection() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="mb-16">
-          
+          className="mb-16"
+        >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Capabilities
+              {data.tagline}
             </span>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 mb-6">
-            Key Capabilities
+            {data.heading}
           </h2>
           <p className="text-neutral-600 text-xl max-w-3xl">
-            Our engineering services span the complete project lifecycle, from
-            initial assessment to detailed design and technical validation.
+            {data.subheading}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {capabilities.map((cap, i) =>
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              y: 40
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true,
-              margin: '-50px'
-            }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.1
-            }}
-            whileHover={{
-              y: -8
-            }}
-            className="group relative overflow-hidden bg-white border border-neutral-200 hover:border-brand-pink/50 transition-all duration-500">
-            
+          {capabilities.map((cap: any, i: number) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                y: 40,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+                margin: "-50px",
+              }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.1,
+              }}
+              whileHover={{
+                y: -8,
+              }}
+              className="group relative overflow-hidden bg-white border border-neutral-200 hover:border-brand-pink/50 transition-all duration-500"
+            >
               {/* Background Image */}
               <div className="relative h-48 overflow-hidden">
                 <motion.img
-                whileHover={{
-                  scale: 1.1
-                }}
-                transition={{
-                  duration: 0.6
-                }}
-                src={cap.image}
-                alt={cap.title}
-                className="w-full h-full object-cover" />
-              
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  transition={{
+                    duration: 0.6,
+                  }}
+                  src={cap.image}
+                  alt={cap.title}
+                  className="w-full h-full object-cover"
+                />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/60 to-transparent" />
 
                 {/* Icon */}
@@ -518,55 +573,65 @@ function CapabilitiesSection() {
                 </p>
               </div>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 // Engineering Process Section
 function ProcessSection() {
-  const steps = [
-  {
-    title: 'Assessment',
-    description:
-    'Comprehensive site evaluation, resource analysis, and technical feasibility assessment',
-    icon: SearchIcon,
-    image:
-    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200'
-  },
-  {
-    title: 'Analysis',
-    description:
-    'Energy yield forecasting, system modeling, and detailed technical evaluation',
-    icon: TrendingUpIcon,
-    image:
-    'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=1200'
-  },
-  {
-    title: 'Design',
-    description:
-    'Detailed engineering, system design, and comprehensive project documentation',
-    icon: PencilRulerIcon,
-    image:
-    'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200'
-  },
-  {
-    title: 'Integration',
-    description:
-    'Power evacuation planning, grid connectivity design, and system integration',
-    icon: SettingsIcon,
-    image:
-    'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200'
-  },
-  {
-    title: 'Validation',
-    description:
-    'Design review, technical validation, and regulatory compliance verification',
-    icon: ShieldCheckIcon,
-    image:
-    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1200'
-  }];
+  const { data } = useSectionData<any>(
+    "engineering-services",
+    "ProcessSection",
+    {
+      tagline: "Our Approach",
+      heading: "Engineering Methodology",
+      subheading:
+        "A systematic approach to engineering excellence, ensuring every project is built on a foundation of technical rigor and precision.",
+      stepsList: [
+        {
+          title: "Assessment",
+          description:
+            "Comprehensive site evaluation, resource analysis, and technical feasibility assessment",
+          image:
+            "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          title: "Analysis",
+          description:
+            "Energy yield forecasting, system modeling, and detailed technical evaluation",
+          image:
+            "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          title: "Design",
+          description:
+            "Detailed engineering, system design, and comprehensive project documentation",
+          image:
+            "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          title: "Integration",
+          description:
+            "Power evacuation planning, grid connectivity design, and system integration",
+          image:
+            "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          title: "Validation",
+          description:
+            "Design review, technical validation, and regulatory compliance verification",
+          image:
+            "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1200",
+        },
+      ],
+    },
+  );
+  const steps = (data.stepsList || []).map((step: any, i: number) => ({
+    ...step,
+    icon: processIcons[i % processIcons.length] || SearchIcon,
+  }));
 
   return (
     <section className="py-32 bg-white">
@@ -574,30 +639,29 @@ function ProcessSection() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="mb-20 text-center">
-          
+          className="mb-20 text-center"
+        >
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Our Approach
+              {data.tagline}
             </span>
             <div className="w-8 h-[2px] bg-brand-pink" />
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 mb-6">
-            Engineering Methodology
+            {data.heading}
           </h2>
           <p className="text-neutral-600 text-xl max-w-3xl mx-auto">
-            A systematic approach to engineering excellence, ensuring every
-            project is built on a foundation of technical rigor and precision.
+            {data.subheading}
           </p>
         </motion.div>
 
@@ -605,34 +669,34 @@ function ProcessSection() {
           {/* Connecting Line */}
           <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-brand-pink via-brand-pink/50 to-transparent hidden lg:block" />
 
-          {steps.map((step, i) =>
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              x: i % 2 === 0 ? -60 : 60
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0
-            }}
-            viewport={{
-              once: true,
-              margin: '-100px'
-            }}
-            transition={{
-              duration: 0.8,
-              delay: i * 0.1
-            }}
-            className={`grid lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
-            
+          {steps.map((step: any, i: number) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                x: i % 2 === 0 ? -60 : 60,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+                margin: "-100px",
+              }}
+              transition={{
+                duration: 0.8,
+                delay: i * 0.1,
+              }}
+              className={`grid lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? "lg:flex-row-reverse" : ""}`}
+            >
               {/* Content */}
               <div
-              className={`${i % 2 === 1 ? 'lg:col-start-2 lg:text-left' : 'lg:text-right'}`}>
-              
+                className={`${i % 2 === 1 ? "lg:col-start-2 lg:text-left" : "lg:text-right"}`}
+              >
                 <div
-                className={`inline-flex items-center gap-3 mb-4 ${i % 2 === 1 ? '' : 'lg:flex-row-reverse'}`}>
-                
+                  className={`inline-flex items-center gap-3 mb-4 ${i % 2 === 1 ? "" : "lg:flex-row-reverse"}`}
+                >
                   <div className="w-14 h-14 bg-brand-panel rounded-xl flex items-center justify-center text-brand-pink">
                     <step.icon size={28} strokeWidth={1.5} />
                   </div>
@@ -650,55 +714,74 @@ function ProcessSection() {
 
               {/* Image */}
               <div
-              className={`${i % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-              
+                className={`${i % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""}`}
+              >
                 <motion.div
-                whileHover={{
-                  scale: 1.02
-                }}
-                transition={{
-                  duration: 0.4
-                }}
-                className="relative overflow-hidden shadow-2xl">
-                
+                  whileHover={{
+                    scale: 1.02,
+                  }}
+                  transition={{
+                    duration: 0.4,
+                  }}
+                  className="relative overflow-hidden shadow-2xl"
+                >
                   <img
-                  src={step.image}
-                  alt={step.title}
-                  className="w-full h-80 object-cover" />
-                
+                    src={step.image}
+                    alt={step.title}
+                    className="w-full h-80 object-cover"
+                  />
+
                   <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/40 to-transparent" />
                 </motion.div>
               </div>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 // Stats Section
 function StatsSection() {
+  const { data } = useSectionData<any>("engineering-services", "StatsSection", {
+    heading: "Engineering Impact",
+    subheading:
+      "Delivering measurable results through technical excellence and precision engineering",
+    stat1Value: 500,
+    stat1Suffix: "+",
+    stat1Label: "Projects Engineered",
+    stat2Value: 8000,
+    stat2Suffix: "+ MW",
+    stat2Label: "Capacity Designed",
+    stat3Value: 23,
+    stat3Suffix: "+",
+    stat3Label: "Countries Served",
+    stat4Value: 99.2,
+    stat4Suffix: "%",
+    stat4Label: "Design Accuracy",
+  });
   const stats = [
-  {
-    value: 500,
-    suffix: '+',
-    label: 'Projects Engineered'
-  },
-  {
-    value: 8000,
-    suffix: '+ MW',
-    label: 'Capacity Designed'
-  },
-  {
-    value: 23,
-    suffix: '+',
-    label: 'Countries Served'
-  },
-  {
-    value: 99.2,
-    suffix: '%',
-    label: 'Design Accuracy'
-  }];
+    {
+      value: data.stat1Value,
+      suffix: data.stat1Suffix,
+      label: data.stat1Label,
+    },
+    {
+      value: data.stat2Value,
+      suffix: data.stat2Suffix,
+      label: data.stat2Label,
+    },
+    {
+      value: data.stat3Value,
+      suffix: data.stat3Suffix,
+      label: data.stat3Label,
+    },
+    {
+      value: data.stat4Value,
+      suffix: data.stat4Suffix,
+      label: data.stat4Label,
+    },
+  ];
 
   return (
     <section className="py-32 bg-neutral-900 text-white relative overflow-hidden">
@@ -712,47 +795,46 @@ function StatsSection() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="text-center mb-16">
-          
+          className="text-center mb-16"
+        >
           <h2 className="text-4xl md:text-6xl font-black mb-6">
-            Engineering Impact
+            {data.heading}
           </h2>
           <p className="text-xl text-neutral-300 max-w-2xl mx-auto">
-            Delivering measurable results through technical excellence and
-            precision engineering
+            {data.subheading}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat, i) =>
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.1
-            }}
-            className="text-center p-8 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-brand-pink/50 transition-colors duration-300">
-            
+          {stats.map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.1,
+              }}
+              className="text-center p-8 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-brand-pink/50 transition-colors duration-300"
+            >
               <div className="text-5xl md:text-6xl font-black text-brand-pink mb-3">
                 <AnimatedCounter target={stat.value} suffix={stat.suffix} />
               </div>
@@ -760,14 +842,33 @@ function StatsSection() {
                 {stat.label}
               </div>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 // Featured Project Section
 function FeaturedProjectSection() {
+  const { data } = useSectionData<any>(
+    "engineering-services",
+    "FeaturedProjectSection",
+    {
+      tagline: "Featured Project",
+      heading: "Engineering Excellence in Action",
+      projectImage:
+        "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=2400",
+      projectTitle: "The Obra 'C' Thermal Success",
+      description:
+        "Complete engineering services for a 2x660 MW supercritical thermal power plant in Uttar Pradesh, delivering comprehensive design, system integration, and technical validation.",
+      metric1Value: "1,320 MW",
+      metric1Label: "Total Capacity",
+      metric2Value: "Supercritical",
+      metric2Label: "Technology",
+      metric3Value: "On Schedule",
+      metric3Label: "Delivery",
+    },
+  );
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 2000], [0, -100]);
   return (
@@ -776,25 +877,25 @@ function FeaturedProjectSection() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="mb-16">
-          
+          className="mb-16"
+        >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Featured Project
+              {data.tagline}
             </span>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900">
-            Engineering Excellence in Action
+            {data.heading}
           </h2>
         </motion.div>
 
@@ -803,31 +904,32 @@ function FeaturedProjectSection() {
           <motion.div
             initial={{
               opacity: 0,
-              x: -40
+              x: -40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
+              duration: 0.8,
             }}
-            className="lg:col-span-3 relative overflow-hidden">
-            
+            className="lg:col-span-3 relative overflow-hidden"
+          >
             <motion.div
               style={{
-                y
+                y,
               }}
-              className="relative">
-              
+              className="relative"
+            >
               <img
-                src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=2400"
+                src={data.projectImage}
                 alt="Obra C Thermal Power Plant"
-                className="w-full h-[600px] object-cover shadow-2xl" />
-              
+                className="w-full h-[600px] object-cover shadow-2xl"
+              />
+
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 via-transparent to-transparent" />
             </motion.div>
           </motion.div>
@@ -836,28 +938,26 @@ function FeaturedProjectSection() {
           <motion.div
             initial={{
               opacity: 0,
-              x: 40
+              x: 40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
               duration: 0.8,
-              delay: 0.2
+              delay: 0.2,
             }}
-            className="lg:col-span-2">
-            
+            className="lg:col-span-2"
+          >
             <h3 className="text-3xl font-black text-neutral-900 mb-4 uppercase tracking-tight">
-              The Obra 'C' Thermal Success
+              {data.projectTitle}
             </h3>
             <p className="text-neutral-600 text-lg leading-relaxed mb-8">
-              Complete engineering services for a 2x660 MW supercritical thermal
-              power plant in Uttar Pradesh, delivering comprehensive design,
-              system integration, and technical validation.
+              {data.description}
             </p>
 
             {/* Metrics */}
@@ -868,9 +968,11 @@ function FeaturedProjectSection() {
                 </div>
                 <div>
                   <div className="text-2xl font-black text-neutral-900">
-                    1,320 MW
+                    {data.metric1Value}
                   </div>
-                  <div className="text-sm text-neutral-600">Total Capacity</div>
+                  <div className="text-sm text-neutral-600">
+                    {data.metric1Label}
+                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -879,9 +981,11 @@ function FeaturedProjectSection() {
                 </div>
                 <div>
                   <div className="text-2xl font-black text-neutral-900">
-                    Supercritical
+                    {data.metric2Value}
                   </div>
-                  <div className="text-sm text-neutral-600">Technology</div>
+                  <div className="text-sm text-neutral-600">
+                    {data.metric2Label}
+                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -890,45 +994,54 @@ function FeaturedProjectSection() {
                 </div>
                 <div>
                   <div className="text-2xl font-black text-neutral-900">
-                    On Schedule
+                    {data.metric3Value}
                   </div>
-                  <div className="text-sm text-neutral-600">Delivery</div>
+                  <div className="text-sm text-neutral-600">
+                    {data.metric3Label}
+                  </div>
                 </div>
               </div>
             </div>
           </motion.div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 // Value Delivered Section
 function ValueSection() {
-  const values = [
-  {
-    title: 'Reduced Project Risk',
-    description:
-    'Accurate planning and technical validation minimize execution risks and costly delays',
-    icon: ShieldCheckIcon
-  },
-  {
-    title: 'Optimized System Design',
-    description:
-    'Performance-focused engineering ensures maximum efficiency and reliability',
-    icon: TargetIcon
-  },
-  {
-    title: 'Strong Technical Foundation',
-    description:
-    'Comprehensive documentation and design reviews support seamless execution',
-    icon: ClipboardCheckIcon
-  },
-  {
-    title: 'Regulatory Compliance',
-    description:
-    'Designs meet all applicable standards and regulatory requirements',
-    icon: CheckCircle2Icon
-  }];
+  const { data } = useSectionData<any>("engineering-services", "ValueSection", {
+    tagline: "Value Delivered",
+    heading: "Engineering Value",
+    subheading:
+      "Our engineering approach delivers measurable value through risk reduction, performance optimization, and technical excellence.",
+    valuesList: [
+      {
+        title: "Reduced Project Risk",
+        description:
+          "Accurate planning and technical validation minimize execution risks and costly delays",
+      },
+      {
+        title: "Optimized System Design",
+        description:
+          "Performance-focused engineering ensures maximum efficiency and reliability",
+      },
+      {
+        title: "Strong Technical Foundation",
+        description:
+          "Comprehensive documentation and design reviews support seamless execution",
+      },
+      {
+        title: "Regulatory Compliance",
+        description:
+          "Designs meet all applicable standards and regulatory requirements",
+      },
+    ],
+  });
+  const values = (data.valuesList || []).map((value: any, i: number) => ({
+    ...value,
+    icon: valueIcons[i % valueIcons.length] || ShieldCheckIcon,
+  }));
 
   return (
     <section className="py-32 bg-neutral-50">
@@ -936,57 +1049,56 @@ function ValueSection() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="mb-16 text-center">
-          
+          className="mb-16 text-center"
+        >
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Value Delivered
+              {data.tagline}
             </span>
             <div className="w-8 h-[2px] bg-brand-pink" />
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900 mb-6">
-            Engineering Value
+            {data.heading}
           </h2>
           <p className="text-neutral-600 text-xl max-w-3xl mx-auto">
-            Our engineering approach delivers measurable value through risk
-            reduction, performance optimization, and technical excellence.
+            {data.subheading}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {values.map((value, i) =>
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              x: i % 2 === 0 ? -40 : 40
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.1
-            }}
-            whileHover={{
-              y: -4
-            }}
-            className="flex gap-6 p-8 bg-white border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300">
-            
+          {values.map((value: any, i: number) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                x: i % 2 === 0 ? -40 : 40,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.1,
+              }}
+              whileHover={{
+                y: -4,
+              }}
+              className="flex gap-6 p-8 bg-white border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300"
+            >
               <div className="w-14 h-14 bg-brand-panel rounded-xl flex items-center justify-center text-brand-pink flex-shrink-0">
                 <value.icon size={28} strokeWidth={1.5} />
               </div>
@@ -999,39 +1111,49 @@ function ValueSection() {
                 </p>
               </div>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 // Related Services Section
 function RelatedServicesSection() {
-  const services = [
-  {
-    title: 'Project Management',
-    description:
-    'Structured planning, coordination, and control across all project phases',
-    link: '/services/project-management',
-    image:
-    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200'
-  },
-  {
-    title: 'EPC & Construction',
-    description:
-    'Execution support across engineering, procurement, and construction',
-    link: '/services',
-    image:
-    'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200'
-  },
-  {
-    title: 'O&M Services',
-    description:
-    'Long-term operational excellence and performance optimization',
-    link: '/services',
-    image:
-    'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200'
-  }];
+  const { data } = useSectionData<any>(
+    "engineering-services",
+    "RelatedServicesSection",
+    {
+      tagline: "Related Services",
+      heading: "Explore More Services",
+      services: [
+        {
+          title: "Project Management",
+          description:
+            "Structured planning, coordination, and control across all project phases",
+          link: "/services/project-management",
+          image:
+            "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          title: "EPC & Construction",
+          description:
+            "Execution support across engineering, procurement, and construction",
+          link: "/services",
+          image:
+            "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          title: "O&M Services",
+          description:
+            "Long-term operational excellence and performance optimization",
+          link: "/services",
+          image:
+            "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200",
+        },
+      ],
+    },
+  );
+  const services = data.services || [];
 
   return (
     <section className="py-32 bg-white">
@@ -1039,65 +1161,66 @@ function RelatedServicesSection() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 20
+            y: 20,
           }}
           whileInView={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
-          className="mb-16">
-          
+          className="mb-16"
+        >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-brand-pink" />
             <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              Related Services
+              {data.tagline}
             </span>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-neutral-900">
-            Explore More Services
+            {data.heading}
           </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {services.map((service, i) =>
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.1
-            }}
-            whileHover={{
-              y: -8
-            }}
-            className="group relative overflow-hidden bg-white border border-neutral-200 hover:border-brand-pink/50 transition-all duration-500">
-            
+          {services.map((service: any, i: number) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.1,
+              }}
+              whileHover={{
+                y: -8,
+              }}
+              className="group relative overflow-hidden bg-white border border-neutral-200 hover:border-brand-pink/50 transition-all duration-500"
+            >
               {/* Image */}
               <div className="relative h-64 overflow-hidden">
                 <motion.img
-                whileHover={{
-                  scale: 1.1
-                }}
-                transition={{
-                  duration: 0.6
-                }}
-                src={service.image}
-                alt={service.title}
-                className="w-full h-full object-cover" />
-              
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  transition={{
+                    duration: 0.6,
+                  }}
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover"
+                />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/40 to-transparent" />
               </div>
 
@@ -1111,22 +1234,31 @@ function RelatedServicesSection() {
                 </p>
 
                 <Link
-                to={service.link}
-                className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300">
-                
+                  to={service.link}
+                  className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300"
+                >
                   Explore Service
                   <ArrowRightIcon size={16} />
                 </Link>
               </div>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 // CTA Section
 function CTASection() {
+  const { data } = useSectionData<any>("engineering-services", "CTASection", {
+    heading: "Ready to Start Your Engineering Project?",
+    description:
+      "Let our engineering team help you build a strong technical foundation for your energy infrastructure project.",
+    primaryBtnLabel: "Get Started",
+    primaryBtnUrl: "/contact",
+    secondaryBtnLabel: "View All Services",
+    secondaryBtnUrl: "/services",
+  });
   return (
     <section className="py-32 bg-neutral-900 text-white relative overflow-hidden">
       {/* Background Glow */}
@@ -1138,55 +1270,57 @@ function CTASection() {
         <motion.div
           initial={{
             opacity: 0,
-            scale: 0.95
+            scale: 0.95,
           }}
           whileInView={{
             opacity: 1,
-            scale: 1
+            scale: 1,
           }}
           viewport={{
-            once: true
+            once: true,
           }}
           transition={{
-            duration: 0.8
-          }}>
-          
+            duration: 0.8,
+          }}
+        >
           <h2 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
-            Ready to Start Your Engineering Project?
+            {data.heading}
           </h2>
           <p className="text-xl text-neutral-300 mb-12 leading-relaxed">
-            Let our engineering team help you build a strong technical
-            foundation for your energy infrastructure project.
+            {data.description}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-              
-              Get Started
+              to={data.primaryBtnUrl || "/contact"}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+            >
+              {data.primaryBtnLabel}
               <ArrowRightIcon size={16} />
             </Link>
             <Link
-              to="/services"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300">
-              
-              View All Services
+              to={data.secondaryBtnUrl || "/services"}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300"
+            >
+              {data.secondaryBtnLabel}
             </Link>
           </div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 // Main Component
 export function EngineeringServices() {
+  useSEO("service/engineering");
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
-      <Navbar />
+    <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
+      {/* Navigation */}
+      <Navigation />
 
       <EngineeringHero />
       <OverviewSection />
@@ -1199,25 +1333,7 @@ export function EngineeringServices() {
       <CTASection />
 
       {/* Footer */}
-      <footer className="py-12 border-t border-neutral-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center text-neutral-500 text-sm">
-          <div className="font-black text-neutral-900 text-xl mb-4 md:mb-0 tracking-tighter">
-            ENCOTEC
-          </div>
-          <div className="flex gap-8">
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Terms
-            </a>
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Contact
-            </a>
-          </div>
-          <div className="mt-4 md:mt-0">© 2024 Encotec Engineering.</div>
-        </div>
-      </footer>
-    </main>);
-
+      <Footer />
+    </main>
+  );
 }

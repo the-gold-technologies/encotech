@@ -1,18 +1,30 @@
-import { Link } from 'react-router-dom';
-import { Navbar } from '../../components/Navbar';
-import { motion } from 'framer-motion';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Footer } from "../../components/Footer";
+import { Navigation } from "../../components/Navigation";
+import { motion } from "framer-motion";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   GlobeIcon,
   PackageIcon,
   WrenchIcon,
+  ShieldCheckIcon,
   TruckIcon,
-  ShieldCheckIcon } from
-'lucide-react';
+} from "lucide-react";
+import { useSectionData } from "../../store/useCMSStore";
+import { useSEO } from "../../hooks/useSEO";
 
+const vasFeatureIconMap = [GlobeIcon, PackageIcon, WrenchIcon];
 
 function SourcingHero() {
+  const { data } = useSectionData<any>("value-added", "SourcingHero", {
+    label: "Strategic Global Sourcing",
+    headingPart1: "The Global Link for ",
+    headingHighlight: "Critical Equipment",
+    description:
+      "Downtime is often caused by a missing part, not a missing plan. Encotec acts as your strategic sourcing partner, leveraging deep relationships with manufacturers to get you what you need, when you need it.",
+  });
   return (
     <section className="relative min-h-[90vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center pt-20">
       <div className="absolute inset-0 opacity-10">
@@ -22,14 +34,14 @@ function SourcingHero() {
               id="grid"
               width="40"
               height="40"
-              patternUnits="userSpaceOnUse">
-              
+              patternUnits="userSpaceOnUse"
+            >
               <path
                 d="M 40 0 L 0 0 0 40"
                 fill="none"
                 stroke="white"
-                strokeWidth="0.5" />
-              
+                strokeWidth="0.5"
+              />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
@@ -42,22 +54,22 @@ function SourcingHero() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 40
+            y: 40,
           }}
           animate={{
             opacity: 1,
-            y: 0
+            y: 0,
           }}
           transition={{
             duration: 1,
-            ease: 'easeOut'
+            ease: "easeOut",
           }}
-          className="max-w-4xl">
-          
+          className="max-w-4xl"
+        >
           <Link
             to="/services"
-            className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300 mb-12">
-            
+            className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300 mb-12"
+          >
             <ArrowLeftIcon size={16} />
             Back to Services
           </Link>
@@ -65,74 +77,78 @@ function SourcingHero() {
           <div className="flex items-center gap-3 mb-8">
             <div className="w-12 h-[3px] bg-brand-pink" />
             <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              Strategic Global Sourcing
+              {data.label || ""}
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
-            The Global Link for <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
-              Critical Equipment
-            </span>
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8">
+            {data.headingPart1 || ""}
+            {data.headingHighlight && (
+              <>
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-light">
+                  {data.headingHighlight}
+                </span>
+              </>
+            )}
           </h1>
 
           <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl">
-            Downtime is often caused by a missing part, not a missing plan.
-            Encotec acts as your strategic sourcing partner, leveraging deep
-            relationships with manufacturers to get you what you need, when you
-            need it.
+            {data.description || ""}
           </p>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
-
 function SourcingFeatures() {
-  const features = [
-  {
-    title: 'Global OEM Network',
-    description:
-    'We have established tie-ups with over 65 major OEMs in China, Vietnam, Korea, and India, giving you direct access to high-quality components without the logistical headache.',
-    icon: GlobeIcon
-  },
-  {
-    title: 'Comprehensive Inventory',
-    description:
-    'We supply everything from high-pressure boiler spares to coal mill rollers and specialized electrical actuators, ensuring your entire plant is covered.',
-    icon: PackageIcon
-  },
-  {
-    title: 'Technical Support',
-    description:
-    'We don’t just supply parts; we provide the engineering support to ensure they are integrated correctly and perform to specification within your existing systems.',
-    icon: WrenchIcon
-  }];
+  const { data } = useSectionData<any>("value-added", "SourcingFeatures", {
+    featuresList: [
+      {
+        title: "Global OEM Network",
+        description:
+          "We have established tie-ups with over 65 major OEMs in China, Vietnam, Korea, and India, giving you direct access to high-quality components without the logistical headache.",
+      },
+      {
+        title: "Comprehensive Inventory",
+        description:
+          "We supply everything from high-pressure boiler spares to coal mill rollers and specialized electrical actuators, ensuring your entire plant is covered.",
+      },
+      {
+        title: "Technical Support",
+        description:
+          "We don’t just supply parts; we provide the engineering support to ensure they are integrated correctly and perform to specification within your existing systems.",
+      },
+    ],
+  });
+  const features = (data.features || data.featuresList || []).map(
+    (f: any, i: number) => ({ ...f, icon: vasFeatureIconMap[i] || GlobeIcon }),
+  );
 
   return (
     <section className="py-28 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {features.map((feature, i) =>
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            viewport={{
-              once: true
-            }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.2
-            }}
-            className="p-10 bg-neutral-50 border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 group">
-            
+          {features.map((feature: any, i: number) => (
+            <motion.div
+              key={i}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.2,
+              }}
+              className="p-10 bg-neutral-50 border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 group"
+            >
               <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center text-brand-pink mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300">
                 <feature.icon size={32} strokeWidth={1.5} />
               </div>
@@ -143,14 +159,31 @@ function SourcingFeatures() {
                 {feature.description}
               </p>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
-
 function SourcingAdvantage() {
+  const { data } = useSectionData<any>("value-added", "SourcingAdvantage", {
+    headingPart1: "More Than Just ",
+    headingHighlight: "Procurement",
+    description:
+      'Procurement is transactional; strategic sourcing is a partnership. Because we operate plants ourselves, we understand the critical difference between a part that "fits" and a part that "performs".',
+    paragraphs: [
+      "Our engineering team vets every supplier and verifies every specification. We handle the complex logistics, customs clearance, and quality assurance, delivering peace of mind along with your critical spares.",
+    ],
+    cards: [
+      { title: "Quality Assured", icon: "ShieldCheck" },
+      { title: "65+ Global OEMs", icon: "Globe" },
+      { title: "Logistics Managed", icon: "Truck" },
+      { title: "Engineering Backed", icon: "Wrench" },
+    ],
+  });
+  const paragraphs = data.paragraphs || [];
+  const cards = data.cards || [];
+
   return (
     <section className="py-28 bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -158,139 +191,115 @@ function SourcingAdvantage() {
           <motion.div
             initial={{
               opacity: 0,
-              x: -40
+              x: -40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
-            }}>
-            
+              duration: 0.8,
+            }}
+          >
             <h2 className="text-4xl md:text-5xl font-black mb-8">
-              More Than Just <br />
-              <span className="text-brand-pink">Procurement</span>
+              {data.headingPart1 || ""}
+              <span className="text-brand-pink">
+                {data.headingHighlight || ""}
+              </span>
             </h2>
             <div className="space-y-6 text-lg text-neutral-400 leading-relaxed">
-              <p>
-                Procurement is transactional; strategic sourcing is a
-                partnership. Because we operate plants ourselves, we understand
-                the critical difference between a part that "fits" and a part
-                that "performs".
-              </p>
-              <p>
-                Our engineering team vets every supplier and verifies every
-                specification. We handle the complex logistics, customs
-                clearance, and quality assurance, delivering peace of mind along
-                with your critical spares.
-              </p>
+              <p>{data.description}</p>
+              {paragraphs.map((p: string, i: number) => (
+                <p key={i}>{p}</p>
+              ))}
             </div>
           </motion.div>
 
           <motion.div
             initial={{
               opacity: 0,
-              x: 40
+              x: 40,
             }}
             whileInView={{
               opacity: 1,
-              x: 0
+              x: 0,
             }}
             viewport={{
-              once: true
+              once: true,
             }}
             transition={{
-              duration: 0.8
+              duration: 0.8,
             }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            
-            {[
-            {
-              title: 'Quality Assured',
-              icon: ShieldCheckIcon
-            },
-            {
-              title: '65+ Global OEMs',
-              icon: GlobeIcon
-            },
-            {
-              title: 'Logistics Managed',
-              icon: TruckIcon
-            },
-            {
-              title: 'Engineering Backed',
-              icon: WrenchIcon
-            }].
-            map((item, i) =>
-            <div
-              key={i}
-              className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 flex flex-col items-center text-center hover:bg-white/10 transition-colors duration-300">
-              
-                <item.icon className="text-brand-pink mb-4" size={32} />
-                <div className="font-bold">{item.title}</div>
-              </div>
-            )}
+            className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+          >
+            {cards.map((item: any, i: number) => {
+              const Icon =
+                item.icon === "ShieldCheck"
+                  ? ShieldCheckIcon
+                  : item.icon === "Globe"
+                    ? GlobeIcon
+                    : item.icon === "Truck"
+                      ? TruckIcon
+                      : WrenchIcon;
+              return (
+                <div
+                  key={i}
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 flex flex-col items-center text-center hover:bg-white/10 transition-colors duration-300"
+                >
+                  <Icon className="text-brand-pink mb-4" size={32} />
+                  <div className="font-bold">{item.title}</div>
+                </div>
+              );
+            })}
           </motion.div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
-
-export function ValueAddedServices() {
+function CTASection() {
+  const { data } = useSectionData<any>("value-added", "CTASection", {
+    heading: "Sourcing Critical Spares?",
+    description:
+      "Access our network of major OEMs in China, Vietnam, and beyond for your spare part needs.",
+    ctaLabel: "Request a Quote",
+    ctaUrl: "/contact",
+  });
   return (
-    <main className="w-full bg-white min-h-screen selection:bg-brand-pink selection:text-white">
-      <Navbar variant="dark" />
+    <section className="py-32 bg-white text-center">
+      <div className="max-w-4xl mx-auto px-6">
+        <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
+          {data.heading}
+        </h2>
+        <p className="text-xl text-neutral-600 mb-10">{data.description}</p>
+        <Link
+          to={data.ctaUrl || "/contact"}
+          className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+        >
+          {data.ctaLabel}
+          <ArrowRightIcon size={20} />
+        </Link>
+      </div>
+    </section>
+  );
+}
+export function ValueAddedServices() {
+  useSEO("service/value-added");
+
+  return (
+    <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
+      {/* Navigation */}
+      <Navigation variant="dark" />
 
       <SourcingHero />
       <SourcingFeatures />
       <SourcingAdvantage />
+      <CTASection />
 
-      <section className="py-32 bg-white text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
-            Sourcing Critical Spares?
-          </h2>
-          <p className="text-xl text-neutral-600 mb-10">
-            Access our network of major OEMs in China, Vietnam, and beyond for
-            your spare part needs.
-          </p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-pink text-white font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300">
-            
-            Request a Quote
-            <ArrowRightIcon size={20} />
-          </Link>
-        </div>
-      </section>
-
-      <footer className="py-12 border-t border-neutral-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center text-neutral-500 text-sm">
-          <div className="font-black text-neutral-900 text-xl mb-4 md:mb-0 tracking-tighter">
-            ENCOTEC
-          </div>
-          <div className="flex gap-8">
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-brand-pink transition-colors">
-              Terms
-            </a>
-            <Link
-              to="/contact"
-              className="hover:text-brand-pink transition-colors">
-              
-              Contact
-            </Link>
-          </div>
-          <div className="mt-4 md:mt-0">© 2024 Encotec Engineering.</div>
-        </div>
-      </footer>
-    </main>);
-
+      <Footer />
+    </main>
+  );
 }
