@@ -13,20 +13,17 @@ if (!fs.existsSync(htmlPath)) {
 }
 
 const html = fs.readFileSync(htmlPath, 'utf8');
-const safeHtml = html.replace(/`/g, '\\`').replace(/\$/g, '\\$');
-const code = `export const template = \`${safeHtml}\`;\n`;
-
 const apiDir = path.resolve(__dirname, '../api');
 if (!fs.existsSync(apiDir)) {
   fs.mkdirSync(apiDir, { recursive: true });
 }
 
-fs.writeFileSync(path.resolve(apiDir, 'template.ts'), code);
-console.log('Successfully generated api/template.ts from dist/index.html');
+// Write directly as static HTML file
+fs.writeFileSync(path.resolve(apiDir, 'template.html'), html);
+console.log('Successfully copied dist/index.html to api/template.html');
 
 // Delete dist/index.html to force Vercel to route clean URL paths through /api/render
 if (fs.existsSync(htmlPath)) {
   fs.unlinkSync(htmlPath);
   console.log('Deleted dist/index.html to enable serverless render rewrites');
 }
-

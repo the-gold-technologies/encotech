@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-// @ts-ignore
-import { template } from './template';
+import fs from 'fs';
+import path from 'path';
 
 const slugMap: Record<string, string> = {
   "service/engineering": "engineering-services",
@@ -13,7 +13,6 @@ const slugMap: Record<string, string> = {
 };
 
 function getSlugFromPath(urlPath: string): string {
-  // Extract path and clean up query params, leading/trailing slashes
   const pathPart = urlPath.split('?')[0] || '/';
   let cleanPath = pathPart.replace(/\/+$/, ''); // Remove trailing slashes
   
@@ -43,6 +42,15 @@ function getSlugFromPath(urlPath: string): string {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Read template HTML file
+  const templatePath = path.join(process.cwd(), 'api', 'template.html');
+  if (!fs.existsSync(templatePath)) {
+    console.error('Template HTML not found at:', templatePath);
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    return res.status(500).send('Server Error: Template not found.');
+  }
+  const template = fs.readFileSync(templatePath, 'utf8');
+
   const cmsApiUrl = process.env.VITE_CMS_API_URL || 'https://cms-encotec.vercel.app';
   const urlPath = req.url || '/';
   const slug = getSlugFromPath(urlPath);
@@ -101,54 +109,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     description = pageSEO?.metaDescription || globalSEO.siteDescription || 'Encotech | Asset Stewardship & Engineering';
   }
 
-  // Fallback default format if title doesn't contain site name
   if (slug && slug !== 'home' && !title.includes('Encotech') && !title.includes('Encotec')) {
     title = `${title} | Encotec`;
   }
 
   // Build head injections
   let headInjections = '\n    <!-- Server-Side SEO & Schema Injection -->\n';
-  
-  // Title
   headInjections += `    <title>${title}</title>\n`;
-
-  // Meta Description
   headInjections += `    <meta name="description" content="${description}" />\n`;
 
-  // Canonical URL
   const canonical = pageSEO?.canonicalUrl || `https://encotech-six.vercel.app${urlPath.split('?')[0]}`;
   headInjections += `    <link rel="canonical" href="${canonical}" />\n`;
 
-  // Robots
   if (pageSEO?.noIndex) {
     headInjections += `    <meta name="robots" content="noindex, nofollow" />\n`;
   }
 
-  // Google Site Verification
   if (globalSEO.searchConsoleId) {
     headInjections += `    <meta name="google-site-verification" content="${globalSEO.searchConsoleId}" />\n`;
   }
 
-  // Favicon
   if (globalSEO.favicon) {
     headInjections += `    <link rel="shortcut icon" href="${globalSEO.favicon}" />\n`;
   }
 
-  // OG Title
   const ogTitle = pageSEO?.ogTitle || title;
   headInjections += `    <meta property="og:title" content="${ogTitle}" />\n`;
 
-  // OG Description
   const ogDescription = pageSEO?.ogDescription || description;
   headInjections += `    <meta property="og:description" content="${ogDescription}" />\n`;
 
-  // OG Image
   const ogImage = pageSEO?.ogImage || pageSEO?.featuredImage || globalSEO.favicon || '';
   if (ogImage) {
     headInjections += `    <meta property="og:image" content="${ogImage}" />\n`;
   }
 
-  // Google Analytics (GA4)
   if (globalSEO.googleAnalyticsId) {
     headInjections += `    <script async src="https://www.googletagmanager.com/gtag/js?id=${globalSEO.googleAnalyticsId}"></script>\n`;
     headInjections += `    <script>
@@ -159,7 +154,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     </script>\n`;
   }
 
-  // Google Tag Manager (GTM)
   if (globalSEO.gtmId) {
     headInjections += `    <script>
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -170,38 +164,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     </script>\n`;
   }
 
-  // Global Schema JSON-LD
   if (globalSEO.schema) {
     headInjections += `    <script type="application/ld+json" id="global-schema-jsonld">${globalSEO.schema}</script>\n`;
   }
 
-  // Page-specific Schema JSON-LD
   if (pageSEO?.schema) {
     const schemaScriptId = `page-schema-${slug.replace(/\//g, "-")}`;
     headInjections += `    <script type="application/ld+json" id="${schemaScriptId}">${pageSEO.schema}</script>\n`;
   }
 
-  // Custom Header Scripts
   if (globalSEO.customHeaderScripts) {
     headInjections += `    ${globalSEO.customHeaderScripts}\n`;
   }
 
-  // Body injections (Custom Footer Scripts)
   let bodyInjections = '';
   if (globalSEO.customFooterScripts) {
     bodyInjections += `\n    ${globalSEO.customFooterScripts}\n`;
   }
 
-  // Perform injection into HTML template
   let html = template;
-
-  // Remove existing title tag if any to avoid duplication
   html = html.replace(/<title>[^]*?<\/title>/gi, '');
-
-  // Insert headInjections right after <head>
   html = html.replace(/<head>/i, `<head>${headInjections}`);
 
-  // Insert bodyInjections right before </body>
   if (bodyInjections) {
     html = html.replace(/<\/body>/i, `${bodyInjections}</body>`);
   }
