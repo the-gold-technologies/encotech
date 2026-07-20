@@ -238,6 +238,19 @@ function WhoWeAre() {
               {data.paragraphs?.[1]}
             </p>
           </div>
+
+          {/* Our Heritage Sub-Block */}
+          <div className="mt-10 pb-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-[2px] bg-brand-pink" />
+              <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
+                {data.heritageTagline || ""}
+              </span>
+            </div>
+            <p className="text-lg text-neutral-800 leading-relaxed font-normal">
+              <i>{data.heritageDescription || ""} </i>
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
