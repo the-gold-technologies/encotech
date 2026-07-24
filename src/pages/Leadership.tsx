@@ -436,7 +436,7 @@ function ExecutiveTeam() {
                 duration: 0.6,
                 delay: index * 0.2,
               }}
-              className="relative h-[500px] overflow-hidden group bg-neutral-800"
+              className="relative min-h-[600px] max-h-max overflow-hidden group bg-neutral-800"
             >
               {/* Background Image */}
               <img

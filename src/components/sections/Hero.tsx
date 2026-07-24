@@ -78,7 +78,7 @@ export function Hero() {
                 duration: 0.8,
                 delay: 0.1,
               }}
-              className="text-[2.6rem] md:text-[3.5rem] lg:text-[4rem] font-black text-neutral-900 leading-[1.05] tracking-tight uppercase mb-8 select-text selection:bg-brand-pink selection:text-white cursor-text"
+              className="text-[2.6rem] md:text-[3.6rem]  font-black text-neutral-900 leading-[1.05] tracking-tight uppercase mb-8 select-text selection:bg-brand-pink selection:text-white cursor-text"
             >
               {data?.headlineLine1}{" "}
               <span className="text-brand-pink">{data?.headlineHighlight}</span>{" "}
@@ -162,36 +162,10 @@ export function Hero() {
             </motion.div>
 
             {/* Stats Row */}
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 20,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: 0.55,
-              }}
-              className={`grid grid-cols-2 md:grid-cols-${heroStats.length} gap-8 pt-8 border-t border-neutral-200`}
-            >
-              {heroStats.map((stat: any, i: number) => (
-                <div key={i}>
-                  <div className="text-3xl md:text-3xl font-black text-neutral-900 tracking-tight leading-none">
-                    {stat.value}
-                  </div>
-                  <div className="text-[9px] font-bold text-neutral-400 tracking-[0.15em] uppercase mt-2 leading-tight">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
           </div>
 
           {/* Right Image Area — spans 6 cols */}
-          <div className="lg:col-span-6 relative mt-8 lg:mt-0">
+          <div className="lg:col-span-6 relative mt-10  max-[650px]:mt-0">
             <motion.div
               initial={{
                 opacity: 0,
@@ -261,6 +235,32 @@ export function Hero() {
             </motion.div>
           </div>
         </div>
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.7,
+            delay: 0.55,
+          }}
+          className={`grid grid-cols-5 max-[850px]:mt-16 max-[650px]:grid-cols-2 md:grid-cols-${heroStats.length} gap-8 pt-8 border-t border-neutral-200`}
+        >
+          {heroStats.map((stat: any, i: number) => (
+            <div key={i}>
+              <div className="text-3xl md:text-3xl font-black text-neutral-900 tracking-tight leading-none">
+                {stat.value}
+              </div>
+              <div className="text-[9px] font-bold text-neutral-400 tracking-[0.15em] uppercase mt-2 leading-tight">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
