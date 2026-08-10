@@ -134,7 +134,7 @@ export const defaultPageSections: Record<string, any> = {
       headlineHighlight: "Stewardship.",
       headlineLine2: "End-to-End Solutions for a Global Future",
       description:
-        'We are more than consultants; we are your partners in progress. By adopting an "Owner\'s Mindset," we take total responsibility for your infrastructure — from the first feasibility study to long-term operational excellence.',
+        'We are more than service provider; we are your partners in progress. By adopting an "Owner\'s Mindset," we take total responsibility for your infrastructure — from the first feasibility study to long-term operational excellence.',
       primaryBtnLabel: "Our Services",
       primaryBtnUrl: "/services",
       secondaryBtnLabel: "View Case Studies",
@@ -147,16 +147,14 @@ export const defaultPageSections: Record<string, any> = {
       ],
       projectsBadgeNumber: "",
       projectsBadgeLabel: "",
-      stat1Value: "2009",
-      stat1Label: "FOUNDING YEAR",
-      stat2Value: "2011",
-      stat2Label: "STARTED OPERATIONS",
-      stat3Value: "13+",
-      stat3Label: "KEY LOCATIONS",
-      stat4Value: "1800+",
-      stat4Label: "MANPOWER",
-      stat5Value: "20+",
-      stat5Label: "GW Under Stewardship",
+      stats: [
+        { value: "2009", label: "FOUNDING YEAR" },
+        { value: "2011", label: "STARTED OPERATIONS" },
+        { value: "13+", label: "KEY LOCATIONS" },
+        { value: "300+", label: "Engineers" },
+        { value: "1800+", label: "MANPOWER" },
+        { value: "10+", label: "GW Under Stewardship" },
+      ],
       backgroundImage:
         "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&q=80&w=1200",
     },
@@ -186,6 +184,11 @@ export const defaultPageSections: Record<string, any> = {
           value: "13+",
           label: "KEY LOCATIONS",
           icon: "Globe",
+        },
+        {
+          value: "100+",
+          label: "INDUSTRY SPECIALISTS",
+          icon: "Award",
         },
         {
           value: "1800+",
@@ -448,7 +451,7 @@ export const defaultPageSections: Record<string, any> = {
         },
         {
           headline: "Planning an Asset Relocation?",
-          text: "Let our expert management team do the due-diligence study, prepare feasibility report, help you in asset valuation and finally transition your critical assets to a new site with zero downtime and optimum timeline.",
+          text: "Let our expert management team do the due-diligence study, prepare feasibility report, help you in asset valuation and finally transition your critical assets to a new site with zero optimum timeline.",
         },
       ],
     },
@@ -603,10 +606,22 @@ export const defaultPageSections: Record<string, any> = {
           icon: "Users",
         },
         {
+          value: "300+",
+          label: "Engineers",
+          description: "Multidisciplinary engineering team",
+          icon: "Users",
+        },
+        {
           value: "100+",
           label: "Industry specialist",
           description: "Providing high-level expert advisory and diagnostics",
           icon: "Briefcase",
+        },
+        {
+          value: "10+ GW",
+          label: "capacity under stewardship",
+          description: "Total power capacity under our stewardship",
+          icon: "Zap",
         },
         {
           value: "20+ GW",
@@ -645,7 +660,7 @@ export const defaultPageSections: Record<string, any> = {
         {
           title: "2013 & Beyond: O&M Leadership",
           description:
-            "Solidified our reputation as top-tier stewards with the long-term O&M contracts, Annual Maintenance contracts, Overhauling jobs. etc.",
+            "Solidified our reputation as top-tier stewards with the long-term O&M management contracts, Annual Maintenance contracts, Overhauling jobs. etc.",
         },
         {
           title: "2016: Supercritical Excellence",
@@ -653,9 +668,9 @@ export const defaultPageSections: Record<string, any> = {
             "Embarked on our flagship O&M partnership for the 2x700 MW supercritical power plant at Nabha Power / Rajpura and 2x660 MW supercritical power plant at Jhajjar.",
         },
         {
-          title: "2018 & Beyond: Environmental Stewardship",
+          title: "2018 & Beyond: Environmental",
           description:
-            "Helping industries meet stringent environmental standards through specialized FGD O&M excellence.",
+            " Delivering a Sustainable, Cleaner Industrial Future Helping industries meet stringent environmental standards through specialized FGD O&M excellence.",
         },
         {
           title: "2021: Going Global",
@@ -663,7 +678,7 @@ export const defaultPageSections: Record<string, any> = {
             "Took our expertise global, managing critical commissioning projects internationally.",
         },
         {
-          title: "2025 & Beyond: New Chapters",
+          title: "2021 & Beyond: New Chapters",
           description:
             "We are currently providing specialized utility management for international airports like Indira Gandhi International Airport, Delhi (DIAL) and Noida International Airport (NIA), newly inaugurated.",
         },
@@ -674,7 +689,7 @@ export const defaultPageSections: Record<string, any> = {
       heading: "Committed to a Greener Tomorrow",
       paragraphs: [
         "Sustainability is not a policy at Encotec; it is our promise. We are committed to sustainable development by integrating high standards of environmental management into everything we do.",
-        "Our in-house Encotec team conducts specialized energy audits to identify savings and reduce the carbon footprints of operational plants. Through our expert advisory and Residual Life Assessments (RLA), we help owners revitalize old plants, making them more efficient and environmentally compliant.",
+        "Our in-house Encotec team conducts energy audits to identify savings and reduce the carbon footprints of operational plants. Through our expert advisory and Residual Life Assessments (RLA), we help owners revitalize old plants, making them more efficient and environmentally compliant.",
       ],
       focuses: [
         "Specialized energy audits by our in-house Encotec team to identify savings and reduce carbon footprints",
@@ -690,7 +705,7 @@ export const defaultPageSections: Record<string, any> = {
       headingPart1: "A Global Presence",
       headingHighlight: "with a Local Touch",
       description:
-        "While our headquarters is in Noida, our footprint spans the world. In India, we are present in 13+ key locations pan India. Internationally, we have established strong roots in Turkey, UAE, Indonesia, Vietnam, Germany, ensuring that wherever infrastructure needs stewardship, Encotec is there.",
+        "While our headquarters is in Noida, our footprint spans the world. In India, we are present in 13+ locations pan India. Internationally, we have established strong roots in Turkey, UAE, Indonesia, Vietnam, Germany, ensuring that wherever infrastructure needs stewardship, Encotec is there.",
       areas: [
         {
           title: "International Operations",
@@ -699,14 +714,6 @@ export const defaultPageSections: Record<string, any> = {
         {
           title: "Headquarters",
           desc: "Noida, India",
-        },
-        {
-          title: "Eastern & Central India",
-          desc: "Jamshedpur, Raipur, Kharagpur",
-        },
-        {
-          title: "Coastal & Southern India",
-          desc: "Vizag and upcoming projects",
         },
       ],
       calloutTitle: "Wherever Energy is Needed",
@@ -721,7 +728,7 @@ export const defaultPageSections: Record<string, any> = {
         {
           role: "Managing Director",
           name: "Arun Kumar Sarna",
-          bio: "Brings extensive leadership experience in engineering, project execution, and energy infrastructure development. With a deep understanding of large-scale power and industrial projects, has been instrumental in shaping the strategic direction of Encotec. Under this leadership, the organization has expanded its capabilities across engineering, project management, and operations, establishing a strong presence in both domestic and international markets. Focuses on driving long-term value creation through operational excellence, technical innovation, and strong client partnerships.",
+          bio: "Brings extensive leadership experience in engineering, project execution, and energy infrastructure development. With a deep understanding of large-scale power and industrial projects, has been instrumental in shaping the strategic direction of Encotec. Under this leadership, the organization has expanded its capabilities across engineering, project management, and operations excellence in energy generation both domestic and international markets. Focus on driving long-term value creation through operational excellence, technical innovation, and strong client partnerships.",
         },
         {
           role: "Director – Operations",
@@ -2007,7 +2014,7 @@ export const defaultPageSections: Record<string, any> = {
       exec1Name: "Arun Kumar Sarna",
       exec1Role: "Managing Director",
       exec1Bio:
-        "Brings extensive leadership experience in engineering, project execution, and energy infrastructure development. With a deep understanding of large-scale power and industrial projects, has been instrumental in shaping the strategic direction of Encotec. Under this leadership, the organization has expanded its capabilities across engineering, project management, and operations, establishing a strong presence in both domestic and international markets. Focuses on driving long-term value creation through operational excellence, technical innovation, and strong client partnerships.",
+        "Brings extensive leadership experience in engineering, project execution, and energy infrastructure development. With a deep understanding of large-scale power and industrial projects, has been instrumental in shaping the strategic direction of Encotec. Under this leadership, the organization has expanded its capabilities across engineering, project management, and operations excellence in energy generation both domestic and international markets. Focus on driving long-term value creation through operational excellence, technical innovation, and strong client partnerships.",
       exec1Tags:
         "Strategic Leadership, Business Development, Energy Infrastructure",
       exec2Name: "Rajan Saxena",
