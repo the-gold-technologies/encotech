@@ -1,8 +1,8 @@
-# **Encotech Website (Frontend)**
+# **encotec Website (Frontend)**
 
 The official public-facing website for Encotec, built with React, Vite, TypeScript, Tailwind CSS, and integrated with the Encotec CMS for dynamic content and server-side SEO rendering.
 
-**Live Website:** [https://encotech-six.vercel.app](https://encotech-six.vercel.app)  
+**Live Website:** [https://encotec-six.vercel.app](https://encotec-six.vercel.app)  
 **Live CMS Dashboard:** [https://cms-encotec.tgtpartner.com](https://cms-encotec.tgtpartner.com)
 
 ---
@@ -53,7 +53,7 @@ Built for Speed, SEO, and Premium User Experience.
 ## 📂 Folder Structure
 
 ```text
-encotech/
+encotec/
 ├── api/                       # Serverless routing and pre-render endpoints
 │   ├── render.ts              # Pre-renders HTML with dynamic SEO meta and schema tags
 │   ├── robots.ts              # Fetches and returns robots.txt rules from CMS
@@ -79,30 +79,39 @@ encotech/
 Follow the steps below to serve the website locally.
 
 ### 1. Requirements
+
 Ensure the target machine has:
+
 - **Node.js** (v18.0.0 or later)
 - **npm** (v9.0.0 or later)
 
 ### 2. Install Dependencies
+
 Clone the repository and install the npm packages:
+
 ```bash
 git clone <repository-url>
-cd encotech
+cd encotec
 npm install
 ```
 
 ### 3. Environment Allocation
+
 Generate a `.env` file at the root of the project:
+
 ```env
 # URL of the hosted CMS API or local development server
 VITE_CMS_API_URL="" # e.g. http://localhost:3000
 ```
 
 ### 4. Run the Application
+
 Start the local development server:
+
 ```bash
 npm run dev
 ```
+
 The website is now running at `http://localhost:5173`.
 
 ---
@@ -111,7 +120,7 @@ The website is now running at `http://localhost:5173`.
 
 When deploying to production (such as Vercel), configure the environment variable in your project settings:
 
-* **`VITE_CMS_API_URL`**: Your live CMS endpoint (e.g. `https://cms.yourdomain.com`).
+- **`VITE_CMS_API_URL`**: Your live CMS endpoint (e.g. `https://cms.yourdomain.com`).
 
 ---
 

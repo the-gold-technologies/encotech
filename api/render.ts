@@ -1,6 +1,6 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import fs from 'fs';
-import path from 'path';
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import fs from "fs";
+import path from "path";
 
 const slugMap: Record<string, string> = {
   "service/engineering": "engineering-services",
@@ -13,58 +13,65 @@ const slugMap: Record<string, string> = {
 };
 
 function getSlugFromPath(urlPath: string): string {
-  const pathPart = urlPath.split('?')[0] || '/';
-  let cleanPath = pathPart.replace(/\/+$/, ''); // Remove trailing slashes
-  
-  if (cleanPath === '' || cleanPath === '/') {
-    return 'home';
+  const pathPart = urlPath.split("?")[0] || "/";
+  let cleanPath = pathPart.replace(/\/+$/, ""); // Remove trailing slashes
+
+  if (cleanPath === "" || cleanPath === "/") {
+    return "home";
   }
 
   // Exact mappings
-  if (cleanPath === '/about') return 'about';
-  if (cleanPath === '/services') return 'services';
-  if (cleanPath === '/insights') return 'insights';
-  if (cleanPath === '/contact') return 'contact';
-  if (cleanPath === '/careers') return 'careers';
-  if (cleanPath === '/certifications') return 'certifications';
-  if (cleanPath === '/leadership') return 'leadership';
+  if (cleanPath === "/about") return "about";
+  if (cleanPath === "/services") return "services";
+  if (cleanPath === "/insights") return "insights";
+  if (cleanPath === "/contact") return "contact";
+  if (cleanPath === "/careers") return "careers";
+  if (cleanPath === "/certifications") return "certifications";
+  if (cleanPath === "/leadership") return "leadership";
 
   // Sub-services
-  if (cleanPath === '/services/engineering') return 'service/engineering';
-  if (cleanPath === '/services/project-management') return 'service/project-management';
-  if (cleanPath === '/services/power-generation') return 'service/power-generation';
-  if (cleanPath === '/services/transmission-distribution') return 'service/transmission-distribution';
-  if (cleanPath === '/services/renewable-energy') return 'service/renewable-energy';
-  if (cleanPath === '/services/airport-services') return 'service/airport-services';
-  if (cleanPath === '/services/value-added') return 'service/value-added';
+  if (cleanPath === "/services/engineering") return "service/engineering";
+  if (cleanPath === "/services/project-management")
+    return "service/project-management";
+  if (cleanPath === "/services/power-generation")
+    return "service/power-generation";
+  if (cleanPath === "/services/transmission-distribution")
+    return "service/transmission-distribution";
+  if (cleanPath === "/services/renewable-energy")
+    return "service/renewable-energy";
+  if (cleanPath === "/services/airport-services")
+    return "service/airport-services";
+  if (cleanPath === "/services/value-added") return "service/value-added";
 
-  return '';
+  return "";
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Read template HTML file
-  const templatePath = path.join(process.cwd(), 'api', 'template.html');
+  const templatePath = path.join(process.cwd(), "api", "template.html");
   if (!fs.existsSync(templatePath)) {
-    console.error('Template HTML not found at:', templatePath);
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-    return res.status(500).send('Server Error: Template not found.');
+    console.error("Template HTML not found at:", templatePath);
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    return res.status(500).send("Server Error: Template not found.");
   }
-  const template = fs.readFileSync(templatePath, 'utf8');
+  const template = fs.readFileSync(templatePath, "utf8");
 
-  const cmsApiUrl = process.env.VITE_CMS_API_URL || 'https://cms-encotec.vercel.app';
-  const urlPath = req.url || '/';
+  const cmsApiUrl =
+    process.env.VITE_CMS_API_URL || "https://cms-encotec.vercel.app";
+  const urlPath = req.url || "/";
   const slug = getSlugFromPath(urlPath);
 
   let globalSEO: any = {
-    siteTitle: "Encotech",
-    siteDescription: "Engineering & Project Management Services - Member of Dornier Group",
+    siteTitle: "encotec",
+    siteDescription:
+      "Engineering & Project Management Services - Member of Dornier Group",
     favicon: null,
     googleAnalyticsId: "G-CT894VPLS1",
     gtmId: "GTM-59DCSVDV",
     searchConsoleId: "4kD9H2fqRgqKEk",
     customHeaderScripts: null,
     customFooterScripts: null,
-    schema: null
+    schema: null,
   };
 
   let pageSEO: any = null;
@@ -79,7 +86,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
   } catch (error) {
-    console.error('Error fetching global SEO from CMS for SSR:', error);
+    console.error("Error fetching global SEO from CMS for SSR:", error);
   }
 
   // 2. Fetch Page SEO if slug is valid
@@ -93,32 +100,48 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
       }
     } catch (error) {
-      console.error(`Error fetching page SEO for ${slug} from CMS for SSR:`, error);
+      console.error(
+        `Error fetching page SEO for ${slug} from CMS for SSR:`,
+        error,
+      );
     }
   }
 
   // Determine Title & Description
-  let title = '';
-  let description = '';
+  let title = "";
+  let description = "";
 
-  if (slug === 'home') {
-    title = globalSEO.siteTitle || pageSEO?.metaTitle || 'Encotech';
-    description = globalSEO.siteDescription || pageSEO?.metaDescription || 'Encotech | Asset Stewardship & Engineering';
+  if (slug === "home") {
+    title = globalSEO.siteTitle || pageSEO?.metaTitle || "encotec";
+    description =
+      globalSEO.siteDescription ||
+      pageSEO?.metaDescription ||
+      "encotec | Asset Stewardship & Engineering";
   } else {
-    title = pageSEO?.metaTitle || globalSEO.siteTitle || 'Encotech';
-    description = pageSEO?.metaDescription || globalSEO.siteDescription || 'Encotech | Asset Stewardship & Engineering';
+    title = pageSEO?.metaTitle || globalSEO.siteTitle || "encotec";
+    description =
+      pageSEO?.metaDescription ||
+      globalSEO.siteDescription ||
+      "encotec | Asset Stewardship & Engineering";
   }
 
-  if (slug && slug !== 'home' && !title.includes('Encotech') && !title.includes('Encotec')) {
+  if (
+    slug &&
+    slug !== "home" &&
+    !title.includes("encotec") &&
+    !title.includes("Encotec")
+  ) {
     title = `${title} | Encotec`;
   }
 
   // Build head injections
-  let headInjections = '\n    <!-- Server-Side SEO & Schema Injection -->\n';
+  let headInjections = "\n    <!-- Server-Side SEO & Schema Injection -->\n";
   headInjections += `    <title>${title}</title>\n`;
   headInjections += `    <meta name="description" content="${description}" />\n`;
 
-  const canonical = pageSEO?.canonicalUrl || `https://encotech-six.vercel.app${urlPath.split('?')[0]}`;
+  const canonical =
+    pageSEO?.canonicalUrl ||
+    `https://encotec-six.vercel.app${urlPath.split("?")[0]}`;
   headInjections += `    <link rel="canonical" href="${canonical}" />\n`;
 
   if (pageSEO?.noIndex) {
@@ -139,7 +162,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const ogDescription = pageSEO?.ogDescription || description;
   headInjections += `    <meta property="og:description" content="${ogDescription}" />\n`;
 
-  const ogImage = pageSEO?.ogImage || pageSEO?.featuredImage || globalSEO.favicon || '';
+  const ogImage =
+    pageSEO?.ogImage || pageSEO?.featuredImage || globalSEO.favicon || "";
   if (ogImage) {
     headInjections += `    <meta property="og:image" content="${ogImage}" />\n`;
   }
@@ -177,19 +201,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     headInjections += `    ${globalSEO.customHeaderScripts}\n`;
   }
 
-  let bodyInjections = '';
+  let bodyInjections = "";
   if (globalSEO.customFooterScripts) {
     bodyInjections += `\n    ${globalSEO.customFooterScripts}\n`;
   }
 
   let html = template;
-  html = html.replace(/<title>[^]*?<\/title>/gi, '');
+  html = html.replace(/<title>[^]*?<\/title>/gi, "");
   html = html.replace(/<head>/i, `<head>${headInjections}`);
 
   if (bodyInjections) {
     html = html.replace(/<\/body>/i, `${bodyInjections}</body>`);
   }
 
-  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
   return res.status(200).send(html);
 }

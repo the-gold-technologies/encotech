@@ -5,7 +5,7 @@ export const defaultPagesMeta: Record<string, any> = {
     visibility: "public",
     isStatic: true,
     description: "Welcome to Encotec",
-    metaTitle: "Encotech - Member of Dornier Group",
+    metaTitle: "encotec - Member of Dornier Group",
     metaDescription: "Providing engineering services since 2011",
   },
   about: {
@@ -20,7 +20,7 @@ export const defaultPagesMeta: Record<string, any> = {
     title: "Services",
     visibility: "public",
     isStatic: true,
-    description: "Encotech Services",
+    description: "encotec Services",
     metaTitle: "Our Services - Encotec",
     metaDescription: "Explore our range of engineering and advisory services",
   },
@@ -28,7 +28,7 @@ export const defaultPagesMeta: Record<string, any> = {
     title: "Insights",
     visibility: "public",
     isStatic: true,
-    description: "Encotech Insights",
+    description: "encotec Insights",
     metaTitle: "Insights & Case Studies - Encotec",
     metaDescription: "Read about our projects and industry insights",
   },
@@ -1765,7 +1765,7 @@ export const defaultPageSections: Record<string, any> = {
       tagline: "QUALITY POLICY & ACCREDITATION",
       heading: "Triple ISO Integrated Management System",
       description:
-        "Certified by Universal Certification Services (UCSPL) and internationally accredited under IAF & KAB standards for Encotech Energy (India) Private Limited.",
+        "Certified by Universal Certification Services (UCSPL) and internationally accredited under IAF & KAB standards for encotec Energy (India) Private Limited.",
       certificationsList: [
         {
           id: "iso-9001",
@@ -1777,7 +1777,8 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "27/03/2028",
           issuer: "Universal Certification Services Private Limited (UCSPL)",
           accreditation: "IAF & KAB (KAB-QC-80)",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784530188/encotech/certificates/iso-9001-certificate.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784530188/encotec/certificates/iso-9001-certificate.jpg",
           scope:
             "Designing, Consultancy, Engineering, Erection, Commissioning, Inspection, Testing, Operation and Maintenance of Plant and Machinery in Energy & Infrastructure Sector.",
         },
@@ -1791,7 +1792,8 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "27/03/2028",
           issuer: "Universal Certification Services Private Limited (UCSPL)",
           accreditation: "IAF & KAB (KAB-EC-61)",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784530189/encotech/certificates/iso-14001-certificate.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784530189/encotec/certificates/iso-14001-certificate.jpg",
           scope:
             "Designing, Consultancy, Engineering, Erection, Commissioning, Inspection, Testing, Operation and Maintenance of Plant and Machinery in Energy & Infrastructure Sector.",
         },
@@ -1805,7 +1807,8 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "27/03/2028",
           issuer: "Universal Certification Services Private Limited (UCSPL)",
           accreditation: "IAF & KAB (KAB-OC-61)",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784530191/encotech/certificates/iso-45001-certificate.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784530191/encotec/certificates/iso-45001-certificate.jpg",
           scope:
             "Designing, Consultancy, Engineering, Erection, Commissioning, Inspection, Testing, Operation and Maintenance of Plant and Machinery in Energy & Infrastructure Sector.",
         },
@@ -1819,7 +1822,8 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "20/05/2027",
           issuer: "Boiler Directorate, Government of Uttar Pradesh, Kanpur",
           accreditation: "Indian Boiler Regulations (IBR 1950)",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784529235/encotech/certificates/ibr-boiler-approval-certificate.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784529235/encotec/certificates/ibr-boiler-approval-certificate.jpg",
           scope:
             "Certificate of approval as Category 'Special Class (WP > 125 Kg/cm²)' Boiler Erector/Repairer and Steam/Feed Pipe Line Fabricator.",
         },
@@ -1831,9 +1835,11 @@ export const defaultPageSections: Record<string, any> = {
           certNumber: "109320520004032024",
           issueDate: "04/03/2024",
           expiryDate: "03/03/2027",
-          issuer: "Licensing Board, Industry, Energy & Labour Dept., Govt. of Maharashtra",
+          issuer:
+            "Licensing Board, Industry, Energy & Labour Dept., Govt. of Maharashtra",
           accreditation: "Govt. of Maharashtra Energy Dept.",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784529236/encotech/certificates/maharashtra-electrical-license.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784529236/encotec/certificates/maharashtra-electrical-license.jpg",
           scope:
             "Official License for execution of electrical contractor works and high-voltage power installations in Maharashtra.",
         },
@@ -1847,7 +1853,8 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "08/08/2046",
           issuer: "Labour Department, Govt. of NCT of Delhi",
           accreditation: "Govt. of NCT of Delhi",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784529237/encotech/certificates/delhi-electrical-license.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784529237/encotec/certificates/delhi-electrical-license.jpg",
           scope:
             "Class-I Electrical Contractor Licence for electrical installation works across National Capital Territory of Delhi.",
         },
@@ -1861,21 +1868,24 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "24/05/2024",
           issuer: "ASTI - DIAL (GMRAA), New Delhi",
           accreditation: "BCAS Accredited ASTI",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784529238/encotech/certificates/avsec-induction-certificate.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784529238/encotec/certificates/avsec-induction-certificate.jpg",
           scope:
             "Certification of AVSEC Induction Course completion for Aviation Security Compliance Officer at international airports.",
         },
         {
           id: "bcas-airport-clearance",
           title: "BCAS Airport Auxiliary Service Clearance",
-          subtitle: "Bureau of Civil Aviation Security, Ministry of Civil Aviation",
+          subtitle:
+            "Bureau of Civil Aviation Security, Ministry of Civil Aviation",
           category: "Airport Aviation Security",
           certNumber: "E20220286415",
           issueDate: "31/03/2023",
           expiryDate: "30/03/2028",
           issuer: "Bureau of Civil Aviation Security (BCAS), Govt. of India",
           accreditation: "Ministry of Civil Aviation (MoCA)",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784529239/encotech/certificates/bcas-airport-security-clearance.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784529239/encotec/certificates/bcas-airport-security-clearance.jpg",
           scope:
             "Official Security Clearance for Encotec Energy India Pvt. Ltd. and its Directors as Auxiliary Service Provider at Airports.",
         },

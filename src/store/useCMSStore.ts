@@ -2,7 +2,8 @@ import { create } from "zustand";
 import { useEffect } from "react";
 import { defaultPagesMeta, defaultPageSections } from "./defaultData";
 
-const API_BASE_URL = import.meta.env.VITE_CMS_API_URL || "https://cms-encotec.vercel.app";
+const API_BASE_URL =
+  import.meta.env.VITE_CMS_API_URL || "https://cms-encotec.vercel.app";
 
 interface PageState {
   loading: boolean;
@@ -111,7 +112,8 @@ export const useCMSStore = create<CMSState>((set, get) => ({
     });
 
     const mappedSlug = slugMap[slug] || slug;
-    const apiSlug = mappedSlug === "value-added-services" ? "value-added" : mappedSlug;
+    const apiSlug =
+      mappedSlug === "value-added-services" ? "value-added" : mappedSlug;
 
     // Define defaults for fallback
     const defaultSections = defaultPageSections[apiSlug] || {};
@@ -149,7 +151,9 @@ export const useCMSStore = create<CMSState>((set, get) => ({
         }
       }
 
-      const mergedSeo = json.data.seo ? { ...defaultSeo, ...json.data.seo } : defaultSeo;
+      const mergedSeo = json.data.seo
+        ? { ...defaultSeo, ...json.data.seo }
+        : defaultSeo;
 
       set((state) => {
         const newPages = { ...state.pages };
@@ -168,7 +172,7 @@ export const useCMSStore = create<CMSState>((set, get) => ({
       console.warn(
         `CMS Fetch Error for "${slug}":`,
         err.message,
-        "- Falling back to mock/default data"
+        "- Falling back to mock/default data",
       );
       set((state) => {
         const newPages = { ...state.pages };
@@ -176,7 +180,10 @@ export const useCMSStore = create<CMSState>((set, get) => ({
           newPages[s] = {
             loading: false,
             error: err.message || "Unknown error",
-            sections: Object.keys(defaultSections).length > 0 ? defaultSections : (state.pages[s]?.sections || {}),
+            sections:
+              Object.keys(defaultSections).length > 0
+                ? defaultSections
+                : state.pages[s]?.sections || {},
             seo: defaultSeo || state.pages[s]?.seo || null,
             fetched: true,
           };
@@ -203,8 +210,9 @@ export const useCMSStore = create<CMSState>((set, get) => ({
       console.warn("CMS Global SEO Fetch Error:", err.message);
       set({
         globalSEO: {
-          siteTitle: "Encotech",
-          siteDescription: "Engineering & Project Management Services - Member of Dornier Group",
+          siteTitle: "encotec",
+          siteDescription:
+            "Engineering & Project Management Services - Member of Dornier Group",
           favicon: null,
           googleAnalyticsId: "G-CT894VPLS1",
           gtmId: "GTM-59DCSVDV",
@@ -218,13 +226,12 @@ export const useCMSStore = create<CMSState>((set, get) => ({
       });
     }
   },
-
 }));
 
 export function useSectionData<T>(
   pageSlug: string,
   sectionType: string,
-  defaultData?: T
+  defaultData?: T,
 ): { data: T; loading: boolean; error: string | null } {
   const pageState = useCMSStore((state) => state.pages[pageSlug]);
   const fetchPage = useCMSStore((state) => state.fetchPage);
@@ -241,14 +248,21 @@ export function useSectionData<T>(
 
   // Merge default data with CMS content if content is found, otherwise return defaultData
   // If defaultData is not provided, return sectionContent or a safe fallback empty object.
-  const data = (sectionContent
-    ? (defaultData ? { ...defaultData, ...sectionContent } : sectionContent)
-    : (defaultData || {})) as T;
+  const data = (
+    sectionContent
+      ? defaultData
+        ? { ...defaultData, ...sectionContent }
+        : sectionContent
+      : defaultData || {}
+  ) as T;
 
   return { data, loading, error };
 }
 
-export function usePageLoading(pageSlug: string): { loading: boolean; error: string | null } {
+export function usePageLoading(pageSlug: string): {
+  loading: boolean;
+  error: string | null;
+} {
   const pageState = useCMSStore((state) => state.pages[pageSlug]);
   const fetchPage = useCMSStore((state) => state.fetchPage);
 
@@ -263,4 +277,3 @@ export function usePageLoading(pageSlug: string): { loading: boolean; error: str
 
   return { loading, error };
 }
-
