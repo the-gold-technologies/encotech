@@ -55,6 +55,33 @@ export function GlobalFootprint() {
       y: e.clientY - rect.top,
     });
   }, []);
+
+  const getTooltipStyle = () => {
+    if (!mapContainerRef.current) {
+      return { left: tooltipPos.x + 16, top: tooltipPos.y - 80 };
+    }
+    const containerWidth = mapContainerRef.current.clientWidth;
+    const containerHeight = mapContainerRef.current.clientHeight;
+    const tooltipWidth = 240;
+    const tooltipHeight = 150;
+
+    let left = tooltipPos.x + 16;
+    if (left + tooltipWidth > containerWidth - 12) {
+      left = tooltipPos.x - tooltipWidth - 16;
+    }
+    if (left < 12) {
+      left = 12;
+    }
+
+    let top = tooltipPos.y - 80;
+    if (top < 12) {
+      top = tooltipPos.y + 20;
+    } else if (top + tooltipHeight > containerHeight - 12) {
+      top = containerHeight - tooltipHeight - 12;
+    }
+
+    return { left, top };
+  };
   return (
     <section
       ref={sectionRef}
@@ -382,13 +409,10 @@ export function GlobalFootprint() {
                     ease: "easeOut",
                   }}
                   className="absolute z-50 pointer-events-none"
-                  style={{
-                    left: tooltipPos.x + 16,
-                    top: tooltipPos.y - 80,
-                  }}
+                  style={getTooltipStyle()}
                 >
                   <div
-                    className="rounded-2xl px-4 py-4 min-w-[200px]"
+                    className="rounded-2xl px-4 py-4 min-w-[200px] max-w-[260px]"
                     style={{
                       background: "rgba(15, 15, 15, 0.95)",
                       border: "1px solid rgba(233,30,140,0.3)",

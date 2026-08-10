@@ -214,12 +214,14 @@ export const defaultPageSections: Record<string, any> = {
         "We bridge the gap between technical complexity and commercial success. Whether you are conceptualizing a new plant or optimizing an existing one, we provide the end-to-end expertise required to keep your world running.",
       services: [
         {
-          title: "Project Conceptualisation & Development",
+          title: "Project Conceptualization & Development",
           description:
-            "From pre-feasibility and financial assessments to finalizing EPC contractors and developing technical specifications.",
+            "From pre-feasibility and financial assessments to front-end EPC coordination and developing technical specifications.",
           icon: "ClipboardCheck",
           image:
             "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
+          ctaLabel: "Learn More",
+          ctaUrl: "/services/engineering-services",
         },
         {
           title: "Construction, Commissioning & Relocation",
@@ -228,30 +230,38 @@ export const defaultPageSections: Record<string, any> = {
           icon: "Network",
           image:
             "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800",
+          ctaLabel: "Learn More",
+          ctaUrl: "/services/project-management",
         },
         {
           title: "Asset Stewardship (O&M)",
           description:
-            "Specialized management of thermal power plants, international airports, and critical utilities like STPs.",
+            "Owner's mindset applied to utility management for international airports, and critical facilities like STPs.",
           icon: "Flame",
           image:
             "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&q=80&w=800",
+          ctaLabel: "Learn More",
+          ctaUrl: "/services/airport-services",
         },
         {
           title: "Expert Advisory & Performance Audits",
           description:
-            "High-level problem solving, energy efficiency audits, and specialized testing (NDT) for operational plants.",
+            "High-level problem solving, energy efficiency audits, and operational advisory for operational plants.",
           icon: "Search",
           image:
             "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800",
+          ctaLabel: "Learn More",
+          ctaUrl: "/services/power-generation",
         },
         {
           title: "Global Trading & Spare Parts",
           description:
-            "Strategic sourcing of critical equipment and spares from major OEMs in China, Vietnam, Korea, and India.",
+            "Strategic sourcing of critical and spare parts from global OEMs and distributors, ensuring continuity and cost savings.",
           icon: "Wrench",
           image:
             "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800",
+          ctaLabel: "Learn More",
+          ctaUrl: "/services/value-added-services",
         },
       ],
     },
@@ -318,7 +328,7 @@ export const defaultPageSections: Record<string, any> = {
           description:
             "Five years of flawless utility management at Delhi International Airport, recently renewed for another five years due to exceptional performance.",
           image:
-            "https://images.unsplash.com/photo-1436491865332-7a61a109db05?auto=format&fit=crop&q=80&w=2000",
+            "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?auto=format&fit=crop&q=80&w=2000",
         },
       ],
     },
@@ -451,7 +461,7 @@ export const defaultPageSections: Record<string, any> = {
         },
         {
           headline: "Planning an Asset Relocation?",
-          text: "Let our expert management team do the due-diligence study, prepare feasibility report, help you in asset valuation and finally transition your critical assets to a new site with zero optimum timeline.",
+          text: "Let our expert management team do the due-diligence study, prepare feasibility report, help you in asset valuation and finally transition your critical assets to a new site with optimum timeline.",
         },
       ],
     },
@@ -510,7 +520,7 @@ export const defaultPageSections: Record<string, any> = {
       headingPart1: "Experience Global",
       headingHighlight: "Engineering Excellence.",
       description:
-        "From India to Global, see how we are setting new standards in power infrastructure. Join the 13+ Projects that rely on Encotec for their critical power needs.",
+        "From India to Global, see how we are setting new standards in power infrastructure. Join the 13+ Projects that rely on Encotec for their critical needs.",
       primaryBtnLabel: "Start Your Project",
       primaryBtnUrl: "/contact",
       secondaryBtnLabel: "Talk to an Expert",
@@ -1091,7 +1101,7 @@ export const defaultPageSections: Record<string, any> = {
             },
             {
               type: "paragraph",
-              text: "This comprehensive O&M engagement for the 2x700 MW Rajpura Supercritical Power Plant is executed in partnership with Nabha Power Limited (L&T Power Division).",
+              text: "This O&M engagement for the 2x700 MW Rajpura Supercritical Power Plant is executed in partnership with Nabha Power Limited (L&T Power Division).",
             },
             {
               type: "heading",
