@@ -2594,17 +2594,33 @@ export const defaultPageSections: Record<string, any> = {
           icon: "HardHat",
         },
         {
-          title: "International Commissioning",
+          title: "Technical Due Diligence",
           description:
-            "Our teams have managed grid synchronization and performance tests in diverse markets, including Greece and Turkey. We ensure your plant meets all local and international standards.",
-          icon: "Globe",
+            "We provide independent technical audits for plant acquisitions, helping you understand the true value, operational risks, and hidden costs of an investment.",
+          icon: "FileCheck",
         },
         {
-          title: "Asset Relocation Services",
+          title: "Restoration Strategy",
           description:
-            "Unique to Encotec, we support owners in the complex process of dismantling, shifting, and reinstalling plants from one site—or country—to another, ensuring minimal downtime.",
-          icon: "Truck",
+            "For older plants, we provide comprehensive revamping and restoration plans to improve performance, extend lifecycle, and meet environmental standards.",
+          icon: "RefreshCw",
         },
+      ],
+    },
+    ValueProtection: {
+      headingPart1: "Protecting Your ",
+      headingHighlight: "Investment",
+      bulletHeading: "What We Evaluate",
+      paragraphs: [
+        "Acquiring or relocating an industrial asset involves significant capital risk. Without a clear understanding of the asset's true condition, you may be inheriting expensive liabilities.",
+        "Our independent technical audits provide the objective data you need to negotiate effectively, plan capital expenditures accurately, and ensure that your investment will deliver the expected returns over its intended lifecycle.",
+      ],
+      bullets: [
+        "Structural integrity and material degradation",
+        "Historical O&M records and failure analysis",
+        "Environmental compliance and emissions",
+        "Control system obsolescence",
+        "Thermodynamic performance baseline",
       ],
     },
     ProcessFlow: {
@@ -2642,10 +2658,10 @@ export const defaultPageSections: Record<string, any> = {
       ],
     },
     CTASection: {
-      heading: "Ready to Bring Your Asset Online?",
+      heading: "Planning an Acquisition or Relocation?",
       description:
-        "From new builds to complex cross-border relocations, our teams are ready to execute.",
-      ctaLabel: "Discuss Your Project",
+        "Get the technical truth about your assets before you make a decision.",
+      ctaLabel: "Request an Assessment",
       ctaUrl: "/contact",
     },
   },
@@ -2781,7 +2797,7 @@ export const defaultPageSections: Record<string, any> = {
         {
           title: "Global OEM Network",
           description:
-            "We have established tie-ups with over 65 major OEMs in China, Vietnam, and India, giving you direct access to high-quality components without the logistical headache.",
+            "We have established tie-ups with over  major OEMs in China, Vietnam, and India, giving you direct access to high-quality components without the logistical headache.",
           icon: "Globe",
         },
         {
@@ -2793,7 +2809,7 @@ export const defaultPageSections: Record<string, any> = {
         {
           title: "Technical Support",
           description:
-            "We don’t just supply parts; we provide the engineering support to ensure they are integrated correctly and perform to specification within your existing systems.",
+            "We don't just supply parts; we provide the engineering support to ensure they are integrated correctly and perform to specification.",
           icon: "Wrench",
         },
       ],

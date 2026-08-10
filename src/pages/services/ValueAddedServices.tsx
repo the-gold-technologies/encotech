@@ -107,7 +107,7 @@ function SourcingFeatures() {
       {
         title: "Global OEM Network",
         description:
-          "We have established tie-ups with over 65 major OEMs in China, Vietnam, Korea, and India, giving you direct access to high-quality components without the logistical headache.",
+          "We have established tie-ups with over  major OEMs in China, Vietnam, Korea, and India, giving you direct access to high-quality components without the logistical headache.",
       },
       {
         title: "Comprehensive Inventory",
@@ -117,7 +117,7 @@ function SourcingFeatures() {
       {
         title: "Technical Support",
         description:
-          "We don’t just supply parts; we provide the engineering support to ensure they are integrated correctly and perform to specification within your existing systems.",
+          "We don't just supply parts; we provide the engineering support to ensure they are integrated correctly and perform to specification.",
       },
     ],
   });

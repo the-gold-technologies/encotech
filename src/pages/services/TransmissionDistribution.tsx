@@ -12,11 +12,13 @@ import {
   CheckCircle2Icon,
   ZapIcon,
   SettingsIcon,
+  FileCheckIcon,
+  RefreshCwIcon,
 } from "lucide-react";
 import { useSectionData } from "../../store/useCMSStore";
 import { useSEO } from "../../hooks/useSEO";
 
-const tdCapIconMap = [HardHatIcon, GlobeIcon, TruckIcon];
+const tdCapIconMap = [HardHatIcon, FileCheckIcon, RefreshCwIcon];
 
 function ConstructionHero() {
   const { data } = useSectionData<any>(
@@ -122,6 +124,7 @@ function ConstructionHero() {
     </section>
   );
 }
+
 function CapabilitiesSection() {
   const { data } = useSectionData<any>(
     "transmission-distribution",
@@ -137,14 +140,14 @@ function CapabilitiesSection() {
             "We have delivered construction excellence across thermal power, solar PV, and wind projects globally. Our teams handle everything from civil works to complex mechanical erection.",
         },
         {
-          title: "International Commissioning",
+          title: "Technical Due Diligence",
           description:
-            "Our teams have managed grid synchronization and performance tests in diverse markets, including Greece and Turkey. We ensure your plant meets all local and international standards.",
+            "We provide independent technical audits for plant acquisitions, helping you understand the true value, operational risks, and hidden costs of an investment.",
         },
         {
-          title: "Asset Relocation Services",
+          title: "Restoration Strategy",
           description:
-            "Unique to Encotec, we support owners in the complex process of dismantling, shifting, and reinstalling plants from one site—or country—to another, ensuring minimal downtime.",
+            "For older plants, we provide comprehensive revamping and restoration plans to improve performance, extend lifecycle, and meet environmental standards.",
         },
       ],
     },
@@ -215,6 +218,103 @@ function CapabilitiesSection() {
     </section>
   );
 }
+
+function ValueProtection() {
+  const { data } = useSectionData<any>(
+    "transmission-distribution",
+    "ValueProtection",
+    {
+      headingPart1: "Protecting Your ",
+      headingHighlight: "Investment",
+      bulletHeading: "What We Evaluate",
+      paragraphs: [
+        "Acquiring or relocating an industrial asset involves significant capital risk. Without a clear understanding of the asset's true condition, you may be inheriting expensive liabilities.",
+        "Our independent technical audits provide the objective data you need to negotiate effectively, plan capital expenditures accurately, and ensure that your investment will deliver the expected returns over its intended lifecycle.",
+      ],
+      bullets: [
+        "Structural integrity and material degradation",
+        "Historical O&M records and failure analysis",
+        "Environmental compliance and emissions",
+        "Control system obsolescence",
+        "Thermodynamic performance baseline",
+      ],
+    },
+  );
+
+  const paragraphs = data.paragraphs || [];
+  const bullets = data.bullets || [];
+
+  return (
+    <section className="py-28 bg-neutral-100 text-neutral-900">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial={{
+              opacity: 0,
+              x: -40,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              duration: 0.8,
+            }}
+          >
+            <h2 className="text-4xl md:text-5xl font-black mb-8 text-neutral-900">
+              {data.headingPart1 || ""}
+              <span className="text-brand-pink">
+                {data.headingHighlight || ""}
+              </span>
+            </h2>
+            <div className="space-y-6 text-lg text-neutral-600 leading-relaxed">
+              {paragraphs.map((para: string, idx: number) => (
+                <p key={idx}>{para}</p>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{
+              opacity: 0,
+              x: 40,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              duration: 0.8,
+            }}
+            className="bg-white border border-neutral-200 shadow-sm p-10 rounded-xl"
+          >
+            <h3 className="text-2xl font-bold mb-6 text-neutral-900">
+              {data.bulletHeading || ""}
+            </h3>
+            <ul className="space-y-4">
+              {bullets.map((item: string, i: number) => (
+                <li key={i} className="flex items-start gap-3">
+                  <CheckCircle2Icon
+                    className="text-brand-pink flex-shrink-0 mt-1"
+                    size={20}
+                  />
+                  <span className="text-neutral-700 font-medium">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ProcessFlow() {
   const { data } = useSectionData<any>(
     "transmission-distribution",
@@ -242,7 +342,7 @@ function ProcessFlow() {
   const steps: any[] = data.steps || [];
 
   return (
-    <section className="py-28 bg-neutral-900 text-white">
+    <section className="py-28 bg-neutral-900 text-white border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
@@ -335,15 +435,16 @@ function ProcessFlow() {
     </section>
   );
 }
+
 function CTASection() {
   const { data } = useSectionData<any>(
     "transmission-distribution",
     "CTASection",
     {
-      heading: "Ready to Bring Your Asset Online?",
+      heading: "Planning an Acquisition or Relocation?",
       description:
-        "From new builds to complex cross-border relocations, our teams are ready to execute.",
-      ctaLabel: "Discuss Your Project",
+        "Get the technical truth about your assets before you make a decision.",
+      ctaLabel: "Request an Assessment",
       ctaUrl: "/contact",
     },
   );
@@ -365,6 +466,7 @@ function CTASection() {
     </section>
   );
 }
+
 export function TransmissionDistribution() {
   useSEO("service/transmission-distribution");
 
@@ -375,6 +477,7 @@ export function TransmissionDistribution() {
 
       <ConstructionHero />
       <CapabilitiesSection />
+      <ValueProtection />
       <ProcessFlow />
       <CTASection />
 
