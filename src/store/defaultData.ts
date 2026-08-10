@@ -5,7 +5,7 @@ export const defaultPagesMeta: Record<string, any> = {
     visibility: "public",
     isStatic: true,
     description: "Welcome to Encotec",
-    metaTitle: "Encotech - Member of Dornier Group",
+    metaTitle: "encotec - Member of Dornier Group",
     metaDescription: "Providing engineering services since 2011",
   },
   about: {
@@ -20,7 +20,7 @@ export const defaultPagesMeta: Record<string, any> = {
     title: "Services",
     visibility: "public",
     isStatic: true,
-    description: "Encotech Services",
+    description: "encotec Services",
     metaTitle: "Our Services - Encotec",
     metaDescription: "Explore our range of engineering and advisory services",
   },
@@ -28,7 +28,7 @@ export const defaultPagesMeta: Record<string, any> = {
     title: "Insights",
     visibility: "public",
     isStatic: true,
-    description: "Encotech Insights",
+    description: "encotec Insights",
     metaTitle: "Insights & Case Studies - Encotec",
     metaDescription: "Read about our projects and industry insights",
   },
@@ -134,7 +134,7 @@ export const defaultPageSections: Record<string, any> = {
       headlineHighlight: "Stewardship.",
       headlineLine2: "End-to-End Solutions for a Global Future",
       description:
-        'We are more than consultants; we are your partners in progress. By adopting an "Owner\'s Mindset," we take total responsibility for your infrastructure — from the first feasibility study to long-term operational excellence.',
+        'We are more than service provider; we are your partners in progress. By adopting an "Owner\'s Mindset," we take total responsibility for your infrastructure — from the first feasibility study to long-term operational excellence.',
       primaryBtnLabel: "Our Services",
       primaryBtnUrl: "/services",
       secondaryBtnLabel: "View Case Studies",
@@ -147,16 +147,14 @@ export const defaultPageSections: Record<string, any> = {
       ],
       projectsBadgeNumber: "",
       projectsBadgeLabel: "",
-      stat1Value: "2009",
-      stat1Label: "FOUNDING YEAR",
-      stat2Value: "2011",
-      stat2Label: "STARTED OPERATIONS",
-      stat3Value: "13+",
-      stat3Label: "KEY LOCATIONS",
-      stat4Value: "1800+",
-      stat4Label: "MANPOWER",
-      stat5Value: "20+",
-      stat5Label: "GW Under Stewardship",
+      stats: [
+        { value: "2009", label: "FOUNDING YEAR" },
+        { value: "2011", label: "STARTED OPERATIONS" },
+        { value: "13+", label: "KEY LOCATIONS" },
+        { value: "300+", label: "Engineers" },
+        { value: "1800+", label: "MANPOWER" },
+        { value: "10+", label: "GW Under Stewardship" },
+      ],
       backgroundImage:
         "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&q=80&w=1200",
     },
@@ -186,6 +184,11 @@ export const defaultPageSections: Record<string, any> = {
           value: "13+",
           label: "KEY LOCATIONS",
           icon: "Globe",
+        },
+        {
+          value: "100+",
+          label: "INDUSTRY SPECIALISTS",
+          icon: "Award",
         },
         {
           value: "1800+",
@@ -448,7 +451,7 @@ export const defaultPageSections: Record<string, any> = {
         },
         {
           headline: "Planning an Asset Relocation?",
-          text: "Let our expert management team do the due-diligence study, prepare feasibility report, help you in asset valuation and finally transition your critical assets to a new site with zero downtime and optimum timeline.",
+          text: "Let our expert management team do the due-diligence study, prepare feasibility report, help you in asset valuation and finally transition your critical assets to a new site with zero optimum timeline.",
         },
       ],
     },
@@ -603,10 +606,22 @@ export const defaultPageSections: Record<string, any> = {
           icon: "Users",
         },
         {
+          value: "300+",
+          label: "Engineers",
+          description: "Multidisciplinary engineering team",
+          icon: "Users",
+        },
+        {
           value: "100+",
           label: "Industry specialist",
           description: "Providing high-level expert advisory and diagnostics",
           icon: "Briefcase",
+        },
+        {
+          value: "10+ GW",
+          label: "capacity under stewardship",
+          description: "Total power capacity under our stewardship",
+          icon: "Zap",
         },
         {
           value: "20+ GW",
@@ -645,7 +660,7 @@ export const defaultPageSections: Record<string, any> = {
         {
           title: "2013 & Beyond: O&M Leadership",
           description:
-            "Solidified our reputation as top-tier stewards with the long-term O&M contracts, Annual Maintenance contracts, Overhauling jobs. etc.",
+            "Solidified our reputation as top-tier stewards with the long-term O&M management contracts, Annual Maintenance contracts, Overhauling jobs. etc.",
         },
         {
           title: "2016: Supercritical Excellence",
@@ -653,9 +668,9 @@ export const defaultPageSections: Record<string, any> = {
             "Embarked on our flagship O&M partnership for the 2x700 MW supercritical power plant at Nabha Power / Rajpura and 2x660 MW supercritical power plant at Jhajjar.",
         },
         {
-          title: "2018 & Beyond: Environmental Stewardship",
+          title: "2018 & Beyond: Environmental",
           description:
-            "Helping industries meet stringent environmental standards through specialized FGD O&M excellence.",
+            " Delivering a Sustainable, Cleaner Industrial Future Helping industries meet stringent environmental standards through specialized FGD O&M excellence.",
         },
         {
           title: "2021: Going Global",
@@ -663,7 +678,7 @@ export const defaultPageSections: Record<string, any> = {
             "Took our expertise global, managing critical commissioning projects internationally.",
         },
         {
-          title: "2025 & Beyond: New Chapters",
+          title: "2021 & Beyond: New Chapters",
           description:
             "We are currently providing specialized utility management for international airports like Indira Gandhi International Airport, Delhi (DIAL) and Noida International Airport (NIA), newly inaugurated.",
         },
@@ -674,7 +689,7 @@ export const defaultPageSections: Record<string, any> = {
       heading: "Committed to a Greener Tomorrow",
       paragraphs: [
         "Sustainability is not a policy at Encotec; it is our promise. We are committed to sustainable development by integrating high standards of environmental management into everything we do.",
-        "Our in-house Encotec team conducts specialized energy audits to identify savings and reduce the carbon footprints of operational plants. Through our expert advisory and Residual Life Assessments (RLA), we help owners revitalize old plants, making them more efficient and environmentally compliant.",
+        "Our in-house Encotec team conducts energy audits to identify savings and reduce the carbon footprints of operational plants. Through our expert advisory and Residual Life Assessments (RLA), we help owners revitalize old plants, making them more efficient and environmentally compliant.",
       ],
       focuses: [
         "Specialized energy audits by our in-house Encotec team to identify savings and reduce carbon footprints",
@@ -690,7 +705,7 @@ export const defaultPageSections: Record<string, any> = {
       headingPart1: "A Global Presence",
       headingHighlight: "with a Local Touch",
       description:
-        "While our headquarters is in Noida, our footprint spans the world. In India, we are present in 13+ key locations pan India. Internationally, we have established strong roots in Turkey, UAE, Indonesia, Vietnam, Germany, ensuring that wherever infrastructure needs stewardship, Encotec is there.",
+        "While our headquarters is in Noida, our footprint spans the world. In India, we are present in 13+ locations pan India. Internationally, we have established strong roots in Turkey, UAE, Indonesia, Vietnam, Germany, ensuring that wherever infrastructure needs stewardship, Encotec is there.",
       areas: [
         {
           title: "International Operations",
@@ -699,14 +714,6 @@ export const defaultPageSections: Record<string, any> = {
         {
           title: "Headquarters",
           desc: "Noida, India",
-        },
-        {
-          title: "Eastern & Central India",
-          desc: "Jamshedpur, Raipur, Kharagpur",
-        },
-        {
-          title: "Coastal & Southern India",
-          desc: "Vizag and upcoming projects",
         },
       ],
       calloutTitle: "Wherever Energy is Needed",
@@ -721,7 +728,7 @@ export const defaultPageSections: Record<string, any> = {
         {
           role: "Managing Director",
           name: "Arun Kumar Sarna",
-          bio: "Brings extensive leadership experience in engineering, project execution, and energy infrastructure development. With a deep understanding of large-scale power and industrial projects, has been instrumental in shaping the strategic direction of Encotec. Under this leadership, the organization has expanded its capabilities across engineering, project management, and operations, establishing a strong presence in both domestic and international markets. Focuses on driving long-term value creation through operational excellence, technical innovation, and strong client partnerships.",
+          bio: "Brings extensive leadership experience in engineering, project execution, and energy infrastructure development. With a deep understanding of large-scale power and industrial projects, has been instrumental in shaping the strategic direction of Encotec. Under this leadership, the organization has expanded its capabilities across engineering, project management, and operations excellence in energy generation both domestic and international markets. Focus on driving long-term value creation through operational excellence, technical innovation, and strong client partnerships.",
         },
         {
           role: "Director – Operations",
@@ -1765,7 +1772,7 @@ export const defaultPageSections: Record<string, any> = {
       tagline: "QUALITY POLICY & ACCREDITATION",
       heading: "Triple ISO Integrated Management System",
       description:
-        "Certified by Universal Certification Services (UCSPL) and internationally accredited under IAF & KAB standards for Encotech Energy (India) Private Limited.",
+        "Certified by Universal Certification Services (UCSPL) and internationally accredited under IAF & KAB standards for encotec Energy (India) Private Limited.",
       certificationsList: [
         {
           id: "iso-9001",
@@ -1777,7 +1784,8 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "27/03/2028",
           issuer: "Universal Certification Services Private Limited (UCSPL)",
           accreditation: "IAF & KAB (KAB-QC-80)",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784530188/encotech/certificates/iso-9001-certificate.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784530188/encotec/certificates/iso-9001-certificate.jpg",
           scope:
             "Designing, Consultancy, Engineering, Erection, Commissioning, Inspection, Testing, Operation and Maintenance of Plant and Machinery in Energy & Infrastructure Sector.",
         },
@@ -1791,7 +1799,8 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "27/03/2028",
           issuer: "Universal Certification Services Private Limited (UCSPL)",
           accreditation: "IAF & KAB (KAB-EC-61)",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784530189/encotech/certificates/iso-14001-certificate.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784530189/encotec/certificates/iso-14001-certificate.jpg",
           scope:
             "Designing, Consultancy, Engineering, Erection, Commissioning, Inspection, Testing, Operation and Maintenance of Plant and Machinery in Energy & Infrastructure Sector.",
         },
@@ -1805,7 +1814,8 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "27/03/2028",
           issuer: "Universal Certification Services Private Limited (UCSPL)",
           accreditation: "IAF & KAB (KAB-OC-61)",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784530191/encotech/certificates/iso-45001-certificate.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784530191/encotec/certificates/iso-45001-certificate.jpg",
           scope:
             "Designing, Consultancy, Engineering, Erection, Commissioning, Inspection, Testing, Operation and Maintenance of Plant and Machinery in Energy & Infrastructure Sector.",
         },
@@ -1819,7 +1829,8 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "20/05/2027",
           issuer: "Boiler Directorate, Government of Uttar Pradesh, Kanpur",
           accreditation: "Indian Boiler Regulations (IBR 1950)",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784529235/encotech/certificates/ibr-boiler-approval-certificate.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784529235/encotec/certificates/ibr-boiler-approval-certificate.jpg",
           scope:
             "Certificate of approval as Category 'Special Class (WP > 125 Kg/cm²)' Boiler Erector/Repairer and Steam/Feed Pipe Line Fabricator.",
         },
@@ -1831,9 +1842,11 @@ export const defaultPageSections: Record<string, any> = {
           certNumber: "109320520004032024",
           issueDate: "04/03/2024",
           expiryDate: "03/03/2027",
-          issuer: "Licensing Board, Industry, Energy & Labour Dept., Govt. of Maharashtra",
+          issuer:
+            "Licensing Board, Industry, Energy & Labour Dept., Govt. of Maharashtra",
           accreditation: "Govt. of Maharashtra Energy Dept.",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784529236/encotech/certificates/maharashtra-electrical-license.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784529236/encotec/certificates/maharashtra-electrical-license.jpg",
           scope:
             "Official License for execution of electrical contractor works and high-voltage power installations in Maharashtra.",
         },
@@ -1847,7 +1860,8 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "08/08/2046",
           issuer: "Labour Department, Govt. of NCT of Delhi",
           accreditation: "Govt. of NCT of Delhi",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784529237/encotech/certificates/delhi-electrical-license.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784529237/encotec/certificates/delhi-electrical-license.jpg",
           scope:
             "Class-I Electrical Contractor Licence for electrical installation works across National Capital Territory of Delhi.",
         },
@@ -1861,21 +1875,24 @@ export const defaultPageSections: Record<string, any> = {
           expiryDate: "24/05/2024",
           issuer: "ASTI - DIAL (GMRAA), New Delhi",
           accreditation: "BCAS Accredited ASTI",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784529238/encotech/certificates/avsec-induction-certificate.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784529238/encotec/certificates/avsec-induction-certificate.jpg",
           scope:
             "Certification of AVSEC Induction Course completion for Aviation Security Compliance Officer at international airports.",
         },
         {
           id: "bcas-airport-clearance",
           title: "BCAS Airport Auxiliary Service Clearance",
-          subtitle: "Bureau of Civil Aviation Security, Ministry of Civil Aviation",
+          subtitle:
+            "Bureau of Civil Aviation Security, Ministry of Civil Aviation",
           category: "Airport Aviation Security",
           certNumber: "E20220286415",
           issueDate: "31/03/2023",
           expiryDate: "30/03/2028",
           issuer: "Bureau of Civil Aviation Security (BCAS), Govt. of India",
           accreditation: "Ministry of Civil Aviation (MoCA)",
-          image: "https://res.cloudinary.com/dpa93copz/image/upload/v1784529239/encotech/certificates/bcas-airport-security-clearance.jpg",
+          image:
+            "https://res.cloudinary.com/dpa93copz/image/upload/v1784529239/encotec/certificates/bcas-airport-security-clearance.jpg",
           scope:
             "Official Security Clearance for Encotec Energy India Pvt. Ltd. and its Directors as Auxiliary Service Provider at Airports.",
         },
@@ -1973,9 +1990,13 @@ export const defaultPageSections: Record<string, any> = {
       heroTitle: "LEADERSHIP & TEAM",
       heroSubtitle:
         "Meet the experienced leaders and engineers driving operational excellence and strategic growth across global energy markets.",
-      heroBadge1: "1,800+ Manpower",
-      heroBadge2: "15+ Years Average Experience",
-      heroBadge3: "10+ Countries",
+      badges: [
+        "1,800+ Manpower",
+        "300+ Engineers",
+        "100+ Professionals & Industry Experts",
+        "12+ Years Average Experience",
+        "10+ Countries",
+      ],
       backgroundImage:
         "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=2400",
     },
@@ -1997,7 +2018,7 @@ export const defaultPageSections: Record<string, any> = {
       exec1Name: "Arun Kumar Sarna",
       exec1Role: "Managing Director",
       exec1Bio:
-        "Brings extensive leadership experience in engineering, project execution, and energy infrastructure development. With a deep understanding of large-scale power and industrial projects, has been instrumental in shaping the strategic direction of Encotec. Under this leadership, the organization has expanded its capabilities across engineering, project management, and operations, establishing a strong presence in both domestic and international markets. Focuses on driving long-term value creation through operational excellence, technical innovation, and strong client partnerships.",
+        "Brings extensive leadership experience in engineering, project execution, and energy infrastructure development. With a deep understanding of large-scale power and industrial projects, has been instrumental in shaping the strategic direction of Encotec. Under this leadership, the organization has expanded its capabilities across engineering, project management, and operations excellence in energy generation both domestic and international markets. Focus on driving long-term value creation through operational excellence, technical innovation, and strong client partnerships.",
       exec1Tags:
         "Strategic Leadership, Business Development, Energy Infrastructure",
       exec2Name: "Rajan Saxena",
@@ -2042,18 +2063,13 @@ export const defaultPageSections: Record<string, any> = {
         "14+ years in financial strategy and corporate governance for engineering firms.",
     },
     TeamByNumbers: {
-      stats1Value: "1800",
-      stats1Suffix: "+",
-      stats1Label: "Total Professionals",
-      stats2Value: "300",
-      stats2Suffix: "+",
-      stats2Label: "Industry specialists",
-      stats3Value: "10",
-      stats3Suffix: "+",
-      stats3Label: "Countries of Operation",
-      stats4Value: "12",
-      stats4Suffix: "+",
-      stats4Label: "Years Avg Experience",
+      stats: [
+        { value: "1800+", label: "Total Professionals" },
+        { value: "300+", label: "Senior Engineers" },
+        { value: "100+", label: "Industry Experts" },
+        { value: "23+", label: "Countries of Operation" },
+        { value: "12+", label: "Years Avg Experience" },
+      ],
     },
     CultureValues: {
       tagline: "Our Culture",
@@ -2577,17 +2593,33 @@ export const defaultPageSections: Record<string, any> = {
           icon: "HardHat",
         },
         {
-          title: "International Commissioning",
+          title: "Technical Due Diligence",
           description:
-            "Our teams have managed grid synchronization and performance tests in diverse markets, including Greece and Turkey. We ensure your plant meets all local and international standards.",
-          icon: "Globe",
+            "We provide independent technical audits for plant acquisitions, helping you understand the true value, operational risks, and hidden costs of an investment.",
+          icon: "FileCheck",
         },
         {
-          title: "Asset Relocation Services",
+          title: "Restoration Strategy",
           description:
-            "Unique to Encotec, we support owners in the complex process of dismantling, shifting, and reinstalling plants from one site—or country—to another, ensuring minimal downtime.",
-          icon: "Truck",
+            "For older plants, we provide comprehensive revamping and restoration plans to improve performance, extend lifecycle, and meet environmental standards.",
+          icon: "RefreshCw",
         },
+      ],
+    },
+    ValueProtection: {
+      headingPart1: "Protecting Your ",
+      headingHighlight: "Investment",
+      bulletHeading: "What We Evaluate",
+      paragraphs: [
+        "Acquiring or relocating an industrial asset involves significant capital risk. Without a clear understanding of the asset's true condition, you may be inheriting expensive liabilities.",
+        "Our independent technical audits provide the objective data you need to negotiate effectively, plan capital expenditures accurately, and ensure that your investment will deliver the expected returns over its intended lifecycle.",
+      ],
+      bullets: [
+        "Structural integrity and material degradation",
+        "Historical O&M records and failure analysis",
+        "Environmental compliance and emissions",
+        "Control system obsolescence",
+        "Thermodynamic performance baseline",
       ],
     },
     ProcessFlow: {
@@ -2625,10 +2657,10 @@ export const defaultPageSections: Record<string, any> = {
       ],
     },
     CTASection: {
-      heading: "Ready to Bring Your Asset Online?",
+      heading: "Planning an Acquisition or Relocation?",
       description:
-        "From new builds to complex cross-border relocations, our teams are ready to execute.",
-      ctaLabel: "Discuss Your Project",
+        "Get the technical truth about your assets before you make a decision.",
+      ctaLabel: "Request an Assessment",
       ctaUrl: "/contact",
     },
   },
@@ -2764,7 +2796,7 @@ export const defaultPageSections: Record<string, any> = {
         {
           title: "Global OEM Network",
           description:
-            "We have established tie-ups with over 65 major OEMs in China, Vietnam, and India, giving you direct access to high-quality components without the logistical headache.",
+            "We have established tie-ups with over  major OEMs in China, Vietnam, and India, giving you direct access to high-quality components without the logistical headache.",
           icon: "Globe",
         },
         {
@@ -2776,7 +2808,7 @@ export const defaultPageSections: Record<string, any> = {
         {
           title: "Technical Support",
           description:
-            "We don’t just supply parts; we provide the engineering support to ensure they are integrated correctly and perform to specification within your existing systems.",
+            "We don't just supply parts; we provide the engineering support to ensure they are integrated correctly and perform to specification.",
           icon: "Wrench",
         },
       ],

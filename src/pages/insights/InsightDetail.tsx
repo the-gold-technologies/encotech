@@ -240,6 +240,17 @@ export function InsightDetail() {
                     </blockquote>
                   );
                 }
+                if (block.type === "image" && (block.image || block.url || block.text)) {
+                  return (
+                    <div key={index} className="my-8 overflow-hidden rounded-2xl border border-neutral-200 shadow-md">
+                      <img
+                        src={block.image || block.url || block.text}
+                        alt="Article illustration"
+                        className="w-full h-auto object-cover max-h-[500px]"
+                      />
+                    </div>
+                  );
+                }
                 if (block.type === "list" && block.items) {
                   return (
                     <ul key={index} className="space-y-4 my-8">

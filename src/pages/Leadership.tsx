@@ -79,10 +79,26 @@ function LeadershipHero() {
       "Meet the experienced leaders and engineers driving operational excellence and strategic growth across global energy markets.",
     backgroundImage:
       "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=2400",
-    heroBadge1: "200+ Professionals",
-    heroBadge2: "15+ Years Average Experience",
-    heroBadge3: "23+ Countries",
+    badges: [
+      "1,800+ Manpower",
+      "300+ Engineers",
+      "100+ Professionals & Industry Experts",
+      "12+ Years Average Experience",
+      "10+ Countries",
+    ],
   });
+
+  const badgeList: string[] =
+    data.badges && data.badges.length > 0
+      ? data.badges
+      : [
+          data.heroBadge1 || "1,800+ Manpower",
+          data.heroBadge2 || "300+ Engineers",
+          data.heroBadge3 || "100+ Professionals & Industry Experts",
+          data.heroBadge4 || "12+ Years Average Experience",
+          data.heroBadge5 || "10+ Countries",
+        ].filter(Boolean);
+
   return (
     <section className="relative min-h-screen w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
@@ -191,39 +207,23 @@ function LeadershipHero() {
 
           {/* Floating Stat Badges */}
           <div className="flex flex-wrap gap-4">
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 20,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.6,
-                delay: 0.8,
-              }}
-              className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase"
-            >
-              {data.heroBadge1}
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
-              className="px-6 py-3 bg-white/90 backdrop-blur-sm text-neutral-900 font-bold text-sm tracking-wider uppercase"
-            >
-              {data.heroBadge2}
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.0 }}
-              className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-sm tracking-wider uppercase"
-            >
-              {data.heroBadge3}
-            </motion.div>
+            {badgeList.map((badge: string, idx: number) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 + idx * 0.1 }}
+                className={`px-6 py-3 font-bold text-sm tracking-wider uppercase backdrop-blur-sm ${
+                  idx === 0
+                    ? "bg-brand-pink/90 text-white"
+                    : idx % 2 === 1
+                    ? "bg-white/90 text-neutral-900"
+                    : "bg-white/10 border border-white/20 text-white"
+                }`}
+              >
+                {badge}
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>
@@ -630,62 +630,82 @@ function SeniorLeadership() {
     </section>
   );
 }
+const defaultTeamStats = [
+  { value: "1800+", label: "Total Professionals" },
+  { value: "300+", label: "Senior Engineers" },
+  { value: "100+", label: "Industry Experts" },
+  { value: "23+", label: "Countries of Operation" },
+  { value: "12+", label: "Years Avg Experience" },
+];
+
 function TeamByNumbers() {
   const { data } = useSectionData<any>("leadership", "TeamByNumbers", {
-    stats1Value: "1800",
-    stats1Label: "Total Professionals",
-    stats1Suffix: "+",
-    stats2Value: "150",
-    stats2Label: "Senior Engineers",
-    stats2Suffix: "+",
-    stats3Value: "23",
-    stats3Label: "Countries of Operation",
-    stats3Suffix: "+",
-    stats4Value: "15",
-    stats4Label: "Years Avg Experience",
-    stats4Suffix: "+",
+    stats: defaultTeamStats,
   });
-  const stats = [
-    {
-      value: parseInt(data.stats1Value) || 1800,
-      label: data.stats1Label || "Total Professionals",
-      suffix: data.stats1Suffix || "+",
-    },
-    {
-      value: parseInt(data.stats2Value) || 150,
-      label: data.stats2Label || "Senior Engineers",
-      suffix: data.stats2Suffix || "+",
-    },
-    {
-      value: parseInt(data.stats3Value) || 23,
-      label: data.stats3Label || "Countries of Operation",
-      suffix: data.stats3Suffix || "+",
-    },
-    {
-      value: parseInt(data.stats4Value) || 15,
-      label: data.stats4Label || "Years Avg Experience",
-      suffix: data.stats4Suffix || "+",
-    },
-  ];
+
+  const rawStats = Array.isArray(data?.stats)
+    ? data.stats
+    : Array.isArray(data?.statsList)
+    ? data.statsList
+    : null;
+
+  let stats = defaultTeamStats;
+
+  if (rawStats && rawStats.length > 0) {
+    stats = rawStats.map((s: any) => ({
+      value: String(s.value || ""),
+      label: String(s.label || ""),
+    }));
+  } else if (data?.stats1Value || data?.stats1Label) {
+    const legacyStats: any[] = [];
+    for (let i = 1; i <= 6; i++) {
+      if (data[`stats${i}Value`] || data[`stats${i}Label`]) {
+        const val = String(data[`stats${i}Value`] || "");
+        const suf = String(data[`stats${i}Suffix`] || "");
+        legacyStats.push({
+          value: val.includes("+") || !suf ? val : `${val}${suf}`,
+          label: String(data[`stats${i}Label`] || ""),
+        });
+      }
+    }
+    if (legacyStats.length > 0) stats = legacyStats;
+  }
+
   return (
     <section className="py-24 bg-neutral-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 divide-x divide-white/10">
-          {stats.map((stat, i) => (
-            <div
-              key={i}
-              className="flex flex-col items-center text-center px-4"
-            >
-              <div className="text-4xl md:text-6xl font-black text-brand-pink mb-2">
-                <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+        <div
+          className={`grid grid-cols-2 ${
+            stats.length >= 5
+              ? "md:grid-cols-3 lg:grid-cols-5"
+              : "md:grid-cols-4"
+          } gap-8 md:gap-6 divide-x divide-white/10`}
+        >
+          {stats.map((stat, i) => {
+            const match = String(stat.value).match(/^([\d,]+)(.*)$/);
+            const num = match ? parseInt(match[1].replace(/,/g, ""), 10) : NaN;
+            const suffix = match ? match[2] : "";
+
+            return (
+              <div
+                key={i}
+                className="flex flex-col items-center text-center px-4"
+              >
+                <div className="text-4xl md:text-5xl font-black text-brand-pink mb-2">
+                  {!isNaN(num) ? (
+                    <AnimatedCounter target={num} suffix={suffix} />
+                  ) : (
+                    stat.value
+                  )}
+                </div>
+                <div className="text-xs md:text-sm font-bold tracking-wider uppercase text-neutral-400">
+                  {stat.label}
+                </div>
               </div>
-              <div className="text-sm font-bold tracking-wider uppercase text-neutral-400">
-                {stat.label}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

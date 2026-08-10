@@ -19,13 +19,22 @@ export function Hero() {
   const MotionHeading = (motion as any)[HeadingTag] || motion.h1;
 
   const serviceTags = data.serviceTags || [];
-  const heroStats = [
-    { value: data.stat1Value, label: data.stat1Label },
-    { value: data.stat2Value, label: data.stat2Label },
-    { value: data.stat3Value, label: data.stat3Label },
-    { value: data.stat4Value, label: data.stat4Label },
-    { value: data.stat5Value, label: data.stat5Label },
-  ].filter((s: any) => s.value && s.label);
+  const heroStats = (
+    (Array.isArray(data.stats) && data.stats.length > 0)
+      ? data.stats
+      : (Array.isArray(data.statsList) && data.statsList.length > 0)
+      ? data.statsList
+      : [
+          { value: data.stat1Value, label: data.stat1Label },
+          { value: data.stat2Value, label: data.stat2Label },
+          { value: data.stat3Value, label: data.stat3Label },
+          { value: data.stat4Value, label: data.stat4Label },
+          { value: data.stat5Value, label: data.stat5Label },
+          { value: data.stat6Value, label: data.stat6Label },
+          { value: data.stat7Value, label: data.stat7Label },
+          { value: data.stat8Value, label: data.stat8Label },
+        ]
+  ).filter((s: any) => s && s.value && s.label);
 
   return (
     <section className="relative w-full bg-white pt-28 pb-16 overflow-hidden">
@@ -248,7 +257,7 @@ export function Hero() {
             duration: 0.7,
             delay: 0.55,
           }}
-          className={`grid grid-cols-5 max-[850px]:mt-16 max-[650px]:grid-cols-2 md:grid-cols-${heroStats.length} gap-8 pt-8 border-t border-neutral-200`}
+          className={`grid grid-cols-2 min-[500px]:grid-cols-3 md:grid-cols-6 gap-8 pt-8 border-t border-neutral-200`}
         >
           {heroStats.map((stat: any, i: number) => (
             <div key={i}>

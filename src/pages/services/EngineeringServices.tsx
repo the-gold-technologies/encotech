@@ -208,7 +208,7 @@ function EngineeringHero() {
               duration: 0.8,
               delay: 0.4,
             }}
-            className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8 max-w-5xl text-white select-text cursor-text selection:bg-brand-pink selection:text-white"
+            className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-8 max-w-5xl text-white select-text cursor-text selection:bg-brand-pink selection:text-white"
           >
             {data.heroTitle}
           </motion.h1>

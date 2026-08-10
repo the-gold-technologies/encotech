@@ -6,18 +6,39 @@ import {
   GlobeIcon,
   UsersIcon,
   ZapIcon,
+  ShieldCheckIcon,
+  AwardIcon,
+  TrendingUpIcon,
+  BriefcaseIcon,
+  ClockIcon,
+  ActivityIcon,
+  CheckCircle2Icon,
   ArrowRightIcon,
 } from "lucide-react";
 import { useSectionData } from "../../store/useCMSStore";
 import { LinkText } from "../ui/LinkText";
 
-const trustStripIcons = [CalendarIcon, GlobeIcon, UsersIcon, ZapIcon];
+const iconMap: Record<string, any> = {
+  Calendar: CalendarIcon,
+  Globe: GlobeIcon,
+  Users: UsersIcon,
+  Zap: ZapIcon,
+  Shield: ShieldCheckIcon,
+  Award: AwardIcon,
+  TrendingUp: TrendingUpIcon,
+  Briefcase: BriefcaseIcon,
+  Clock: ClockIcon,
+  Activity: ActivityIcon,
+  CheckCircle: CheckCircle2Icon,
+};
+
+const defaultIcons = [CalendarIcon, GlobeIcon, UsersIcon, ZapIcon];
 
 export function AboutSection() {
   const { data } = useSectionData<any>("home", "AboutUs");
   const stats = (data.stats || []).map((stat: any, i: number) => ({
     ...stat,
-    icon: trustStripIcons[i % trustStripIcons.length] || ZapIcon,
+    icon: (stat.icon && iconMap[stat.icon]) || defaultIcons[i % defaultIcons.length] || ZapIcon,
   }));
 
   return (
