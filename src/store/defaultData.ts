@@ -328,7 +328,7 @@ export const defaultPageSections: Record<string, any> = {
           description:
             "Five years of flawless utility management at Delhi International Airport, recently renewed for another five years due to exceptional performance.",
           image:
-            "https://images.unsplash.com/photo-1436491865332-7a61a109db05?auto=format&fit=crop&q=80&w=2000",
+            "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?auto=format&fit=crop&q=80&w=2000",
         },
       ],
     },
