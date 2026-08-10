@@ -34,6 +34,8 @@ interface GlobalSEOData {
   searchConsoleId?: string | null;
   customHeaderScripts?: string | null;
   customFooterScripts?: string | null;
+  socialLinks?: any[];
+  canonicalOrdering?: string | null;
   schema?: string | null;
   headingOptions?: any;
 }

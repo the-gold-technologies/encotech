@@ -461,7 +461,7 @@ export const defaultPageSections: Record<string, any> = {
         },
         {
           headline: "Planning an Asset Relocation?",
-          text: "Let our expert management team do the due-diligence study, prepare feasibility report, help you in asset valuation and finally transition your critical assets to a new site with zero optimum timeline.",
+          text: "Let our expert management team do the due-diligence study, prepare feasibility report, help you in asset valuation and finally transition your critical assets to a new site with optimum timeline.",
         },
       ],
     },
@@ -520,7 +520,7 @@ export const defaultPageSections: Record<string, any> = {
       headingPart1: "Experience Global",
       headingHighlight: "Engineering Excellence.",
       description:
-        "From India to Global, see how we are setting new standards in power infrastructure. Join the 13+ Projects that rely on Encotec for their critical power needs.",
+        "From India to Global, see how we are setting new standards in power infrastructure. Join the 13+ Projects that rely on Encotec for their critical needs.",
       primaryBtnLabel: "Start Your Project",
       primaryBtnUrl: "/contact",
       secondaryBtnLabel: "Talk to an Expert",
@@ -1101,7 +1101,7 @@ export const defaultPageSections: Record<string, any> = {
             },
             {
               type: "paragraph",
-              text: "This comprehensive O&M engagement for the 2x700 MW Rajpura Supercritical Power Plant is executed in partnership with Nabha Power Limited (L&T Power Division).",
+              text: "This O&M engagement for the 2x700 MW Rajpura Supercritical Power Plant is executed in partnership with Nabha Power Limited (L&T Power Division).",
             },
             {
               type: "heading",
