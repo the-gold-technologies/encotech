@@ -57,9 +57,9 @@ export function Navigation({ variant = "light" }: NavigationProps) {
       >
         <Link to="/" className="flex items-center">
           <img
-            src="/encotec-768x179.png"
+            src="/encotec-logo.png"
             alt="Encotec - Member of Dornier Group"
-            className="h-10 w-auto"
+            className="h-10 w-auto object-contain"
           />
         </Link>
 
@@ -150,9 +150,9 @@ export function Navigation({ variant = "light" }: NavigationProps) {
             {/* Panel header — logo + close in one row */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-100">
               <img
-                src="/encotec-768x179.png"
+                src="/encotec-logo.png"
                 alt="Encotec"
-                className="h-6 w-auto"
+                className="h-7 w-auto object-contain"
               />
               <button
                 onClick={() => setMobileMenuOpen(false)}

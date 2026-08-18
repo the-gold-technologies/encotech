@@ -28,9 +28,11 @@ export function Loader() {
           transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <h2 className="text-xl font-bold tracking-[0.2em] uppercase text-white mb-2">
-            Encotec
-          </h2>
+          <img
+            src="/encotec-logo.png"
+            alt="Encotec"
+            className="h-8 w-auto mb-3 brightness-0 invert opacity-90"
+          />
           <p className="text-xs tracking-[0.1em] text-neutral-400 uppercase">
             Loading energy stewardship...
           </p>

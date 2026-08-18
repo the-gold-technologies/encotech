@@ -9,9 +9,13 @@ interface FooterProps {
 export function Footer({ className = '', variant = 'standalone' }: FooterProps) {
   const content = (
     <>
-      <div className="font-black text-neutral-900 text-xl mb-4 md:mb-0 tracking-tighter">
-        ENCOTEC
-      </div>
+      <Link to="/" className="flex items-center mb-4 md:mb-0">
+        <img
+          src="/encotec-logo.png"
+          alt="Encotec"
+          className="h-8 w-auto object-contain"
+        />
+      </Link>
       <div className="flex gap-8">
         <a href="#" className="hover:text-brand-pink transition-colors">
           Privacy
