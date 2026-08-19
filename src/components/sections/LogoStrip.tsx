@@ -1,45 +1,79 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
 import { useSectionData } from "../../store/useCMSStore";
 
+const isImageUrl = (val: any): boolean => {
+  if (typeof val !== "string") return false;
+  return (
+    val.startsWith("http://") ||
+    val.startsWith("https://") ||
+    val.startsWith("/") ||
+    val.startsWith("data:image/") ||
+    /\.(png|jpe?g|svg|webp|gif)$/i.test(val)
+  );
+};
+
 export function LogoStrip() {
+  const [isHovered, setIsHovered] = useState(false);
   const { data } = useSectionData<any>("home", "LogoStripSection");
 
-  if (!data.logos) return null;
-  const logos = data.logos;
+  if (!data || !data.logos || !Array.isArray(data.logos)) return null;
+
+  // Strictly filter for valid image logo items only (no text fallbacks)
+  const validLogos = data.logos
+    .map((logo: any) => {
+      if (typeof logo === "object" && logo !== null && logo.image) {
+        return { name: logo.name || "Client Logo", image: logo.image };
+      }
+      if (typeof logo === "string" && isImageUrl(logo)) {
+        return { name: "Client Logo", image: logo };
+      }
+      return null;
+    })
+    .filter(Boolean) as Array<{ name: string; image: string }>;
+
+  if (validLogos.length === 0) return null;
+
+  const displayList = [
+    ...validLogos,
+    ...validLogos,
+    ...validLogos,
+    ...validLogos,
+  ];
+  const duration = Math.max(25, validLogos.length * 2.5);
 
   return (
     <section className="py-16 bg-neutral-50 border-y border-neutral-200 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 mb-8 text-center">
-        <p className="text-sm font-semibold text-neutral-400 uppercase tracking-widest select-text cursor-text">
-          {data.tagline}
-        </p>
-      </div>
+      {data.tagline && (
+        <div className="max-w-7xl mx-auto px-4 mb-8 text-center">
+          <p className="text-sm font-semibold text-neutral-400 uppercase tracking-widest select-text cursor-text">
+            {data.tagline}
+          </p>
+        </div>
+      )}
 
-      <div className="flex relative overflow-hidden">
-        <motion.div
-          className="flex gap-16 items-center whitespace-nowrap px-8"
-          animate={{
-            x: ["0%", "-50%"],
-          }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "linear",
+      <div className="flex relative overflow-hidden group">
+        <div
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="flex gap-16 items-center whitespace-nowrap px-8 cursor-pointer"
+          style={{
+            width: "max-content",
+            animation: `marquee ${duration}s linear infinite`,
+            animationPlayState: isHovered ? "paused" : "running",
           }}
         >
-          {[...logos, ...logos, ...logos].map((logo, i) => (
-            <span
+          {displayList.map((logo, i) => (
+            <img
               key={i}
-              className="text-2xl md:text-3xl font-bold text-neutral-300 hover:text-neutral-900 transition-colors duration-300 cursor-default select-none"
-            >
-              {logo}
-            </span>
+              src={logo.image}
+              alt={logo.name}
+              className="h-10 md:h-14 max-w-[160px] object-contain grayscale hover:grayscale-0 opacity-80 hover:opacity-100 hover:scale-110 transition-all duration-300 flex-shrink-0 cursor-pointer"
+            />
           ))}
-        </motion.div>
+        </div>
 
-        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-neutral-50 to-transparent z-10" />
-        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-neutral-50 to-transparent z-10" />
+        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-neutral-50 to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-neutral-50 to-transparent z-10 pointer-events-none" />
       </div>
     </section>
   );
