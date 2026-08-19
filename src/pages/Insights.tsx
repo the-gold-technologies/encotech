@@ -59,39 +59,41 @@ function AnimatedCounter({
     </span>
   );
 }
-// Data
 
 // Hero Section
 function InsightsHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
-  const { data } = useSectionData<any>("insights", "InsightsHero", {
-    tagline: "Insights & Resources",
-    heroTitle: "INSIGHTS, CASE STUDIES & INDUSTRY PERSPECTIVES",
-    heroSubtitle:
-      "Explore our thought leadership, project successes, and the latest updates from the forefront of global energy engineering.",
-    tab1Label: "Case Studies",
-    tab2Label: "News & Updates",
-    tab3Label: "Blog & Articles",
-  });
+  const { data } = useSectionData<any>("insights", "InsightsHero");
+
+  const tagline = data.tagline || data.heroTagline;
+  const heroTitle = data.heroTitle || data.title;
+  const heroSubtitle = data.heroSubtitle || data.subtitle || data.description;
+  const bgImage = data.backgroundImage || data.heroImage || data.image;
+  const tab1Label = data.tab1Label;
+  const tab2Label = data.tab2Label;
+  const tab3Label = data.tab3Label;
+
   return (
     <section className="relative min-h-[80vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
-      <motion.div
-        style={{
-          y,
-        }}
-        className="absolute inset-0"
-      >
-        <img
-          src={data.backgroundImage}
-          alt="Energy infrastructure"
-          className="w-full h-full object-cover opacity-40"
-        />
+      {bgImage && (
+        <motion.div
+          style={{
+            y,
+          }}
+          className="absolute inset-0"
+        >
+          <img
+            src={bgImage}
+            alt={heroTitle || "Insights"}
+            className="w-full h-full object-cover opacity-40"
+          />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/90 via-neutral-900/70 to-neutral-900" />
-      </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/90 via-neutral-900/70 to-neutral-900" />
+        </motion.div>
+      )}
 
       {/* Grid Overlay */}
       <div
@@ -123,106 +125,140 @@ function InsightsHero() {
           className="max-w-4xl"
         >
           {/* Label */}
-          <motion.div
-            initial={{
-              opacity: 0,
-              x: -20,
-            }}
-            animate={{
-              opacity: 1,
-              x: 0,
-            }}
-            transition={{
-              duration: 0.6,
-              delay: 0.2,
-            }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="w-12 h-[3px] bg-brand-pink" />
-            <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              {data.tagline}
-            </span>
-          </motion.div>
+          {tagline && (
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: -20,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.2,
+              }}
+              className="flex items-center gap-3 mb-8"
+            >
+              <div className="w-12 h-[3px] bg-brand-pink" />
+              <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
+                {tagline}
+              </span>
+            </motion.div>
+          )}
 
           {/* Headline */}
-          <motion.h1
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.4,
-            }}
-            className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-8"
-          >
-            {data.heroTitle}
-          </motion.h1>
+          {heroTitle && (
+            <motion.h1
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.4,
+              }}
+              className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-8"
+            >
+              {heroTitle}
+            </motion.h1>
+          )}
 
           {/* Subtitle */}
-          <motion.p
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.6,
-            }}
-            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12"
-          >
-            {data.heroSubtitle}
-          </motion.p>
+          {heroSubtitle && (
+            <motion.p
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.6,
+              }}
+              className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12"
+            >
+              {heroSubtitle}
+            </motion.p>
+          )}
 
           {/* Category Pills */}
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.6,
-              delay: 0.8,
-            }}
-            className="flex flex-wrap gap-4"
-          >
-            <div className="px-6 py-2.5 bg-brand-pink/20 border border-brand-pink/30 text-brand-pink font-bold text-sm tracking-wider uppercase rounded-full">
-              {data.tab1Label}
-            </div>
-            <div className="px-6 py-2.5 bg-blue-500/20 border border-blue-500/30 text-blue-400 font-bold text-sm tracking-wider uppercase rounded-full">
-              {data.tab2Label}
-            </div>
-            <div className="px-6 py-2.5 bg-green-500/20 border border-green-500/30 text-green-400 font-bold text-sm tracking-wider uppercase rounded-full">
-              {data.tab3Label}
-            </div>
-          </motion.div>
+          {(tab1Label || tab2Label || tab3Label) && (
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.8,
+              }}
+              className="flex flex-wrap gap-4"
+            >
+              {tab1Label && (
+                <div className="px-6 py-2.5 bg-brand-pink/20 border border-brand-pink/30 text-brand-pink font-bold text-sm tracking-wider uppercase rounded-full">
+                  {tab1Label}
+                </div>
+              )}
+              {tab2Label && (
+                <div className="px-6 py-2.5 bg-blue-500/20 border border-blue-500/30 text-blue-400 font-bold text-sm tracking-wider uppercase rounded-full">
+                  {tab2Label}
+                </div>
+              )}
+              {tab3Label && (
+                <div className="px-6 py-2.5 bg-green-500/20 border border-green-500/30 text-green-400 font-bold text-sm tracking-wider uppercase rounded-full">
+                  {tab3Label}
+                </div>
+              )}
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </section>
   );
 }
+
 // Featured Insight Section
 function FeaturedInsight() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -100]);
-  const { data } = useSectionData<any>("insights", "FeaturedInsight", {
-    badgeLabel: "Featured Case Study",
-    btnLabel: "Read Full Case Study",
-  });
+  const { data } = useSectionData<any>("insights", "FeaturedInsight");
+  const { data: articlesData } = useSectionData<any>("insights", "ArticlesList");
 
-  if (!data.latestArticleTitle) return null;
+  const articlesList = Array.isArray(articlesData?.articles)
+    ? articlesData.articles
+    : Array.isArray(articlesData?.items)
+    ? articlesData.items
+    : [];
+  const firstArticle = articlesList[0];
+
+  const badgeLabel = data.badgeLabel;
+  const btnLabel = data.btnLabel || data.ctaLabel;
+  const title = data.latestArticleTitle || data.title || firstArticle?.title;
+  const summary =
+    data.latestArticleSummary ||
+    data.summary ||
+    data.description ||
+    firstArticle?.description;
+  const slug = data.latestArticleSlug || data.slug || firstArticle?.slug;
+  const image = data.latestArticleImage || data.image || firstArticle?.image;
+  const date = data.latestArticleDate || data.date || firstArticle?.date;
+  const location =
+    data.latestArticleLocation || data.location || firstArticle?.location;
+
+  if (!title) return null;
 
   return (
     <section className="py-20 bg-neutral-50">
@@ -245,54 +281,64 @@ function FeaturedInsight() {
           className="group relative w-full h-[600px] overflow-hidden bg-neutral-900 cursor-pointer"
         >
           {/* Parallax Image */}
-          <motion.div
-            style={{
-              y,
-            }}
-            className="absolute inset-0 h-[120%] -top-[10%]"
-          >
-            <img
-              src={data.latestArticleImage}
-              alt={data.latestArticleTitle}
-              className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000"
-            />
+          {image && (
+            <motion.div
+              style={{
+                y,
+              }}
+              className="absolute inset-0 h-[120%] -top-[10%]"
+            >
+              <img
+                src={image}
+                alt={title}
+                className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000"
+              />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/40 to-transparent" />
-          </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/40 to-transparent" />
+            </motion.div>
+          )}
 
           {/* Content */}
           <Link
-            to={`/insights/${data.latestArticleSlug}`}
+            to={slug ? `/insights/${slug}` : "/insights"}
             className="absolute inset-0 p-10 md:p-16 flex flex-col justify-end"
           >
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase mb-6">
-                {data.badgeLabel}
-              </div>
+              {badgeLabel && (
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-pink text-white text-xs font-bold tracking-wider uppercase mb-6">
+                  {badgeLabel}
+                </div>
+              )}
               <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight tracking-tight group-hover:text-brand-pink/90 transition-colors duration-300">
-                {data.latestArticleTitle}
+                {title}
               </h2>
-              <p className="text-xl text-neutral-300 mb-8 leading-relaxed max-w-2xl">
-                {data.latestArticleSummary}
-              </p>
+              {summary && (
+                <p className="text-xl text-neutral-300 mb-8 leading-relaxed max-w-2xl">
+                  {summary}
+                </p>
+              )}
 
               <div className="flex items-center gap-6 text-sm font-medium text-neutral-400 mb-8">
-                <div className="flex items-center gap-2">
-                  <CalendarIcon size={16} />
-                  {data.latestArticleDate}
-                </div>
-                {data.latestArticleLocation && (
+                {date && (
+                  <div className="flex items-center gap-2">
+                    <CalendarIcon size={16} />
+                    {date}
+                  </div>
+                )}
+                {location && (
                   <div className="flex items-center gap-2">
                     <MapPinIcon size={16} />
-                    {data.latestArticleLocation}
+                    {location}
                   </div>
                 )}
               </div>
 
-              <button className="inline-flex items-center gap-2 text-sm font-bold text-white hover:gap-4 transition-all duration-300 uppercase tracking-wider">
-                {data.btnLabel}
-                <ArrowRightIcon size={16} className="text-brand-pink" />
-              </button>
+              {btnLabel && (
+                <button className="inline-flex items-center gap-2 text-sm font-bold text-white hover:gap-4 transition-all duration-300 uppercase tracking-wider">
+                  {btnLabel}
+                  <ArrowRightIcon size={16} className="text-brand-pink" />
+                </button>
+              )}
             </div>
           </Link>
         </motion.div>
@@ -300,22 +346,22 @@ function FeaturedInsight() {
     </section>
   );
 }
+
 // Content Grid Section
 function ContentGrid() {
-  const { data: articlesData } = useSectionData<any>(
-    "insights",
-    "ArticlesList",
-    {
-      emptyMessage: "No insights found for this category.",
-      articles: [],
-    },
-  );
-  const { data: relatedData } = useSectionData<any>(
-    "insights",
-    "RelatedInsights",
-    { readMoreLabel: "Read Article" },
-  );
-  const displayArticles = articlesData.articles;
+  const { data: articlesData } = useSectionData<any>("insights", "ArticlesList");
+  const { data: relatedData } = useSectionData<any>("insights", "RelatedInsights");
+
+  const displayArticles = Array.isArray(articlesData?.articles)
+    ? articlesData.articles
+    : Array.isArray(articlesData?.items)
+    ? articlesData.items
+    : Array.isArray(articlesData)
+    ? articlesData
+    : [];
+
+  const emptyMessage = articlesData?.emptyMessage;
+  const readMoreLabel = relatedData?.readMoreLabel;
 
   const [activeFilter, setActiveFilter] = useState("All");
   const filters = ["All", "Case Studies", "News", "Blogs"];
@@ -326,6 +372,7 @@ function ContentGrid() {
     if (activeFilter === "Blogs") return item.category === "Blog";
     return true;
   });
+
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "Case Study":
@@ -338,6 +385,7 @@ function ContentGrid() {
         return "bg-neutral-800 text-white";
     }
   };
+
   return (
     <section className="py-20 bg-neutral-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -373,7 +421,7 @@ function ContentGrid() {
           <AnimatePresence mode="popLayout">
             {filteredData.map((item: any, index: number) => (
               <motion.div
-                key={item.id}
+                key={item.id || item.slug || index}
                 layout
                 initial={{
                   opacity: 0,
@@ -406,37 +454,43 @@ function ContentGrid() {
                   className="flex flex-col h-full"
                 >
                   {/* Image */}
-                  <div
-                    className={`relative overflow-hidden ${index === 0 && activeFilter !== "All" ? "h-80" : "h-60"}`}
-                  >
-                    <motion.img
-                      whileHover={{
-                        scale: 1.05,
-                      }}
-                      transition={{
-                        duration: 0.6,
-                      }}
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
+                  {item.image && (
+                    <div
+                      className={`relative overflow-hidden ${index === 0 && activeFilter !== "All" ? "h-80" : "h-60"}`}
+                    >
+                      <motion.img
+                        whileHover={{
+                          scale: 1.05,
+                        }}
+                        transition={{
+                          duration: 0.6,
+                        }}
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                      />
 
-                    <div className="absolute top-4 left-4">
-                      <span
-                        className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${getCategoryColor(item.category)}`}
-                      >
-                        {item.category}
-                      </span>
+                      {item.category && (
+                        <div className="absolute top-4 left-4">
+                          <span
+                            className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${getCategoryColor(item.category)}`}
+                          >
+                            {item.category}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  </div>
+                  )}
 
                   {/* Content */}
                   <div className="p-8 flex flex-col flex-grow">
                     <div className="flex items-center gap-4 text-xs font-medium text-neutral-500 mb-4">
-                      <div className="flex items-center gap-1.5">
-                        <CalendarIcon size={14} />
-                        {item.date}
-                      </div>
+                      {item.date && (
+                        <div className="flex items-center gap-1.5">
+                          <CalendarIcon size={14} />
+                          {item.date}
+                        </div>
+                      )}
                       {item.location && (
                         <div className="flex items-center gap-1.5">
                           <MapPinIcon size={14} />
@@ -457,14 +511,18 @@ function ContentGrid() {
                       {item.title}
                     </h3>
 
-                    <p className="text-neutral-600 leading-relaxed mb-8 flex-grow">
-                      {item.description}
-                    </p>
+                    {item.description && (
+                      <p className="text-neutral-600 leading-relaxed mb-8 flex-grow">
+                        {item.description}
+                      </p>
+                    )}
 
-                    <div className="inline-flex items-center gap-2 text-sm font-bold text-neutral-900 group-hover:text-brand-pink group-hover:gap-3 transition-all duration-300 uppercase tracking-wider mt-auto">
-                      {relatedData.readMoreLabel}
-                      <ChevronRightIcon size={16} />
-                    </div>
+                    {readMoreLabel && (
+                      <div className="inline-flex items-center gap-2 text-sm font-bold text-neutral-900 group-hover:text-brand-pink group-hover:gap-3 transition-all duration-300 uppercase tracking-wider mt-auto">
+                        {readMoreLabel}
+                        <ChevronRightIcon size={16} />
+                      </div>
+                    )}
                   </div>
                 </Link>
               </motion.div>
@@ -472,24 +530,57 @@ function ContentGrid() {
           </AnimatePresence>
         </motion.div>
 
-        {filteredData.length === 0 && (
+        {filteredData.length === 0 && emptyMessage && (
           <div className="py-20 text-center text-neutral-500">
-            {articlesData.emptyMessage}
+            {emptyMessage}
           </div>
         )}
       </div>
     </section>
   );
 }
+
 // Stats Banner
 function StatsBanner() {
   const { data } = useSectionData<any>("insights", "InsightsStats");
-  const stats = [
-    { value: parseInt(data.stat1Value) || 15, suffix: data.stat1Suffix || "+", label: data.stat1Label || "Case Studies Published" },
-    { value: parseInt(data.stat2Value) || 50, suffix: data.stat2Suffix || "+", label: data.stat2Label || "Articles & Insights" },
-    { value: parseInt(data.stat3Value) || 10, suffix: data.stat3Suffix || "+", label: data.stat3Label || "Countries Covered" },
-    { value: parseInt(data.stat4Value) || 10, suffix: data.stat4Suffix || "K+", label: data.stat4Label || "Monthly Readers" },
-  ];
+
+  const rawStats = Array.isArray(data?.stats)
+    ? data.stats
+    : Array.isArray(data?.statsList)
+    ? data.statsList
+    : null;
+
+  let stats: Array<{ value: number | string; suffix: string; label: string }> = [];
+
+  if (rawStats && rawStats.length > 0) {
+    stats = rawStats.map((s: any) => {
+      const match = String(s.value || "").match(/^([\d,]+)(.*)$/);
+      const num = match ? parseInt(match[1].replace(/,/g, ""), 10) : NaN;
+      const suffix = match ? match[2] : "";
+      return {
+        value: !isNaN(num) ? num : s.value || "",
+        suffix,
+        label: String(s.label || ""),
+      };
+    });
+  } else if (data) {
+    const legacyKeys = [1, 2, 3, 4];
+    legacyKeys.forEach((i) => {
+      const valStr = String(data[`stat${i}Value`] || data[`stats${i}Value`] || "");
+      const sufStr = String(data[`stat${i}Suffix`] || data[`stats${i}Suffix`] || "");
+      const labelStr = String(data[`stat${i}Label`] || data[`stats${i}Label`] || "");
+      if (valStr || labelStr) {
+        const num = parseInt(valStr.replace(/,/g, ""), 10);
+        stats.push({
+          value: !isNaN(num) ? num : valStr,
+          suffix: sufStr,
+          label: labelStr,
+        });
+      }
+    });
+  }
+
+  if (stats.length === 0) return null;
 
   return (
     <section className="py-20 bg-neutral-900 text-white relative overflow-hidden">
@@ -520,7 +611,11 @@ function StatsBanner() {
               className="text-center"
             >
               <div className="text-4xl md:text-5xl font-black text-brand-pink mb-2">
-                <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                {typeof stat.value === "number" ? (
+                  <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                ) : (
+                  `${stat.value}${stat.suffix}`
+                )}
               </div>
               <div className="text-xs font-bold text-neutral-400 uppercase tracking-wider">
                 {stat.label}
@@ -532,13 +627,17 @@ function StatsBanner() {
     </section>
   );
 }
+
 // Newsletter Section
 function NewsletterSection() {
-  const { data } = useSectionData<any>("insights", "NewsletterSection", {
-    privacyNote: "We respect your privacy. Unsubscribe at any time.",
-  });
+  const { data } = useSectionData<any>("insights", "NewsletterSection");
 
-  if (!data.heading) return null;
+  const tagline = data.tagline;
+  const heading = data.heading || data.title;
+  const description = data.description;
+  const privacyNote = data.privacyNote;
+
+  if (!heading) return null;
 
   return (
     <section className="py-32 bg-white">
@@ -563,22 +662,24 @@ function NewsletterSection() {
             <MailIcon size={32} strokeWidth={1.5} />
           </div>
 
-          {data.tagline && (
+          {tagline && (
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-8 h-[2px] bg-brand-pink" />
               <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                {data.tagline}
+                {tagline}
               </span>
               <div className="w-8 h-[2px] bg-brand-pink" />
             </div>
           )}
 
           <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6 tracking-tight">
-            {data.heading}
+            {heading}
           </h2>
-          <p className="text-xl text-neutral-600 mb-12 leading-relaxed max-w-2xl mx-auto">
-            {data.description}
-          </p>
+          {description && (
+            <p className="text-xl text-neutral-600 mb-12 leading-relaxed max-w-2xl mx-auto">
+              {description}
+            </p>
+          )}
 
           <form
             className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto"
@@ -598,22 +699,27 @@ function NewsletterSection() {
               Subscribe
             </button>
           </form>
-          <p className="text-xs text-neutral-400 mt-4">{data.privacyNote}</p>
+          {privacyNote && (
+            <p className="text-xs text-neutral-400 mt-4">{privacyNote}</p>
+          )}
         </motion.div>
       </div>
     </section>
   );
 }
+
 // CTA Section
 function CTASection() {
-  const { data } = useSectionData<any>("insights", "InsightsCTA", {
-    primaryBtnLabel: "Start Your Project",
-    primaryBtnUrl: "/contact",
-    secondaryBtnLabel: "View Our Services",
-    secondaryBtnUrl: "/services",
-  });
+  const { data } = useSectionData<any>("insights", "InsightsCTA");
 
-  if (!data.ctaHeading) return null;
+  const ctaHeading = data.ctaHeading || data.heading;
+  const ctaSubtitle = data.ctaSubtitle || data.subtitle;
+  const primaryBtnLabel = data.primaryBtnLabel || data.primaryLabel;
+  const primaryBtnUrl = data.primaryBtnUrl || data.primaryUrl || "/contact";
+  const secondaryBtnLabel = data.secondaryBtnLabel || data.secondaryLabel;
+  const secondaryBtnUrl = data.secondaryBtnUrl || data.secondaryUrl || "/services";
+
+  if (!ctaHeading) return null;
 
   return (
     <section className="py-32 bg-neutral-900 text-white relative overflow-hidden">
@@ -639,32 +745,39 @@ function CTASection() {
           }}
         >
           <h2 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
-            {data.ctaHeading}
+            {ctaHeading}
           </h2>
-          <p className="text-xl text-neutral-300 mb-12 leading-relaxed">
-            {data.ctaSubtitle}
-          </p>
+          {ctaSubtitle && (
+            <p className="text-xl text-neutral-300 mb-12 leading-relaxed">
+              {ctaSubtitle}
+            </p>
+          )}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to={data.primaryBtnUrl}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
-            >
-              {data.primaryBtnLabel}
-              <ArrowRightIcon size={16} />
-            </Link>
-            <Link
-              to={data.secondaryBtnUrl}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300"
-            >
-              {data.secondaryBtnLabel}
-            </Link>
+            {primaryBtnLabel && (
+              <Link
+                to={primaryBtnUrl}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+              >
+                {primaryBtnLabel}
+                <ArrowRightIcon size={16} />
+              </Link>
+            )}
+            {secondaryBtnLabel && (
+              <Link
+                to={secondaryBtnUrl}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300"
+              >
+                {secondaryBtnLabel}
+              </Link>
+            )}
           </div>
         </motion.div>
       </div>
     </section>
   );
 }
+
 // Main Component
 export function Insights() {
   useSEO("insights");
@@ -672,6 +785,7 @@ export function Insights() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}

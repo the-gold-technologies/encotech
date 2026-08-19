@@ -12,36 +12,23 @@ import {
   ArrowRightIcon,
 } from "lucide-react";
 import { useSectionData } from "../../store/useCMSStore";
+
 // Dynamic Articles List from CMS
 export function InsightDetail() {
   const { slug } = useParams();
   const { data: articlesData, loading } = useSectionData<any>(
     "insights",
-    "ArticlesList",
-    { articles: [] },
+    "ArticlesList"
   );
   const { data: relatedData } = useSectionData<any>(
     "insights",
-    "RelatedInsights",
-    {
-      heading: "Related Insights",
-      viewAllLabel: "View All",
-      readMoreLabel: "Read More",
-    },
+    "RelatedInsights"
   );
   const { data: detailData } = useSectionData<any>(
     "insights",
-    "InsightDetail",
-    {
-      backLabel: "Back to Insights",
-      loadingText: "Loading insight details...",
-      notFoundTitle: "Article Not Found",
-      notFoundText:
-        "The insight you are looking for doesn't exist or has been moved.",
-      notFoundBtnLabel: "Back to Insights",
-      shareLabel: "Share this article",
-    },
+    "InsightDetail"
   );
+
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
 
@@ -50,14 +37,31 @@ export function InsightDetail() {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  const articlesList = articlesData.articles;
+  const articlesList = Array.isArray(articlesData?.articles)
+    ? articlesData.articles
+    : Array.isArray(articlesData?.items)
+    ? articlesData.items
+    : Array.isArray(articlesData)
+    ? articlesData
+    : [];
+
   const article = articlesList.find((item: any) => item.slug === slug);
+
+  const backLabel = detailData?.backLabel;
+  const loadingText = detailData?.loadingText;
+  const notFoundTitle = detailData?.notFoundTitle;
+  const notFoundText = detailData?.notFoundText;
+  const notFoundBtnLabel = detailData?.notFoundBtnLabel;
+  const shareLabel = detailData?.shareLabel;
+  const relatedHeading = relatedData?.heading;
+  const viewAllLabel = relatedData?.viewAllLabel;
+  const readMoreLabel = relatedData?.readMoreLabel;
 
   useSEO(
     "",
     article
       ? `${article.title} | Encotec`
-      : `${detailData.notFoundTitle} | Encotec`,
+      : `${notFoundTitle || "Article"} | Encotec`,
     article ? article.description : "Encotec Insight and Case Study",
   );
 
@@ -65,7 +69,7 @@ export function InsightDetail() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-neutral-900 text-white">
         <div className="w-16 h-16 border-4 border-brand-pink border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-neutral-400">{detailData.loadingText}</p>
+        {loadingText && <p className="text-neutral-400">{loadingText}</p>}
       </div>
     );
   }
@@ -73,26 +77,33 @@ export function InsightDetail() {
   if (!article) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-neutral-50 px-6">
-        <h1 className="text-4xl font-black text-neutral-900 mb-4">
-          {detailData.notFoundTitle}
-        </h1>
-        <p className="text-neutral-600 mb-8 text-center max-w-md">
-          {detailData.notFoundText}
-        </p>
-        <Link
-          to="/insights"
-          className="px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
-        >
-          {detailData.notFoundBtnLabel}
-        </Link>
+        {notFoundTitle && (
+          <h1 className="text-4xl font-black text-neutral-900 mb-4">
+            {notFoundTitle}
+          </h1>
+        )}
+        {notFoundText && (
+          <p className="text-neutral-600 mb-8 text-center max-w-md">
+            {notFoundText}
+          </p>
+        )}
+        {notFoundBtnLabel && (
+          <Link
+            to="/insights"
+            className="px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+          >
+            {notFoundBtnLabel}
+          </Link>
+        )}
       </div>
     );
   }
 
   // Get 3 related articles (excluding current)
   const relatedArticles = articlesList
-    .filter((item: any) => item.id !== article.id)
+    .filter((item: any) => item.slug !== slug && item.id !== article.id)
     .slice(0, 3);
+
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "Case Study":
@@ -105,6 +116,14 @@ export function InsightDetail() {
         return "bg-neutral-800 text-white";
     }
   };
+
+  let contentBlocks = article.content;
+  if (typeof contentBlocks === "string") {
+    contentBlocks = [{ type: "paragraph", text: contentBlocks }];
+  } else if (!Array.isArray(contentBlocks)) {
+    contentBlocks = [];
+  }
+
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white pb-20">
       {/* Navigation */}
@@ -141,31 +160,37 @@ export function InsightDetail() {
               duration: 0.8,
             }}
           >
-            <Link
-              to="/insights"
-              className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300 mb-8"
-            >
-              <ArrowLeftIcon size={16} />
-              {detailData.backLabel}
-            </Link>
-
-            <div className="mb-6">
-              <span
-                className={`px-4 py-1.5 text-xs font-bold uppercase tracking-wider ${getCategoryColor(article.category)}`}
+            {backLabel && (
+              <Link
+                to="/insights"
+                className="inline-flex items-center gap-2 text-sm font-bold text-brand-pink hover:gap-3 transition-all duration-300 mb-8"
               >
-                {article.category}
-              </span>
-            </div>
+                <ArrowLeftIcon size={16} />
+                {backLabel}
+              </Link>
+            )}
+
+            {article.category && (
+              <div className="mb-6">
+                <span
+                  className={`px-4 py-1.5 text-xs font-bold uppercase tracking-wider ${getCategoryColor(article.category)}`}
+                >
+                  {article.category}
+                </span>
+              </div>
+            )}
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight mb-8">
               {article.title}
             </h1>
 
             <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-neutral-300">
-              <div className="flex items-center gap-2">
-                <CalendarIcon size={16} />
-                {article.date}
-              </div>
+              {article.date && (
+                <div className="flex items-center gap-2">
+                  <CalendarIcon size={16} />
+                  {article.date}
+                </div>
+              )}
               {article.location && (
                 <div className="flex items-center gap-2">
                   <MapPinIcon size={16} />
@@ -203,7 +228,7 @@ export function InsightDetail() {
           >
             {/* Render Rich Content */}
             <div className="space-y-8 text-neutral-700 leading-relaxed text-lg">
-              {article.content.map((block: any, index: number) => {
+              {contentBlocks.map((block: any, index: number) => {
                 if (block.type === "paragraph") {
                   return (
                     <p
@@ -268,100 +293,116 @@ export function InsightDetail() {
             </div>
           </motion.div>
 
-          {/* Share / Tags section could go here */}
-          <div className="mt-16 pt-8 border-t border-neutral-200 flex justify-between items-center">
-            <div className="text-sm font-bold text-neutral-900 uppercase tracking-wider">
-              {detailData.shareLabel}
+          {/* Share section */}
+          {shareLabel && (
+            <div className="mt-16 pt-8 border-t border-neutral-200 flex justify-between items-center">
+              <div className="text-sm font-bold text-neutral-900 uppercase tracking-wider">
+                {shareLabel}
+              </div>
+              <div className="flex gap-4">
+                <button className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center hover:bg-brand-pink hover:text-white transition-colors">
+                  in
+                </button>
+                <button className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center hover:bg-brand-pink hover:text-white transition-colors">
+                  tw
+                </button>
+              </div>
             </div>
-            <div className="flex gap-4">
-              <button className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center hover:bg-brand-pink hover:text-white transition-colors">
-                in
-              </button>
-              <button className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center hover:bg-brand-pink hover:text-white transition-colors">
-                tw
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       </section>
 
       {/* Related Insights */}
-      <section className="py-24 bg-neutral-50 border-t border-neutral-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="text-3xl font-black text-neutral-900 uppercase tracking-tight">
-              {relatedData.heading}
-            </h2>
-            <Link
-              to="/insights"
-              className="text-sm font-bold text-brand-pink hover:text-[#a0004f] transition-colors uppercase tracking-wider"
-            >
-              {relatedData.viewAllLabel}
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedArticles.map((item: any, index: number) => (
-              <motion.div
-                key={item.id}
-                initial={{
-                  opacity: 0,
-                  y: 20,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.1,
-                }}
-                whileHover={{
-                  y: -8,
-                }}
-                className="group bg-white border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 overflow-hidden flex flex-col"
-              >
+      {relatedArticles.length > 0 && (
+        <section className="py-24 bg-neutral-50 border-t border-neutral-200">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <div className="flex items-center justify-between mb-12">
+              {relatedHeading && (
+                <h2 className="text-3xl font-black text-neutral-900 uppercase tracking-tight">
+                  {relatedHeading}
+                </h2>
+              )}
+              {viewAllLabel && (
                 <Link
-                  to={`/insights/${item.slug}`}
-                  className="flex flex-col h-full"
+                  to="/insights"
+                  className="text-sm font-bold text-brand-pink hover:text-[#a0004f] transition-colors uppercase tracking-wider"
                 >
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600"
-                    />
-
-                    <div className="absolute top-4 left-4">
-                      <span
-                        className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${getCategoryColor(item.category)}`}
-                      >
-                        {item.category}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="font-black text-neutral-900 mb-3 uppercase tracking-tight group-hover:text-brand-pink transition-colors line-clamp-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-neutral-600 text-sm leading-relaxed mb-6 line-clamp-2 flex-grow">
-                      {item.description}
-                    </p>
-                    <div className="inline-flex items-center gap-2 text-xs font-bold text-neutral-900 group-hover:text-brand-pink transition-colors uppercase tracking-wider mt-auto">
-                      {relatedData.readMoreLabel}
-                      <ArrowRightIcon size={14} />
-                    </div>
-                  </div>
+                  {viewAllLabel}
                 </Link>
-              </motion.div>
-            ))}
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {relatedArticles.map((item: any, index: number) => (
+                <motion.div
+                  key={item.id || item.slug || index}
+                  initial={{
+                    opacity: 0,
+                    y: 20,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  viewport={{
+                    once: true,
+                  }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.1,
+                  }}
+                  whileHover={{
+                    y: -8,
+                  }}
+                  className="group bg-white border border-neutral-200 hover:border-brand-pink/30 transition-all duration-300 overflow-hidden flex flex-col"
+                >
+                  <Link
+                    to={`/insights/${item.slug}`}
+                    className="flex flex-col h-full"
+                  >
+                    {item.image && (
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600"
+                        />
+
+                        {item.category && (
+                          <div className="absolute top-4 left-4">
+                            <span
+                              className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${getCategoryColor(item.category)}`}
+                            >
+                              {item.category}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    <div className="p-6 flex flex-col flex-grow">
+                      <h3 className="font-black text-neutral-900 mb-3 uppercase tracking-tight group-hover:text-brand-pink transition-colors line-clamp-2">
+                        {item.title}
+                      </h3>
+                      {item.description && (
+                        <p className="text-neutral-600 text-sm leading-relaxed mb-6 line-clamp-2 flex-grow">
+                          {item.description}
+                        </p>
+                      )}
+                      {readMoreLabel && (
+                        <div className="inline-flex items-center gap-2 text-xs font-bold text-neutral-900 group-hover:text-brand-pink transition-colors uppercase tracking-wider mt-auto">
+                          {readMoreLabel}
+                          <ArrowRightIcon size={14} />
+                        </div>
+                      )}
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Footer */}
       <Footer className="mt-auto" />
