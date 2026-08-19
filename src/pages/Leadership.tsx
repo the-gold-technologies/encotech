@@ -502,7 +502,7 @@ function ExecutiveTeam() {
 
               {/* Hover Glassmorphism Overlay */}
               <div className="absolute inset-0 bg-neutral-900/90 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-8 md:p-12 flex flex-col justify-start pt-12">
-                <p className="text-lg text-neutral-300 leading-relaxed mb-8">
+                <p className="text-sm text-neutral-300 leading-relaxed mb-6">
                   {exec.bio}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-auto pb-24">
