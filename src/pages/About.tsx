@@ -830,6 +830,8 @@ function Leadership() {
   const { data } = useSectionData<any>("about", "Leadership");
   const leaders = data.leaders || [];
 
+  if (!data.heading && leaders.length === 0) return null;
+
   return (
     <section className="py-28 bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -847,12 +849,16 @@ function Leadership() {
           }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-black mb-4">
-            {data.heading}
-          </h2>
-          <p className="text-neutral-400 text-lg max-w-3xl mx-auto">
-            {data.description}
-          </p>
+          {data.heading && (
+            <h2 className="text-4xl md:text-5xl font-black mb-4">
+              {data.heading}
+            </h2>
+          )}
+          {data.description && (
+            <p className="text-neutral-400 text-lg max-w-3xl mx-auto">
+              {data.description}
+            </p>
+          )}
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -874,13 +880,38 @@ function Leadership() {
                 duration: 0.6,
                 delay: i * 0.2,
               }}
-              className="p-10 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-brand-pink/30 transition-all duration-300"
+              className="relative p-10 bg-neutral-900 border border-white/10 hover:border-brand-pink/40 transition-all duration-300 overflow-hidden group min-h-[600px] flex flex-col justify-end"
             >
-              <div className="text-brand-pink text-sm font-bold tracking-wider uppercase mb-2">
-                {leader.role}
+              {/* Background Image from CMS */}
+              {leader.image && (
+                <>
+                  <img
+                    src={leader.image}
+                    alt={leader.name}
+                    className="absolute inset-0 w-full h-full object-cover object-top opacity-40 group-hover:opacity-55 group-hover:scale-105 transition-all duration-700 pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/80 to-neutral-950/40 pointer-events-none" />
+                </>
+              )}
+
+              {/* Static Content (Always Visible) */}
+              <div className="relative z-10">
+                {leader.role && (
+                  <div className="text-brand-pink text-xs md:text-sm font-bold tracking-wider uppercase mb-2">
+                    {leader.role}
+                  </div>
+                )}
+                {leader.name && (
+                  <h3 className="text-2xl md:text-3xl font-black text-white mb-6">
+                    {leader.name}
+                  </h3>
+                )}
+                {leader.bio && (
+                  <p className="text-neutral-300 leading-relaxed text-sm md:text-base">
+                    {leader.bio}
+                  </p>
+                )}
               </div>
-              <h3 className="text-2xl font-black mb-6">{leader.name}</h3>
-              <p className="text-neutral-400 leading-relaxed">{leader.bio}</p>
             </motion.div>
           ))}
         </div>

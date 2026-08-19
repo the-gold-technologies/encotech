@@ -37,40 +37,39 @@ const benefitIcons = [
 // Process step icon map (by index)
 const processIcons = [FileTextIcon, SearchIcon, UsersIcon, CheckCircle2Icon];
 
-// --- Data ---
-
 // --- Components ---
 function CareersHero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
-  const { data } = useSectionData<any>("careers", "CareersHero", {
-    heroTagline: "Careers at Encotec",
-    heroTitle: "SHAPE THE FUTURE OF GLOBAL ENERGY",
-    heroSubtitle:
-      "Join a team of world-class engineers and energy professionals delivering critical infrastructure across 23+ countries.",
-    backgroundImage:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2400",
-    badge1Text: "200+ Team Members",
-    badge2Text: "Offices in 8 Countries",
-  });
+  const { data } = useSectionData<any>("careers", "CareersHero");
+
+  const heroTagline = data.heroTagline || data.tagline;
+  const heroTitle = data.heroTitle || data.title;
+  const heroSubtitle = data.heroSubtitle || data.subtitle || data.description;
+  const bgImage = data.backgroundImage || data.heroImage || data.image;
+  const badge1Text = data.badge1Text || data.badge1;
+  const badge2Text = data.badge2Text || data.badge2;
+
   return (
     <section className="relative min-h-[80vh] w-full bg-neutral-900 text-white overflow-hidden flex items-center">
       {/* Parallax Background */}
-      <motion.div
-        style={{
-          y,
-        }}
-        className="absolute inset-0"
-      >
-        <img
-          src={data.backgroundImage}
-          alt="Team collaboration"
-          className="w-full h-full object-cover opacity-40"
-        />
+      {bgImage && (
+        <motion.div
+          style={{
+            y,
+          }}
+          className="absolute inset-0"
+        >
+          <img
+            src={bgImage}
+            alt={heroTitle || "Careers"}
+            className="w-full h-full object-cover opacity-40"
+          />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/90 via-neutral-900/70 to-neutral-900" />
-      </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/90 via-neutral-900/70 to-neutral-900" />
+        </motion.div>
+      )}
 
       {/* Grid Overlay */}
       <div
@@ -102,106 +101,118 @@ function CareersHero() {
           className="max-w-4xl"
         >
           {/* Label */}
-          <motion.div
-            initial={{
-              opacity: 0,
-              x: -20,
-            }}
-            animate={{
-              opacity: 1,
-              x: 0,
-            }}
-            transition={{
-              duration: 0.6,
-              delay: 0.2,
-            }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="w-12 h-[3px] bg-brand-pink" />
-            <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
-              {data.heroTagline}
-            </span>
-          </motion.div>
+          {heroTagline && (
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: -20,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.2,
+              }}
+              className="flex items-center gap-3 mb-8"
+            >
+              <div className="w-12 h-[3px] bg-brand-pink" />
+              <span className="text-sm font-bold tracking-[0.25em] text-brand-pink uppercase">
+                {heroTagline}
+              </span>
+            </motion.div>
+          )}
 
           {/* Headline */}
-          <motion.h1
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.4,
-            }}
-            className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8"
-          >
-            {data.heroTitle}
-          </motion.h1>
+          {heroTitle && (
+            <motion.h1
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.4,
+              }}
+              className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8"
+            >
+              {heroTitle}
+            </motion.h1>
+          )}
 
           {/* Subtitle */}
-          <motion.p
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.6,
-            }}
-            className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl"
-          >
-            {data.heroSubtitle}
-          </motion.p>
+          {heroSubtitle && (
+            <motion.p
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.6,
+              }}
+              className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light mb-12 max-w-3xl"
+            >
+              {heroSubtitle}
+            </motion.p>
+          )}
 
           {/* Floating Badges */}
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.6,
-              delay: 0.8,
-            }}
-            className="flex flex-wrap gap-4"
-          >
-            <div className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase">
-              {data.badge1Text}
-            </div>
-            <div className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-sm tracking-wider uppercase">
-              {data.badge2Text}
-            </div>
-          </motion.div>
+          {(badge1Text || badge2Text) && (
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.8,
+              }}
+              className="flex flex-wrap gap-4"
+            >
+              {badge1Text && (
+                <div className="px-6 py-3 bg-brand-pink/90 backdrop-blur-sm text-white font-bold text-sm tracking-wider uppercase">
+                  {badge1Text}
+                </div>
+              )}
+              {badge2Text && (
+                <div className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-sm tracking-wider uppercase">
+                  {badge2Text}
+                </div>
+              )}
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </section>
   );
 }
+
 function WhyEncotecSection() {
-  const { data } = useSectionData<any>("careers", "CareersCulture", {
-    cultureTagline: "Why Join Us",
-    cultureHeading: "Engineering Careers That Matter",
-    culturePara1:
-      "At Encotec, we don't just build power plants; we engineer the foundation of modern society. Our team works on some of the most complex and critical energy infrastructure projects globally, from massive supercritical thermal plants to utility-scale renewable energy parks.",
-    culturePara2:
-      "We foster a culture of technical excellence, continuous learning, and collaborative problem-solving. When you join Encotec, you gain global exposure, working alongside industry veterans who are passionate about mentoring the next generation of engineering leaders.",
-    cultureQuote:
-      "We empower our engineers to take ownership, innovate, and deliver solutions that have a tangible impact on global energy security.",
-    cultureImage:
-      "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200",
-  });
+  const { data } = useSectionData<any>("careers", "CareersCulture");
+
+  const cultureTagline = data.cultureTagline || data.tagline;
+  const cultureHeading = data.cultureHeading || data.heading;
+  const culturePara1 = data.culturePara1 || data.para1 || data.description;
+  const culturePara2 = data.culturePara2 || data.para2;
+  const cultureQuote = data.cultureQuote || data.quote;
+  const cultureImage = data.cultureImage || data.image;
+
+  if (!cultureHeading && !culturePara1 && !cultureImage) return null;
+
   return (
     <section className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -223,137 +234,129 @@ function WhyEncotecSection() {
               duration: 0.8,
             }}
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-[2px] bg-brand-pink" />
-              <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                {data.cultureTagline}
-              </span>
-            </div>
+            {cultureTagline && (
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-[2px] bg-brand-pink" />
+                <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
+                  {cultureTagline}
+                </span>
+              </div>
+            )}
 
-            <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8 leading-tight">
-              {data.cultureHeading}
-            </h2>
+            {cultureHeading && (
+              <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8 leading-tight">
+                {cultureHeading}
+              </h2>
+            )}
 
             <div className="space-y-6 text-lg text-neutral-700 leading-relaxed">
-              <p>{data.culturePara1}</p>
-              <p>{data.culturePara2}</p>
+              {culturePara1 && <p>{culturePara1}</p>}
+              {culturePara2 && <p>{culturePara2}</p>}
 
-              <div className="mt-8 p-8 bg-brand-panel border-l-4 border-brand-pink">
-                <p className="text-xl text-neutral-900 font-medium italic">
-                  "{data.cultureQuote}"
-                </p>
-              </div>
+              {cultureQuote && (
+                <div className="mt-8 p-8 bg-brand-panel border-l-4 border-brand-pink">
+                  <p className="text-xl text-neutral-900 font-medium italic">
+                    "{cultureQuote}"
+                  </p>
+                </div>
+              )}
             </div>
           </motion.div>
 
           {/* Right: Image */}
-          <motion.div
-            initial={{
-              opacity: 0,
-              x: 40,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.2,
-            }}
-            className="relative"
-          >
-            <div
-              className="relative"
-              style={{
-                transform: "rotate(2deg)",
+          {cultureImage && (
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: 40,
               }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+              }}
+              className="relative"
             >
-              <img
-                src={data.cultureImage}
-                alt="Engineers working"
-                className="w-full h-[600px] object-cover shadow-2xl"
-              />
+              <div
+                className="relative"
+                style={{
+                  transform: "rotate(2deg)",
+                }}
+              >
+                <img
+                  src={cultureImage}
+                  alt={cultureHeading || "Why Join Us"}
+                  className="w-full h-[600px] object-cover shadow-2xl"
+                />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/20 to-transparent" />
-            </div>
-          </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/20 to-transparent" />
+              </div>
+            </motion.div>
+          )}
         </div>
       </div>
     </section>
   );
 }
+
 function BenefitsSection() {
-  const { data } = useSectionData<any>("careers", "CareersBenefits", {
-    tagline: "What We Offer",
-    heading: "Benefits & Perks",
-    benefitsList: [
-      {
-        title: "Global Exposure",
-        description:
-          "Work on critical energy infrastructure projects across 23+ countries with diverse international teams.",
-      },
-      {
-        title: "Technical Growth",
-        description:
-          "Access to cutting-edge technologies, specialized training, and continuous learning programs.",
-      },
-      {
-        title: "Competitive Compensation",
-        description:
-          "Industry-leading salary packages with performance-based bonuses and comprehensive benefits.",
-      },
-      {
-        title: "Health & Wellness",
-        description:
-          "Comprehensive medical insurance, wellness programs, and support for physical and mental health.",
-      },
-      {
-        title: "Work-Life Balance",
-        description:
-          "Flexible working arrangements, generous leave policies, and a supportive team environment.",
-      },
-      {
-        title: "Career Progression",
-        description:
-          "Clear growth paths, leadership development, and mentorship from seasoned industry veterans.",
-      },
-    ],
-  });
-  const benefits = (data.benefitsList || []).map((b: any, i: number) => ({
+  const { data } = useSectionData<any>("careers", "CareersBenefits");
+
+  const tagline = data.tagline;
+  const heading = data.heading;
+  const rawBenefits = Array.isArray(data.benefitsList)
+    ? data.benefitsList
+    : Array.isArray(data.benefits)
+    ? data.benefits
+    : [];
+
+  const benefits = rawBenefits.map((b: any, i: number) => ({
     ...b,
-    icon: benefitIcons[i] || AwardIcon,
+    icon: benefitIcons[i % benefitIcons.length] || AwardIcon,
   }));
+
+  if (!heading && benefits.length === 0) return null;
+
   return (
     <section className="py-32 bg-neutral-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          className="mb-16 text-center"
-        >
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-8 h-[2px] bg-brand-pink" />
-            <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              {data.tagline}
-            </span>
-            <div className="w-8 h-[2px] bg-brand-pink" />
-          </div>
-          <h2 className="text-4xl md:text-5xl font-black text-neutral-900">
-            {data.heading}
-          </h2>
-        </motion.div>
+        {(tagline || heading) && (
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            className="mb-16 text-center"
+          >
+            {tagline && (
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="w-8 h-[2px] bg-brand-pink" />
+                <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
+                  {tagline}
+                </span>
+                <div className="w-8 h-[2px] bg-brand-pink" />
+              </div>
+            )}
+            {heading && (
+              <h2 className="text-4xl md:text-5xl font-black text-neutral-900">
+                {heading}
+              </h2>
+            )}
+          </motion.div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {benefits.map((benefit: any, i: number) => (
@@ -396,85 +399,42 @@ function BenefitsSection() {
     </section>
   );
 }
+
 function OpenPositionsSection() {
-  const { data } = useSectionData<any>("careers", "CareersOpenPositions", {
-    heading: "Current Openings",
-    jobsList: [
-      {
-        title: "Senior Power Plant Engineer",
-        dept: "Engineering",
-        location: "Mumbai, India",
-        type: "Full-time",
-        desc: "Lead engineering design and technical reviews for supercritical thermal power projects.",
-      },
-      {
-        title: "Renewable Energy Analyst",
-        dept: "Engineering",
-        location: "Dubai, UAE",
-        type: "Full-time",
-        desc: "Conduct energy yield analysis and feasibility studies for solar and wind projects.",
-      },
-      {
-        title: "Project Manager — EPC",
-        dept: "Project Management",
-        location: "Riyadh, KSA",
-        type: "Full-time",
-        desc: "Manage end-to-end execution of large-scale EPC projects in the Middle East.",
-      },
-      {
-        title: "Commissioning Engineer",
-        dept: "Engineering",
-        location: "Houston, USA",
-        type: "Contract",
-        desc: "Oversee testing and commissioning of power generation equipment and systems.",
-      },
-      {
-        title: "O&M Site Manager",
-        dept: "Operations",
-        location: "Rajpura, India",
-        type: "Full-time",
-        desc: "Lead day-to-day operations and maintenance of a 2x700 MW supercritical plant.",
-      },
-      {
-        title: "Electrical Design Engineer",
-        dept: "Engineering",
-        location: "Mumbai, India",
-        type: "Full-time",
-        desc: "Design transmission lines (33kV-765kV) and substation systems (AIS/GIS).",
-      },
-      {
-        title: "Business Development Manager",
-        dept: "Corporate",
-        location: "Singapore",
-        type: "Full-time",
-        desc: "Drive business growth across the Asia-Pacific region for energy services.",
-      },
-      {
-        title: "Quality Assurance Lead",
-        dept: "Operations",
-        location: "Frankfurt, Germany",
-        type: "Full-time",
-        desc: "Implement and oversee quality management systems across European projects.",
-      },
-    ],
-  });
-  const jobs = (data.jobsList || []).map((job: any, index: number) => ({
+  const { data } = useSectionData<any>("careers", "CareersOpenPositions");
+
+  const heading = data.heading || data.title;
+  const rawJobs = Array.isArray(data.jobsList)
+    ? data.jobsList
+    : Array.isArray(data.jobs)
+    ? data.jobs
+    : Array.isArray(data.openings)
+    ? data.openings
+    : [];
+
+  const jobs = rawJobs.map((job: any, index: number) => ({
     ...job,
-    id: index + 1,
+    id: job.id || index + 1,
+    title: job.title || "",
+    dept: job.dept || job.department || "General",
+    location: job.location || "",
+    type: job.type || "Full-time",
+    desc: job.desc || job.description || "",
   }));
+
   const [activeFilter, setActiveFilter] = useState("All");
-  const filters = [
-    "All",
-    "Engineering",
-    "Project Management",
-    "Operations",
-    "Corporate",
-  ];
+
+  // Dynamically extract department list from actual jobs returned from CMS
+  const dynamicDepts = Array.from(
+    new Set<string>(jobs.map((j: any) => String(j.dept)).filter(Boolean))
+  );
+  const filters: string[] = ["All", ...dynamicDepts];
 
   const filteredJobs = jobs.filter((job: any) => {
     if (activeFilter === "All") return true;
     return job.dept === activeFilter;
   });
+
   const getDeptColor = (dept: string) => {
     switch (dept) {
       case "Engineering":
@@ -489,6 +449,9 @@ function OpenPositionsSection() {
         return "bg-neutral-800 text-white";
     }
   };
+
+  if (!heading && jobs.length === 0) return null;
+
   return (
     <section id="open-positions" className="py-32 bg-white min-h-screen">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -506,33 +469,37 @@ function OpenPositionsSection() {
           }}
           className="mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
-            {data.heading}
-          </h2>
+          {heading && (
+            <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8">
+              {heading}
+            </h2>
+          )}
 
           {/* Filter Tabs */}
-          <div className="flex flex-wrap items-center gap-8 border-b border-neutral-200">
-            {filters.map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`relative pb-4 text-sm font-bold tracking-wider uppercase transition-colors duration-300 ${activeFilter === filter ? "text-brand-pink" : "text-neutral-500 hover:text-neutral-900"}`}
-              >
-                {filter}
-                {activeFilter === filter && (
-                  <motion.div
-                    layoutId="jobTab"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-pink"
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 30,
-                    }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
+          {filters.length > 1 && (
+            <div className="flex flex-wrap items-center gap-8 border-b border-neutral-200">
+              {filters.map((filter) => (
+                <button
+                  key={filter}
+                  onClick={() => setActiveFilter(filter)}
+                  className={`relative pb-4 text-sm font-bold tracking-wider uppercase transition-colors duration-300 ${activeFilter === filter ? "text-brand-pink" : "text-neutral-500 hover:text-neutral-900"}`}
+                >
+                  {filter}
+                  {activeFilter === filter && (
+                    <motion.div
+                      layoutId="jobTab"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-pink"
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
         </motion.div>
 
         {/* Job List */}
@@ -540,7 +507,7 @@ function OpenPositionsSection() {
           <AnimatePresence mode="popLayout">
             {filteredJobs.map((job: any, index: number) => (
               <motion.div
-                key={job.id}
+                key={job.id || index}
                 layout
                 initial={{
                   opacity: 0,
@@ -568,24 +535,30 @@ function OpenPositionsSection() {
               >
                 <div className="flex-grow">
                   <div className="flex flex-wrap items-center gap-3 mb-3">
-                    <span
-                      className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${getDeptColor(job.dept)}`}
-                    >
-                      {job.dept}
-                    </span>
-                    <span className="flex items-center gap-1.5 text-xs font-medium text-neutral-500">
-                      <MapPinIcon size={14} />
-                      {job.location}
-                    </span>
-                    <span className="flex items-center gap-1.5 text-xs font-medium text-neutral-500">
-                      <BriefcaseIcon size={14} />
-                      {job.type}
-                    </span>
+                    {job.dept && (
+                      <span
+                        className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${getDeptColor(job.dept)}`}
+                      >
+                        {job.dept}
+                      </span>
+                    )}
+                    {job.location && (
+                      <span className="flex items-center gap-1.5 text-xs font-medium text-neutral-500">
+                        <MapPinIcon size={14} />
+                        {job.location}
+                      </span>
+                    )}
+                    {job.type && (
+                      <span className="flex items-center gap-1.5 text-xs font-medium text-neutral-500">
+                        <BriefcaseIcon size={14} />
+                        {job.type}
+                      </span>
+                    )}
                   </div>
                   <h3 className="text-2xl font-black text-neutral-900 mb-2 group-hover:text-brand-pink transition-colors">
                     {job.title}
                   </h3>
-                  <p className="text-neutral-600">{job.desc}</p>
+                  {job.desc && <p className="text-neutral-600">{job.desc}</p>}
                 </div>
 
                 <div className="flex-shrink-0">
@@ -608,73 +581,56 @@ function OpenPositionsSection() {
     </section>
   );
 }
+
 function CultureGallery() {
-  const { data } = useSectionData<any>("careers", "CareersGallery", {
-    tagline: "Inside Encotec",
-    heading: "Life at Encotec",
-    galleryList: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800",
-        caption: "Team Collaboration",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800",
-        caption: "On-Site Engineering",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800",
-        caption: "Strategic Planning",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800",
-        caption: "Field Operations",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800",
-        caption: "Team Celebrations",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800",
-        caption: "Project Reviews",
-      },
-    ],
-  });
-  const gallery: Array<{ image: string; caption: string }> =
-    data.galleryList || [];
+  const { data } = useSectionData<any>("careers", "CareersGallery");
+
+  const tagline = data.tagline;
+  const heading = data.heading;
+  const gallery: Array<{ image: string; caption: string }> = Array.isArray(
+    data.galleryList
+  )
+    ? data.galleryList
+    : Array.isArray(data.gallery)
+    ? data.gallery
+    : [];
+
+  if (!heading && gallery.length === 0) return null;
+
   return (
     <section className="py-32 bg-neutral-900 text-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          className="mb-16 text-center"
-        >
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-8 h-[2px] bg-brand-pink" />
-            <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-              {data.tagline}
-            </span>
-            <div className="w-8 h-[2px] bg-brand-pink" />
-          </div>
-          <h2 className="text-4xl md:text-5xl font-black mb-6">
-            {data.heading}
-          </h2>
-        </motion.div>
+        {(tagline || heading) && (
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            className="mb-16 text-center"
+          >
+            {tagline && (
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="w-8 h-[2px] bg-brand-pink" />
+                <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
+                  {tagline}
+                </span>
+                <div className="w-8 h-[2px] bg-brand-pink" />
+              </div>
+            )}
+            {heading && (
+              <h2 className="text-4xl md:text-5xl font-black mb-6">
+                {heading}
+              </h2>
+            )}
+          </motion.div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {gallery.map((item, i) => (
@@ -699,15 +655,17 @@ function CultureGallery() {
             >
               <img
                 src={item.image}
-                alt={item.caption}
+                alt={item.caption || "Gallery image"}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                <span className="text-lg font-bold tracking-wider uppercase text-brand-pink transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  {item.caption}
-                </span>
-              </div>
+              {item.caption && (
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                  <span className="text-lg font-bold tracking-wider uppercase text-brand-pink transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    {item.caption}
+                  </span>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
@@ -715,57 +673,47 @@ function CultureGallery() {
     </section>
   );
 }
+
 function ApplicationProcess() {
-  const { data } = useSectionData<any>("careers", "CareersProcess", {
-    heading: "How to Join Us",
-    processSteps: [
-      {
-        title: "Apply Online",
-        description: "Submit your resume and cover letter through our portal.",
-      },
-      {
-        title: "Initial Screening",
-        description:
-          "Our HR team reviews your application within 5 business days.",
-      },
-      {
-        title: "Technical Interview",
-        description:
-          "Meet with our engineering leads for a technical discussion.",
-      },
-      {
-        title: "Final Offer",
-        description: "Receive your offer and begin your journey with Encotec.",
-      },
-    ],
-  });
-  const processSteps = (data.processSteps || []).map(
-    (step: any, i: number) => ({
-      ...step,
-      icon: processIcons[i] || CheckCircle2Icon,
-    }),
-  );
+  const { data } = useSectionData<any>("careers", "CareersProcess");
+
+  const heading = data.heading;
+  const rawSteps = Array.isArray(data.processSteps)
+    ? data.processSteps
+    : Array.isArray(data.steps)
+    ? data.steps
+    : [];
+
+  const processSteps = rawSteps.map((step: any, i: number) => ({
+    ...step,
+    icon: processIcons[i % processIcons.length] || CheckCircle2Icon,
+  }));
+
+  if (!heading && processSteps.length === 0) return null;
+
   return (
     <section className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          className="mb-20 text-center"
-        >
-          <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
-            {data.heading}
-          </h2>
-        </motion.div>
+        {heading && (
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            className="mb-20 text-center"
+          >
+            <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
+              {heading}
+            </h2>
+          </motion.div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
           {/* Connecting Line (Desktop) */}
@@ -810,13 +758,14 @@ function ApplicationProcess() {
     </section>
   );
 }
+
 function CTASection() {
-  const { data } = useSectionData<any>("careers", "CareersCTA", {
-    ctaHeading: "Don't See the Right Role?",
-    ctaSubtitle:
-      "We're always looking for talented engineers and energy professionals. Send us your resume and we'll keep you in mind for future opportunities.",
-    hrEmail: "careers@encotec.com",
-  });
+  const { data } = useSectionData<any>("careers", "CareersCTA");
+
+  const ctaHeading = data.ctaHeading || data.heading;
+  const ctaSubtitle = data.ctaSubtitle || data.subtitle;
+  const hrEmail = data.hrEmail || data.email;
+
   const scrollToJobs = () => {
     const element = document.getElementById("open-positions");
     if (element) {
@@ -825,6 +774,9 @@ function CTASection() {
       });
     }
   };
+
+  if (!ctaHeading) return null;
+
   return (
     <section className="py-32 bg-neutral-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-20">
@@ -849,20 +801,24 @@ function CTASection() {
           }}
         >
           <h2 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
-            {data.ctaHeading}
+            {ctaHeading}
           </h2>
-          <p className="text-xl text-neutral-300 mb-12 leading-relaxed">
-            {data.ctaSubtitle}
-          </p>
+          {ctaSubtitle && (
+            <p className="text-xl text-neutral-300 mb-12 leading-relaxed">
+              {ctaSubtitle}
+            </p>
+          )}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={`mailto:${data.hrEmail}`}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
-            >
-              Send Your Resume
-              <ArrowRightIcon size={16} />
-            </a>
+            {hrEmail && (
+              <a
+                href={`mailto:${hrEmail}`}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
+              >
+                Send Your Resume
+                <ArrowRightIcon size={16} />
+              </a>
+            )}
             <button
               onClick={scrollToJobs}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300"
@@ -875,12 +831,14 @@ function CTASection() {
     </section>
   );
 }
+
 export function Careers() {
   useSEO("careers");
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
     <main className="w-full bg-white min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}
