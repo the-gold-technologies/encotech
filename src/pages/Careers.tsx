@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Footer } from "../components/Footer";
 import { Navigation } from "../components/Navigation";
+import { JobApplicationModal, JobOpening } from "../components/JobApplicationModal";
 import {
   motion,
   useScroll,
@@ -400,7 +401,11 @@ function BenefitsSection() {
   );
 }
 
-function OpenPositionsSection() {
+function OpenPositionsSection({
+  onApply,
+}: {
+  onApply: (job: any) => void;
+}) {
   const { data } = useSectionData<any>("careers", "CareersOpenPositions");
 
   const heading = data.heading || data.title;
@@ -562,7 +567,10 @@ function OpenPositionsSection() {
                 </div>
 
                 <div className="flex-shrink-0">
-                  <button className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white text-sm font-bold tracking-wider uppercase hover:bg-brand-pink transition-colors duration-300">
+                  <button
+                    onClick={() => onApply(job)}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white text-sm font-bold tracking-wider uppercase hover:bg-brand-pink transition-colors duration-300 cursor-pointer"
+                  >
                     Apply Now
                     <ArrowRightIcon size={16} />
                   </button>
@@ -599,76 +607,72 @@ function CultureGallery() {
 
   return (
     <section className="py-32 bg-neutral-900 text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        {(tagline || heading) && (
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 mb-16">
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+          }}
+        >
+          {tagline && (
+            <span className="text-xs font-black uppercase tracking-widest text-brand-pink mb-4 block">
+              {tagline}
+            </span>
+          )}
+          {heading && (
+            <h2 className="text-4xl md:text-5xl font-black text-white">
+              {heading}
+            </h2>
+          )}
+        </motion.div>
+      </div>
+
+      <div className="flex gap-6 overflow-x-auto pb-8 px-6 lg:px-10 no-scrollbar">
+        {gallery.map((item, index) => (
           <motion.div
+            key={index}
             initial={{
               opacity: 0,
-              y: 20,
+              scale: 0.9,
             }}
             whileInView={{
               opacity: 1,
-              y: 0,
+              scale: 1,
             }}
             viewport={{
               once: true,
             }}
-            className="mb-16 text-center"
+            transition={{
+              duration: 0.5,
+              delay: index * 0.1,
+            }}
+            className="flex-shrink-0 w-80 md:w-96 group relative overflow-hidden aspect-[4/3] bg-neutral-800"
           >
-            {tagline && (
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <div className="w-8 h-[2px] bg-brand-pink" />
-                <span className="text-xs font-bold tracking-[0.2em] text-brand-pink uppercase">
-                  {tagline}
-                </span>
-                <div className="w-8 h-[2px] bg-brand-pink" />
-              </div>
-            )}
-            {heading && (
-              <h2 className="text-4xl md:text-5xl font-black mb-6">
-                {heading}
-              </h2>
-            )}
-          </motion.div>
-        )}
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {gallery.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{
-                opacity: 0,
-                scale: 0.95,
-              }}
-              whileInView={{
-                opacity: 1,
-                scale: 1,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.6,
-                delay: i * 0.1,
-              }}
-              className="group relative h-72 overflow-hidden bg-neutral-800"
-            >
+            {item.image ? (
               <img
                 src={item.image}
-                alt={item.caption || "Gallery image"}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                alt={item.caption || `Culture ${index + 1}`}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
-
+            ) : (
+              <div className="w-full h-full bg-neutral-800 flex items-center justify-center text-neutral-600">
+                <UsersIcon size={48} />
+              </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
               {item.caption && (
-                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                  <span className="text-lg font-bold tracking-wider uppercase text-brand-pink transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    {item.caption}
-                  </span>
-                </div>
+                <p className="text-white font-medium text-sm">{item.caption}</p>
               )}
-            </motion.div>
-          ))}
-        </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </section>
   );
@@ -677,89 +681,103 @@ function CultureGallery() {
 function ApplicationProcess() {
   const { data } = useSectionData<any>("careers", "CareersProcess");
 
+  const tagline = data.tagline;
   const heading = data.heading;
-  const rawSteps = Array.isArray(data.processSteps)
-    ? data.processSteps
-    : Array.isArray(data.steps)
-    ? data.steps
-    : [];
+  const subtitle = data.subtitle;
+  const steps: Array<{ step: string; title: string; desc: string }> =
+    Array.isArray(data.stepsList)
+      ? data.stepsList
+      : Array.isArray(data.steps)
+      ? data.steps
+      : [];
 
-  const processSteps = rawSteps.map((step: any, i: number) => ({
-    ...step,
-    icon: processIcons[i % processIcons.length] || CheckCircle2Icon,
-  }));
-
-  if (!heading && processSteps.length === 0) return null;
+  if (!heading && steps.length === 0) return null;
 
   return (
-    <section className="py-32 bg-white">
+    <section className="py-32 bg-neutral-50 border-t border-neutral-200">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        {heading && (
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            className="mb-20 text-center"
-          >
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+          }}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
+          {tagline && (
+            <span className="text-xs font-black uppercase tracking-widest text-brand-pink mb-4 block">
+              {tagline}
+            </span>
+          )}
+          {heading && (
             <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
               {heading}
             </h2>
-          </motion.div>
-        )}
+          )}
+          {subtitle && (
+            <p className="text-lg text-neutral-600 leading-relaxed">
+              {subtitle}
+            </p>
+          )}
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-          {/* Connecting Line (Desktop) */}
-          <div className="hidden md:block absolute top-12 left-1/8 right-1/8 h-[2px] bg-neutral-200 z-0" />
-
-          {processSteps.map((step: any, i: number) => (
-            <motion.div
-              key={i}
-              initial={{
-                opacity: 0,
-                y: 30,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.6,
-                delay: i * 0.1,
-              }}
-              className="relative z-10 text-center"
-            >
-              <div className="w-24 h-24 mx-auto bg-white border-4 border-neutral-100 rounded-full flex items-center justify-center text-brand-pink mb-6 shadow-xl">
-                <step.icon size={32} strokeWidth={1.5} />
-              </div>
-              <div className="text-4xl font-black text-neutral-100 mb-4">
-                0{i + 1}
-              </div>
-              <h3 className="text-xl font-bold text-neutral-900 mb-3 uppercase tracking-tight">
-                {step.title}
-              </h3>
-              <p className="text-neutral-600 leading-relaxed">
-                {step.description}
-              </p>
-            </motion.div>
-          ))}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+          {steps.map((item, index) => {
+            const Icon = processIcons[index % processIcons.length];
+            return (
+              <motion.div
+                key={index}
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1,
+                }}
+                className="relative bg-white p-8 border border-neutral-200"
+              >
+                <div className="text-5xl font-black text-neutral-200 mb-6">
+                  {item.step || `0${index + 1}`}
+                </div>
+                <div className="w-12 h-12 bg-neutral-100 flex items-center justify-center text-neutral-900 mb-6">
+                  <Icon size={24} />
+                </div>
+                <h3 className="text-xl font-bold text-neutral-900 mb-3">
+                  {item.title}
+                </h3>
+                {item.desc && (
+                  <p className="text-sm text-neutral-600 leading-relaxed">
+                    {item.desc}
+                  </p>
+                )}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
 
-function CTASection() {
+function CTASection({
+  onApplyGeneral,
+}: {
+  onApplyGeneral: () => void;
+}) {
   const { data } = useSectionData<any>("careers", "CareersCTA");
 
   const ctaHeading = data.ctaHeading || data.heading;
@@ -810,18 +828,18 @@ function CTASection() {
           )}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {hrEmail && (
-              <a
-                href={`mailto:${hrEmail}`}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300"
-              >
-                Send Your Resume
-                <ArrowRightIcon size={16} />
-              </a>
-            )}
             <button
+              type="button"
+              onClick={onApplyGeneral}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-pink text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a0004f] transition-colors duration-300 cursor-pointer"
+            >
+              Send Your Resume
+              <ArrowRightIcon size={16} />
+            </button>
+            <button
+              type="button"
               onClick={scrollToJobs}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white text-sm font-bold tracking-wider uppercase hover:bg-white hover:text-neutral-900 transition-all duration-300 cursor-pointer"
             >
               View Open Positions
             </button>
@@ -835,6 +853,23 @@ function CTASection() {
 export function Careers() {
   useSEO("careers");
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState<JobOpening | null>(null);
+
+  const handleApply = (job: JobOpening) => {
+    setSelectedJob(job);
+    setIsModalOpen(true);
+  };
+
+  const handleApplyGeneral = () => {
+    setSelectedJob({
+      title: "General Application",
+      dept: "General",
+      location: "India / Remote",
+    });
+    setIsModalOpen(true);
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -847,13 +882,20 @@ export function Careers() {
       <CareersHero />
       <WhyEncotecSection />
       <BenefitsSection />
-      <OpenPositionsSection />
+      <OpenPositionsSection onApply={handleApply} />
       <CultureGallery />
       <ApplicationProcess />
-      <CTASection />
+      <CTASection onApplyGeneral={handleApplyGeneral} />
 
       {/* Footer */}
       <Footer />
+
+      {/* Application Form Modal */}
+      <JobApplicationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        job={selectedJob}
+      />
     </main>
   );
 }
