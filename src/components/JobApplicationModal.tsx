@@ -82,6 +82,15 @@ export function JobApplicationModal({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, isSubmitting, onClose]);
 
+  const readFileAsBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleFileChange = (file: File | null) => {
     setFileError("");
     if (!file) {
@@ -149,6 +158,15 @@ export function JobApplicationModal({
 
     setIsSubmitting(true);
 
+    let finalBase64 = resumeBase64;
+    if (!finalBase64 && resumeFile) {
+      try {
+        finalBase64 = await readFileAsBase64(resumeFile);
+      } catch (readErr) {
+        console.warn("Failed to read file as base64:", readErr);
+      }
+    }
+
     const API_BASE_URL =
       import.meta.env.VITE_CMS_API_URL || "https://cms-encotec.vercel.app";
 
@@ -167,7 +185,7 @@ export function JobApplicationModal({
       resumeName: resumeFile.name,
       resumeSize: resumeFile.size,
       resumeType: resumeFile.type,
-      resumeBase64: resumeBase64,
+      resumeBase64: finalBase64,
       recipientEmail: "hr@encotecenergy.com",
       submittedAt: new Date().toISOString(),
     };
