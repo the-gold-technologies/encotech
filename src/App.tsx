@@ -17,6 +17,8 @@ import { Contact } from './pages/Contact';
 import { Careers } from './pages/Careers';
 import { Certifications } from './pages/Certifications';
 import { Leadership } from './pages/Leadership';
+import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { CookiePolicy } from './pages/CookiePolicy';
 
 export function App() {
   const fetchGlobalSEO = useCMSStore((state) => state.fetchGlobalSEO);
@@ -180,6 +182,10 @@ export function App() {
         <Route path="/careers" element={<Careers />} />
         <Route path="/certifications" element={<Certifications />} />
         <Route path="/leadership" element={<Leadership />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/cookies" element={<CookiePolicy />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
       </Routes>
     </BrowserRouter>);
 
