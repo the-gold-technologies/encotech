@@ -6,6 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
+      '/api/job-applications': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
       '/robots.txt': {
         target: 'http://localhost:3000',
         rewrite: () => '/api/seo/robots',

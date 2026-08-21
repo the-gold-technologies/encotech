@@ -9,6 +9,10 @@
       "destination": "/api/sitemap"
     },
     {
+      "source": "/api/job-applications",
+      "destination": "/api/job-applications"
+    },
+    {
       "source": "/",
       "destination": "/api/render"
     },
